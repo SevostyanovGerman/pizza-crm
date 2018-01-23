@@ -1,33 +1,30 @@
-# Eclipse
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
 .classpath
+.factorypath
 .project
-.settings/
-/.settings
+.settings
+.springBeans
 
-# Intellij
-.idea/
-*.iml
+### IntelliJ IDEA ###
+.idea
 *.iws
+*.iml
+*.ipr
 
-
-
-# Mac
+### Mac ###
 .DS_Store
 
-# Windows
+### Windows ###
 desktop.ini
 
-# Maven
-log/
-target/
-bin/
-doc/
-
-# Project
-Logs/
-Debug_pages/
-Libs/
-Orders/
-hs_err_*
-configs/*
-*.dat
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
