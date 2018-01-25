@@ -1,4 +1,4 @@
-package com.java_mentor.pizzacrm;
+package com.pizza.crm;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

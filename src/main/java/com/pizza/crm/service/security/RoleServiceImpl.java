@@ -1,12 +1,12 @@
-package com.java_mentor.pizzacrm.service.security;
+package com.pizza.crm.service.security;
 
-import com.java_mentor.pizzacrm.model.security.Role;
-import com.java_mentor.pizzacrm.repository.RoleRepository;
+import com.pizza.crm.model.security.Role;
+import com.pizza.crm.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -16,16 +16,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Collection<Role> getAll() {
-
-        Collection<Role> roles = new ArrayList<>();
-        roleRepository.findAll().forEach(roles::add);
-        return roles;
-
+        return roleRepository.findAll();
     }
 
     @Override
-    public Role findById(Integer id) {
-        return roleRepository.findById(id).orElse(new Role());
+    public Optional<Role> findById(Long id) {
+        return roleRepository.findById(id);
     }
 
     @Override
@@ -34,7 +30,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         roleRepository.deleteById(id);
     }
 }

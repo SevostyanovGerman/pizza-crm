@@ -1,12 +1,13 @@
-package com.java_mentor.pizzacrm.service;
+package com.pizza.crm.service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface CrudService<T, ID> {
 
     Collection<T> getAll();
 
-    T findById(ID id);
+    Optional<T> findById(ID id);
 
     T save(T t);
 

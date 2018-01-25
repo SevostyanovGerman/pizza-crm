@@ -1,34 +1,49 @@
-package com.java_mentor.pizzacrm.model.security;
+package com.pizza.crm.model.security;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Role implements Serializable {
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "id_role")},
             inverseJoinColumns = {@JoinColumn(name = "id_user")})
-    private Collection<User> users = new ArrayList<>();
+    private Collection<User> users;
+
+    public Role(String name, Collection<User> users) {
+        this.name = name;
+        this.users = users;
+    }
+
+    public Role(String name) {
+        this(name, new ArrayList<>());
+    }
 
     public Role() {
     }
 
-    public Integer getId() {
+    @Override
+    public String getAuthority() {
+        return name;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,7 +1,6 @@
-package com.java_mentor.pizzacrm.service.security;
+package com.pizza.crm.service.security;
 
-import com.java_mentor.pizzacrm.model.security.User;
-import com.java_mentor.pizzacrm.service.converter.UserToUserDetailsConverter;
+import com.pizza.crm.model.security.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +17,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserToUserDetailsConverter userToUserDetailsConverter;
-
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
-        LOGGER.debug("Loading user by username: {}", s);
+        LOGGER.debug("Trying to find user with pincode: '{}'", s);
 
-        User user = userService.findByUsername(s).orElseThrow(() -> new UsernameNotFoundException("Can't find: " + s));
+        User user = userService.findByPincode(s).orElseThrow(() -> new UsernameNotFoundException("Can't find: " + s));
 
         LOGGER.debug("Found user: {}", user);
 
-        return userToUserDetailsConverter.convert(user);
+        return user;
 
     }
 }
