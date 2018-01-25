@@ -1,7 +1,7 @@
-package pizza.crm.service.security;
+package com.pizza.crm.service.security;
 
-import pizza.crm.model.security.User;
-import pizza.crm.service.CrudService;
+import com.pizza.crm.model.security.User;
+import com.pizza.crm.service.CrudService;
 
 import java.util.Optional;
 

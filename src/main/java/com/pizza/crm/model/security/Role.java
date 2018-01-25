@@ -1,4 +1,4 @@
-package pizza.crm.model.security;
+package com.pizza.crm.model.security;
 
 import org.springframework.security.core.GrantedAuthority;
 

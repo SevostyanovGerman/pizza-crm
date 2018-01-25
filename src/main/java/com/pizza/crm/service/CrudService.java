@@ -1,4 +1,4 @@
-package pizza.crm.service;
+package com.pizza.crm.service;
 
 import java.util.Collection;
 import java.util.Optional;

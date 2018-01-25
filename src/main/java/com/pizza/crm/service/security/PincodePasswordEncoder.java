@@ -1,4 +1,4 @@
-package pizza.crm.service.security;
+package com.pizza.crm.service.security;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 

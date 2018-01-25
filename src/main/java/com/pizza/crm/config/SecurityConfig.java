@@ -1,6 +1,6 @@
-package pizza.crm.config;
+package com.pizza.crm.config;
 
-import pizza.crm.service.security.PincodePasswordEncoder;
+import com.pizza.crm.service.security.PincodePasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

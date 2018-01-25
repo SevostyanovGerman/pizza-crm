@@ -1,6 +1,6 @@
-package pizza.crm.repository;
+package com.pizza.crm.repository;
 
-import pizza.crm.model.security.User;
+import com.pizza.crm.model.security.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

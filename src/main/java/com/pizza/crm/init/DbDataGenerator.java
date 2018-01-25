@@ -1,9 +1,9 @@
-package pizza.crm.init;
+package com.pizza.crm.init;
 
-import pizza.crm.model.security.Role;
-import pizza.crm.model.security.User;
-import pizza.crm.service.security.RoleService;
-import pizza.crm.service.security.UserService;
+import com.pizza.crm.model.security.Role;
+import com.pizza.crm.model.security.User;
+import com.pizza.crm.service.security.RoleService;
+import com.pizza.crm.service.security.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
