@@ -22,14 +22,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .csrf().ignoringAntMatchers("/h2-console/**").disable()
-                .headers().frameOptions().disable()
-                .and()
                 .authorizeRequests()
-                .antMatchers("/h2-console/**" ,"/webjars/**", "/static/**").permitAll()
+                .antMatchers("/webjars/**", "/css/**", "/img/**", "/js/**").permitAll()
                 .antMatchers("/**").authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll();
+                .formLogin()
+                .loginPage("/login").permitAll()
+                .usernameParameter("pincode").passwordParameter("pincode");
 
     }
 
