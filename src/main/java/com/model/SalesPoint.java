@@ -14,10 +14,10 @@ public class SalesPoint {
     private String name;
 
     @Column(name = "shoppingHall")
-    private boolean shoppingHall;
+    private byte shoppingHall;
 
     @Column(name = "Delivery")
-    private boolean Delivery;
+    private byte Delivery;
 
     public Long getId() {
         return id;
@@ -35,19 +35,19 @@ public class SalesPoint {
         this.name = name;
     }
 
-    public boolean isShoppingHall() {
+    public byte getShoppingHall() {
         return shoppingHall;
     }
 
-    public void setShoppingHall(boolean shoppingHall) {
+    public void setShoppingHall(byte shoppingHall) {
         this.shoppingHall = shoppingHall;
     }
 
-    public boolean isDelivery() {
+    public byte isDelivery() {
         return Delivery;
     }
 
-    public void setDelivery(boolean delivery) {
+    public void setDelivery(byte delivery) {
         Delivery = delivery;
     }
 }
