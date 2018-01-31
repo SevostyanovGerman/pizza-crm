@@ -11,4 +11,9 @@ public class IndexController {
         return "index";
     }
 
+    @RequestMapping("/adv")
+    public String advPage() {
+        return "advancedOptions";
+    }
+
 }

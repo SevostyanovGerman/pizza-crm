@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Index</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link href="../static/css/advancedOptions.css"
+          th:href="@{/css/advancedOptions.css}"
+          rel="stylesheet" media="screen"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://use.fontawesome.com/568e4530f3.js"></script>
+</head>
+<body>
+    <div class="container-fluid" >
+        <div class="row info">
+            <div class="col-sm-1">
+                <p>iiko v. 5.2.2</p>
+            </div>
+            <div class="col-sm-1">
+                <p>25.01.2018</p>
+            </div>
+            <div class="col-sm-1">
+               <p>12:00</p>
+            </div>
+        </div>
+    </div>
+
+    <!--<nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="height: 3vh">-->
+        <!--<div class="collapse navbar-collapse" style="color: white; font-size: 10px">-->
+            <!--<div class="col-sm-1">-->
+                <!--iiko v. 5.2.2-->
+            <!--</div>-->
+            <!--<div class="col-sm-1">-->
+                <!--25.01.2018-->
+            <!--</div>-->
+            <!--<div class="col-sm-1">-->
+                <!--12:00-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</nav>-->
+
+    <div class="container-fluid" >
+        <div class="row header">
+            <div class="col-sm-1 offset-11 text-center">
+                <p><i class="fa fa-lock" aria-hidden="true"></i></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid main-row">
+            <div class="row">
+                <div class="col-sm-2 " >
+                    <div class="row person-table-row" >
+                        <table  class="table  person-table" >
+                            <tr>
+                                <td class="text-center person-table-header" style="border-color: darkorchid;" ><p><b>Юлия Савенко</b>  </p> Смена открыта </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"> Закрыть личную смену </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"> Личная страница </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"> Сообщения </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-2"  >
+                    <div class="row guest-table-row">
+                        <table class="table guest-table">
+                            <tr>
+                                <td class="text-center guest-table-header" style="border-color: #4b80d7;">ГОСТИ</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Доставка</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Список гостей</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row personal-table-row">
+                        <table class="table personal-table">
+                            <tr>
+                                <td class="text-center personal-table-header" style="border-color: #875ad7;">ПЕРСОНАЛ  </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"> Редактировать явки </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Подменная карты</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-2"  >
+                    <div class="row service-table-row">
+                        <table class="table table-bordered service-table" >
+                            <tr>
+                                <td class="text-center service-table-header" style="border-color: #1a8f7c;"> СЕРВИС </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"> Отчеты </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"> Стоп-лист </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"> Настройка и печать шрихкодов </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"> Кухонный экран </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-6 main-table-row">
+                    <table class="table table-bordered main-table">
+                        <tr>
+                            <td colspan="2" class="text-center main-table-header-cashier" style="border-color: #3aae8e">
+                                <p class="text-center"> КАССА</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="main-table-header" style="border-color: #3aae8e">
+                                <p>Фискальный регистратор линейки АТОЛ </p>
+                                <p>Смена № 94 </p>
+                                <p>Менеджер: Анна Олейник</p>
+                            </td>
+                        </tr>
+                            <tr>
+                                <td class="text-center"> Закрыть кассовую смену </td>
+                                <td class="text-center">Внести деньги</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"> Изъять деньги </td>
+                                <td class="text-center">Закрытые заказы</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Заказы закрытых кассовых систем</td>
+                                <td class="text-center">Текущие заказы</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"> Печать Х-отчета </td>
+                                <td class="text-center">  Открыть денежный ящик  </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <div class="container-fluid footer" style="background-color: #201c21; color: white; height: 9vh">
+        <div class="row">
+            <div class="col-sm-1 text-center">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                <p style="font-size: 10px">НАЗАД</p>
+            </div>
+            <div class="col-sm-1 text-center">
+                <i class="fa fa-align-justify" aria-hidden="true"></i>
+                <p class="" style="font-size: 10px">ЗАКАЗ</p>
+            </div>
+            <div class="col-sm-1 offset-4 text-center">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                <p style="font-size: 10px">ДОПОЛНЕНИЯ</p>
+            </div>
+            <div class="col-md-1 text-center">
+                <i class="fa fa-exclamation text-center" aria-hidden="true"></i>
+                <p style="font-size: 10px">АВАЙРИЙНЫЕ ОПЕРАЦИИ</p>
+            </div>
+            <div class="col-md-1 text-center">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <p style="font-size: 10px">СТАТУС</p>
+            </div>
+            <div class="col-sm-1 text-center">
+                <i class="fa fa-arrows-h" aria-hidden="true"></i>
+                <p style="font-size: 10px">TEAMVIEWER</p>
+            </div>
+            <div class="col-sm-1 text-center">
+                <i class="fa fa-windows" aria-hidden="true"></i>
+                <p style="font-size: 10px">ВЫЙТИ В WINDOWS</p>
+            </div>
+            <div class="col-sm-1 text-center" style="line-height: 7vh;">
+                <i class="fa fa-power-off" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
