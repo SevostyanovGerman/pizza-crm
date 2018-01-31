@@ -17,7 +17,7 @@ public class QualityСontrol {
     private Cooking cooking;
 
     @Column(name = "verdict")
-    private boolean verdict;
+    private byte verdict;
 
     @Column(name = "comment")
     private String comment;
@@ -53,11 +53,11 @@ public class QualityСontrol {
         this.cooking = cooking;
     }
 
-    public boolean isVerdict() {
+    public byte getVerdict() {
         return verdict;
     }
 
-    public void setVerdict(boolean verdict) {
+    public void setVerdict(byte verdict) {
         this.verdict = verdict;
     }
 
