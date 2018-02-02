@@ -12,18 +12,16 @@ public class DeliveryOrder {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "courier")
-    private Employee courier;
+//    @Column(name = "courier")
+//    private Employee courier;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "checkOutTime")
     private Date checkOutTime;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "timeReturn")
     private Date timeReturn;
 
-    private SalesPoint salesPoint;
+//    private SalesPoint salesPoint;
 
     public Long getId() {
         return id;
@@ -33,13 +31,13 @@ public class DeliveryOrder {
         this.id = id;
     }
 
-    public Employee getCourier() {
-        return courier;
-    }
-
-    public void setCourier(Employee courier) {
-        this.courier = courier;
-    }
+//    public Employee getCourier() {
+//        return courier;
+//    }
+//
+//    public void setCourier(Employee courier) {
+//        this.courier = courier;
+//    }
 
     public Date getCheckOutTime() {
         return checkOutTime;
@@ -57,11 +55,11 @@ public class DeliveryOrder {
         this.timeReturn = timeReturn;
     }
 
-    public SalesPoint getSalesPoint() {
-        return salesPoint;
-    }
-
-    public void setSalesPoint(SalesPoint salesPoint) {
-        this.salesPoint = salesPoint;
-    }
+//    public SalesPoint getSalesPoint() {
+//        return salesPoint;
+//    }
+//
+//    public void setSalesPoint(SalesPoint salesPoint) {
+//        this.salesPoint = salesPoint;
+//    }
 }

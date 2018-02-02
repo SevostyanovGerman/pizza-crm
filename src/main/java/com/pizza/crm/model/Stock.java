@@ -14,8 +14,8 @@ public class Stock {
     @Column(name = "name")
     private String name;
 
-    @OneToMany
-    private Set<SalesPoint> salesPoint;
+//    @OneToMany
+//    private Set<SalesPoint> salesPoint;
 
     public Long getId() {
         return id;
@@ -33,11 +33,11 @@ public class Stock {
         this.name = name;
     }
 
-    public Set<SalesPoint> getSalesPoint() {
-        return salesPoint;
-    }
-
-    public void setSalesPoint(Set<SalesPoint> salesPoint) {
-        this.salesPoint = salesPoint;
-    }
+//    public Set<SalesPoint> getSalesPoint() {
+//        return salesPoint;
+//    }
+//
+//    public void setSalesPoint(Set<SalesPoint> salesPoint) {
+//        this.salesPoint = salesPoint;
+//    }
 }

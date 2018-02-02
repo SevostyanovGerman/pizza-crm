@@ -4,24 +4,22 @@ import javax.persistence.*;
 import javax.persistence.criteria.Order;
 import java.util.Date;
 
-@Entity(name="DeliveryОrderTab")
-@Table(name = "DeliveryОrderTab")
-public class DeliveryОrderTab {
+@Entity(name="DeliveryOrderTab")
+@Table(name = "DeliveryOrderTab")
+public class DeliveryOrderTab {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private Long id;
 
-    @ManyToOne
-    private DeliveryOrder deliveryOrder;
+//    @ManyToOne
+//    private DeliveryOrder deliveryOrder;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date checkOutTime;
 
     private int deliveryTime;
 
-    @OneToOne
-    private Order order;
+//    private Order order;
 
     public Long getId() {
         return id;
@@ -31,13 +29,13 @@ public class DeliveryОrderTab {
         this.id = id;
     }
 
-    public DeliveryOrder getDeliveryOrder() {
-        return deliveryOrder;
-    }
-
-    public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
-        this.deliveryOrder = deliveryOrder;
-    }
+//    public DeliveryOrder getDeliveryOrder() {
+//        return deliveryOrder;
+//    }
+//
+//    public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
+//        this.deliveryOrder = deliveryOrder;
+//    }
 
     public Date getCheckOutTime() {
         return checkOutTime;
@@ -55,11 +53,11 @@ public class DeliveryОrderTab {
         this.deliveryTime = deliveryTime;
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
+//    public Order getOrder() {
+//        return order;
+//    }
+//
+//    public void setOrder(Order order) {
+//        this.order = order;
+//    }
 }

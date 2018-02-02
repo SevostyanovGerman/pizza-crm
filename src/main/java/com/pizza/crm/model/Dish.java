@@ -14,8 +14,8 @@ public class Dish {
     @Column(name = "name")
     private String name;
 
-    @OneToMany
-    private Set<Ingredient> ingredients;
+//    @OneToMany
+//    private Set<Ingredient> ingredients;
 
     public Long getId() {
         return id;
@@ -33,11 +33,11 @@ public class Dish {
         this.name = name;
     }
 
-    public Set<Ingredient> getIngredients() {
-        return ingredients;
-    }
+//    public Set<Ingredient> getIngredients() {
+//        return ingredients;
+//    }
 
-    public void setIngredients(Set<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
+//    public void setIngredients(Set<Ingredient> ingredients) {
+//        this.ingredients = ingredients;
+//    }
 }

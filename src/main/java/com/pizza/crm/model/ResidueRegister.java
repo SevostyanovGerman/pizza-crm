@@ -6,11 +6,14 @@ import java.util.Set;
 @Entity(name="ResidueRegister")
 @Table(name = "ResidueRegister")
 public class ResidueRegister {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    @OneToMany
-    private Set<Ingredient> ingredient;
-
-    private Set<Stock> stock;
+//    @OneToMany
+//    private Set<Ingredient> ingredient;
+//
+//    private Set<Stock> stock;
 
     @Column(name = "period")
     private double period;
@@ -21,21 +24,40 @@ public class ResidueRegister {
     @Column(name = "registrar")
     private String registrar;
 
-    public Set<Ingredient> getIngredient() {
-        return ingredient;
+    public ResidueRegister() {
     }
 
-    public void setIngredient(Set<Ingredient> ingredient) {
-        this.ingredient = ingredient;
+    public ResidueRegister(Set<Ingredient> ingredient, Set<Stock> stock, double period, int count, String registrar) {
+//        this.ingredient = ingredient;
+//        this.stock = stock;
+        this.period = period;
+        this.count = count;
+        this.registrar = registrar;
     }
 
-    public Set<Stock> getStock() {
-        return stock;
+    public Long getId() {
+        return id;
     }
 
-    public void setStock(Set<Stock> stock) {
-        this.stock = stock;
+    public void setId(Long id) {
+        this.id = id;
     }
+
+//    public Set<Ingredient> getIngredient() {
+//        return ingredient;
+//    }
+
+//    public void setIngredient(Set<Ingredient> ingredient) {
+//        this.ingredient = ingredient;
+//    }
+
+//    public Set<Stock> getStock() {
+//        return stock;
+//    }
+//
+//    public void setStock(Set<Stock> stock) {
+//        this.stock = stock;
+//    }
 
     public double getPeriod() {
         return period;

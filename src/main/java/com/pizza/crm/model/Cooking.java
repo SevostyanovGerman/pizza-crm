@@ -12,26 +12,24 @@ public class Cooking {
     @Column(name = "id")
     private Long id;
 
-    private Employee employee;
+//    private Employee employee;
 
-    @OneToMany
-    private Set<Order> order;
+//    @OneToMany
+//    private Set<Order> order;
+//
+//    private Set<OrderTab> orderTab;
 
-    private Set<OpderTab> opderTab;
-
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "startTime")
     private Date startTime;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "endTime")
     private Date endTime;
 
-    @Column(name = "typeWork")
-    private TypeWork typeWork;
+//    @Column(name = "typeWork")
+//    private TypeWork typeWork;
 
-    @Column(name = "salesPoint")
-    private SalesPoint salesPoint;
+//    @Column(name = "salesPoint")
+//    private SalesPoint salesPoint;
 
     public Long getId() {
         return id;
@@ -41,29 +39,29 @@ public class Cooking {
         this.id = id;
     }
 
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public Set<Order> getOrder() {
-        return order;
-    }
-
-    public void setOrder(Set<Order> order) {
-        this.order = order;
-    }
-
-    public Set<OpderTab> getOpderTab() {
-        return opderTab;
-    }
-
-    public void setOpderTab(Set<OpderTab> opderTab) {
-        this.opderTab = opderTab;
-    }
+//    public Employee getEmployee() {
+//        return employee;
+//    }
+//
+//    public void setEmployee(Employee employee) {
+//        this.employee = employee;
+//    }
+//
+//    public Set<Order> getOrder() {
+//        return order;
+//    }
+//
+//    public void setOrder(Set<Order> order) {
+//        this.order = order;
+//    }
+//
+//    public Set<OrderTab> getOrderTab() {
+//        return orderTab;
+//    }
+//
+//    public void setOpderTab(Set<OrderTab> opderTab) {
+//        this.orderTab = opderTab;
+//    }
 
     public Date getStartTime() {
         return startTime;
@@ -81,19 +79,19 @@ public class Cooking {
         this.endTime = endTime;
     }
 
-    public TypeWork getTypeWork() {
-        return typeWork;
-    }
-
-    public void setTypeWork(TypeWork typeWork) {
-        this.typeWork = typeWork;
-    }
-
-    public SalesPoint getSalesPoint() {
-        return salesPoint;
-    }
-
-    public void setSalesPoint(SalesPoint salesPoint) {
-        this.salesPoint = salesPoint;
-    }
+//    public TypeWork getTypeWork() {
+//        return typeWork;
+//    }
+//
+//    public void setTypeWork(TypeWork typeWork) {
+//        this.typeWork = typeWork;
+//    }
+//
+//    public SalesPoint getSalesPoint() {
+//        return salesPoint;
+//    }
+//
+//    public void setSalesPoint(SalesPoint salesPoint) {
+//        this.salesPoint = salesPoint;
+//    }
 }

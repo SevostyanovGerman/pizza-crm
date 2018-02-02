@@ -12,14 +12,13 @@ public class Invoice {
     @Column(name = "id")
     private Long id;
 
-    @OneToMany
-    private Set<Provider> provider;
+//    @OneToMany
+//    private Set<Provider> provider;
+//
+//    private Stock stock;
+//
+//    private SalesPoint salesPoint;
 
-    private Stock stock;
-
-    private SalesPoint salesPoint;
-
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateCreate")
     private Date dateCreate;
 
@@ -31,29 +30,29 @@ public class Invoice {
         this.id = id;
     }
 
-    public Set<Provider> getProvider() {
-        return provider;
-    }
-
-    public void setProvider(Set<Provider> provider) {
-        this.provider = provider;
-    }
-
-    public Stock getStock() {
-        return stock;
-    }
-
-    public void setStock(Stock stock) {
-        this.stock = stock;
-    }
-
-    public SalesPoint getSalesPoint() {
-        return salesPoint;
-    }
-
-    public void setSalesPoint(SalesPoint salesPoint) {
-        this.salesPoint = salesPoint;
-    }
+//    public Set<Provider> getProvider() {
+//        return provider;
+//    }
+//
+//    public void setProvider(Set<Provider> provider) {
+//        this.provider = provider;
+//    }
+//
+//    public Stock getStock() {
+//        return stock;
+//    }
+//
+//    public void setStock(Stock stock) {
+//        this.stock = stock;
+//    }
+//
+//    public SalesPoint getSalesPoint() {
+//        return salesPoint;
+//    }
+//
+//    public void setSalesPoint(SalesPoint salesPoint) {
+//        this.salesPoint = salesPoint;
+//    }
 
     public Date getDateCreate() {
         return dateCreate;

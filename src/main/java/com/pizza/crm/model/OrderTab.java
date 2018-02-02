@@ -3,22 +3,22 @@ package com.pizza.crm.model;
 import javax.persistence.*;
 
 
-@Entity(name="OpderTab")
-@Table(name = "OpderTab")
-public class OpderTab {
+@Entity(name="OrderTab")
+@Table(name = "OrderTab")
+public class OrderTab {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "order")
-    private Order order;
+//    @Column(name = "order")
+//    private Order order;
 
     @Column(name = "lineNumber")
     private int lineNumber;
 
-    @Column(name = "dish")
-    private Dish dish;
+//    @Column(name = "dish")
+//    private Dish dish;
 
     @Column(name = "count")
     private int count;
@@ -43,13 +43,13 @@ public class OpderTab {
         this.id = id;
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
+//    public Order getOrder() {
+//        return order;
+//    }
+//
+//    public void setOrder(Order order) {
+//        this.order = order;
+//    }
 
     public int getLineNumber() {
         return lineNumber;
@@ -59,13 +59,13 @@ public class OpderTab {
         this.lineNumber = lineNumber;
     }
 
-    public Dish getDish() {
-        return dish;
-    }
-
-    public void setDish(Dish dish) {
-        this.dish = dish;
-    }
+//    public Dish getDish() {
+//        return dish;
+//    }
+//
+//    public void setDish(Dish dish) {
+//        this.dish = dish;
+//    }
 
     public int getCount() {
         return count;

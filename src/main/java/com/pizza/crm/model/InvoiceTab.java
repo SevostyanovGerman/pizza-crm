@@ -12,11 +12,11 @@ public class InvoiceTab {
     @Column(name = "id")
     private Long id;
 
-    @OneToMany
-    private Set<Invoice> invoice;
-
-    @OneToMany
-    private Set<Ingredient> ingredient;
+//    @OneToMany
+//    private Set<Invoice> invoice;
+//
+////    @OneToMany
+//    private Set<Ingredient> ingredient;
 
     @Column(name = "count")
     private int count;
@@ -38,21 +38,21 @@ public class InvoiceTab {
         this.id = id;
     }
 
-    public Set<Invoice> getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(Set<Invoice> invoice) {
-        this.invoice = invoice;
-    }
-
-    public Set<Ingredient> getIngredient() {
-        return ingredient;
-    }
-
-    public void setIngredient(Set<Ingredient> ingredient) {
-        this.ingredient = ingredient;
-    }
+//    public Set<Invoice> getInvoice() {
+//        return invoice;
+//    }
+//
+//    public void setInvoice(Set<Invoice> invoice) {
+//        this.invoice = invoice;
+//    }
+//
+//    public Set<Ingredient> getIngredient() {
+//        return ingredient;
+//    }
+//
+//    public void setIngredient(Set<Ingredient> ingredient) {
+//        this.ingredient = ingredient;
+//    }
 
     public int getCount() {
         return count;

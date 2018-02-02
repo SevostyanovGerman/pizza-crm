@@ -12,15 +12,14 @@ public class Order {
     @Column(name = "id")
     private Long id;
 
-    private SalesPoint salesPoint;
+//    private SalesPoint salesPoint;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "deteCreateOrder")
-    private Date deteCreateOrder;
+    @Column(name = "dateCreateOrder")
+    private Date dateCreateOrder;
 
-    private Employee employee;
+//    private Employee employee;
 
-    private Client client;
+//    private Client client;
 
     @Column(name = "paymentMethod")
     private String paymentMethod;
@@ -45,37 +44,37 @@ public class Order {
         this.id = id;
     }
 
-    public SalesPoint getSalesPoint() {
-        return salesPoint;
+//    public SalesPoint getSalesPoint() {
+//        return salesPoint;
+//    }
+//
+//    public void setSalesPoint(SalesPoint salesPoint) {
+//        this.salesPoint = salesPoint;
+//    }
+
+    public Date getDateCreateOrder() {
+        return dateCreateOrder;
     }
 
-    public void setSalesPoint(SalesPoint salesPoint) {
-        this.salesPoint = salesPoint;
+    public void setDateCreateOrder(Date dateCreateOrder) {
+        this.dateCreateOrder = dateCreateOrder;
     }
 
-    public Date getDeteCreateOrder() {
-        return deteCreateOrder;
-    }
-
-    public void setDeteCreateOrder(Date deteCreateOrder) {
-        this.deteCreateOrder = deteCreateOrder;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
+//    public Employee getEmployee() {
+//        return employee;
+//    }
+//
+//    public void setEmployee(Employee employee) {
+//        this.employee = employee;
+//    }
+//
+//    public Client getClient() {
+//        return client;
+//    }
+//
+//    public void setClient(Client client) {
+//        this.client = client;
+//    }
 
     public String getPaymentMethod() {
         return paymentMethod;
