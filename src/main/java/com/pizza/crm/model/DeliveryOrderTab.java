@@ -1,25 +1,28 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
-import javax.persistence.criteria.Order;
 import java.util.Date;
 
-@Entity(name="DeliveryOrderTab")
-@Table(name = "DeliveryOrderTab")
+@Entity
 public class DeliveryOrderTab {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
     private Long id;
 
-//    @ManyToOne
-//    private DeliveryOrder deliveryOrder;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "deliveryOrder_id")
+    private DeliveryOrder deliveryOrder;
 
     private Date checkOutTime;
 
     private int deliveryTime;
 
-//    private Order order;
+    @OneToOne(mappedBy = "deliveryOrder")
+    private Order order;
+
+    public DeliveryOrderTab() {
+    }
 
     public Long getId() {
         return id;
@@ -29,13 +32,13 @@ public class DeliveryOrderTab {
         this.id = id;
     }
 
-//    public DeliveryOrder getDeliveryOrder() {
-//        return deliveryOrder;
-//    }
-//
-//    public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
-//        this.deliveryOrder = deliveryOrder;
-//    }
+    public DeliveryOrder getDeliveryOrder() {
+        return deliveryOrder;
+    }
+
+    public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
+        this.deliveryOrder = deliveryOrder;
+    }
 
     public Date getCheckOutTime() {
         return checkOutTime;
@@ -53,11 +56,11 @@ public class DeliveryOrderTab {
         this.deliveryTime = deliveryTime;
     }
 
-//    public Order getOrder() {
-//        return order;
-//    }
-//
-//    public void setOrder(Order order) {
-//        this.order = order;
-//    }
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }

@@ -1,40 +1,53 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
-
-@Entity(name="Order")
-@Table(name = "Order")
+@Entity
+@Table(name = "clientOrder")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
-//    private SalesPoint salesPoint;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "salesPoint_id")
+    private SalesPoint salesPoint;
 
-    @Column(name = "dateCreateOrder")
-    private Date dateCreateOrder;
+    private LocalDateTime dateCreateOrder;
 
-//    private Employee employee;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
-//    private Client client;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
+    private Client client;
 
-    @Column(name = "paymentMethod")
+    @OneToOne
+    private DeliveryOrder deliveryOrder;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<Cooking> cookings = new ArrayList<>();
+
     private String paymentMethod;
 
-    @Column(name = "deliveryAddress")
     private String deliveryAddress;
 
-    @Column(name = "costNotDiscount")
     private double costNotDiscount;
 
-    @Column(name = "discount")
     private double discount;
 
-    @Column(name = "costDiscount")
     private double costDiscount;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<OrderTab> orderTab = new ArrayList<>();
+
+    public Order() {
+    }
 
     public Long getId() {
         return id;
@@ -44,37 +57,37 @@ public class Order {
         this.id = id;
     }
 
-//    public SalesPoint getSalesPoint() {
-//        return salesPoint;
-//    }
-//
-//    public void setSalesPoint(SalesPoint salesPoint) {
-//        this.salesPoint = salesPoint;
-//    }
+    public SalesPoint getSalesPoint() {
+        return salesPoint;
+    }
 
-    public Date getDateCreateOrder() {
+    public void setSalesPoint(SalesPoint salesPoint) {
+        this.salesPoint = salesPoint;
+    }
+
+    public LocalDateTime getDateCreateOrder() {
         return dateCreateOrder;
     }
 
-    public void setDateCreateOrder(Date dateCreateOrder) {
+    public void setDateCreateOrder(LocalDateTime dateCreateOrder) {
         this.dateCreateOrder = dateCreateOrder;
     }
 
-//    public Employee getEmployee() {
-//        return employee;
-//    }
-//
-//    public void setEmployee(Employee employee) {
-//        this.employee = employee;
-//    }
-//
-//    public Client getClient() {
-//        return client;
-//    }
-//
-//    public void setClient(Client client) {
-//        this.client = client;
-//    }
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     public String getPaymentMethod() {
         return paymentMethod;
@@ -114,5 +127,29 @@ public class Order {
 
     public void setCostDiscount(double costDiscount) {
         this.costDiscount = costDiscount;
+    }
+
+    public Collection<OrderTab> getOrderTab() {
+        return orderTab;
+    }
+
+    public void setOrderTab(Collection<OrderTab> orderTab) {
+        this.orderTab = orderTab;
+    }
+
+    public DeliveryOrder getDeliveryOrder() {
+        return deliveryOrder;
+    }
+
+    public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
+        this.deliveryOrder = deliveryOrder;
+    }
+
+    public Collection<Cooking> getCookings() {
+        return cookings;
+    }
+
+    public void setCookings(Collection<Cooking> cookings) {
+        this.cookings = cookings;
     }
 }

@@ -1,21 +1,30 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name="Dish")
-@Table(name = "Dish")
+@Entity
 public class Dish {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
     private String name;
 
-//    @OneToMany
-//    private Set<Ingredient> ingredients;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "dish_ingredient",
+            joinColumns = @JoinColumn(name = "dish_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    private Set<Ingredient> ingredients = new HashSet<>();
+
+    public Dish() {
+    }
+
+    public Dish(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
@@ -33,11 +42,12 @@ public class Dish {
         this.name = name;
     }
 
-//    public Set<Ingredient> getIngredients() {
-//        return ingredients;
-//    }
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
 
-//    public void setIngredients(Set<Ingredient> ingredients) {
-//        this.ingredients = ingredients;
-//    }
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
 }

@@ -2,33 +2,44 @@ package com.pizza.crm.model;
 
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name="InvoiceTab")
-@Table(name = "InvoiceTab")
+@Entity
 public class InvoiceTab {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
-//    @OneToMany
-//    private Set<Invoice> invoice;
-//
-////    @OneToMany
-//    private Set<Ingredient> ingredient;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
 
-    @Column(name = "count")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "invoiceTab_ingredient",
+            joinColumns = @JoinColumn(name = "invoiceTab_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    private Set<Ingredient> ingredients = new HashSet<>();
+
     private int count;
 
-    @Column(name = "unit")
     private String unit;
 
-    @Column(name = "costOne")
     private double costOne;
 
-    @Column(name = "allCost")
     private double allCost;
+
+    public InvoiceTab() {
+    }
+
+    public InvoiceTab(Invoice invoice, int count, String unit, double costOne, double allCost) {
+        this.invoice = invoice;
+        this.count = count;
+        this.unit = unit;
+        this.costOne = costOne;
+        this.allCost = allCost;
+    }
 
     public Long getId() {
         return id;
@@ -37,22 +48,6 @@ public class InvoiceTab {
     public void setId(Long id) {
         this.id = id;
     }
-
-//    public Set<Invoice> getInvoice() {
-//        return invoice;
-//    }
-//
-//    public void setInvoice(Set<Invoice> invoice) {
-//        this.invoice = invoice;
-//    }
-//
-//    public Set<Ingredient> getIngredient() {
-//        return ingredient;
-//    }
-//
-//    public void setIngredient(Set<Ingredient> ingredient) {
-//        this.ingredient = ingredient;
-//    }
 
     public int getCount() {
         return count;
@@ -84,5 +79,21 @@ public class InvoiceTab {
 
     public void setAllCost(double allCost) {
         this.allCost = allCost;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }

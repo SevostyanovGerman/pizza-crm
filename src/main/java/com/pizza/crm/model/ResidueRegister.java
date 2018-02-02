@@ -1,35 +1,34 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name="ResidueRegister")
-@Table(name = "ResidueRegister")
+@Entity
 public class ResidueRegister {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-//    @OneToMany
-//    private Set<Ingredient> ingredient;
-//
-//    private Set<Stock> stock;
+    @ManyToMany(mappedBy = "residueRegister")
+    private Set<Ingredient> ingredient = new HashSet<>();
 
-    @Column(name = "period")
+    @ManyToMany(mappedBy = "residueRegister")
+    private Set<Stock> stock = new HashSet<>();
+
     private double period;
 
-    @Column(name = "count")
     private int count;
 
-    @Column(name = "registrar")
     private String registrar;
 
     public ResidueRegister() {
     }
 
     public ResidueRegister(Set<Ingredient> ingredient, Set<Stock> stock, double period, int count, String registrar) {
-//        this.ingredient = ingredient;
-//        this.stock = stock;
+        this.ingredient = ingredient;
+        this.stock = stock;
         this.period = period;
         this.count = count;
         this.registrar = registrar;
@@ -43,21 +42,21 @@ public class ResidueRegister {
         this.id = id;
     }
 
-//    public Set<Ingredient> getIngredient() {
-//        return ingredient;
-//    }
+    public Set<Ingredient> getIngredient() {
+        return ingredient;
+    }
 
-//    public void setIngredient(Set<Ingredient> ingredient) {
-//        this.ingredient = ingredient;
-//    }
+    public void setIngredient(Set<Ingredient> ingredient) {
+        this.ingredient = ingredient;
+    }
 
-//    public Set<Stock> getStock() {
-//        return stock;
-//    }
-//
-//    public void setStock(Set<Stock> stock) {
-//        this.stock = stock;
-//    }
+    public Set<Stock> getStock() {
+        return stock;
+    }
+
+    public void setStock(Set<Stock> stock) {
+        this.stock = stock;
+    }
 
     public double getPeriod() {
         return period;

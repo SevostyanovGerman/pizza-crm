@@ -2,25 +2,35 @@ package com.pizza.crm.model;
 
 import javax.persistence.*;
 
-@Entity(name="Provider")
-@Table(name = "Provider")
+@Entity
 public class Provider {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "namePrint")
     private String namePrint;
 
-    @Column(name = "inn")
     private String inn;
 
-    @Column(name = "typeProvider")
+    @Enumerated(EnumType.STRING)
     private TypeProvider typeProvider;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
+
+    public Provider() {
+    }
+
+    public Provider(String name, String namePrint, String inn, TypeProvider typeProvider) {
+        this.name = name;
+        this.namePrint = namePrint;
+        this.inn = inn;
+        this.typeProvider = typeProvider;
+    }
 
     public Long getId() {
         return id;
@@ -60,5 +70,13 @@ public class Provider {
 
     public void setTypeProvider(TypeProvider typeProvider) {
         this.typeProvider = typeProvider;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 }

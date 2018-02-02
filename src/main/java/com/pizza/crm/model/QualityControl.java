@@ -2,27 +2,26 @@ package com.pizza.crm.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity(name="QualityСontrol")
-@Table(name = "QualityСontrol")
-public class QualityСontrol {
+@Entity
+public class QualityControl {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
     private Long id;
 
-//    private Employee employee;
+    @ManyToMany(mappedBy = "qualityControls")
+    private Set<Employee> employees = new HashSet<>();
 
-//    @OneToOne
-//    private Cooking cooking;
+    @OneToOne(mappedBy = "qualityControl")
+    private Cooking cooking;
 
-    @Column(name = "verdict")
     private byte verdict;
 
-    @Column(name = "comment")
     private String comment;
 
-    @Column(name = "createTime")
     private Date createTime;
 
 //    @Column(name = "salesPoint")
@@ -36,14 +35,6 @@ public class QualityСontrol {
         this.id = id;
     }
 
-//    public Employee getEmployee() {
-//        return employee;
-//    }
-//
-//    public void setEmployee(Employee employee) {
-//        this.employee = employee;
-//    }
-//
 //    public Cooking getCooking() {
 //        return cooking;
 //    }
@@ -76,11 +67,20 @@ public class QualityСontrol {
         this.createTime = createTime;
     }
 
-//    public SalesPoint getSalesPoint() {
-//        return salesPoint;
-//    }
-//
-//    public void setSalesPoint(SalesPoint salesPoint) {
-//        this.salesPoint = salesPoint;
-//    }
+    public Cooking getCooking() {
+        return cooking;
+    }
+
+    public void setCooking(Cooking cooking) {
+        this.cooking = cooking;
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
+    }
+
 }
