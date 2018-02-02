@@ -1,4 +1,4 @@
-package com.model;
+package com.pizza.crm.model;
 
 
 import javax.persistence.*;
@@ -16,7 +16,7 @@ public class InvoiceTab {
     private Set<Invoice> invoice;
 
     @OneToMany
-    private Set<Product> product;
+    private Set<Ingredient> ingredient;
 
     @Column(name = "count")
     private int count;
@@ -46,12 +46,12 @@ public class InvoiceTab {
         this.invoice = invoice;
     }
 
-    public Set<Product> getProduct() {
-        return product;
+    public Set<Ingredient> getIngredient() {
+        return ingredient;
     }
 
-    public void setProduct(Set<Product> product) {
-        this.product = product;
+    public void setIngredient(Set<Ingredient> ingredient) {
+        this.ingredient = ingredient;
     }
 
     public int getCount() {

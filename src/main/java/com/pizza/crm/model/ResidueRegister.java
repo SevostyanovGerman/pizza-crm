@@ -1,4 +1,4 @@
-package com.model;
+package com.pizza.crm.model;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -8,7 +8,7 @@ import java.util.Set;
 public class ResidueRegister {
 
     @OneToMany
-    private Set<Product> product;
+    private Set<Ingredient> ingredient;
 
     private Set<Stock> stock;
 
@@ -21,12 +21,12 @@ public class ResidueRegister {
     @Column(name = "registrar")
     private String registrar;
 
-    public Set<Product> getProduct() {
-        return product;
+    public Set<Ingredient> getIngredient() {
+        return ingredient;
     }
 
-    public void setProduct(Set<Product> product) {
-        this.product = product;
+    public void setIngredient(Set<Ingredient> ingredient) {
+        this.ingredient = ingredient;
     }
 
     public Set<Stock> getStock() {

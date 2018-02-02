@@ -1,4 +1,4 @@
-package com.model;
+package com.pizza.crm.model;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -15,7 +15,7 @@ public class Dish {
     private String name;
 
     @OneToMany
-    private Set<Product> ingredients;
+    private Set<Ingredient> ingredients;
 
     public Long getId() {
         return id;
@@ -33,11 +33,11 @@ public class Dish {
         this.name = name;
     }
 
-    public Set<Product> getIngredients() {
+    public Set<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Set<Product> ingredients) {
+    public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 }

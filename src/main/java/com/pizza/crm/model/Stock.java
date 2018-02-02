@@ -1,4 +1,4 @@
-package com.model;
+package com.pizza.crm.model;
 
 import javax.persistence.*;
 import java.util.Set;

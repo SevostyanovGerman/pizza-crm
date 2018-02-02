@@ -1,7 +1,6 @@
-package com.model;
+package com.pizza.crm.model;
 
 import javax.persistence.*;
-import java.lang.reflect.Type;
 import java.sql.Date;
 import java.util.Set;
 

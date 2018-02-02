@@ -1,10 +1,10 @@
-package com.model;
+package com.pizza.crm.model;
 
 import javax.persistence.*;
 
-@Entity(name="Product")
-@Table(name = "Product")
-public class Product {
+@Entity(name="Ingredient")
+@Table(name = "Ingredient")
+public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

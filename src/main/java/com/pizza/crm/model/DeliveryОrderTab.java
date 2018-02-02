@@ -1,8 +1,7 @@
-package com.model;
+package com.pizza.crm.model;
 
 import javax.persistence.*;
 import javax.persistence.criteria.Order;
-import javax.xml.crypto.Data;
 import java.util.Date;
 
 @Entity(name="DeliveryОrderTab")
