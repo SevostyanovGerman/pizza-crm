@@ -17,7 +17,7 @@ public class Dish {
     @JoinTable(name = "dish_ingredient",
             joinColumns = @JoinColumn(name = "dish_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-    private Set<Ingredient> ingredients = new HashSet<>();
+    private Set<Ingredient> ingredient = new HashSet<>();
 
     public Dish() {
     }
@@ -42,12 +42,12 @@ public class Dish {
         this.name = name;
     }
 
-    public Set<Ingredient> getIngredients() {
-        return ingredients;
+    public Set<Ingredient> getIngredient() {
+        return ingredient;
     }
 
-    public void setIngredients(Set<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public void setIngredient(Set<Ingredient> ingredient) {
+        this.ingredient = ingredient;
     }
 
 }

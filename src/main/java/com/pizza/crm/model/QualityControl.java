@@ -1,7 +1,7 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +12,7 @@ public class QualityControl {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToMany(mappedBy = "qualityControls")
+    @ManyToMany(mappedBy = "qualityControl")
     private Set<Employee> employees = new HashSet<>();
 
     @OneToOne(mappedBy = "qualityControl")
@@ -22,10 +22,14 @@ public class QualityControl {
 
     private String comment;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
-//    @Column(name = "salesPoint")
-//    private SalesPoint salesPoint;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "salesPoint_id")
+    private SalesPoint salesPoint;
+
+    public QualityControl() {
+    }
 
     public Long getId() {
         return id;
@@ -34,14 +38,6 @@ public class QualityControl {
     public void setId(Long id) {
         this.id = id;
     }
-
-//    public Cooking getCooking() {
-//        return cooking;
-//    }
-//
-//    public void setCooking(Cooking cooking) {
-//        this.cooking = cooking;
-//    }
 
     public byte getVerdict() {
         return verdict;
@@ -59,11 +55,11 @@ public class QualityControl {
         this.comment = comment;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
@@ -83,4 +79,11 @@ public class QualityControl {
         this.employees = employees;
     }
 
+    public SalesPoint getSalesPoint() {
+        return salesPoint;
+    }
+
+    public void setSalesPoint(SalesPoint salesPoint) {
+        this.salesPoint = salesPoint;
+    }
 }

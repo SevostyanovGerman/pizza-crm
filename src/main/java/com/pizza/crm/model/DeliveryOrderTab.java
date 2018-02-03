@@ -1,7 +1,7 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class DeliveryOrderTab {
@@ -14,9 +14,9 @@ public class DeliveryOrderTab {
     @JoinColumn(name = "deliveryOrder_id")
     private DeliveryOrder deliveryOrder;
 
-    private Date checkOutTime;
+    private LocalDateTime checkOutTime;
 
-    private int deliveryTime;
+    private LocalDateTime deliveryTime;
 
     @OneToOne(mappedBy = "deliveryOrder")
     private Order order;
@@ -40,19 +40,19 @@ public class DeliveryOrderTab {
         this.deliveryOrder = deliveryOrder;
     }
 
-    public Date getCheckOutTime() {
+    public LocalDateTime getCheckOutTime() {
         return checkOutTime;
     }
 
-    public void setCheckOutTime(Date checkOutTime) {
+    public void setCheckOutTime(LocalDateTime checkOutTime) {
         this.checkOutTime = checkOutTime;
     }
 
-    public int getDeliveryTime() {
+    public LocalDateTime getDeliveryTime() {
         return deliveryTime;
     }
 
-    public void setDeliveryTime(int deliveryTime) {
+    public void setDeliveryTime(LocalDateTime deliveryTime) {
         this.deliveryTime = deliveryTime;
     }
 

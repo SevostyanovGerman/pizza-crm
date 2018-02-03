@@ -16,7 +16,7 @@ public class Stock {
     private String name;
 
     @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<Invoice> invoices = new ArrayList<>();
+    private Collection<Invoice> invoice = new ArrayList<>();
 
     @ManyToMany(mappedBy = "stock")
     private Set<SalesPoint> salesPoint = new HashSet<>();
@@ -50,12 +50,12 @@ public class Stock {
         this.name = name;
     }
 
-    public Collection<Invoice> getInvoices() {
-        return invoices;
+    public Collection<Invoice> getInvoice() {
+        return invoice;
     }
 
-    public void setInvoices(Collection<Invoice> invoices) {
-        this.invoices = invoices;
+    public void setInvoice(Collection<Invoice> invoice) {
+        this.invoice = invoice;
     }
 
     public Set<SalesPoint> getSalesPoint() {

@@ -1,7 +1,7 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -10,11 +10,10 @@ public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<Provider> providers = new ArrayList<>();
+    private Collection<Provider> provider = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "stock_id")
@@ -24,8 +23,7 @@ public class Invoice {
     @JoinColumn(name = "salesPoint_id")
     private SalesPoint salesPoint;
 
-    @Column(name = "dateCreate")
-    private Date dateCreate;
+    private LocalDateTime dateCreate;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<InvoiceTab> invoiceTab = new ArrayList<>();
@@ -54,11 +52,11 @@ public class Invoice {
         this.salesPoint = salesPoint;
     }
 
-    public Date getDateCreate() {
+    public LocalDateTime getDateCreate() {
         return dateCreate;
     }
 
-    public void setDateCreate(Date dateCreate) {
+    public void setDateCreate(LocalDateTime dateCreate) {
         this.dateCreate = dateCreate;
     }
 
@@ -70,11 +68,11 @@ public class Invoice {
         this.invoiceTab = invoiceTab;
     }
 
-    public Collection<Provider> getProviders() {
-        return providers;
+    public Collection<Provider> getProvider() {
+        return provider;
     }
 
-    public void setProviders(Collection<Provider> providers) {
-        this.providers = providers;
+    public void setProvider(Collection<Provider> provider) {
+        this.provider = provider;
     }
 }

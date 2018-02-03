@@ -23,16 +23,16 @@ public class Employee {
     @JoinTable(name = "employee_cooking",
         joinColumns = @JoinColumn(name = "employee_id"),
         inverseJoinColumns = @JoinColumn(name = "cooking_id"))
-    private Set<Cooking> cookings = new HashSet<>();
+    private Set<Cooking> cooking = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "employee_qualityControl",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "qualityControl_id"))
-    private Set<QualityControl> qualityControls = new HashSet<>();
+    private Set<QualityControl> qualityControl = new HashSet<>();
 
     @OneToMany(mappedBy = "courier", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<DeliveryOrder> deliveryOrders = new ArrayList<>();
+    private Collection<DeliveryOrder> deliveryOrder = new ArrayList<>();
 
     public Employee() {
     }
@@ -65,27 +65,27 @@ public class Employee {
         this.orders = orders;
     }
 
-    public Collection<DeliveryOrder> getDeliveryOrders() {
-        return deliveryOrders;
+    public Collection<DeliveryOrder> getDeliveryOrder() {
+        return deliveryOrder;
     }
 
-    public void setDeliveryOrders(Collection<DeliveryOrder> deliveryOrders) {
-        this.deliveryOrders = deliveryOrders;
+    public void setDeliveryOrder(Collection<DeliveryOrder> deliveryOrder) {
+        this.deliveryOrder = deliveryOrder;
     }
 
-    public Set<Cooking> getCookings() {
-        return cookings;
+    public Set<Cooking> getCooking() {
+        return cooking;
     }
 
-    public void setCookings(Set<Cooking> cookings) {
-        this.cookings = cookings;
+    public void setCooking(Set<Cooking> cooking) {
+        this.cooking = cooking;
     }
 
-    public Set<QualityControl> getQualityControls() {
-        return qualityControls;
+    public Set<QualityControl> getQualityControl() {
+        return qualityControl;
     }
 
-    public void setQualityControls(Set<QualityControl> qualityControls) {
-        this.qualityControls = qualityControls;
+    public void setQualityControl(Set<QualityControl> qualityControl) {
+        this.qualityControl = qualityControl;
     }
 }

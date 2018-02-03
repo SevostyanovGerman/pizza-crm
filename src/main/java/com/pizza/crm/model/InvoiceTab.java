@@ -20,7 +20,7 @@ public class InvoiceTab {
     @JoinTable(name = "invoiceTab_ingredient",
             joinColumns = @JoinColumn(name = "invoiceTab_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-    private Set<Ingredient> ingredients = new HashSet<>();
+    private Set<Ingredient> ingredient = new HashSet<>();
 
     private int count;
 
@@ -89,11 +89,11 @@ public class InvoiceTab {
         this.invoice = invoice;
     }
 
-    public Set<Ingredient> getIngredients() {
-        return ingredients;
+    public Set<Ingredient> getIngredient() {
+        return ingredient;
     }
 
-    public void setIngredients(Set<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public void setIngredient(Set<Ingredient> ingredient) {
+        this.ingredient = ingredient;
     }
 }

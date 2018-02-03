@@ -31,6 +31,9 @@ public class SalesPoint {
     @OneToMany(mappedBy = "salesPoint", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Invoice> invoices = new ArrayList<>();
 
+    @OneToMany(mappedBy = "salesPoint", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<QualityControl> qualityControl = new ArrayList<>();
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "salesPoint_stock",
             joinColumns = @JoinColumn(name = "salesPoint_id"),
@@ -110,5 +113,13 @@ public class SalesPoint {
 
     public void setStock(Set<Stock> stock) {
         this.stock = stock;
+    }
+
+    public Collection<QualityControl> getQualityControl() {
+        return qualityControl;
+    }
+
+    public void setQualityControl(Collection<QualityControl> qualityControl) {
+        this.qualityControl = qualityControl;
     }
 }

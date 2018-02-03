@@ -19,11 +19,11 @@ public class Ingredient {
 
     private String unit;
 
-    @ManyToMany(mappedBy = "ingredients")
-    private Set<Dish> dishes = new HashSet<>();
+    @ManyToMany(mappedBy = "ingredient")
+    private Set<Dish> dish = new HashSet<>();
 
-    @ManyToMany(mappedBy = "ingredients")
-    private Set<InvoiceTab> invoiceTabs = new HashSet<>();
+    @ManyToMany(mappedBy = "ingredient")
+    private Set<InvoiceTab> invoiceTab = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "ingredient_residueRegister",
@@ -81,20 +81,20 @@ public class Ingredient {
         this.unit = unit;
     }
 
-    public Set<Dish> getDishes() {
-        return dishes;
+    public Set<Dish> getDish() {
+        return dish;
     }
 
-    public void setDishes(Set<Dish> dishes) {
-        this.dishes = dishes;
+    public void setDish(Set<Dish> dish) {
+        this.dish = dish;
     }
 
-    public Set<InvoiceTab> getInvoiceTabs() {
-        return invoiceTabs;
+    public Set<InvoiceTab> getInvoiceTab() {
+        return invoiceTab;
     }
 
-    public void setInvoiceTabs(Set<InvoiceTab> invoiceTabs) {
-        this.invoiceTabs = invoiceTabs;
+    public void setInvoiceTab(Set<InvoiceTab> invoiceTab) {
+        this.invoiceTab = invoiceTab;
     }
 
     public Set<ResidueRegister> getResidueRegister() {

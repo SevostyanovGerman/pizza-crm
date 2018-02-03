@@ -1,6 +1,7 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ public class ResidueRegister {
     @ManyToMany(mappedBy = "residueRegister")
     private Set<Stock> stock = new HashSet<>();
 
-    private double period;
+    private LocalDateTime period;
 
     private int count;
 
@@ -26,7 +27,7 @@ public class ResidueRegister {
     public ResidueRegister() {
     }
 
-    public ResidueRegister(Set<Ingredient> ingredient, Set<Stock> stock, double period, int count, String registrar) {
+    public ResidueRegister(Set<Ingredient> ingredient, Set<Stock> stock, LocalDateTime period, int count, String registrar) {
         this.ingredient = ingredient;
         this.stock = stock;
         this.period = period;
@@ -58,11 +59,11 @@ public class ResidueRegister {
         this.stock = stock;
     }
 
-    public double getPeriod() {
+    public LocalDateTime getPeriod() {
         return period;
     }
 
-    public void setPeriod(double period) {
+    public void setPeriod(LocalDateTime period) {
         this.period = period;
     }
 

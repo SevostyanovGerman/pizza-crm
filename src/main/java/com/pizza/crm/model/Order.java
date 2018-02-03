@@ -31,7 +31,7 @@ public class Order {
     private DeliveryOrder deliveryOrder;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<Cooking> cookings = new ArrayList<>();
+    private Collection<Cooking> cooking = new ArrayList<>();
 
     private String paymentMethod;
 
@@ -145,11 +145,11 @@ public class Order {
         this.deliveryOrder = deliveryOrder;
     }
 
-    public Collection<Cooking> getCookings() {
-        return cookings;
+    public Collection<Cooking> getCooking() {
+        return cooking;
     }
 
-    public void setCookings(Collection<Cooking> cookings) {
-        this.cookings = cookings;
+    public void setCooking(Collection<Cooking> cooking) {
+        this.cooking = cooking;
     }
 }

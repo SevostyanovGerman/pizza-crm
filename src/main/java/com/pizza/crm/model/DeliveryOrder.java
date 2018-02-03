@@ -2,7 +2,7 @@ package com.pizza.crm.model;
 
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -17,9 +17,9 @@ public class DeliveryOrder {
     @JoinColumn(name = "courier_id")
     private Employee courier;
 
-    private Date checkOutTime;
+    private LocalDateTime checkOutTime;
 
-    private Date timeReturn;
+    private LocalDateTime timeReturn;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "salesPoint_id")
@@ -50,19 +50,19 @@ public class DeliveryOrder {
         this.courier = courier;
     }
 
-    public Date getCheckOutTime() {
+    public LocalDateTime getCheckOutTime() {
         return checkOutTime;
     }
 
-    public void setCheckOutTime(Date checkOutTime) {
+    public void setCheckOutTime(LocalDateTime checkOutTime) {
         this.checkOutTime = checkOutTime;
     }
 
-    public Date getTimeReturn() {
+    public LocalDateTime getTimeReturn() {
         return timeReturn;
     }
 
-    public void setTimeReturn(Date timeReturn) {
+    public void setTimeReturn(LocalDateTime timeReturn) {
         this.timeReturn = timeReturn;
     }
 

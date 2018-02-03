@@ -1,9 +1,7 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,8 +12,8 @@ public class Cooking {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToMany(mappedBy = "cookings")
-    private Set<Employee> employees = new HashSet<>();
+    @ManyToMany(mappedBy = "cooking")
+    private Set<Employee> employee = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
@@ -24,9 +22,9 @@ public class Cooking {
     @ManyToMany(mappedBy = "cooking")
     private Set<OrderTab> orderTab = new HashSet<>();
 
-    private Date startTime;
+    private LocalDateTime startTime;
 
-    private Date endTime;
+    private LocalDateTime endTime;
 
     @Enumerated(EnumType.STRING)
     private TypeWork typeWork;
@@ -49,19 +47,19 @@ public class Cooking {
         this.id = id;
     }
 
-    public Date getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
@@ -89,12 +87,12 @@ public class Cooking {
         this.order = order;
     }
 
-    public Set<Employee> getEmployees() {
-        return employees;
+    public Set<Employee> getEmployee() {
+        return employee;
     }
 
-    public void setEmployees(Set<Employee> employees) {
-        this.employees = employees;
+    public void setEmployee(Set<Employee> employee) {
+        this.employee = employee;
     }
 
     public SalesPoint getSalesPoint() {

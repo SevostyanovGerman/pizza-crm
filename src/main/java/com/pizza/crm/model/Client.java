@@ -14,7 +14,7 @@ public class Client {
     private String name;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<Order> orders = new ArrayList<>();
+    private Collection<Order> order = new ArrayList<>();
 
     public Client() {
     }
@@ -39,11 +39,11 @@ public class Client {
         this.name = name;
     }
 
-    public Collection<Order> getOrders() {
-        return orders;
+    public Collection<Order> getOrder() {
+        return order;
     }
 
-    public void setOrders(Collection<Order> orders) {
-        this.orders = orders;
+    public void setOrder(Collection<Order> order) {
+        this.order = order;
     }
 }
