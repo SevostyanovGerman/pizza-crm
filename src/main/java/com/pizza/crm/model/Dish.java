@@ -13,11 +13,14 @@ public class Dish {
 
     private String name;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "dish_ingredient",
-            joinColumns = @JoinColumn(name = "dish_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-    private Set<Ingredient> ingredient = new HashSet<>();
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(name = "dish_ingredient",
+//            joinColumns = @JoinColumn(name = "dish_id"),
+//            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+//    private Set<Ingredient> ingredient = new HashSet<>();
+
+    @ManyToMany(mappedBy = "dish")
+    private Set<Categories> categories = new HashSet<>();
 
     public Dish() {
     }
@@ -42,12 +45,12 @@ public class Dish {
         this.name = name;
     }
 
-    public Set<Ingredient> getIngredient() {
-        return ingredient;
-    }
-
-    public void setIngredient(Set<Ingredient> ingredient) {
-        this.ingredient = ingredient;
-    }
+//    public Set<Ingredient> getIngredient() {
+//        return ingredient;
+//    }
+//
+//    public void setIngredient(Set<Ingredient> ingredient) {
+//        this.ingredient = ingredient;
+//    }
 
 }

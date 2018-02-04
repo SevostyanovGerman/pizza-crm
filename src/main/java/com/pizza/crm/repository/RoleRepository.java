@@ -10,4 +10,6 @@ public interface RoleRepository extends CrudRepository<Role, Long> {
     @Override
     List<Role> findAll();
 
+
+
 }

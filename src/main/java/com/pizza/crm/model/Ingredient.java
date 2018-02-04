@@ -19,8 +19,8 @@ public class Ingredient {
 
     private String unit;
 
-    @ManyToMany(mappedBy = "ingredient")
-    private Set<Dish> dish = new HashSet<>();
+//    @ManyToMany(mappedBy = "ingredient")
+//    private Set<Dish> dish = new HashSet<>();
 
     @ManyToMany(mappedBy = "ingredient")
     private Set<InvoiceTab> invoiceTab = new HashSet<>();
@@ -81,13 +81,13 @@ public class Ingredient {
         this.unit = unit;
     }
 
-    public Set<Dish> getDish() {
-        return dish;
-    }
+//    public Set<Dish> getDish() {
+//        return dish;
+//    }
 
-    public void setDish(Set<Dish> dish) {
-        this.dish = dish;
-    }
+//    public void setDish(Set<Dish> dish) {
+//        this.dish = dish;
+//    }
 
     public Set<InvoiceTab> getInvoiceTab() {
         return invoiceTab;

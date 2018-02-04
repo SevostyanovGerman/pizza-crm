@@ -1,7 +1,11 @@
 package com.pizza.crm.init;
 
+import com.pizza.crm.model.Categories;
+import com.pizza.crm.model.Dish;
 import com.pizza.crm.model.security.Role;
 import com.pizza.crm.model.security.User;
+import com.pizza.crm.service.security.CategoriesService;
+import com.pizza.crm.service.security.DishService;
 import com.pizza.crm.service.security.RoleService;
 import com.pizza.crm.service.security.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +13,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 @Component
 public class DbDataGenerator implements ApplicationListener<ContextRefreshedEvent> {
@@ -20,6 +23,12 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private CategoriesService categoriesService;
+
+    @Autowired
+    private DishService dishService;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -32,6 +41,22 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
         userService.save(new User("admin", true, Arrays.asList(adminRole, userRole)));
         userService.save(new User("user", true, Collections.singletonList(userRole)));
+
+        Dish dishPizza = new Dish("Pizza margarita");
+        Dish dishRol = new Dish("Rol Folodelfia");
+
+        dishService.save(dishPizza);
+        dishService.save(dishRol);
+
+        categoriesService.save(new Categories("Pizza", new HashSet<>(Arrays.asList(dishPizza))));
+        categoriesService.save(new Categories("Rol"));
+
+        Iterator iterator  = categoriesService.getAll().iterator();
+
+        while (iterator.hasNext()){
+            System.out.println(iterator.next().toString());
+        }
+
 
     }
 }
