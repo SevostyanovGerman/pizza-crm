@@ -111,22 +111,22 @@
             </ul>
           </div>
           <div class="middle-panel-body">
-              <a class="middle-panel-green" href="#">Для ролл</a>
-              <a class="middle-panel-green" href="#">Пиво блюдо</a>
-              <a class="middle-panel-white" href="#">Закуски</a>
-              <a class="middle-panel-green1" href="#">Пицца 22,5 см</a>
-              <a class="middle-panel-green" href="#">Инвентарь и оборудование</a>
-              <a class="middle-panel-green1" href="#">Пицца 35 см</a>
-              <a class="middle-panel-white" href="#">Кальцоне</a>
-              <a class="middle-panel-green" href="#">Пицца с сайта</a>
-              <a class="middle-panel-white" href="#">Компоты/морсы</a>
-              <a class="middle-panel-red" href="#">Посуда одноразовая</a>
-              <a class="middle-panel-white" href="#">Кофе/чай</a>
-              <a class="middle-panel-yellow" href="#">С собой</a>
-              <a class="middle-panel-green" href="#">Морепродукты</a>
-              <a class="middle-panel-white" href="#">Стромболи</a>
-              <a class="middle-panel-green" href="#">Напитки</a>
-              <a class="middle-panel-green" href="#">Топинги</a>
+              <a th:each="category : ${categories}" th:text="${category.name}" th:class="middle-panel-white" th:styleappend="'background-color: ' + ${category.color}" href="#">Для ролл</a>
+              <!--<a class="middle-panel-green" href="#">Пиво блюдо</a>-->
+              <!--<a class="middle-panel-white" href="#">Закуски</a>-->
+              <!--<a class="middle-panel-green1" href="#">Пицца 22,5 см</a>-->
+              <!--<a class="middle-panel-green" href="#">Инвентарь и оборудование</a>-->
+              <!--<a class="middle-panel-green1" href="#">Пицца 35 см</a>-->
+              <!--<a class="middle-panel-white" href="#">Кальцоне</a>-->
+              <!--<a class="middle-panel-green" href="#">Пицца с сайта</a>-->
+              <!--<a class="middle-panel-white" href="#">Компоты/морсы</a>-->
+              <!--<a class="middle-panel-red" href="#">Посуда одноразовая</a>-->
+              <!--<a class="middle-panel-white" href="#">Кофе/чай</a>-->
+              <!--<a class="middle-panel-yellow" href="#">С собой</a>-->
+              <!--<a class="middle-panel-green" href="#">Морепродукты</a>-->
+              <!--<a class="middle-panel-white" href="#">Стромболи</a>-->
+              <!--<a class="middle-panel-green" href="#">Напитки</a>-->
+              <!--<a class="middle-panel-green" href="#">Топинги</a>-->
           </div>
         </div>
         <!-- middle-panel -->

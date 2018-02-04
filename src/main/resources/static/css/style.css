@@ -73,7 +73,7 @@ ul {
 }
 section {
   margin-left: 12px;
-  background-color: #aeaeae;
+  background-color: #3e4040;
 }
 section .header {
   background-color: #000;
@@ -154,7 +154,7 @@ section .left-panel-body {
   color: #000;
 }
 section .left-panel-body table {
-  width: 101%;
+  width: 100%;
 }
 section .left-panel-body table tr {
   background-color: #dfe385;
@@ -164,7 +164,7 @@ section .left-panel-body-1 {
   line-height: 0vh;
 }
 section .left-panel-body-1 table {
-  width: 101%;
+  width: 100%;
   border-collapse: collapse;
 }
 section .left-panel-body-1 table tr {
