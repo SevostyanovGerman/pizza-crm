@@ -32,7 +32,6 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-
         Role adminRole = new Role("ADMIN");
         Role userRole = new Role("USER");
 
@@ -50,13 +49,5 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
         categoriesService.save(new Categories("Pizza", new HashSet<>(Arrays.asList(dishPizza))));
         categoriesService.save(new Categories("Rol"));
-
-        Iterator iterator  = categoriesService.getAll().iterator();
-
-        while (iterator.hasNext()){
-            System.out.println(iterator.next().toString());
-        }
-
-
     }
 }

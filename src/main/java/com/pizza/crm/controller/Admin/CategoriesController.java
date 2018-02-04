@@ -5,60 +5,44 @@ import com.pizza.crm.service.security.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
+import javax.validation.Valid;
+
 
 @Controller
 public class CategoriesController {
 
     @Autowired
-    CategoriesService categoriesService;
+    private CategoriesService categoriesService;
 
     @RequestMapping("/acotegories")
-    public String adminCategories(Model model) {
-
+    public String categories(Model model) {
         model.addAttribute("Categories", categoriesService.getAll());
-
         return "adminCategories";
     }
 
-    @RequestMapping(value =  "/acotegories/add", method = RequestMethod.POST)
-    public String adminAddCategories(@RequestParam String name, Model model) {
-
-        if (!name.isEmpty()) {
-            categoriesService.save(new Categories(name));
+    @RequestMapping(value = "/acotegories/add", method = RequestMethod.POST)
+    public String addCategories(@ModelAttribute("Categories") @Validated Categories categories, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            categoriesService.save(new Categories(categories.getName()));
         }
-
         return "redirect:/acotegories";
     }
 
-    @RequestMapping(value =  "/acotegories/del", method = RequestMethod.GET)
-    public String adminDeleteCategories(@RequestParam String id, Model model) {
-
-        if (!id.isEmpty()) {
-            categoriesService.deleteById(new Long(id));
-        }
-
+    @RequestMapping(value = "/acotegories/del", method = RequestMethod.GET)
+    public String deleteCategories(@Valid @RequestParam Long id) {
+        categoriesService.deleteById(id);
         return "redirect:/acotegories";
     }
 
-    @RequestMapping(value =  "/acotegories/edit", method = RequestMethod.POST)
-    public String adminEditCategories(@RequestParam String id, @RequestParam String name, Model model) {
-
-        if (!id.isEmpty() || !name.isEmpty()) {
-            Categories categories = categoriesService.findById(new Long(id)).get();
-            categories.setName(name);
-            categoriesService.save(categories);
+    @RequestMapping(value = "/acotegories/update", method = RequestMethod.POST)
+    public String updateCategories(@ModelAttribute("Categories") @Validated Categories categories, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            categoriesService.update(categories);
         }
-
         return "redirect:/acotegories";
     }
-
-
-
 }

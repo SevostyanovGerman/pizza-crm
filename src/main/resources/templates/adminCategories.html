@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Index</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
-              th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
-              rel="stylesheet" media="screen"/>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
-                th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-                th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    </head>
-    <body>
-        <div class="container">
-            <h2 style="margin-top: 1rem">Категории</h2>
-            <form class="form-inline" style="margin-top: 1rem" action="#" th:action="@{/acotegories/add}" method="POST">
-                <div class="form-group mx-sm-3 mb-2">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Название категории">
-                </div>
-                <button type="submit" class="btn btn-primary mb-2">Добавить категорию</button>
-            </form>
-
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Del</th>
-                    <th scope="col">Edit</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="Categories:${Categories}">
-                    <td th:utext="${Categories.id}">...</td>
-                    <td th:utext="${Categories.name}"></td>
-                    <td><a class="btn btn-success btn-control" th:href="@{/acotegories/del?id=} + ${Categories.id}">Удалить</a></td>
-                    <td>
-                        <form class="form-inline" action="#" th:action="@{/acotegories/edit}" method="POST">
-                            <input type="hidden" name="id" th:value="${Categories.id}">
-                            <input type="text" class="form-control" name="name" placeholder="Название категории" style="margin-bottom: 8px; margin-right: 2px;">
-                            <button type="submit" class="btn btn-primary mb-2">Обновить категорию</button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+<head>
+    <title>Index</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <h2 style="margin-top: 1rem">Категории</h2>
+    <form class="form-inline" th:object="${Categories}" style="margin-top: 1rem" action="#"
+          th:action="@{/acotegories/add}" method="POST">
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Название категории">
         </div>
+        <button type="submit" class="btn btn-primary mb-2">Добавить категорию</button>
+    </form>
 
-    </body>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Del</th>
+            <th scope="col">Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="Categories:${Categories}">
+            <td th:utext="${Categories.id}">...</td>
+            <td th:utext="${Categories.name}"></td>
+            <td><a class="btn btn-success btn-control" th:href="@{/acotegories/del?id=} + ${Categories.id}">Удалить</a>
+            </td>
+            <td>
+                <form class="form-inline" th:object="${Categories}" action="#" th:action="@{/acotegories/update}"
+                      method="POST">
+                    <input type="hidden" name="id" th:value="${Categories.id}">
+                    <input type="text" class="form-control" name="name" placeholder="Название категории" style="margin-bottom: 8px; margin-right: 2px;">
+                    <button type="submit" class="btn btn-primary mb-2">Обновить категорию</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
 </html>

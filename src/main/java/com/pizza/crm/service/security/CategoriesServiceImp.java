@@ -34,4 +34,11 @@ public class CategoriesServiceImp implements CategoriesService {
     public void deleteById(Long id) {
         categoriesRepository.deleteById(id);
     }
+
+    @Override
+    public void update(Categories categories) {
+        Categories categoriesDb = categoriesRepository.findById(categories.getId()).get();
+        categoriesDb.setName(categories.getName());
+        categoriesRepository.save(categoriesDb);
+    }
 }
