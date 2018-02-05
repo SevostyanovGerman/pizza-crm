@@ -23,12 +23,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/webjars/**", "/css/**", "/img/**", "/js/**").permitAll()
-                .antMatchers("/**").authenticated()
+                .antMatchers("/**").permitAll()
                 .and()
-                .formLogin()
-                .loginPage("/login").permitAll()
-                .usernameParameter("pincode").passwordParameter("pincode");
+                .csrf().disable();
+//                .antMatchers("/webjars/**", "/css/**", "/img/**", "/js/**").permitAll()
+//                .and()
+//                .formLogin()
+//                .loginPage("/login").permitAll()
+//                .usernameParameter("pincode").passwordParameter("pincode");
 
     }
 
