@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
         <title>Title</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -48,6 +50,9 @@
             </div>
         </div>
         <script>
+            var csrfToken = $("meta[name='_csrf']").attr("content");
+            var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
             var options = {
                 valueNames: ['name']
             };
@@ -80,6 +85,9 @@
                     dataType: 'json',
                     cache: false,
                     timeout: 600000,
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(csrfHeader, csrfToken);
+                    },
                     success: function (data) {
                     },
                     error: function (e) {
