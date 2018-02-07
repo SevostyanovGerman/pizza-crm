@@ -1,10 +1,14 @@
-package com.pizza.crm.service;
+package com.pizza.crm.repository;
 
 import com.pizza.crm.model.AddedCategory;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface AddedCategoryService {
+
+public interface AddedCategoryDao {
 
     void save(AddedCategory category);
 

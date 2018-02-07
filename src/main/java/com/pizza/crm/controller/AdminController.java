@@ -7,13 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 
 @Controller
 public class AdminController {
+
     @Autowired
-    AddedCategoryService categoryService;
+    private AddedCategoryService categoryService;
 
     @RequestMapping("/admin")
     public String admin(Model model){
@@ -30,6 +32,12 @@ public class AdminController {
     public String adminPage(AddedCategory category){
         categoryService.save(category);
         return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/admin/getinfo", method = RequestMethod.GET)
+    @ResponseBody
+    public AddedCategory getCategory(String name){
+        return categoryService.getCategoryByName(name);
     }
 
 }

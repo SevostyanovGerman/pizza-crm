@@ -1,7 +1,7 @@
 package com.pizza.crm.service;
 
 import com.pizza.crm.model.AddedCategory;
-import com.pizza.crm.repository.AddedCategoryRepository;
+import com.pizza.crm.repository.AddedCategoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -11,28 +11,32 @@ import java.util.List;
 
 @Service
 public class AddedCategoryServiceImpl implements AddedCategoryService {
+
     @Autowired
-    AddedCategoryRepository repository;
+    private AddedCategoryDao addedCategoryDao;
 
     @Override
     public void save(AddedCategory category) {
-        repository.save(category);
+        addedCategoryDao.save(category);
     }
 
     @Override
     public void delete(Long id) {
-        repository.deleteById(id);
+        addedCategoryDao.delete(id);
     }
 
     @Override
     public AddedCategory getCategory(Long id) {
-        return repository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Category not found"));
+        return addedCategoryDao.getCategory(id);
+    }
+
+    @Override
+    public AddedCategory getCategoryByName(String name) {
+        return addedCategoryDao.getCategoryByName(name);
     }
 
     @Override
     public List<AddedCategory> getAllCategories() {
-        List<AddedCategory> categories = new ArrayList<>();
-        repository.findAll().forEach(category -> categories.add(category));
-        return categories;
+        return addedCategoryDao.getAllCategories();
     }
 }

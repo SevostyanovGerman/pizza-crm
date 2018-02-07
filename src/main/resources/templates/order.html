@@ -8,6 +8,10 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="../static/js/login.js"
+            th:src="@{/js/order.js}"></script>
 
     <link rel="stylesheet" href="css/font-awesome.min.css"> 
     <link rel="stylesheet" href="css/style.css">
@@ -51,7 +55,7 @@
               </div>
             </div>
             <div class="left-panel-body">
-              <table>
+              <table id="result">
                 <tr>
                   <td>Куринные крылья 10шт</td>
                   <td>300.00р</td>
@@ -111,9 +115,9 @@
             </ul>
           </div>
           <div class="middle-panel-body">
-              <a th:each="category : ${categories}" th:text="${category.name}" th:class="middle-panel-white" th:styleappend="'background-color: ' + ${category.color}" href="#">Для ролл</a>
-              <!--<a class="middle-panel-green" href="#">Пиво блюдо</a>-->
-              <!--<a class="middle-panel-white" href="#">Закуски</a>-->
+              <a th:each="category : ${categories}" th:text="${category.name}" th:class="middle-panel-white" th:styleappend="'background-color: ' + ${category.color}" th:id="${category.name}" th:onclick="'getInfo(\'' + ${category.name} + '\')'" href="#">Для ролл</a>
+              <a class="middle-panel-green" href="#" onclick="dinar('xxx')" id="SomeName">Пиво блюдо</a>
+              <a class="middle-panel-white" href="#" onclick="getInfo()">Закуски</a>
               <!--<a class="middle-panel-green1" href="#">Пицца 22,5 см</a>-->
               <!--<a class="middle-panel-green" href="#">Инвентарь и оборудование</a>-->
               <!--<a class="middle-panel-green1" href="#">Пицца 35 см</a>-->
