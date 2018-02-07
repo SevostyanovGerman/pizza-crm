@@ -1,100 +1,104 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="_csrf" th:content="${_csrf.token}"/>
-        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-        <title>Title</title>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
-              th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
-              rel="stylesheet" media="screen"/>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
-                th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    </head>
-    <body>
-        <div class="container">
-            <h2 th:text="${categoriesName}"></h2>
-            <p th:text="${categoriesId}" style="display: none" class="cat-name"></p>
-            <a href="/acotegories">Назад</a>
-            <div class="row">
-                <div class="col-6">
-                    <h3>Блюда принадлежащие категории</h3>
-                    <div id="users">
-                        <input class="search" placeholder="Search" style="margin-bottom: 1rem; width: 100%;"/>
-                        <ul id="sortable1" class="connectedSortable list list-group list-g"
-                            style="border: #1a8f7c 1px solid; padding: 0.5rem;">
-                            <li th:each="categoriesDish : ${categoriesDish}" class="list-group-item list-group-item-action"><p class="name" th:text="${categoriesDish.name}" th:value="${categoriesDish.id}"></p></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <h3>Все блюда</h3>
-                    <div id="users1">
-                        <input class="search" placeholder="Search" style="margin-bottom: 1rem; width: 100%;"/>
-                        <ul id="sortable2" class="connectedSortable list list-group"
-                            style="border: #1a8f7c 1px solid; padding: 0.5rem;">
-                            <li th:each="allDish : ${allDish}" class="list-group-item list-group-item-action"><p class="name" th:text="${allDish.name}" th:value="${allDish.id}"></p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <button type="button" class="btn btn-primary btn-lg btn-block btn-save" style="margin-top: 1rem;">Сохранить изменения категории
-                    </button>
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <h2 th:text="${categoriesName}"></h2>
+    <p th:text="${categoriesId}" style="display: none" class="cat-name"></p>
+    <a href="/categories">Назад</a>
+    <div class="row">
+        <div class="col-6">
+            <h3>Блюда принадлежащие категории</h3>
+            <div id="users">
+                <input class="search" placeholder="Search" style="margin-bottom: 1rem; width: 100%;"/>
+                <ul id="sortable1" class="connectedSortable list list-group list-g"
+                    style="border: #1a8f7c 1px solid; padding: 0.5rem;">
+                    <li th:each="categoriesDish : ${categoriesDish}" class="list-group-item list-group-item-action"><p
+                            class="name" th:text="${categoriesDish.name}" th:value="${categoriesDish.id}"></p></li>
+                </ul>
             </div>
         </div>
-        <script>
-            var csrfToken = $("meta[name='_csrf']").attr("content");
-            var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        <div class="col-6">
+            <h3>Все блюда</h3>
+            <div id="users1">
+                <input class="search" placeholder="Search" style="margin-bottom: 1rem; width: 100%;"/>
+                <ul id="sortable2" class="connectedSortable list list-group"
+                    style="border: #1a8f7c 1px solid; padding: 0.5rem;">
+                    <li th:each="allDish : ${allDish}" class="list-group-item list-group-item-action"><p class="name"
+                                                                                                         th:text="${allDish.name}"
+                                                                                                         th:value="${allDish.id}"></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-primary btn-lg btn-block btn-save" style="margin-top: 1rem;">Сохранить
+                изменения категории
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
-            var options = {
-                valueNames: ['name']
-            };
-            new List('users', options);
-            new List('users1', options);
-            $(function () {
-                $("#sortable1, #sortable2").sortable({
-                    connectWith: ".connectedSortable",
-                    update: function (event, ui) {
-                        new List('users', options);
-                        new List('users1', options);
-                    }
-                }).disableSelection();
+    var options = {
+        valueNames: ['name']
+    };
+    new List('users', options);
+    new List('users1', options);
+    $(function () {
+        $("#sortable1, #sortable2").sortable({
+            connectWith: ".connectedSortable",
+            update: function (event, ui) {
+                new List('users', options);
+                new List('users1', options);
+            }
+        }).disableSelection();
+    });
+
+
+    $(".btn-save").click(function () {
+        var mylist = [];
+        $("ul.list-g > li > p").each(function () {
+            mylist.push({
+                "id": $(this).attr("value"),
+                "name": $(this).text()
             });
+        });
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/update/categoriesdish/" + $(".cat-name").text(),
+            data: JSON.stringify(mylist),
+            dataType: 'json',
+            cache: false,
+            timeout: 600000,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (data) {
+            },
+            error: function (e) {
+            }
+        });
+    });
 
-
-            $(".btn-save").click(function () {
-                var mylist = [];
-                $("ul.list-g > li > p").each(function () {
-                    mylist.push({
-                        "id": $(this).attr("value"),
-                        "name": $(this).text()
-                    });
-                });
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/json",
-                    url: "/update/categoriesdish/" + $(".cat-name").text(),
-                    data: JSON.stringify(mylist),
-                    dataType: 'json',
-                    cache: false,
-                    timeout: 600000,
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader(csrfHeader, csrfToken);
-                    },
-                    success: function (data) {
-                    },
-                    error: function (e) {
-                    }
-                });
-            });
-
-        </script>
-    </body>
+</script>
+</body>
 </html>

@@ -22,35 +22,35 @@ public class CategoriesController {
     @Autowired
     private DishService dishService;
 
-    @RequestMapping("/acotegories")
+    @RequestMapping("/categories")
     public String categories(Model model) {
         model.addAttribute("Categories", categoriesService.getAll());
         return "adminCategories";
     }
 
-    @RequestMapping(value = "/acotegories/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/categories/add", method = RequestMethod.POST)
     public String addCategories(@ModelAttribute("Categories") @Validated Categories categories, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             categoriesService.save(categories);
         }
-        return "redirect:/acotegories";
+        return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/acotegories/del", method = RequestMethod.GET)
+    @RequestMapping(value = "/categories/del", method = RequestMethod.GET)
     public String deleteCategories(@Valid @RequestParam Long id) {
         categoriesService.deleteById(id);
-        return "redirect:/acotegories";
+        return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/acotegories/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/categories/update", method = RequestMethod.POST)
     public String updateCategories(@ModelAttribute("Categories") @Validated Categories categories, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             categoriesService.updateCategoriesName(categories);
         }
-        return "redirect:/acotegories";
+        return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/acotegories/update", method = RequestMethod.GET)
+    @RequestMapping(value = "/categories/update", method = RequestMethod.GET)
     public String updateCategories(@Valid @RequestParam(name = "id") Long id, Model model) {
         Categories categories = categoriesService.findById(id).get();
         model.addAttribute("categoriesName", categories.getName());

@@ -15,7 +15,7 @@
 <div class="container">
     <h2 style="margin-top: 1rem">Категории</h2>
     <form class="form-inline" th:object="${Categories}" style="margin-top: 1rem" action="#"
-          th:action="@{/acotegories/add}" method="POST">
+          th:action="@{/categories/add}" method="POST">
         <div class="form-group mx-sm-3 mb-2">
             <input type="text" class="form-control" id="name" name="name" placeholder="Название категории">
         </div>
@@ -36,10 +36,10 @@
         <tr th:each="Categories:${Categories}">
             <td th:utext="${Categories.id}">...</td>
             <td th:utext="${Categories.name}"></td>
-            <td><a class="btn btn-success btn-control" th:href="@{/acotegories/del?id=} + ${Categories.id}">Удалить</a>
+            <td><a class="btn btn-success btn-control" th:href="@{/categories/del?id=} + ${Categories.id}">Удалить</a>
             </td>
             <td>
-                <form class="form-inline" th:object="${Categories}" action="#" th:action="@{/acotegories/update}"
+                <form class="form-inline" th:object="${Categories}" action="#" th:action="@{/categories/update}"
                       method="POST">
                     <input type="hidden" name="id" th:value="${Categories.id}">
                     <input type="text" class="form-control" name="name" placeholder="Название категории"
@@ -47,7 +47,8 @@
                     <button type="submit" class="btn btn-primary mb-2">Обновить название категории</button>
                 </form>
             </td>
-            <td><a class="btn btn-success btn-control" th:href="@{/acotegories/update?id=} + ${Categories.id}">Обновить категорию</a>
+            <td><a class="btn btn-success btn-control" th:href="@{/categories/update?id=} + ${Categories.id}">Обновить
+                категорию</a>
         </tr>
         </tbody>
     </table>
