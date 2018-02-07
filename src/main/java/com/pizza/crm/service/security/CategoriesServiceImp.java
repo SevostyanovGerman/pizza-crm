@@ -1,6 +1,7 @@
 package com.pizza.crm.service.security;
 
 import com.pizza.crm.model.Categories;
+import com.pizza.crm.model.Dish;
 import com.pizza.crm.model.security.Role;
 import com.pizza.crm.repository.CategoriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CategoriesServiceImp implements CategoriesService {
@@ -36,9 +38,16 @@ public class CategoriesServiceImp implements CategoriesService {
     }
 
     @Override
-    public void update(Categories categories) {
+    public void updateCategoriesName(Categories categories) {
         Categories categoriesDb = categoriesRepository.findById(categories.getId()).get();
         categoriesDb.setName(categories.getName());
+        categoriesRepository.save(categoriesDb);
+    }
+
+    @Override
+    public void updateCategoriesDish(long id, Set<Dish> dish) {
+        Categories categoriesDb = categoriesRepository.findById(id).get();
+        categoriesDb.setDish(dish);
         categoriesRepository.save(categoriesDb);
     }
 }

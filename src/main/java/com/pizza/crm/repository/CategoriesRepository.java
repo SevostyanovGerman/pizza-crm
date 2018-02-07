@@ -10,5 +10,4 @@ public interface CategoriesRepository extends CrudRepository<Categories, Long> {
     @Override
     List<Categories> findAll();
 
-
 }

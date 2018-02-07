@@ -28,7 +28,8 @@
             <th scope="col">ID</th>
             <th scope="col">Name</th>
             <th scope="col">Del</th>
-            <th scope="col">Edit</th>
+            <th scope="col">UpdateName</th>
+            <th scope="col">Update</th>
         </tr>
         </thead>
         <tbody>
@@ -41,14 +42,15 @@
                 <form class="form-inline" th:object="${Categories}" action="#" th:action="@{/acotegories/update}"
                       method="POST">
                     <input type="hidden" name="id" th:value="${Categories.id}">
-                    <input type="text" class="form-control" name="name" placeholder="Название категории" style="margin-bottom: 8px; margin-right: 2px;">
-                    <button type="submit" class="btn btn-primary mb-2">Обновить категорию</button>
+                    <input type="text" class="form-control" name="name" placeholder="Название категории"
+                           style="margin-bottom: 8px; margin-right: 2px;">
+                    <button type="submit" class="btn btn-primary mb-2">Обновить название категории</button>
                 </form>
             </td>
+            <td><a class="btn btn-success btn-control" th:href="@{/acotegories/update?id=} + ${Categories.id}">Обновить категорию</a>
         </tr>
         </tbody>
     </table>
 </div>
-
 </body>
 </html>

@@ -13,6 +13,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
+import java.lang.reflect.Array;
 import java.util.*;
 
 @Component
@@ -31,6 +33,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     private DishService dishService;
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         Role adminRole = new Role("ADMIN");
         Role userRole = new Role("USER");
@@ -43,11 +46,13 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
         Dish dishPizza = new Dish("Pizza margarita");
         Dish dishRol = new Dish("Rol Folodelfia");
+        Dish dishRol1 = new Dish("Rol kolofornia");
 
         dishService.save(dishPizza);
         dishService.save(dishRol);
+        dishService.save(dishRol1);
 
-        categoriesService.save(new Categories("Pizza", new HashSet<>(Arrays.asList(dishPizza))));
-        categoriesService.save(new Categories("Rol"));
+        categoriesService.save(new Categories("Pizza", new HashSet<>(Arrays.asList(dishPizza, dishRol))));
+        categoriesService.save(new Categories("Rol", new HashSet<>(Arrays.asList(dishRol))));
     }
 }

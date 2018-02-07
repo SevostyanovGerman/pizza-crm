@@ -1,6 +1,8 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +14,9 @@ public class Dish {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
+    @Size(min = 1)
+    @Column(name = "name", unique = true)
     private String name;
 
 //    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -24,6 +29,11 @@ public class Dish {
     private Set<Categories> categories = new HashSet<>();
 
     public Dish() {
+    }
+
+    public Dish(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Dish(String name) {
@@ -54,4 +64,11 @@ public class Dish {
 //        this.ingredient = ingredient;
 //    }
 
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
