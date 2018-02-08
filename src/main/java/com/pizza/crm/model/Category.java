@@ -1,6 +1,7 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
     private String name;
 
     @ManyToMany(mappedBy = "categories")
@@ -49,7 +51,7 @@ public class Category {
             return;
         }
         dishes.add(newDish);
-        newDish.addDishCategory(this);
+        newDish.addCategory(this);
     }
 
     public void removeDish(Dish removedDish) {
@@ -57,7 +59,7 @@ public class Category {
             return;
         }
         dishes.remove(removedDish);
-        removedDish.removeDishCategory(this);
+        removedDish.removeCategory(this);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,13 +13,14 @@ public class Dish {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
     private String name;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "dish_ingredient",
             joinColumns = @JoinColumn(name = "dish_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-    private Set<Ingredient> ingredient = new HashSet<>();
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "dish_dishCategory",
@@ -49,32 +51,44 @@ public class Dish {
         this.name = name;
     }
 
-    public Set<Ingredient> getIngredient() {
-        return ingredient;
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredient(Set<Ingredient> ingredient) {
-        this.ingredient = ingredient;
+    public void addIngredient(Ingredient ingredient) {
+        if (ingredients.contains(ingredient)) {
+            return;
+        }
+        ingredients.add(ingredient);
+        ingredient.addDush(this);
+    }
+
+    public void removeIngredient(Ingredient ingredient) {
+        if (!ingredients.contains(ingredient)) {
+            return;
+        }
+        ingredients.remove(ingredient);
+        ingredient.removeDish(this);
     }
 
     public Set<Category> getCategories() {
         return categories;
     }
 
-    public void addDishCategory(Category newCategory) {
-        if (categories.contains(newCategory)) {
+    public void addCategory(Category category) {
+        if (categories.contains(category)) {
             return;
         }
-        categories.add(newCategory);
-        newCategory.addDish(this);
+        categories.add(category);
+        category.addDish(this);
     }
 
-    public void removeDishCategory(Category removedCategory) {
-        if (!categories.contains(removedCategory)) {
+    public void removeCategory(Category category) {
+        if (!categories.contains(category)) {
             return;
         }
-        categories.remove(removedCategory);
-        removedCategory.removeDish(this);
+        categories.remove(category);
+        category.removeDish(this);
     }
 
 }

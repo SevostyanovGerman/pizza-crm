@@ -1,16 +1,19 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "ingredient")
 public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
     private String name;
 
     private double price;
@@ -19,8 +22,8 @@ public class Ingredient {
 
     private String unit;
 
-    @ManyToMany(mappedBy = "ingredient")
-    private Set<Dish> dish = new HashSet<>();
+    @ManyToMany(mappedBy = "ingredients")
+    private Set<Dish> dishes = new HashSet<>();
 
     @ManyToMany(mappedBy = "ingredient")
     private Set<InvoiceTab> invoiceTab = new HashSet<>();
@@ -81,12 +84,18 @@ public class Ingredient {
         this.unit = unit;
     }
 
-    public Set<Dish> getDish() {
-        return dish;
+    public Set<Dish> getDishes() {
+        return dishes;
     }
 
-    public void setDish(Set<Dish> dish) {
-        this.dish = dish;
+    public void addDush(Dish dish) {
+        dishes.add(dish);
+        dish.addIngredient(this);
+    }
+
+    public void removeDish(Dish dish) {
+        dishes.remove(dish);
+        dish.removeIngredient(this);
     }
 
     public Set<InvoiceTab> getInvoiceTab() {
@@ -103,5 +112,10 @@ public class Ingredient {
 
     public void setResidueRegister(Set<ResidueRegister> residueRegister) {
         this.residueRegister = residueRegister;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
