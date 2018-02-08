@@ -1,6 +1,5 @@
 package com.pizza.crm.service;
 
-import com.pizza.crm.dto.DishForm;
 import com.pizza.crm.model.Category;
 import com.pizza.crm.model.Dish;
 import com.pizza.crm.repository.CategoryRepository;
@@ -36,11 +35,6 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public void save(DishForm dishForm) {
-        save(from(dishForm));
-    }
-
-    @Override
     public Collection<Dish> saveAll(Collection<Dish> dishes) {
         return dishRepository.saveAll(dishes);
     }
@@ -55,14 +49,6 @@ public class DishServiceImpl implements DishService {
         Collection<Category> availableCategories = categoryRepository.findAll();
         availableCategories.removeAll(dish.getCategories());
         return availableCategories;
-    }
-
-    private Dish from(DishForm dishForm) {
-        Dish dish = new Dish("");
-        dish.setId(dishForm.getId());
-        dish.setName(dishForm.getName());
-        categoryRepository.findAllById(dishForm.getCategories()).forEach(dish::addDishCategory);
-        return dish;
     }
 
 }
