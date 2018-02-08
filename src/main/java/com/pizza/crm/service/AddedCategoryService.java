@@ -14,6 +14,6 @@ public interface AddedCategoryService {
 
     AddedCategory getCategoryByName(String name);
 
-    List<AddedCategory> getAllCategories();
+    List<AddedCategory> findAllCategories();
 
 }

@@ -1,27 +1,45 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity(name="Ingredient")
-@Table(name = "Ingredient")
+@Entity
 public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "price")
     private double price;
 
-    @Column(name = "type")
     private String type;
 
-    @Column(name = "unit")
     private String unit;
+
+//    @ManyToMany(mappedBy = "ingredient")
+//    private Set<Dish> dish = new HashSet<>();
+
+    @ManyToMany(mappedBy = "ingredient")
+    private Set<InvoiceTab> invoiceTab = new HashSet<>();
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "ingredient_residueRegister",
+        joinColumns = @JoinColumn(name = "ingredient_id"),
+        inverseJoinColumns = @JoinColumn(name = "residueRegister_id"))
+    private Set<ResidueRegister> residueRegister = new HashSet<>();
+
+    public Ingredient() {
+    }
+
+    public Ingredient(String name, double price, String type, String unit) {
+        this.name = name;
+        this.price = price;
+        this.type = type;
+        this.unit = unit;
+    }
 
     public Long getId() {
         return id;
@@ -61,5 +79,29 @@ public class Ingredient {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+//    public Set<Dish> getDish() {
+//        return dish;
+//    }
+
+//    public void setDish(Set<Dish> dish) {
+//        this.dish = dish;
+//    }
+
+    public Set<InvoiceTab> getInvoiceTab() {
+        return invoiceTab;
+    }
+
+    public void setInvoiceTab(Set<InvoiceTab> invoiceTab) {
+        this.invoiceTab = invoiceTab;
+    }
+
+    public Set<ResidueRegister> getResidueRegister() {
+        return residueRegister;
+    }
+
+    public void setResidueRegister(Set<ResidueRegister> residueRegister) {
+        this.residueRegister = residueRegister;
     }
 }

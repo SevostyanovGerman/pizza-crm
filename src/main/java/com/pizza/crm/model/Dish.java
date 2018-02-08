@@ -1,21 +1,44 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name="Dish")
+@Entity
 @Table(name = "Dish")
 public class Dish {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @NotNull
+    @Size(min = 1)
+    @Column(name = "name", unique = true)
     private String name;
 
-//    @OneToMany
-//    private Set<Ingredient> ingredients;
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @JoinTable(name = "dish_ingredient",
+//            joinColumns = @JoinColumn(name = "dish_id"),
+//            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+//    private Set<Ingredient> ingredient = new HashSet<>();
+
+    @ManyToMany(mappedBy = "dish")
+    private Set<Categories> categories = new HashSet<>();
+
+    public Dish() {
+    }
+
+    public Dish(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Dish(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
@@ -33,11 +56,19 @@ public class Dish {
         this.name = name;
     }
 
-//    public Set<Ingredient> getIngredients() {
-//        return ingredients;
+//    public Set<Ingredient> getIngredient() {
+//        return ingredient;
+//    }
+//
+//    public void setIngredient(Set<Ingredient> ingredient) {
+//        this.ingredient = ingredient;
 //    }
 
-//    public void setIngredients(Set<Ingredient> ingredients) {
-//        this.ingredients = ingredients;
-//    }
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

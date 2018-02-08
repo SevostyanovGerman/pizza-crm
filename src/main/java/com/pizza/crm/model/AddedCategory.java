@@ -1,11 +1,9 @@
 package com.pizza.crm.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table (name = "AddedCategoryRepository")
 public class AddedCategory {
 
     @Id

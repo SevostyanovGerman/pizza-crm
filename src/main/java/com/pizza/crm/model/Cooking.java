@@ -1,35 +1,43 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name="Cooking")
-@Table(name = "Cooking")
+@Entity
 public class Cooking {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
-//    private Employee employee;
+    @ManyToMany(mappedBy = "cooking")
+    private Set<Employee> employee = new HashSet<>();
 
-//    @OneToMany
-//    private Set<Order> order;
-//
-//    private Set<OrderTab> orderTab;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_id")
+    private Order order;
 
-    @Column(name = "startTime")
-    private Date startTime;
+    @ManyToMany(mappedBy = "cooking")
+    private Set<OrderTab> orderTab = new HashSet<>();
 
-    @Column(name = "endTime")
-    private Date endTime;
+    private LocalDateTime startTime;
 
-//    @Column(name = "typeWork")
-//    private TypeWork typeWork;
+    private LocalDateTime endTime;
 
-//    @Column(name = "salesPoint")
-//    private SalesPoint salesPoint;
+    @Enumerated(EnumType.STRING)
+    private TypeWork typeWork;
+
+    @OneToOne
+    private QualityControl qualityControl;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "salesPoint_id")
+    private SalesPoint salesPoint;
+
+    public Cooking() {
+    }
 
     public Long getId() {
         return id;
@@ -39,59 +47,67 @@ public class Cooking {
         this.id = id;
     }
 
-//    public Employee getEmployee() {
-//        return employee;
-//    }
-//
-//    public void setEmployee(Employee employee) {
-//        this.employee = employee;
-//    }
-//
-//    public Set<Order> getOrder() {
-//        return order;
-//    }
-//
-//    public void setOrder(Set<Order> order) {
-//        this.order = order;
-//    }
-//
-//    public Set<OrderTab> getOrderTab() {
-//        return orderTab;
-//    }
-//
-//    public void setOpderTab(Set<OrderTab> opderTab) {
-//        this.orderTab = opderTab;
-//    }
-
-    public Date getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
-//    public TypeWork getTypeWork() {
-//        return typeWork;
-//    }
-//
-//    public void setTypeWork(TypeWork typeWork) {
-//        this.typeWork = typeWork;
-//    }
-//
-//    public SalesPoint getSalesPoint() {
-//        return salesPoint;
-//    }
-//
-//    public void setSalesPoint(SalesPoint salesPoint) {
-//        this.salesPoint = salesPoint;
-//    }
+    public TypeWork getTypeWork() {
+        return typeWork;
+    }
+
+    public void setTypeWork(TypeWork typeWork) {
+        this.typeWork = typeWork;
+    }
+
+    public QualityControl getQualityControl() {
+        return qualityControl;
+    }
+
+    public void setQualityControl(QualityControl qualityControl) {
+        this.qualityControl = qualityControl;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Set<Employee> getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Set<Employee> employee) {
+        this.employee = employee;
+    }
+
+    public SalesPoint getSalesPoint() {
+        return salesPoint;
+    }
+
+    public void setSalesPoint(SalesPoint salesPoint) {
+        this.salesPoint = salesPoint;
+    }
+
+    public Set<OrderTab> getOrderTab() {
+        return orderTab;
+    }
+
+    public void setOrderTab(Set<OrderTab> orderTab) {
+        this.orderTab = orderTab;
+    }
 }

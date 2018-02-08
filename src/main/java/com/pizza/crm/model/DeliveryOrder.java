@@ -2,26 +2,37 @@ package com.pizza.crm.model;
 
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
-@Entity(name="DeliveryOrder")
-@Table(name = "DeliveryOrder")
+@Entity
 public class DeliveryOrder {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
-//    @Column(name = "courier")
-//    private Employee courier;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "courier_id")
+    private Employee courier;
 
-    @Column(name = "checkOutTime")
-    private Date checkOutTime;
+    private LocalDateTime checkOutTime;
 
-    @Column(name = "timeReturn")
-    private Date timeReturn;
+    private LocalDateTime timeReturn;
 
-//    private SalesPoint salesPoint;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "salesPoint_id")
+    private SalesPoint salesPoint;
+
+    @OneToMany(mappedBy = "deliveryOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<DeliveryOrderTab> deliveryOrderTab = new ArrayList<>();
+
+    @OneToOne(mappedBy = "deliveryOrder")
+    private Order order;
+
+    public DeliveryOrder() {
+    }
 
     public Long getId() {
         return id;
@@ -31,35 +42,51 @@ public class DeliveryOrder {
         this.id = id;
     }
 
-//    public Employee getCourier() {
-//        return courier;
-//    }
-//
-//    public void setCourier(Employee courier) {
-//        this.courier = courier;
-//    }
+    public Employee getCourier() {
+        return courier;
+    }
 
-    public Date getCheckOutTime() {
+    public void setCourier(Employee courier) {
+        this.courier = courier;
+    }
+
+    public LocalDateTime getCheckOutTime() {
         return checkOutTime;
     }
 
-    public void setCheckOutTime(Date checkOutTime) {
+    public void setCheckOutTime(LocalDateTime checkOutTime) {
         this.checkOutTime = checkOutTime;
     }
 
-    public Date getTimeReturn() {
+    public LocalDateTime getTimeReturn() {
         return timeReturn;
     }
 
-    public void setTimeReturn(Date timeReturn) {
+    public void setTimeReturn(LocalDateTime timeReturn) {
         this.timeReturn = timeReturn;
     }
 
-//    public SalesPoint getSalesPoint() {
-//        return salesPoint;
-//    }
-//
-//    public void setSalesPoint(SalesPoint salesPoint) {
-//        this.salesPoint = salesPoint;
-//    }
+    public SalesPoint getSalesPoint() {
+        return salesPoint;
+    }
+
+    public void setSalesPoint(SalesPoint salesPoint) {
+        this.salesPoint = salesPoint;
+    }
+
+    public Collection<DeliveryOrderTab> getDeliveryOrderTab() {
+        return deliveryOrderTab;
+    }
+
+    public void setDeliveryOrderTab(Collection<DeliveryOrderTab> deliveryOrderTab) {
+        this.deliveryOrderTab = deliveryOrderTab;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }

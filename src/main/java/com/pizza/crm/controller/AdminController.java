@@ -2,6 +2,7 @@ package com.pizza.crm.controller;
 
 import com.pizza.crm.model.AddedCategory;
 import com.pizza.crm.service.AddedCategoryService;
+import com.pizza.crm.service.security.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,35 +10,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class AdminController {
 
     @Autowired
-    private AddedCategoryService categoryService;
+    private AddedCategoryService addedCategoryService;
+
+    @Autowired
+    private CategoriesService categoriesService;
 
     @RequestMapping("/admin")
     public String admin(Model model){
-        ArrayList<String> categories = new ArrayList<>();
-        categories.add("Category1");
-        categories.add("Category2");
-        categories.add("Category3");
-        categories.add("Category4");
-        model.addAttribute("categories", categories);
+        model.addAttribute("categories", addedCategoryService.findAllCategories());
         return "adminPage";
     }
 
-    @RequestMapping(value = "/admin/add", method = RequestMethod.POST)
-    public String adminPage(AddedCategory category){
-        categoryService.save(category);
-        return "redirect:/admin";
-    }
+
 
     @RequestMapping(value = "/admin/getinfo", method = RequestMethod.GET)
     @ResponseBody
     public AddedCategory getCategory(String name){
-        return categoryService.getCategoryByName(name);
+        return addedCategoryService.getCategoryByName(name);
     }
 
+    @RequestMapping(value = "/admin/findall", method = RequestMethod.GET)
+    @ResponseBody
+    public List<AddedCategory> findCategories(){
+        return addedCategoryService.findAllCategories();
+    }
 }

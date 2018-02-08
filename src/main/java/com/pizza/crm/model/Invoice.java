@@ -1,26 +1,32 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
-@Entity(name="Invoice")
-@Table(name = "Invoice")
+@Entity
 public class Invoice {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
-//    @OneToMany
-//    private Set<Provider> provider;
-//
-//    private Stock stock;
-//
-//    private SalesPoint salesPoint;
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<Provider> provider = new ArrayList<>();
 
-    @Column(name = "dateCreate")
-    private Date dateCreate;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "stock_id")
+    private Stock stock;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "salesPoint_id")
+    private SalesPoint salesPoint;
+
+    private LocalDateTime dateCreate;
+
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<InvoiceTab> invoiceTab = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -30,35 +36,43 @@ public class Invoice {
         this.id = id;
     }
 
-//    public Set<Provider> getProvider() {
-//        return provider;
-//    }
-//
-//    public void setProvider(Set<Provider> provider) {
-//        this.provider = provider;
-//    }
-//
-//    public Stock getStock() {
-//        return stock;
-//    }
-//
-//    public void setStock(Stock stock) {
-//        this.stock = stock;
-//    }
-//
-//    public SalesPoint getSalesPoint() {
-//        return salesPoint;
-//    }
-//
-//    public void setSalesPoint(SalesPoint salesPoint) {
-//        this.salesPoint = salesPoint;
-//    }
+    public Stock getStock() {
+        return stock;
+    }
 
-    public Date getDateCreate() {
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    public SalesPoint getSalesPoint() {
+        return salesPoint;
+    }
+
+    public void setSalesPoint(SalesPoint salesPoint) {
+        this.salesPoint = salesPoint;
+    }
+
+    public LocalDateTime getDateCreate() {
         return dateCreate;
     }
 
-    public void setDateCreate(Date dateCreate) {
+    public void setDateCreate(LocalDateTime dateCreate) {
         this.dateCreate = dateCreate;
+    }
+
+    public Collection<InvoiceTab> getInvoiceTab() {
+        return invoiceTab;
+    }
+
+    public void setInvoiceTab(Collection<InvoiceTab> invoiceTab) {
+        this.invoiceTab = invoiceTab;
+    }
+
+    public Collection<Provider> getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Collection<Provider> provider) {
+        this.provider = provider;
     }
 }
