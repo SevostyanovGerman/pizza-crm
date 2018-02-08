@@ -71,7 +71,17 @@
             </select>
         </div>
         <input type="submit" class="btn btn-primary" value="Добавить" style="margin-left: 15px"/>
+    </form>
 
+    <h2>Удалить кнопку категории с панели кассира</h2>
+    <form class="form-inline" action="#" th:action="@{/admin/delete}" method="post" >
+        <div class="form-group" style="margin-left: 15px">
+            <label for="category.name2">Выберите категорию</label>
+            <select class="form-control" name="name" id="category.name2" required="required">
+                <option th:each="category : ${addedCategories}" th:value="${category.name}" th:text="${category.name}"></option>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-danger" value="Удалить" style="margin-left: 15px"/>
     </form>
 </div>
 </body>

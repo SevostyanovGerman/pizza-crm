@@ -33,6 +33,7 @@ public class CategoriesController {
     @RequestMapping("/categories")
     public String categories(Model model) {
         model.addAttribute("Categories", categoriesService.getAll());
+        model.addAttribute("addedCategories", addedCategoryService.findAllCategories());
         return "adminCategories";
     }
 
@@ -69,9 +70,22 @@ public class CategoriesController {
     }
 
     @RequestMapping(value = "/admin/add", method = RequestMethod.POST)
-    public String adminPage(AddedCategory category, Model model){
+    public String addCategory(AddedCategory category){
         if (addedCategoryService.getCategoryByName(category.getName()) == null){
             addedCategoryService.save(category);
+        } else {
+            AddedCategory db = addedCategoryService.getCategoryByName(category.getName());
+            db.setColor(category.getColor());
+            addedCategoryService.save(db);
+        }
+        return "redirect:/categories";
+    }
+
+    @RequestMapping(value = "/admin/delete", method = RequestMethod.POST)
+    public String deleteCategory(String name){
+        AddedCategory db = addedCategoryService.getCategoryByName(name);
+        if (db != null){
+            addedCategoryService.delete(db.getId());
         }
         return "redirect:/categories";
     }

@@ -27,8 +27,6 @@ public class AdminController {
         return "adminPage";
     }
 
-
-
     @RequestMapping(value = "/admin/getinfo", method = RequestMethod.GET)
     @ResponseBody
     public AddedCategory getCategory(String name){
