@@ -9,4 +9,6 @@ public interface DishRepository extends CrudRepository<Dish, Long> {
 
     @Override
     List<Dish> findAll();
+
+    Dish getDishByName(String name);
 }

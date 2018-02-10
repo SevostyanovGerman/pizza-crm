@@ -36,4 +36,8 @@ public class DishServiceImp implements DishService {
     public void deleteById(Long id) {
         dishRepository.deleteById(id);
     }
+
+    public Dish getDishByName(String name){
+        return dishRepository.getDishByName(name);
+    }
 }

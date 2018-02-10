@@ -5,4 +5,6 @@ import com.pizza.crm.service.CrudService;
 
 public interface DishService extends CrudService<Dish, Long> {
 
+    Dish getDishByName(String name);
+
 }

@@ -3,6 +3,7 @@ package com.pizza.crm.controller.admin.rest;
 import com.pizza.crm.model.Categories;
 import com.pizza.crm.model.Dish;
 import com.pizza.crm.service.security.CategoriesService;
+import com.pizza.crm.service.security.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,9 @@ public class CategoriesControllerRest {
     @Autowired
     private CategoriesService categoriesService;
 
+    @Autowired
+    private DishService dishService;
+
     @RequestMapping(value = "/update/categoriesdish/{id}")
     public ResponseEntity<?> updateCategories1(@RequestBody @Validated Set<Dish> dish, @PathVariable("id") @Validated long id, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
@@ -29,5 +33,11 @@ public class CategoriesControllerRest {
     public ResponseEntity<?> getDishToCategories(@RequestParam("name") @Validated String name) {
         Categories categories = categoriesService.getCategoriesByName(name);
         return ResponseEntity.ok(categories.getDish());
+    }
+
+    @RequestMapping(value = "/admin/getinfo", method = RequestMethod.POST)
+    @ResponseBody
+    public Dish getCategory(String name){
+        return dishService.getDishByName(name);
     }
 }

@@ -19,6 +19,8 @@ public class Dish {
     @Column(name = "name", unique = true)
     private String name;
 
+    private double price;
+
 //    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //    @JoinTable(name = "dish_ingredient",
 //            joinColumns = @JoinColumn(name = "dish_id"),
@@ -40,6 +42,11 @@ public class Dish {
         this.name = name;
     }
 
+    public Dish(@NotNull @Size(min = 1) String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
     public Long getId() {
         return id;
     }
@@ -54,6 +61,14 @@ public class Dish {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
 //    public Set<Ingredient> getIngredient() {
