@@ -40,4 +40,5 @@ public class CategoriesControllerRest {
     public Dish getCategory(String name){
         return dishService.getDishByName(name);
     }
+
 }

@@ -61,3 +61,7 @@ function getCategories() {
     $("#categories").css({"display": "block"});
     $("#dish").css({"display": "none"});
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
