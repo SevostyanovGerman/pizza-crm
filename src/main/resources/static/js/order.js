@@ -47,7 +47,7 @@ function getProduct(name) {
             $("#dish").empty();
             $.each(data, function (key, value) {
                 var zzz = value.name;
-                $("#dish").append("<a onclick='getInfo(\""+value.name+"\")' class=\"middle-panel-white\" href=\"#\">" + value.name + " " + value.price + "</a>")
+                $("#dish").append("<a onclick='getInfo(\""+value.name+"\")' class=\"middle-panel-white\" href=\"#\"><p>" + value.name + "</p>" + value.price + "</a>")
             });
             $("#dish").css({"display": "block"});
         },
