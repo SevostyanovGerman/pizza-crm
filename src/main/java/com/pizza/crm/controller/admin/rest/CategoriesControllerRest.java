@@ -35,10 +35,4 @@ public class CategoriesControllerRest {
         return ResponseEntity.ok(categories.getDish());
     }
 
-    @RequestMapping(value = "/admin/getinfo", method = RequestMethod.POST)
-    @ResponseBody
-    public Dish getCategory(String name){
-        return dishService.getDishByName(name);
-    }
-
 }

@@ -2,28 +2,14 @@ var host = window.location.origin;
 var csrfToken = $("meta[name='_csrf']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
-function makeRow(data) {
-    var markup = "<tr><td>" + data.name + "</td><td>" + data.price + "</td></tr>";
+function makeRow(name, price) {
+    var markup = "<tr><td>" + name + "</td><td>" + price + "</td></tr>";
     $("#result").append(markup)
 }
 
-function getInfo(name) {
-    $.ajax({
-        method: "POST",
-        url: "http://127.0.0.1:8080/admin/getinfo",
-        data: ({name: name}),
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader(csrfHeader, csrfToken);
-        },
-        success: function process(data) {
-            makeRow(data);
-            sum(data.price);
-            return data;
-        },
-        error: function (data) {
-            alert("Error" + data);
-        }
-    })
+function setCashierTable(name, price) {
+    makeRow(name, price);
+    sum(price)
 }
 
 function sum(data) {
@@ -46,8 +32,7 @@ function getProduct(name) {
         success: function (data) {
             $("#dish").empty();
             $.each(data, function (key, value) {
-                var zzz = value.name;
-                $("#dish").append("<a onclick='getInfo(\""+value.name+"\")' class=\"middle-panel-white\" href=\"#\">" + value.name + " " + value.price + "</a>")
+                $("#dish").append("<a onclick='setCashierTable(\""+value.name+"\", " + value.price + ")' class=\"middle-panel-white\" href=\"#\"><p>" + value.name + "</p>" + value.price + "</a>")
             });
             $("#dish").css({"display": "block"});
         },
@@ -61,7 +46,4 @@ function getCategories() {
     $("#categories").css({"display": "block"});
     $("#dish").css({"display": "none"});
 }
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes

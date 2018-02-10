@@ -330,6 +330,8 @@ section .middle-panel-body #dish a {
     display: inline-block;
     width: 33%;
     font-size: 1.5rem;
+    line-height: 4.5vh;
+
 }
 
 section .middle-panel-green {
