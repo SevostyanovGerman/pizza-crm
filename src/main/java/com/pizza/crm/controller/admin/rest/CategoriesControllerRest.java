@@ -1,5 +1,6 @@
 package com.pizza.crm.controller.admin.rest;
 
+import com.pizza.crm.model.Categories;
 import com.pizza.crm.model.Dish;
 import com.pizza.crm.service.security.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,11 @@ public class CategoriesControllerRest {
             categoriesService.updateCategoriesDish(id, dish);
         }
         return ResponseEntity.ok("");
+    }
+
+    @RequestMapping(value = "/get/categoriesdish")
+    public ResponseEntity<?> getDishToCategories(@RequestParam("name") @Validated String name) {
+        Categories categories = categoriesService.getCategoriesByName(name);
+        return ResponseEntity.ok(categories.getDish());
     }
 }

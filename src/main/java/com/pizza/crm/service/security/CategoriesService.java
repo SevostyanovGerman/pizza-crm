@@ -12,4 +12,6 @@ public interface CategoriesService extends CrudService<Categories, Long> {
 
     void updateCategoriesDish(long id, Set<Dish> dish);
 
+    Categories getCategoriesByName(String name);
+
 }

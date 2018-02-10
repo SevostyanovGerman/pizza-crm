@@ -38,6 +38,11 @@ public class CategoriesServiceImp implements CategoriesService {
     }
 
     @Override
+    public Categories getCategoriesByName(String name) {
+        return categoriesRepository.getCategoriesByNameRepository(name);
+    }
+
+    @Override
     public void updateCategoriesName(Categories categories) {
         Categories categoriesDb = categoriesRepository.findById(categories.getId()).get();
         categoriesDb.setName(categories.getName());
