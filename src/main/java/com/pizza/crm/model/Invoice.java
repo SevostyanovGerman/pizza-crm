@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
+@Table(name = "Invoice")
 public class Invoice {
 
     @Id

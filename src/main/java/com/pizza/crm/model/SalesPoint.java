@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "SalesPoint")
 public class SalesPoint {
 
     @Id
@@ -15,9 +16,9 @@ public class SalesPoint {
 
     private String name;
 
-    private byte shoppingHall;
+    private Byte shoppingHall;
 
-    private byte delivery;
+    private Byte delivery;
 
     @OneToMany(mappedBy = "salesPoint", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Order> orders = new ArrayList<>();
@@ -59,19 +60,19 @@ public class SalesPoint {
         this.name = name;
     }
 
-    public byte getShoppingHall() {
+    public Byte getShoppingHall() {
         return shoppingHall;
     }
 
-    public void setShoppingHall(byte shoppingHall) {
+    public void setShoppingHall(Byte shoppingHall) {
         this.shoppingHall = shoppingHall;
     }
 
-    public byte getDelivery() {
+    public Byte getDelivery() {
         return delivery;
     }
 
-    public void setDelivery(byte delivery) {
+    public void setDelivery(Byte delivery) {
         this.delivery = delivery;
     }
 

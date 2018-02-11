@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Table(name = "clientOrder")
+@Table(name = "Order")
 public class Order {
 
     @Id

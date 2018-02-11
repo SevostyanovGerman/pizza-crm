@@ -3,6 +3,7 @@ package com.pizza.crm.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Provider")
 public class Provider {
 
     @Id

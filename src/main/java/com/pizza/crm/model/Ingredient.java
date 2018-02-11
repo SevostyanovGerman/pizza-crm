@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "Ingredient")
 public class Ingredient {
 
     @Id
@@ -27,8 +28,8 @@ public class Ingredient {
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "ingredient_residueRegister",
-        joinColumns = @JoinColumn(name = "ingredient_id"),
-        inverseJoinColumns = @JoinColumn(name = "residueRegister_id"))
+            joinColumns = @JoinColumn(name = "ingredient_id"),
+            inverseJoinColumns = @JoinColumn(name = "residueRegister_id"))
     private Set<ResidueRegister> residueRegister = new HashSet<>();
 
     public Ingredient() {

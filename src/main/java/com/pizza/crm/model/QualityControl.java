@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "QualityControl")
 public class QualityControl {
 
     @Id
@@ -18,7 +19,7 @@ public class QualityControl {
     @OneToOne(mappedBy = "qualityControl")
     private Cooking cooking;
 
-    private byte verdict;
+    private Byte verdict;
 
     private String comment;
 
@@ -39,11 +40,11 @@ public class QualityControl {
         this.id = id;
     }
 
-    public byte getVerdict() {
+    public Byte getVerdict() {
         return verdict;
     }
 
-    public void setVerdict(byte verdict) {
+    public void setVerdict(Byte verdict) {
         this.verdict = verdict;
     }
 
