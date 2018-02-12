@@ -88,14 +88,8 @@ public class Ingredient {
         return dishes;
     }
 
-    public void addDush(Dish dish) {
-        dishes.add(dish);
-        dish.addIngredient(this);
-    }
-
-    public void removeDish(Dish dish) {
-        dishes.remove(dish);
-        dish.removeIngredient(this);
+    public void setDishes(Set<Dish> dishes) {
+        this.dishes = dishes;
     }
 
     public Set<InvoiceTab> getInvoiceTab() {

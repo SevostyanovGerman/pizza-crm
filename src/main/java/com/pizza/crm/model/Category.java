@@ -46,20 +46,8 @@ public class Category {
         return dishes;
     }
 
-    public void addDish(Dish newDish) {
-        if (dishes.contains(newDish)) {
-            return;
-        }
-        dishes.add(newDish);
-        newDish.addCategory(this);
-    }
-
-    public void removeDish(Dish removedDish) {
-        if (!dishes.contains(removedDish)) {
-            return;
-        }
-        dishes.remove(removedDish);
-        removedDish.removeCategory(this);
+    public void setDishes(Set<Dish> dishes) {
+        this.dishes = dishes;
     }
 
     @Override

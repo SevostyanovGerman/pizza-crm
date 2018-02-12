@@ -56,19 +56,13 @@ public class Dish {
     }
 
     public void addIngredient(Ingredient ingredient) {
-        if (ingredients.contains(ingredient)) {
-            return;
-        }
         ingredients.add(ingredient);
-        ingredient.addDush(this);
+        ingredient.getDishes().add(this);
     }
 
     public void removeIngredient(Ingredient ingredient) {
-        if (!ingredients.contains(ingredient)) {
-            return;
-        }
         ingredients.remove(ingredient);
-        ingredient.removeDish(this);
+        ingredient.getDishes().remove(this);
     }
 
     public Set<Category> getCategories() {
@@ -76,19 +70,13 @@ public class Dish {
     }
 
     public void addCategory(Category category) {
-        if (categories.contains(category)) {
-            return;
-        }
         categories.add(category);
-        category.addDish(this);
+        category.getDishes().add(this);
     }
 
     public void removeCategory(Category category) {
-        if (!categories.contains(category)) {
-            return;
-        }
         categories.remove(category);
-        category.removeDish(this);
+        category.getDishes().remove(this);
     }
 
 }
