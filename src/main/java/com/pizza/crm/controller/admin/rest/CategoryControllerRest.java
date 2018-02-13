@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-public class CategoriesControllerRest {
+public class CategoryControllerRest {
 
     @Autowired
     private CategoryService categoryService;

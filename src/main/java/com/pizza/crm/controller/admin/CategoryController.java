@@ -19,7 +19,7 @@ import javax.validation.Valid;
 
 
 @Controller
-public class CategoriesController {
+public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
