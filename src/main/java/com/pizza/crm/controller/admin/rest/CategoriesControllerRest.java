@@ -1,8 +1,8 @@
 package com.pizza.crm.controller.admin.rest;
 
-import com.pizza.crm.model.Categories;
+import com.pizza.crm.model.Category;
 import com.pizza.crm.model.Dish;
-import com.pizza.crm.service.security.CategoriesService;
+import com.pizza.crm.service.security.CategoryService;
 import com.pizza.crm.service.security.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import java.util.Set;
 public class CategoriesControllerRest {
 
     @Autowired
-    private CategoriesService categoriesService;
+    private CategoryService categoryService;
 
     @Autowired
     private DishService dishService;
@@ -24,15 +24,15 @@ public class CategoriesControllerRest {
     @RequestMapping(value = "/update/categoriesdish/{id}")
     public ResponseEntity<?> updateCategories1(@RequestBody @Validated Set<Dish> dish, @PathVariable("id") @Validated long id, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            categoriesService.updateCategoriesDish(id, dish);
+            categoryService.updateCategoriesDish(id, dish);
         }
         return ResponseEntity.ok("");
     }
 
     @RequestMapping(value = "/get/categoriesdish")
     public ResponseEntity<?> getDishToCategories(@RequestParam("name") @Validated String name) {
-        Categories categories = categoriesService.getCategoriesByName(name);
-        return ResponseEntity.ok(categories.getDish());
+        Category category = categoryService.getCategoriesByName(name);
+        return ResponseEntity.ok(category.getDish());
     }
 
 }

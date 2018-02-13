@@ -21,7 +21,7 @@ function sum(data) {
 
 function getProduct(name) {
     $("#backward").removeClass("disable");
-    $("#categories").css({"display": "none"});
+    $("#category").css({"display": "none"});
     $.ajax({
         type: "POST",
         url: "/get/categoriesdish",
@@ -43,7 +43,7 @@ function getProduct(name) {
 
 function getCategories() {
     $("#backward").addClass("disable");
-    $("#categories").css({"display": "block"});
+    $("#category").css({"display": "block"});
     $("#dish").css({"display": "none"});
 }
 

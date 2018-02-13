@@ -1,9 +1,9 @@
 package com.pizza.crm.controller.admin;
 
 import com.pizza.crm.model.AddedCategory;
-import com.pizza.crm.model.Categories;
+import com.pizza.crm.model.Category;
 import com.pizza.crm.service.AddedCategoryService;
-import com.pizza.crm.service.security.CategoriesService;
+import com.pizza.crm.service.security.CategoryService;
 import com.pizza.crm.service.security.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ import javax.validation.Valid;
 public class CategoriesController {
 
     @Autowired
-    private CategoriesService categoriesService;
+    private CategoryService categoryService;
 
     @Autowired
     private AddedCategoryService addedCategoryService;
@@ -32,39 +32,39 @@ public class CategoriesController {
 
     @RequestMapping("/categories")
     public String categories(Model model) {
-        model.addAttribute("Categories", categoriesService.getAll());
+        model.addAttribute("category", categoryService.getAll());
         model.addAttribute("addedCategories", addedCategoryService.findAllCategories());
         return "adminCategories";
     }
 
     @RequestMapping(value = "/categories/add", method = RequestMethod.POST)
-    public String addCategories(@ModelAttribute("Categories") @Validated Categories categories, BindingResult bindingResult) {
+    public String addCategories(@ModelAttribute("category") @Validated Category category, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            categoriesService.save(categories);
+            categoryService.save(category);
         }
         return "redirect:/categories";
     }
 
     @RequestMapping(value = "/categories/del", method = RequestMethod.GET)
     public String deleteCategories(@Valid @RequestParam Long id) {
-        categoriesService.deleteById(id);
+        categoryService.deleteById(id);
         return "redirect:/categories";
     }
 
     @RequestMapping(value = "/categories/update", method = RequestMethod.POST)
-    public String updateCategories(@ModelAttribute("Categories") @Validated Categories categories, BindingResult bindingResult) {
+    public String updateCategories(@ModelAttribute("category") @Validated Category category, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            categoriesService.updateCategoriesName(categories);
+            categoryService.updateCategoriesName(category);
         }
         return "redirect:/categories";
     }
 
     @RequestMapping(value = "/categories/update", method = RequestMethod.GET)
     public String updateCategories(@Valid @RequestParam(name = "id") Long id, Model model) {
-        Categories categories = categoriesService.findById(id).get();
-        model.addAttribute("categoriesName", categories.getName());
-        model.addAttribute("categoriesId", categories.getId());
-        model.addAttribute("categoriesDish", categories.getDish());
+        Category category = categoryService.findById(id).get();
+        model.addAttribute("categoriesName", category.getName());
+        model.addAttribute("categoriesId", category.getId());
+        model.addAttribute("categoriesDish", category.getDish());
         model.addAttribute("allDish", dishService.getAll());
         return "moreCategoriesInfo";
     }

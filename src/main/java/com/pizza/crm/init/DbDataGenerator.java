@@ -2,12 +2,12 @@ package com.pizza.crm.init;
 
 
 import com.pizza.crm.model.AddedCategory;
-import com.pizza.crm.model.Categories;
+import com.pizza.crm.model.Category;
 import com.pizza.crm.model.Dish;
 import com.pizza.crm.model.security.Role;
 import com.pizza.crm.model.security.User;
 import com.pizza.crm.service.AddedCategoryService;
-import com.pizza.crm.service.security.CategoriesService;
+import com.pizza.crm.service.security.CategoryService;
 import com.pizza.crm.service.security.DishService;
 import com.pizza.crm.service.security.RoleService;
 import com.pizza.crm.service.security.UserService;
@@ -34,7 +34,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     private AddedCategoryService addedCategoryService;
 
     @Autowired
-    private CategoriesService categoriesService;
+    private CategoryService categoryService;
 
     @Autowired
     private DishService dishService;
@@ -65,8 +65,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         dishService.save(dishRol1);
         dishService.save(dishRol2);
 
-        categoriesService.save(new Categories("Pizza", new HashSet<>(Arrays.asList(dishPizza, dishRol))));
-        categoriesService.save(new Categories("Roll", new HashSet<>(Arrays.asList(dishRol, dishRol1, dishRol2))));
+        categoryService.save(new Category("Pizza", new HashSet<>(Arrays.asList(dishPizza, dishRol))));
+        categoryService.save(new Category("Roll", new HashSet<>(Arrays.asList(dishRol, dishRol1, dishRol2))));
 
     }
 }

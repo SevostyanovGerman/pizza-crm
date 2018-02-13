@@ -119,8 +119,8 @@
                 </ul>
             </div>
             <div class="middle-panel-body">
-                <div id="categories">
-                    <a th:each="category : ${categories}" th:text="${category.name}" th:class="middle-panel-white"
+                <div id="category">
+                    <a th:each="category : ${category}" th:text="${category.name}" th:class="middle-panel-white"
                        th:styleappend="'background-color: ' + ${category.color}" th:id="${category.name}"
                        th:onclick="'getProduct(\'' + ${category.name} + '\')'" href="#"></a>
                 </div>

@@ -6,8 +6,8 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
-@Table(name = "Categories")
-public class Categories {
+@Table(name = "Category")
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,16 +24,16 @@ public class Categories {
             inverseJoinColumns = {@JoinColumn(name = "dish_id")})
     private Set<Dish> dish;
 
-    public Categories(String name, Set<Dish> dish) {
+    public Category(String name, Set<Dish> dish) {
         this.name = name;
         this.dish = dish;
     }
 
-    public Categories(String name) {
+    public Category(String name) {
         this.name = name;
     }
 
-    public Categories() {
+    public Category() {
     }
 
     public Long getId() {
@@ -62,7 +62,7 @@ public class Categories {
 
     @Override
     public String toString() {
-        return "Categories{" +
+        return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

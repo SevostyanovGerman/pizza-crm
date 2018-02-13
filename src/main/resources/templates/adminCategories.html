@@ -14,7 +14,7 @@
 <body>
 <div class="container">
     <h2 style="margin-top: 1rem">Категории</h2>
-    <form class="form-inline" th:object="${Categories}" style="margin-top: 1rem" action="#"
+    <form class="form-inline" th:object="${category}" style="margin-top: 1rem" action="#"
           th:action="@{/categories/add}" method="POST">
         <div class="form-group mx-sm-3 mb-2">
             <input type="text" class="form-control" id="name" name="name" placeholder="Название категории">
@@ -33,21 +33,21 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="Categories:${Categories}">
-            <td th:utext="${Categories.id}">...</td>
-            <td th:utext="${Categories.name}"></td>
-            <td><a class="btn btn-success btn-control" th:href="@{/categories/del?id=} + ${Categories.id}">Удалить</a>
+        <tr th:each="category:${category}">
+            <td th:utext="${category.id}">...</td>
+            <td th:utext="${category.name}"></td>
+            <td><a class="btn btn-success btn-control" th:href="@{/category/del?id=} + ${category.id}">Удалить</a>
             </td>
             <td>
-                <form class="form-inline" th:object="${Categories}" action="#" th:action="@{/categories/update}"
+                <form class="form-inline" th:object="${category}" action="#" th:action="@{/category/update}"
                       method="POST">
-                    <input type="hidden" name="id" th:value="${Categories.id}">
+                    <input type="hidden" name="id" th:value="${category.id}">
                     <input type="text" class="form-control" name="name" placeholder="Название категории"
                            style="margin-bottom: 8px; margin-right: 2px;">
                     <button type="submit" class="btn btn-primary mb-2">Обновить название категории</button>
                 </form>
             </td>
-            <td><a class="btn btn-success btn-control" th:href="@{/categories/update?id=} + ${Categories.id}">Обновить
+            <td><a class="btn btn-success btn-control" th:href="@{/categories/update?id=} + ${category.id}">Обновить
                 категорию</a>
         </tr>
         </tbody>
@@ -57,7 +57,7 @@
         <div class="form-group" style="margin-left: 15px">
             <label for="category.name">Выберите категорию</label>
             <select class="form-control" name="name" id="category.name" required="required">
-                <option th:each="category : ${Categories}" th:value="${category.name}" th:text="${category.name}"></option>
+                <option th:each="category : ${category}" th:value="${category.name}" th:text="${category.name}"></option>
             </select>
         </div>
         <div class="form-group" style="margin-left: 15px">

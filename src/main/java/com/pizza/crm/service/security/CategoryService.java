@@ -6,7 +6,7 @@ import com.pizza.crm.service.CrudService;
 
 import java.util.Set;
 
-public interface CategoriesService extends CrudService<Category, Long> {
+public interface CategoryService extends CrudService<Category, Long> {
 
     void updateCategoriesName(Category category);
 

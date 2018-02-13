@@ -28,7 +28,7 @@ public class Dish {
 //    private Set<Ingredient> ingredient = new HashSet<>();
 
     @ManyToMany(mappedBy = "dish")
-    private Set<Categories> categories = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
 
     public Dish() {
     }
