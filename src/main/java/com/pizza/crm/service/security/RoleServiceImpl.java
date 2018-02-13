@@ -30,6 +30,11 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public Collection<Role> saveAll(Collection<Role> roles) {
+        return roleRepository.saveAll(roles);
+    }
+
+    @Override
     public void deleteById(Long id) {
         roleRepository.deleteById(id);
     }

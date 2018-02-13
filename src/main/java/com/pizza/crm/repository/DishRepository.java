@@ -1,12 +1,7 @@
 package com.pizza.crm.repository;
 
 import com.pizza.crm.model.Dish;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface DishRepository extends CrudRepository<Dish, Long> {
-
-    @Override
-    List<Dish> findAll();
+public interface DishRepository extends JpaRepository<Dish, Long> {
 }

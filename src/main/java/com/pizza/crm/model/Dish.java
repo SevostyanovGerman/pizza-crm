@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Dish")
+@Table(name = "dish")
 public class Dish {
 
     @Id
@@ -19,14 +19,17 @@ public class Dish {
     @Column(name = "name", unique = true)
     private String name;
 
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @JoinTable(name = "dish_ingredient",
-//            joinColumns = @JoinColumn(name = "dish_id"),
-//            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-//    private Set<Ingredient> ingredient = new HashSet<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "dish_ingredient",
+            joinColumns = @JoinColumn(name = "dish_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    private Set<Ingredient> ingredients = new HashSet<>();
 
-    @ManyToMany(mappedBy = "dish")
-    private Set<Categories> categories = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "dish_category",
+            joinColumns = @JoinColumn(name = "dish_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
 
     public Dish() {
     }
@@ -56,13 +59,13 @@ public class Dish {
         this.name = name;
     }
 
-//    public Set<Ingredient> getIngredient() {
-//        return ingredient;
-//    }
-//
-//    public void setIngredient(Set<Ingredient> ingredient) {
-//        this.ingredient = ingredient;
-//    }
+    public Set<Ingredient> getIngredient() {
+        return ingredients;
+    }
+
+    public void setIngredient(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
 
     @Override
     public String toString() {
@@ -71,4 +74,18 @@ public class Dish {
                 ", name='" + name + '\'' +
                 '}';
     }
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void addCategory(Category newCategory) {
+        categories.add(newCategory);
+        newCategory.getDishes().add(this);
+    }
+
+    public void removeCategory(Category removedCategory) {
+        categories.remove(removedCategory);
+        removedCategory.getDishes().remove(this);
+    }
+
 }

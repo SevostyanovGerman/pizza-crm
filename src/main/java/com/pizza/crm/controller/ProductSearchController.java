@@ -1,6 +1,6 @@
 package com.pizza.crm.controller;
 
-import com.pizza.crm.service.security.DishService;
+import com.pizza.crm.service.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
