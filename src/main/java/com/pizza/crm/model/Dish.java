@@ -28,7 +28,10 @@ public class Dish {
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private Set<Ingredient> ingredients = new HashSet<>();
 
-    @ManyToMany(mappedBy = "dish")
+    @ManyToMany
+    @JoinTable(name = "dish_category",
+            joinColumns = @JoinColumn(name = "dish_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
 
     public Dish() {

@@ -48,7 +48,7 @@ $(document).ready(function () {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
             success: function () {
-                //window.location.replace("/admin/dish");
+                window.location.replace("/admin/dish");
             }
         });
     });

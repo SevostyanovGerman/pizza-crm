@@ -42,17 +42,7 @@ public class DishController {
 
     @PostMapping("/update")
     public String updateDish(@RequestBody Dish dish) {
-//        Dish dishBd = dishService.findById(dish.getId()).get();
-//        dishBd.setName(dish.getName());
-//        dishBd.setCategories(dish.getCategories());
-//        Set<Category> distcat = dishBd.getCategories();
-//
-//        Iterator<Category> iterator = distcat.iterator();
-//        while(iterator.hasNext()) {
-//            System.out.println(iterator.next());
-//        }
-
-        dishService.save(dish);
+        dishService.updateDishCategories(dish);
         return "redirect:/admin/dish";
     }
 

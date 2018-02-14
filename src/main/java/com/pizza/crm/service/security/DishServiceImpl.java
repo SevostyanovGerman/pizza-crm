@@ -50,6 +50,14 @@ public class DishServiceImpl implements DishService {
 //    }
 
     @Override
+    public void updateDishCategories(Dish dish) {
+        Dish dishBd = dishRepository.findById(dish.getId()).get();
+        dishBd.setName(dish.getName());
+        dishBd.setCategories(dish.getCategories());
+        dishRepository.save(dishBd);
+    }
+
+    @Override
     public Collection<Category> getAvailableCategories(Dish dish) {
         Collection<Category> availableCategories = categoryRepository.findAll();
         availableCategories.removeAll(dish.getCategories());

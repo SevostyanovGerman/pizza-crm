@@ -22,9 +22,9 @@ public class Category {
     private String name;
 
     @ManyToMany
-    @JoinTable(name = "categories_dish",
-            joinColumns = {@JoinColumn(name = "categories_id")},
-            inverseJoinColumns = {@JoinColumn(name = "dish_id")})
+    @JoinTable(name = "dish_category",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "dish_id"))
     @JsonBackReference
     private Set<Dish> dish;
 
