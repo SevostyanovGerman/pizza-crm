@@ -49,7 +49,12 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public void updateCategoriesDish(long id, Set<Dish> dish) {
+    public Collection<Category> saveAll(Collection<Category> dishCategories) {
+        return categoryRepository.saveAll(dishCategories);
+    }
+
+    @Override
+    public void updateCategoriesDish(Long id, Set<Dish> dish) {
         Category categoryDb = categoryRepository.findById(id).get();
         categoryDb.setDish(dish);
         categoryRepository.save(categoryDb);

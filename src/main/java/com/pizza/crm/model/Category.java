@@ -1,8 +1,11 @@
 package com.pizza.crm.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,6 +25,7 @@ public class Category {
     @JoinTable(name = "categories_dish",
             joinColumns = {@JoinColumn(name = "categories_id")},
             inverseJoinColumns = {@JoinColumn(name = "dish_id")})
+    @JsonBackReference
     private Set<Dish> dish;
 
     public Category(String name, Set<Dish> dish) {

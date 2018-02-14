@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Dish")
+@Table(name = "dish")
 public class Dish {
 
     @Id
@@ -19,16 +19,17 @@ public class Dish {
     @Column(name = "name", unique = true)
     private String name;
 
+
     private double price;
 
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @JoinTable(name = "dish_ingredient",
-//            joinColumns = @JoinColumn(name = "dish_id"),
-//            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-//    private Set<Ingredient> ingredient = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "dish_ingredient",
+            joinColumns = @JoinColumn(name = "dish_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     @ManyToMany(mappedBy = "dish")
-    private Set<Category> categories = new HashSet<>();
+    private Set<Category> categories;
 
     public Dish() {
     }
@@ -71,12 +72,30 @@ public class Dish {
         this.price = price;
     }
 
-//    public Set<Ingredient> getIngredient() {
-//        return ingredient;
+    public Set<Ingredient> getIngredient() {
+        return ingredients;
+    }
+
+    public void setIngredient(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+//    public void addCategory(Category newCategory) {
+//        categories.add(newCategory);
+//        //newCategory.getDish().add(this);
 //    }
 //
-//    public void setIngredient(Set<Ingredient> ingredient) {
-//        this.ingredient = ingredient;
+//    public void removeCategory(Category removedCategory) {
+//        categories.remove(removedCategory);
+//        //removedCategory.getDish().remove(this);
 //    }
 
     @Override
@@ -86,4 +105,5 @@ public class Dish {
                 ", name='" + name + '\'' +
                 '}';
     }
+
 }

@@ -1,14 +1,11 @@
 package com.pizza.crm.repository;
 
 import com.pizza.crm.model.security.User;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface UserRepository extends CrudRepository<User, Long> {
-
-    @Override
-    List<User> findAll();
+public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByPincode(String pincode);
 

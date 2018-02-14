@@ -10,7 +10,7 @@ public interface CategoryService extends CrudService<Category, Long> {
 
     void updateCategoriesName(Category category);
 
-    void updateCategoriesDish(long id, Set<Dish> dish);
+    void updateCategoriesDish(Long id, Set<Dish> dish);
 
     Category getCategoriesByName(String name);
 

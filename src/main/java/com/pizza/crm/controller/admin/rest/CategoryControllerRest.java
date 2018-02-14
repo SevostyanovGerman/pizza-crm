@@ -18,9 +18,6 @@ public class CategoryControllerRest {
     @Autowired
     private CategoryService categoryService;
 
-    @Autowired
-    private DishService dishService;
-
     @RequestMapping(value = "/update/categoriesdish/{id}")
     public ResponseEntity<?> updateCategories1(@RequestBody @Validated Set<Dish> dish, @PathVariable("id") @Validated long id, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {

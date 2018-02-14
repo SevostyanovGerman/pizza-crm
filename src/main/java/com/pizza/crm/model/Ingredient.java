@@ -20,8 +20,8 @@ public class Ingredient {
 
     private String unit;
 
-//    @ManyToMany(mappedBy = "ingredient")
-//    private Set<Dish> dish = new HashSet<>();
+    @ManyToMany(mappedBy = "ingredients")
+    private Set<Dish> dishes = new HashSet<>();
 
     @ManyToMany(mappedBy = "ingredient")
     private Set<InvoiceTab> invoiceTab = new HashSet<>();
@@ -82,14 +82,6 @@ public class Ingredient {
         this.unit = unit;
     }
 
-//    public Set<Dish> getDish() {
-//        return dish;
-//    }
-
-//    public void setDish(Set<Dish> dish) {
-//        this.dish = dish;
-//    }
-
     public Set<InvoiceTab> getInvoiceTab() {
         return invoiceTab;
     }
@@ -104,5 +96,13 @@ public class Ingredient {
 
     public void setResidueRegister(Set<ResidueRegister> residueRegister) {
         this.residueRegister = residueRegister;
+    }
+
+    public Set<Dish> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(Set<Dish> dishes) {
+        this.dishes = dishes;
     }
 }

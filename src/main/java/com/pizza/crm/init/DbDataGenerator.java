@@ -16,7 +16,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -39,9 +38,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     @Autowired
     private DishService dishService;
 
-
     @Override
-    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         Role adminRole = new Role("ADMIN");
         Role userRole = new Role("USER");
@@ -59,6 +56,31 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         Dish dishRol = new Dish("Roll philadelphia", 350);
         Dish dishRol1 = new Dish("Roll california", 300);
         Dish dishRol2 = new Dish("Roll dragon", 400);
+//
+//        Category dc1 = new Category("Закуски");
+//        Category dc2 = new Category("Пицца");
+//        Category dc3 = new Category("Компоты/морсы");
+//        Category dc4 = new Category("Кофе/чай");
+//        Category dc5 = new Category("С собой");
+
+//        categoryService.saveAll(Arrays.asList(dc1, dc2, dc3, dc4, dc5));
+//
+//        Dish d1 = new Dish("Крылья куриные");
+//        Dish d2 = new Dish("Чемпионская 35см");
+//        Dish d3 = new Dish("Барбекю 35см");
+//
+//        d1.addCategory(dc1);
+//
+//        d2.addCategory(dc2);
+//
+//        d3.addCategory(dc2);
+//
+//        dishService.saveAll(Arrays.asList(d1, d2, d3));
+
+//        Dish dishPizza = new Dish("Pizza margarita");
+//        Dish dishRol = new Dish("Rol Folodelfia");
+//        Dish dishRol1 = new Dish("Rol kolofornia");
+
 
         dishService.save(dishPizza);
         dishService.save(dishRol);
