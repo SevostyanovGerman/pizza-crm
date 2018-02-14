@@ -1,4 +1,4 @@
-package com.pizza.crm.service.security;
+package com.pizza.crm.service;
 
 import com.pizza.crm.model.Dish;
 import com.pizza.crm.model.Category;
@@ -42,19 +42,6 @@ public class DishServiceImpl implements DishService {
     @Override
     public void deleteById(Long id) {
         dishRepository.deleteById(id);
-    }
-
-//    @Override
-//    public Dish getDishByName(String name){
-//        return dishRepository.getDishByName(name);
-//    }
-
-    @Override
-    public void updateDishCategories(Dish dish) {
-        Dish dishBd = dishRepository.findById(dish.getId()).get();
-        dishBd.setName(dish.getName());
-        dishBd.setCategories(dish.getCategories());
-        dishRepository.save(dishBd);
     }
 
     @Override

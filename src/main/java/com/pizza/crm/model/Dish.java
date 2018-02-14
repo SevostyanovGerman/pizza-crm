@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "dish")
+@Table(name = "Dish")
 public class Dish {
 
     @Id
@@ -19,19 +19,18 @@ public class Dish {
     @Column(name = "name", unique = true)
     private String name;
 
-
     private double price;
 
     @ManyToMany
-    @JoinTable(name = "dish_ingredient",
-            joinColumns = @JoinColumn(name = "dish_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    @JoinTable(name = "Dish_Ingredient",
+            joinColumns = @JoinColumn(name = "dish"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient"))
     private Set<Ingredient> ingredients = new HashSet<>();
 
     @ManyToMany
-    @JoinTable(name = "dish_category",
-            joinColumns = @JoinColumn(name = "dish_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @JoinTable(name = "Dish_Category",
+            joinColumns = @JoinColumn(name = "dish"),
+            inverseJoinColumns = @JoinColumn(name = "category"))
     private Set<Category> categories;
 
     public Dish() {
@@ -46,7 +45,7 @@ public class Dish {
         this.name = name;
     }
 
-    public Dish(@NotNull @Size(min = 1) String name, double price) {
+    public Dish(String name, double price) {
         this.name = name;
         this.price = price;
     }
@@ -103,10 +102,7 @@ public class Dish {
 
     @Override
     public String toString() {
-        return "Dish{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return name;
     }
 
 }

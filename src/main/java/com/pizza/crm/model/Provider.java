@@ -20,7 +20,7 @@ public class Provider {
     private TypeProvider typeProvider;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "invoice_id")
+    @JoinColumn(name = "invoice")
     private Invoice invoice;
 
     public Provider() {

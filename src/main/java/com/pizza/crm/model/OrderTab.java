@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "OrderTab")
+@Table(name = "ClientOrderTab")
 public class OrderTab {
 
     @Id
@@ -13,13 +13,13 @@ public class OrderTab {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "clientOrder")
     private Order order;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "orderTab_cooking",
-            joinColumns = @JoinColumn(name = "orderTab_id"),
-            inverseJoinColumns = @JoinColumn(name = "cooking_id"))
+    @JoinTable(name = "ClientOrderTab_Cooking",
+            joinColumns = @JoinColumn(name = "clientOrderTab"),
+            inverseJoinColumns = @JoinColumn(name = "cooking"))
     private Set<Cooking> cooking = new HashSet<>();
 
     private int lineNumber;

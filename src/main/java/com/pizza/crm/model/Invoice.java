@@ -17,11 +17,11 @@ public class Invoice {
     private Collection<Provider> provider = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "stock_id")
+    @JoinColumn(name = "stock")
     private Stock stock;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "salesPoint_id")
+    @JoinColumn(name = "salesPoint")
     private SalesPoint salesPoint;
 
     private LocalDateTime dateCreate;

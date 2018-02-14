@@ -21,8 +21,8 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
-            joinColumns = {@JoinColumn(name = "id_user")},
-            inverseJoinColumns = {@JoinColumn(name = "id_role")})
+            joinColumns = {@JoinColumn(name = "user")},
+            inverseJoinColumns = {@JoinColumn(name = "role")})
     private Collection<Role> roles;
 
     public User(String pincode, Boolean enabled, Collection<Role> roles) {

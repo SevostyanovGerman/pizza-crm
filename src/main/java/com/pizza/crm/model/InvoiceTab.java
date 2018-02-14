@@ -14,13 +14,13 @@ public class InvoiceTab {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "invoice_id")
+    @JoinColumn(name = "invoice")
     private Invoice invoice;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "invoiceTab_ingredient",
-            joinColumns = @JoinColumn(name = "invoiceTab_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    @JoinTable(name = "InvoiceTab_Ingredient",
+            joinColumns = @JoinColumn(name = "invoiceTab"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient"))
     private Set<Ingredient> ingredient = new HashSet<>();
 
     private int count;

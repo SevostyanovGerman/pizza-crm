@@ -36,9 +36,9 @@ public class SalesPoint {
     private Collection<QualityControl> qualityControl = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "salesPoint_stock",
-            joinColumns = @JoinColumn(name = "salesPoint_id"),
-            inverseJoinColumns = @JoinColumn(name = "stock_id"))
+    @JoinTable(name = "SalesPoint_Stock",
+            joinColumns = @JoinColumn(name = "salesPoint"),
+            inverseJoinColumns = @JoinColumn(name = "stock"))
     private Set<Stock> stock = new HashSet<>();
 
     public SalesPoint() {

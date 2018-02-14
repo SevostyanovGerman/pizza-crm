@@ -1,4 +1,4 @@
-package com.pizza.crm.service.security;
+package com.pizza.crm.service;
 
 import com.pizza.crm.model.Category;
 import com.pizza.crm.model.Dish;
@@ -12,6 +12,6 @@ public interface CategoryService extends CrudService<Category, Long> {
 
     void updateCategoriesDish(Long id, Set<Dish> dish);
 
-    Category getCategoriesByName(String name);
+    Category getCategoryByName(String name);
 
 }

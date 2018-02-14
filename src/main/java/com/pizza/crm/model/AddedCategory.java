@@ -3,7 +3,7 @@ package com.pizza.crm.model;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "AddedCategoryRepository")
+@Table(name = "AddedCategory")
 public class AddedCategory {
 
     @Id
@@ -14,12 +14,12 @@ public class AddedCategory {
 
     private String color;
 
+    public AddedCategory() {
+    }
+
     public AddedCategory(String name, String color) {
         this.name = name;
         this.color = color;
-    }
-
-    public AddedCategory() {
     }
 
     public Long getId() {

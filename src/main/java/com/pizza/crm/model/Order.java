@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Order")
+@Table(name = "ClientOrder")
 public class Order {
 
     @Id
@@ -14,17 +14,17 @@ public class Order {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "salesPoint_id")
+    @JoinColumn(name = "salesPoint")
     private SalesPoint salesPoint;
 
     private LocalDateTime dateCreateOrder;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "employee")
     private Employee employee;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client")
     private Client client;
 
     @OneToOne

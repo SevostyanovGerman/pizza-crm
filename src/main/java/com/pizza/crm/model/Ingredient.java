@@ -27,9 +27,9 @@ public class Ingredient {
     private Set<InvoiceTab> invoiceTab = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "ingredient_residueRegister",
-            joinColumns = @JoinColumn(name = "ingredient_id"),
-            inverseJoinColumns = @JoinColumn(name = "residueRegister_id"))
+    @JoinTable(name = "Ingredient_ResidueRegister",
+            joinColumns = @JoinColumn(name = "ingredient"),
+            inverseJoinColumns = @JoinColumn(name = "residueRegister"))
     private Set<ResidueRegister> residueRegister = new HashSet<>();
 
     public Ingredient() {

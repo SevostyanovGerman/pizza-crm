@@ -23,9 +23,9 @@ public class Stock {
     private Set<SalesPoint> salesPoint = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "stock_residueRegister",
-            joinColumns = @JoinColumn(name = "stock_id"),
-            inverseJoinColumns = @JoinColumn(name = "residueRegister_id"))
+    @JoinTable(name = "Stock_ResidueRegister",
+            joinColumns = @JoinColumn(name = "stock"),
+            inverseJoinColumns = @JoinColumn(name = "residueRegister"))
     private Set<ResidueRegister> residueRegister = new HashSet<>();
 
     public Stock() {

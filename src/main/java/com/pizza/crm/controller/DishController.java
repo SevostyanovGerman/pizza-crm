@@ -1,17 +1,14 @@
 package com.pizza.crm.controller;
 
-import com.pizza.crm.model.Category;
 import com.pizza.crm.model.Dish;
-import com.pizza.crm.service.security.CategoryService;
-import com.pizza.crm.service.security.DishService;
+import com.pizza.crm.service.CategoryService;
+import com.pizza.crm.service.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
 import java.util.Optional;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/admin/dish")
@@ -42,7 +39,7 @@ public class DishController {
 
     @PostMapping("/update")
     public String updateDish(@RequestBody Dish dish) {
-        dishService.updateDishCategories(dish);
+        dishService.save(dish);
         return "redirect:/admin/dish";
     }
 

@@ -1,4 +1,4 @@
-package com.pizza.crm.service.security;
+package com.pizza.crm.service;
 
 import com.pizza.crm.model.Category;
 import com.pizza.crm.model.Dish;
@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class CategoryServiceImp implements CategoryService {
+public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -37,7 +37,7 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public Category getCategoriesByName(String name) {
+    public Category getCategoryByName(String name) {
         return categoryRepository.getCategoriesByNameRepository(name);
     }
 

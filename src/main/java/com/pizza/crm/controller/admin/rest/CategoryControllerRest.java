@@ -2,8 +2,7 @@ package com.pizza.crm.controller.admin.rest;
 
 import com.pizza.crm.model.Category;
 import com.pizza.crm.model.Dish;
-import com.pizza.crm.service.security.CategoryService;
-import com.pizza.crm.service.security.DishService;
+import com.pizza.crm.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -28,7 +27,7 @@ public class CategoryControllerRest {
 
     @RequestMapping(value = "/get/categoriesdish")
     public ResponseEntity<?> getDishToCategories(@RequestParam("name") @Validated String name) {
-        Category category = categoryService.getCategoriesByName(name);
+        Category category = categoryService.getCategoryByName(name);
         return ResponseEntity.ok(category.getDish());
     }
 

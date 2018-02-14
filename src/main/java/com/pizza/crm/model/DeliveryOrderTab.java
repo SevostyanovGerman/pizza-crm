@@ -12,7 +12,7 @@ public class DeliveryOrderTab {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "deliveryOrder_id")
+    @JoinColumn(name = "deliveryOrder")
     private DeliveryOrder deliveryOrder;
 
     private LocalDateTime checkOutTime;

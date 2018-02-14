@@ -21,15 +21,15 @@ public class Employee {
     private Collection<Order> orders = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "employee_cooking",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "cooking_id"))
+    @JoinTable(name = "Employee_Cooking",
+            joinColumns = @JoinColumn(name = "employee"),
+            inverseJoinColumns = @JoinColumn(name = "cooking"))
     private Set<Cooking> cooking = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "employee_qualityControl",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "qualityControl_id"))
+    @JoinTable(name = "Employee_QualityControl",
+            joinColumns = @JoinColumn(name = "employee"),
+            inverseJoinColumns = @JoinColumn(name = "qualityControl"))
     private Set<QualityControl> qualityControl = new HashSet<>();
 
     @OneToMany(mappedBy = "courier", cascade = CascadeType.ALL, orphanRemoval = true)

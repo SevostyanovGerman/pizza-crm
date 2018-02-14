@@ -15,7 +15,7 @@ public class DeliveryOrder {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "courier_id")
+    @JoinColumn(name = "courier")
     private Employee courier;
 
     private LocalDateTime checkOutTime;
@@ -23,7 +23,7 @@ public class DeliveryOrder {
     private LocalDateTime timeReturn;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "salesPoint_id")
+    @JoinColumn(name = "salesPoint")
     private SalesPoint salesPoint;
 
     @OneToMany(mappedBy = "deliveryOrder", cascade = CascadeType.ALL, orphanRemoval = true)

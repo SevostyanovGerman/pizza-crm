@@ -17,7 +17,7 @@ public class Cooking {
     private Set<Employee> employee = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "clientOrder")
     private Order order;
 
     @ManyToMany(mappedBy = "cooking")
@@ -34,7 +34,7 @@ public class Cooking {
     private QualityControl qualityControl;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "salesPoint_id")
+    @JoinColumn(name = "salesPoint")
     private SalesPoint salesPoint;
 
     public Cooking() {

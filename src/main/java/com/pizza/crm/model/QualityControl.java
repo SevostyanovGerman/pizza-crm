@@ -26,7 +26,7 @@ public class QualityControl {
     private LocalDateTime createTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "salesPoint_id")
+    @JoinColumn(name = "salesPoint")
     private SalesPoint salesPoint;
 
     public QualityControl() {

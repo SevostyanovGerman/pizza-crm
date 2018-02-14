@@ -22,9 +22,9 @@ public class Category {
     private String name;
 
     @ManyToMany
-    @JoinTable(name = "dish_category",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "dish_id"))
+    @JoinTable(name = "Dish_Category",
+            joinColumns = @JoinColumn(name = "category"),
+            inverseJoinColumns = @JoinColumn(name = "dish"))
     @JsonBackReference
     private Set<Dish> dish;
 
@@ -33,11 +33,11 @@ public class Category {
         this.dish = dish;
     }
 
-    public Category(String name) {
-        this.name = name;
+    public Category() {
     }
 
-    public Category() {
+    public Category(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -66,9 +66,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return name;
     }
 }
