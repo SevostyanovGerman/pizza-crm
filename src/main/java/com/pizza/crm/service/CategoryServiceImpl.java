@@ -56,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void updateCategoriesDish(Long id, Set<Dish> dish) {
         Category categoryDb = categoryRepository.findById(id).get();
-        categoryDb.setDish(dish);
+        categoryDb.setDishes(dish);
         categoryRepository.save(categoryDb);
     }
 }

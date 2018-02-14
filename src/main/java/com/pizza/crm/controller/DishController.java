@@ -3,6 +3,7 @@ package com.pizza.crm.controller;
 import com.pizza.crm.model.Dish;
 import com.pizza.crm.service.CategoryService;
 import com.pizza.crm.service.DishService;
+import com.pizza.crm.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,9 @@ public class DishController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private IngredientService ingredientService;
+
     @GetMapping({"", "/"})
     public String dishList(Model model) {
         model.addAttribute("dishList", dishService.getAll());
@@ -32,6 +36,7 @@ public class DishController {
         if (dishOptional.isPresent()) {
             model.addAttribute("dish", dishOptional.get());
             model.addAttribute("allDishCategories", dishService.getAvailableCategories(dishOptional.get()));
+            model.addAttribute("allDishIngredients", dishService.getAvailableIngredients(dishOptional.get()));
             return "admin/dish/edit";
         }
         return "admin/dish";
@@ -47,6 +52,7 @@ public class DishController {
     public String newDish(Model model) {
         model.addAttribute("dish", new Dish("Новое блюдо"));
         model.addAttribute("allDishCategories", categoryService.getAll());
+        model.addAttribute("allDishIngredients", ingredientService.getAll());
         return "admin/dish/edit";
     }
 

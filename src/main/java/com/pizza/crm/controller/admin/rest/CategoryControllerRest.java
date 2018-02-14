@@ -28,7 +28,7 @@ public class CategoryControllerRest {
     @RequestMapping(value = "/get/categoriesdish")
     public ResponseEntity<?> getDishToCategories(@RequestParam("name") @Validated String name) {
         Category category = categoryService.getCategoryByName(name);
-        return ResponseEntity.ok(category.getDish());
+        return ResponseEntity.ok(category.getDishes());
     }
 
 }

@@ -4,11 +4,13 @@ package com.pizza.crm.init;
 import com.pizza.crm.model.AddedCategory;
 import com.pizza.crm.model.Category;
 import com.pizza.crm.model.Dish;
+import com.pizza.crm.model.Ingredient;
 import com.pizza.crm.model.security.Role;
 import com.pizza.crm.model.security.User;
 import com.pizza.crm.service.AddedCategoryService;
 import com.pizza.crm.service.CategoryService;
 import com.pizza.crm.service.DishService;
+import com.pizza.crm.service.IngredientService;
 import com.pizza.crm.service.security.RoleService;
 import com.pizza.crm.service.security.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,9 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     @Autowired
     private DishService dishService;
 
+    @Autowired
+    private IngredientService ingredientService;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         Role adminRole = new Role("ADMIN");
@@ -56,31 +61,11 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         Dish dishRol = new Dish("Roll philadelphia", 350);
         Dish dishRol1 = new Dish("Roll california", 300);
         Dish dishRol2 = new Dish("Roll dragon", 400);
-//
-//        Category dc1 = new Category("Закуски");
-//        Category dc2 = new Category("Пицца");
-//        Category dc3 = new Category("Компоты/морсы");
-//        Category dc4 = new Category("Кофе/чай");
-//        Category dc5 = new Category("С собой");
 
-//        categoryService.saveAll(Arrays.asList(dc1, dc2, dc3, dc4, dc5));
-//
-//        Dish d1 = new Dish("Крылья куриные");
-//        Dish d2 = new Dish("Чемпионская 35см");
-//        Dish d3 = new Dish("Барбекю 35см");
-//
-//        d1.addCategory(dc1);
-//
-//        d2.addCategory(dc2);
-//
-//        d3.addCategory(dc2);
-//
-//        dishService.saveAll(Arrays.asList(d1, d2, d3));
+        Ingredient ingredient = new Ingredient("Dough", 1.0, "1", "kg");
+        ingredientService.save(ingredient);
 
-//        Dish dishPizza = new Dish("Pizza margarita");
-//        Dish dishRol = new Dish("Rol Folodelfia");
-//        Dish dishRol1 = new Dish("Rol kolofornia");
-
+        dishPizza.addIngredient(ingredient);
 
         dishService.save(dishPizza);
         dishService.save(dishRol);

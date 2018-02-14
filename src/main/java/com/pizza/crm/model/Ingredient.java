@@ -1,6 +1,7 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ public class Ingredient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
     private String name;
 
     private double price;
@@ -82,6 +84,14 @@ public class Ingredient {
         this.unit = unit;
     }
 
+    public Set<Dish> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(Set<Dish> dishes) {
+        this.dishes = dishes;
+    }
+
     public Set<InvoiceTab> getInvoiceTab() {
         return invoiceTab;
     }
@@ -98,11 +108,8 @@ public class Ingredient {
         this.residueRegister = residueRegister;
     }
 
-    public Set<Dish> getDishes() {
-        return dishes;
-    }
-
-    public void setDishes(Set<Dish> dishes) {
-        this.dishes = dishes;
+    @Override
+    public String toString() {
+        return name;
     }
 }

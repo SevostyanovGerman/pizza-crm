@@ -1,8 +1,7 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,8 +13,7 @@ public class Dish {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Size(min = 1)
+	@NotBlank
     @Column(name = "name", unique = true)
     private String name;
 
@@ -80,6 +78,20 @@ public class Dish {
 
     public void setIngredient(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
+	}
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void addIngredient(Ingredient ingredient) {
+        ingredients.add(ingredient);
+        ingredient.getDishes().add(this);
+    }
+
+    public void removeIngredient(Ingredient ingredient) {
+        ingredients.remove(ingredient);
+        ingredient.getDishes().remove(this);
     }
 
     public void setCategories(Set<Category> categories) {
@@ -90,19 +102,9 @@ public class Dish {
         return categories;
     }
 
-//    public void addCategory(Category newCategory) {
-//        categories.add(newCategory);
-//        //newCategory.getDish().add(this);
-//    }
-//
-//    public void removeCategory(Category removedCategory) {
-//        categories.remove(removedCategory);
-//        //removedCategory.getDish().remove(this);
-//    }
-
     @Override
     public String toString() {
         return name;
-    }
+	}
 
 }

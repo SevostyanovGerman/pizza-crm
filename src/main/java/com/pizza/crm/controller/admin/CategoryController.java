@@ -64,7 +64,7 @@ public class CategoryController {
         Category category = categoryService.findById(id).get();
         model.addAttribute("categoriesName", category.getName());
         model.addAttribute("categoriesId", category.getId());
-        model.addAttribute("categoriesDish", category.getDish());
+        model.addAttribute("categoriesDish", category.getDishes());
         model.addAttribute("allDish", dishService.getAll());
         return "moreCategoriesInfo";
     }

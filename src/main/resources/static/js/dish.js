@@ -18,6 +18,25 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+    let options = {
+        valueNames: ['name']
+    };
+
+    new List('ingredient', options);
+    new List('ingredientAll', options);
+
+    $(function () {
+        $("#dishIngredientList, #allDishIngredientList").sortable({
+            connectWith: ".connectedSortable",
+            update: function (event, ui) {
+                new List('ingredient', options);
+                new List('ingredientAll', options);
+            }
+        }).disableSelection();
+    });
+});
+
+$(document).ready(function () {
     let csrfToken = $("meta[name='_csrf']").attr("content");
     let csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
@@ -25,12 +44,19 @@ $(document).ready(function () {
         let dish = {
             id: undefined,
             name: undefined,
-            categories: []
+            categories: [],
+            ingredients: []
         };
         dish.id = $(".dish-id").val();
         dish.name = $(".dish-name").val();
         $(".dc-list > p").each(function () {
             dish.categories.push({
+                "id": $(this).attr("value"),
+                "name": $(this).text()
+            });
+        });
+        $(".di-list > p").each(function () {
+            dish.ingredients.push({
                 "id": $(this).attr("value"),
                 "name": $(this).text()
             });

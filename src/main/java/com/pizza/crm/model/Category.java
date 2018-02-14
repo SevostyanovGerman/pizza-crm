@@ -3,8 +3,7 @@ package com.pizza.crm.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,9 +15,8 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Size(min = 1)
-    @Column(name = "name", unique = true)
+    @NotBlank
+	@Column(name = "name", unique = true)
     private String name;
 
     @ManyToMany
@@ -26,11 +24,11 @@ public class Category {
             joinColumns = @JoinColumn(name = "category"),
             inverseJoinColumns = @JoinColumn(name = "dish"))
     @JsonBackReference
-    private Set<Dish> dish;
+    private Set<Dish> dishes;
 
-    public Category(String name, Set<Dish> dish) {
+    public Category(String name, Set<Dish> dishes) {
         this.name = name;
-        this.dish = dish;
+        this.dishes = dishes;
     }
 
     public Category() {
@@ -56,12 +54,12 @@ public class Category {
         this.name = name;
     }
 
-    public Set<Dish> getDish() {
-        return dish;
+    public Set<Dish> getDishes() {
+        return dishes;
     }
 
-    public void setDish(Set<Dish> dish) {
-        this.dish = dish;
+    public void setDishes(Set<Dish> dishes) {
+        this.dishes = dishes;
     }
 
     @Override
