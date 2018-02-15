@@ -7,7 +7,16 @@ function makeRow(name, price) {
     $("#result").append(markup)
 }
 
+function orderTime() {
+    var dt = new Date();
+    var time = dt.getHours() + ":" + dt.getMinutes();
+    if ($('#orderTime').is(':empty')){
+        $('#orderTime').html(time)
+    }
+}
+
 function setCashierTable(name, price) {
+    orderTime();
     makeRow(name, price);
     sum(price)
 }

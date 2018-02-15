@@ -1,0 +1,42 @@
+715  [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Starting PizzaCrmApplication on Dinars-iMac.local with PID 717 (/Users/dinpc/IdeaProjects/pizza-crm/target/classes started by dinpc in /Users/dinpc/IdeaProjects/pizza-crm)
+722  [restartedMain] DEBUG com.pizza.crm.PizzaCrmApplication - Running with Spring Boot v2.0.0.M7, Spring v5.0.2.RELEASE
+726  [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - No active profile set, falling back to default profiles: default
+7293 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Started PizzaCrmApplication in 7.024 seconds (JVM running for 8.152)
+14005 [http-nio-8080-exec-1] DEBUG c.p.c.s.s.UserDetailsServiceImpl - Trying to find user with pincode: 'admin'
+14064 [http-nio-8080-exec-1] DEBUG c.p.c.s.s.UserDetailsServiceImpl - Found user: User{id=3, pincode='admin', enabled=true, roles=[Role{id=1, name='ADMIN'}, Role{id=2, name='USER'}]}
+2023353 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Starting PizzaCrmApplication on Dinars-iMac.local with PID 717 (/Users/dinpc/IdeaProjects/pizza-crm/target/classes started by dinpc in /Users/dinpc/IdeaProjects/pizza-crm)
+2023354 [restartedMain] DEBUG com.pizza.crm.PizzaCrmApplication - Running with Spring Boot v2.0.0.M7, Spring v5.0.2.RELEASE
+2023355 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - No active profile set, falling back to default profiles: default
+2025719 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Started PizzaCrmApplication in 2.566 seconds (JVM running for 2026.603)
+2180810 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Starting PizzaCrmApplication on Dinars-iMac.local with PID 717 (/Users/dinpc/IdeaProjects/pizza-crm/target/classes started by dinpc in /Users/dinpc/IdeaProjects/pizza-crm)
+2180810 [restartedMain] DEBUG com.pizza.crm.PizzaCrmApplication - Running with Spring Boot v2.0.0.M7, Spring v5.0.2.RELEASE
+2180811 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - No active profile set, falling back to default profiles: default
+2182794 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Started PizzaCrmApplication in 2.306 seconds (JVM running for 2183.68)
+2189480 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Starting PizzaCrmApplication on Dinars-iMac.local with PID 717 (/Users/dinpc/IdeaProjects/pizza-crm/target/classes started by dinpc in /Users/dinpc/IdeaProjects/pizza-crm)
+2189481 [restartedMain] DEBUG com.pizza.crm.PizzaCrmApplication - Running with Spring Boot v2.0.0.M7, Spring v5.0.2.RELEASE
+2189481 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - No active profile set, falling back to default profiles: default
+2191926 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Started PizzaCrmApplication in 2.48 seconds (JVM running for 2192.811)
+2211637 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Starting PizzaCrmApplication on Dinars-iMac.local with PID 717 (/Users/dinpc/IdeaProjects/pizza-crm/target/classes started by dinpc in /Users/dinpc/IdeaProjects/pizza-crm)
+2211637 [restartedMain] DEBUG com.pizza.crm.PizzaCrmApplication - Running with Spring Boot v2.0.0.M7, Spring v5.0.2.RELEASE
+2211637 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - No active profile set, falling back to default profiles: default
+2213961 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Started PizzaCrmApplication in 2.354 seconds (JVM running for 2214.846)
+2225605 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Starting PizzaCrmApplication on Dinars-iMac.local with PID 717 (/Users/dinpc/IdeaProjects/pizza-crm/target/classes started by dinpc in /Users/dinpc/IdeaProjects/pizza-crm)
+2225605 [restartedMain] DEBUG com.pizza.crm.PizzaCrmApplication - Running with Spring Boot v2.0.0.M7, Spring v5.0.2.RELEASE
+2225605 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - No active profile set, falling back to default profiles: default
+2227672 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Started PizzaCrmApplication in 2.105 seconds (JVM running for 2228.558)
+2234297 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Starting PizzaCrmApplication on Dinars-iMac.local with PID 717 (/Users/dinpc/IdeaProjects/pizza-crm/target/classes started by dinpc in /Users/dinpc/IdeaProjects/pizza-crm)
+2234297 [restartedMain] DEBUG com.pizza.crm.PizzaCrmApplication - Running with Spring Boot v2.0.0.M7, Spring v5.0.2.RELEASE
+2234298 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - No active profile set, falling back to default profiles: default
+2236472 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Started PizzaCrmApplication in 2.204 seconds (JVM running for 2237.358)
+2284873 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Starting PizzaCrmApplication on Dinars-iMac.local with PID 717 (/Users/dinpc/IdeaProjects/pizza-crm/target/classes started by dinpc in /Users/dinpc/IdeaProjects/pizza-crm)
+2284873 [restartedMain] DEBUG com.pizza.crm.PizzaCrmApplication - Running with Spring Boot v2.0.0.M7, Spring v5.0.2.RELEASE
+2284873 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - No active profile set, falling back to default profiles: default
+2286800 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Started PizzaCrmApplication in 1.955 seconds (JVM running for 2287.687)
+2300945 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Starting PizzaCrmApplication on Dinars-iMac.local with PID 717 (/Users/dinpc/IdeaProjects/pizza-crm/target/classes started by dinpc in /Users/dinpc/IdeaProjects/pizza-crm)
+2300945 [restartedMain] DEBUG com.pizza.crm.PizzaCrmApplication - Running with Spring Boot v2.0.0.M7, Spring v5.0.2.RELEASE
+2300945 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - No active profile set, falling back to default profiles: default
+2302870 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Started PizzaCrmApplication in 1.953 seconds (JVM running for 2303.756)
+1021 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Starting PizzaCrmApplication on Dinars-iMac.local with PID 947 (/Users/dinpc/IdeaProjects/pizza-crm/target/classes started by dinpc in /Users/dinpc/IdeaProjects/pizza-crm)
+1026 [restartedMain] DEBUG com.pizza.crm.PizzaCrmApplication - Running with Spring Boot v2.0.0.M7, Spring v5.0.2.RELEASE
+1032 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - No active profile set, falling back to default profiles: default
+7522 [restartedMain] INFO  com.pizza.crm.PizzaCrmApplication - Started PizzaCrmApplication in 7.074 seconds (JVM running for 8.095)
