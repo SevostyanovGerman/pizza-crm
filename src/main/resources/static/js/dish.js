@@ -44,11 +44,13 @@ $(document).ready(function () {
         let dish = {
             id: undefined,
             name: undefined,
+            price: undefined,
             categories: [],
             ingredients: []
         };
         dish.id = $(".dish-id").val();
         dish.name = $(".dish-name").val();
+        dish.price = $("#price").val();
         $(".dc-list > p").each(function () {
             dish.categories.push({
                 "id": $(this).attr("value"),

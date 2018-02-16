@@ -44,7 +44,7 @@ public class DishController {
 
     @PostMapping("/update")
     public String updateDish(@RequestBody Dish dish) {
-        dishService.save(dish);
+            dishService.save(dish);
         return "redirect:/admin/dish";
     }
 
