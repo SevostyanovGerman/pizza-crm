@@ -83,6 +83,14 @@ ul {
     padding: 0 !important;
 }
 
+.order-table td {
+    border: none;
+}
+
+.order-table tr.highlight td {
+    background-color: #dfe385;
+}
+
 section {
     margin-left: 12px;
     background-color: #3e4040;
@@ -185,7 +193,7 @@ section .left-panel-body table {
 }
 
 section .left-panel-body table tr {
-    background-color: #dfe385;
+    background-color: white;
     line-height: 4vh;
 }
 

@@ -6,19 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>Pizza crm</title>
+    <title>Order</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/style.css}"
+          href="../static/css/style.css"
+          rel="stylesheet" media="screen">
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script src="../static/js/login.js"
+    <script src="../static/js/order.js"
             th:src="@{/js/order.js}"></script>
-
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -27,7 +32,7 @@
     <div class="row">
         <div class="col no-margin">
             <div class="header">
-                <p class="header-left">iiko v5.2</p>
+                <p class="header-left">Pizza CRM</p>
                 <p class="header-left">11.01.2018 12:20</p>
                 <p class="header-right">Юлия Савенко</p>
                 <span></span>
@@ -58,8 +63,9 @@
                         <p>Юлия Савенко</p>
                     </div>
                 </div>
-                <div class="left-panel-body">
-                    <table id="result">
+                <!--Current order table-->
+                <div class="left-panel-body" style="overflow: auto">
+                    <table id="orderTable" class="order-table table table-sm table-condensed">
                         <tr>
 
                         </tr>
@@ -82,7 +88,7 @@
                                 <p>
                                     подытог:
                                 </p>
-                                <span id="sum">
+                                <span id="total">
                                     0
                                 </span>
                             </td>
@@ -98,11 +104,12 @@
                         </tr>
                     </table>
                 </div>
+                <!--Dish quantity control-->
                 <div class="left-panel-body-2">
-                    <a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                    <a href="#" class="add-quantity"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                    <a href="#" class="subtract-quantity"><i class="fa fa-minus" aria-hidden="true"></i></a>
                     <a href="#">123</a>
-                    <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a href="#" class="remove-selected-dish"><i class="fa fa-times" aria-hidden="true"></i></a>
                 </div>
             </div>
         </div>
@@ -120,7 +127,7 @@
             </div>
             <div class="middle-panel-body">
                 <div id="category">
-                    <a th:each="category : ${category}" th:text="${category.name}" th:class="middle-panel-white"
+                    <a th:each="category : ${categories}" th:text="${category.name}" th:class="middle-panel-white"
                        th:styleappend="'background-color: ' + ${category.color}" th:id="${category.name}"
                        th:onclick="'getProduct(\'' + ${category.name} + '\')'" href="#"></a>
                 </div>
