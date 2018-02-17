@@ -8,17 +8,22 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Pizza crm</title>
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
-            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"-->
+          <!--th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"-->
+            <!--th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script src="../static/js/login.js"
-            th:src="@{/js/order.js}"></script>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <script src="../static/js/login.js" th:src="@{/js/order.js}"></script>
 
 </head>
 
@@ -69,10 +74,12 @@
                     <table>
                         <tr>
                             <td rowspan="2" class="table-td-1">
-                                <p>скидка:</p>
-                                <span>0,00%</span>
-                                <p>надбавка:</p>
-                                <span>0,00%</span>
+                                <a href="#" onclick="ModalShow()">
+                                    <p>скидка:</p>
+                                    <span id="discount">0.00</span><span> %</span>
+                                    <p>надбавка:</p>
+                                    <span id="extraCharge">0.00</span><span> %</span>
+                                </a>
                             </td>
                             <td class="table-td-2">
                                 <p>0005 Переод 1</p>
@@ -93,7 +100,7 @@
                                     Прейскурант для блюда
                                 </p>
                             <td class="table-td-3">
-                                <p class="price">0</p>
+                                <p class="price" id="lastPrice">0</p>
                             </td>
                         </tr>
                     </table>
@@ -178,5 +185,32 @@
         </div>
     </div>
 </section>
+<!-- Button trigger modal -->
+<style>
+    .modal {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+</style>
+<!-- Modal -->
+<div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Установите скидку/наценку</p>
+                <form action="#">
+                    <span>Скидка:</span>
+                    <input type="tel" name="discountForm" id="discountForm" onchange="ChangeDiscount()" pattern="\d+(,\d{2})?">
+                    <span>Наценка:</span>
+                    <input type="text" name="extraChargeForm" id="extraChargeForm" onchange="ChangeExtraCharge()">
+                </form>
+                <button type="button" class="btn btn-success" onclick="SaveChange()">Сохранить</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

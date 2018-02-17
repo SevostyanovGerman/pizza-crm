@@ -1,6 +1,10 @@
 var host = window.location.origin;
 var csrfToken = $("meta[name='_csrf']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+var discount = 0.00;
+var extraCharge = 0.00;
+var cost = 0;
+var price;
 
 function makeRow(name, price) {
     var markup = "<tr><td>" + name + "</td><td>" + price + "</td></tr>";
@@ -13,10 +17,15 @@ function setCashierTable(name, price) {
 }
 
 function sum(data) {
-    var price = parseInt($("#sum").text());
     var dPrice = parseInt(data);
-    price += dPrice;
-    $("#sum").html(price)
+    cost += dPrice;
+    if (discount > 0) {
+        price = cost - (cost * discount / 100);
+    } else {
+        price = cost + (cost * extraCharge / 100);
+    }
+    $("#sum").html(cost);
+    $("#lastPrice").html(price);
 }
 
 function getProduct(name) {
@@ -32,7 +41,7 @@ function getProduct(name) {
         success: function (data) {
             $("#dish").empty();
             $.each(data, function (key, value) {
-                $("#dish").append("<a onclick='setCashierTable(\""+value.name+"\", " + value.price + ")' class=\"middle-panel-white\" href=\"#\"><p>" + value.name + "</p>" + value.price + "</a>")
+                $("#dish").append("<a onclick='setCashierTable(\"" + value.name + "\", " + value.price + ")' class=\"middle-panel-white\" href=\"#\"><p>" + value.name + "</p>" + value.price + "</a>")
             });
             $("#dish").css({"display": "block"});
         },
@@ -45,5 +54,34 @@ function getCategories() {
     $("#backward").addClass("disable");
     $("#category").css({"display": "block"});
     $("#dish").css({"display": "none"});
+
 }
 
+function ModalShow() {
+    $("#exampleModal").modal('show');
+    $("#discountForm").val($("#discount").text());
+    $("#extraChargeForm").val($("#extraCharge").text());
+}
+
+function ChangeDiscount() {
+    $("#extraChargeForm").val("0.00");
+}
+
+function ChangeExtraCharge() {
+    $("#discountForm").val("0.00");
+}
+
+function SaveChange() {
+    discount = parseFloat($('input[name="discountForm"]').val());
+    extraCharge = parseFloat($('input[name="extraChargeForm"]').val());
+    $("#discount").html(discount);
+    $("#extraCharge").html(extraCharge);
+    $("#exampleModal").modal('hide');
+    if (discount > 0) {
+        price = cost - (cost * discount / 100);
+
+    } else {
+        price = cost + (cost * extraCharge / 100);
+    }
+    $("#lastPrice").html(price);
+}

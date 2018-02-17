@@ -232,6 +232,17 @@ section .left-panel .table-td-1 {
     width: 30%;
 }
 
+section .left-panel .table-td-1 a {
+    width: 100%;
+    color: #3c3e3e;
+    text-decoration: none;
+}
+
+section .left-panel .table-td-1 a:hover {
+    color: #3c3e3e;
+    text-decoration: none;
+}
+
 section .left-panel .table-td-1 p {
     display: inline-block;
     width: 100%;
@@ -254,6 +265,12 @@ section .left-panel .table-td-2 {
 section .left-panel .table-td-2 p {
     font-size: 1.1rem;
     line-height: 2.5vh;
+}
+
+section #lastPrice {
+    font-size: 2rem;
+    line-height: 2.5vh;
+    font-weight: 400;
 }
 
 section .left-panel .table-td-3 p {
@@ -461,4 +478,41 @@ section .footer-item-3 {
 
 a .disable {
     color: #aeaeae;
+}
+
+.modal-body button {
+    margin-top: 0.5rem;
+    display: inline-block;
+    width: 100%;
+    border-radius: 0px;
+}
+
+.modal-body p {
+    text-align: center;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 100;
+}
+
+.modal-body input {
+    border: none;
+    padding-left: 1rem;
+    display: inline-block;
+    width: 100%;
+    height: 2rem;
+    font-size: 1.5rem;
+    font-weight: 100;
+    margin-bottom: 0.5rem;
+}
+
+.modal-body span {
+    margin-top: 1rem;
+    text-align: center;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 100;
+}
+
+.modal-content {
+    background-color: #3c3e3e;
 }

@@ -63,9 +63,10 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         Dish dishRol2 = new Dish("Roll dragon", 400);
 
         Ingredient ingredient = new Ingredient("Dough", 1.0, "1", "kg");
+
         ingredientService.save(ingredient);
 
-        dishPizza.addIngredient(ingredient);
+        //dishPizza.addIngredient(ingredient);
 
         dishService.save(dishPizza);
         dishService.save(dishRol);
