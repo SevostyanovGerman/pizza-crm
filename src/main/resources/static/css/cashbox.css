@@ -1,0 +1,101 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.body {
+    margin-bottom: 60px;
+}
+
+.cashbox-header-menu {
+    height: 7vh;
+    background-color: #fff;
+    position: relative;
+}
+
+.cashbox-header-menu p {
+    height: 7vh;
+    line-height: 7vh;
+    text-align: center;
+    font-size: 25px;
+}
+
+.cashbox-header-menu a {
+    height: 7vh;
+    line-height: 7vh;
+    color: #000;
+    float: right;
+    text-align: center;
+    font-size: 3.5rem;
+}
+
+.cashbox-panel-total {
+    height: 100px;
+    line-height: 100px;
+}
+
+.cashbox-total {
+    background-color: white;
+    color: black;
+    text-align: right;
+    height: 100px;
+    line-height: 100px;
+    font-size: 82px;
+}
+
+.cahsbox-left-panel-body {
+    height: 24vh;
+    background-color: #fff;
+    color: #000;
+}
+
+.cashbox-left-panel-header {
+    height: 7vh;
+    line-height: 7vh;
+    background-color: #DCE0E4;
+    color: black;
+    font-size: 1.5rem;
+}
+
+.cashbox-panel-btn {
+    border-radius: 0;
+    padding: 22px;
+    font-size: 24px;
+    opacity: 0.8
+}
+
+.cashbox-col {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.cashbox-first-col {
+    padding-right: 2px;
+}
+
+.cashbox-btn-darker {
+    background-color: #282828;
+}
+
+.disabled {
+    color: lightgray;
+}
+
+.cashbox-footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #1a1a1a;
+    height: 60px;
+    line-height: 60px;
+}
+
+.cashbox-footer-item {
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    font-size: 18px;
+    margin-top: 10px;
+}
