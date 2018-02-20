@@ -14,7 +14,7 @@ public class OrderController {
 
     @RequestMapping("/order")
     public String orderPage(Model model) {
-        model.addAttribute("category", categoryService.findAllCategories());
+        model.addAttribute("categories", categoryService.findAllCategories());
         return "order";
     }
 }

@@ -1,96 +1,183 @@
-var host = window.location.origin;
-var csrfToken = $("meta[name='_csrf']").attr("content");
-var csrfHeader = $("meta[name='_csrf_header']").attr("content");
-var discount = 0.00;
-var extraCharge = 0.00;
-var cost = 0;
-var price;
+let csrfToken = $("meta[name='_csrf']").attr("content");
+let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+let colonToggler = false;
 
-function makeRow(name, price) {
-    var markup = "<tr><td>" + name + "</td><td>" + price + "</td></tr>";
-    $("#result").append(markup)
-}
-
-function orderTime() {
-    var dt = new Date();
-    var time = dt.getHours() + ":" + dt.getMinutes();
-    if ($('#orderTime').is(':empty')){
-        $('#orderTime').html(time)
-    }
-}
-
-function setCashierTable(name, price) {
-    orderTime();
-    makeRow(name, price);
-    sum(price)
-}
-
-function sum(data) {
-    var dPrice = parseInt(data);
-    cost += dPrice;
-    if (discount > 0) {
-        price = cost - (cost * discount / 100);
-    } else {
-        price = cost + (cost * extraCharge / 100);
-    }
-    $("#sum").html(cost);
-    $("#lastPrice").html(price);
-}
-
-function getProduct(name) {
-    $("#backward").removeClass("disable");
-    $("#category").css({"display": "none"});
-    $.ajax({
-        type: "POST",
-        url: "/get/categoriesdish",
-        data: "name=" + name,
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader(csrfHeader, csrfToken);
-        },
-        success: function (data) {
-            $("#dish").empty();
-            $.each(data, function (key, value) {
-                $("#dish").append("<a onclick='setCashierTable(\"" + value.name + "\", " + value.price + ")' class=\"middle-panel-white\" href=\"#\"><p>" + value.name + "</p>" + value.price + "</a>")
-            });
-            $("#dish").css({"display": "block"});
-        },
-        error: function (e) {
-        }
+function displayDateTime() {
+    let dt = new Date().toLocaleTimeString('ru-RU', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
     });
+    let dateTimeParts = dt.split(',');
+    let dateParts = dateTimeParts[0].split('.');
+    let timeParts = dateTimeParts[1].split(':');
+    $('.clock-days').text(dateParts[0]);
+    $('.clock-months').text(dateParts[1]);
+    $('.clock-years').text(dateParts[2]);
+    $('.clock-hours').text(timeParts[0]);
+    $('.clock-minutes').text(timeParts[1]);
+    $(".clock-colon").css({ visibility: colonToggler ? 'visible' : 'hidden'});
+    colonToggler = !colonToggler;
 }
 
-function getCategories() {
-    $("#backward").addClass("disable");
-    $("#category").css({"display": "block"});
-    $("#dish").css({"display": "none"});
+$(document).ready(function () {
+    displayDateTime();
+    setInterval(displayDateTime, 1000);
+});
 
-}
+$(document).ready(function () {
+    let dt = new Date();
+    let time = dt.getHours() + ":" + dt.getMinutes();
+    $('#orderTime').html(time);
+});
 
-function ModalShow() {
-    $("#exampleModal").modal('show');
-    $("#discountForm").val($("#discount").text());
-    $("#extraChargeForm").val($("#extraCharge").text());
-}
+$(document).ready(function () {
+    $(".category-item").click(function () {
+        $("#backward").removeClass("disable");
+        $("#category").css({"display": "none"});
+        $.ajax({
+            type: "POST",
+            url: "/get/categoriesdish",
+            data: "name=" + $(this).text(),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (data) {
+                $("#dish").empty().css({"display": "block"});
+                $.each(data, function (key, value) {
+                    $("#dish").append($([
+                        "<a href='#' class='order-item middle-panel-white'",
+                        "data-item-name=\"" + value.name + "\"",
+                        "data-quantity='1'",
+                        "data-price=" + value.price,
+                        ">",
+                        "<p>" + value.name + "</p>",
+                        "<p>" + value.price + "</p>",
+                        "</a>"
+                    ].join("\n")));
+                });
+            },
+            error: function (e) {
+            }
+        });
+    });
+});
 
-function ChangeDiscount() {
-    $("#extraChargeForm").val("0.00");
-}
+$(document).ready(function () {
+    $("#backward").click(function () {
+        $(this).addClass("disable");
+        $("#category").css({"display": "block"});
+        $("#dish").css({"display": "none"});
+    })
+});
 
-function ChangeExtraCharge() {
-    $("#discountForm").val("0.00");
-}
+$(document).ready(function () {
+    $('.discount-extraCharge-modal-show').click(function () {
+        $("#discount-extraCharge-modal").modal('show');
+        $("#discountForm").val($("#discount").text());
+        $("#extraChargeForm").val($("#extraCharge").text());
+    });
+});
 
-function SaveChange() {
-    discount = parseFloat($('input[name="discountForm"]').val());
-    extraCharge = parseFloat($('input[name="extraChargeForm"]').val());
-    $("#discount").html(discount);
-    $("#extraCharge").html(extraCharge);
-    $("#exampleModal").modal('hide');
-    if (discount > 0) {
-        price = cost - (cost * discount / 100);
+$(document).ready(function () {
+    $('.discount-extraCharge-modal-save').click(function () {
+        let discount = parseFloat($('input[name="discountForm"]').val());
+        let extraCharge = parseFloat($('input[name="extraChargeForm"]').val());
+        $("#discount").html(discount).val(discount);
+        $("#extraCharge").html(extraCharge).val(extraCharge);
+        $("#discount-extraCharge-modal").modal('hide');
+        updateTotal();
+    });
+});
 
-    } else {
-        price = cost + (cost * extraCharge / 100);
+$(document).ready(function () {
+    $('.order-table').on('click', 'tr', function () {
+        $(this).addClass('highlight').siblings().removeClass('highlight');
+    });
+});
+
+$(document).ready(function () {
+    $('.add-quantity').click(function () {
+        let tr = getSelectedRow();
+        let quantity = parseFloat(tr.find('td:eq(0)').text());
+        quantity++;
+        tr.find('td:eq(0)').text(quantity);
+        updateTotal();
+    });
+});
+
+$(document).ready(function () {
+    $('.subtract-quantity').click(function () {
+        let tr = getSelectedRow();
+        let quantity = parseFloat(tr.find('td:eq(0)').text());
+        if (--quantity <= 0) {
+            tr.remove();
+            updateTotal();
+            return;
+        }
+        tr.find('td:eq(0)').text(quantity);
+        updateTotal();
+    });
+});
+
+$(document).ready(function () {
+    $('.remove-selected-dish').click(function () {
+        let tr = getSelectedRow();
+        tr.prev().addClass('highlight').siblings().removeClass('highlight');
+        updateTotal();
+        tr.remove();
+    });
+});
+
+$(document).ready(function () {
+    $('#dish').on('click', '.order-item', function (e) {
+        e.preventDefault();
+        $('.order-table').append($([
+            "<tr>",
+            "<td>" + $(this).data('quantity') + "</td>",
+            "<td>" + $(this).data('itemName') + "</td>",
+            "<td>" + $(this).data('price') + "</td>",
+        ].join("/n")));
+        updateTotal();
+    });
+});
+
+function getSelectedRow() {
+    let tr = $('.order-table tr.highlight');
+    if (tr.length === 0) {
+        tr = $('.order-table tr:last');
+        tr.addClass('highlight').siblings().removeClass('highlight');
     }
-    $("#lastPrice").html(price);
+    return tr;
+}
+
+function updateTotal() {
+    let rawTotal = 0;
+    $('.order-table tr').each(function () {
+        rawTotal += getRowTotal($(this));
+    });
+    let discount = parseFloat($("#discount").val());
+    let extraCharge = parseFloat($("#extraCharge").val());
+    let total = rawTotal;
+    if (!isNaN(discount) && discount > 0) {
+        total = rawTotal - rawTotal * discount / 100;
+    } else if (!isNaN(extraCharge) && extraCharge > 0) {
+        total = rawTotal + rawTotal * extraCharge / 100;
+    }
+    $('#rawTotal').html(rawTotal);
+    $('#total').html(total);
+}
+
+function getRowTotal(row) {
+    let quantity = parseFloat(row.find('td:eq(0)').text());
+    if (isNaN(quantity)) {
+        quantity = 0;
+    }
+    let price = parseFloat(row.find('td:eq(2)').text());
+    if (isNaN(price)) {
+        price = 0;
+    }
+    return quantity * price;
 }

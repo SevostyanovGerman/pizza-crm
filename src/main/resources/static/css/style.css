@@ -114,6 +114,13 @@ section .header span {
     border-radius: 50%;
 }
 
+section .header .header-clock {
+    line-height: 2.6vh;
+    display: inline-block;
+    font-size: 1.1rem;
+    color: white;
+}
+
 section .header-right {
     position: absolute;
     right: 5rem;
@@ -185,7 +192,7 @@ section .left-panel-body table {
 }
 
 section .left-panel-body table tr {
-    background-color: #dfe385;
+    background-color: white;
     line-height: 4vh;
 }
 
@@ -474,6 +481,18 @@ section .footer-item-2 a i {
 
 section .footer-item-3 {
     width: 40%;
+}
+
+.order-table tr {
+    cursor: pointer;
+}
+
+.order-table td {
+    border: none;
+}
+
+.order-table tr.highlight td {
+    background-color: #dfe385;
 }
 
 a .disable {

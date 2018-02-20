@@ -6,37 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>Pizza crm</title>
+    <title>Order</title>
 
-    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"-->
-          <!--th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>-->
-    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"-->
-            <!--th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/style.css}"
+          href="../static/css/style.css"
+          rel="stylesheet" media="screen">
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="../static/js/login.js" th:src="@{/js/order.js}"></script>
-
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="../static/js/order.js"
+            th:src="@{/js/order.js}"></script>
 </head>
 
 <body>
 <section>
-    <div class="row">
-        <div class="col no-margin">
-            <div class="header">
-                <p class="header-left">iiko v5.2</p>
-                <p class="header-left">11.01.2018 12:20</p>
-                <p class="header-right">Юлия Савенко</p>
-                <span></span>
-            </div>
+    <div class="row header">
+        <div class="col-4">
+            <p>Pizza CRM</p>
+            <p></p>p></p>
+            <p class="clock-days no-margin"></p><p class="no-margin">.</p>
+            <p class="clock-months no-margin"></p><p class="no-margin">.</p>
+            <p class="clock-years no-margin"></p><p class="no-margin">&nbsp;&nbsp;</p>
+            <p class="clock-hours no-margin"></p><p class="clock-colon no-margin">:</p>
+            <p class="clock-minutes no-margin"></p>
+        </div>
+        <div class="col offset-7 no-margin">
+            <p class="header-right">Юлия Савенко</p>
+            <span></span>
         </div>
     </div>
     <div class="header-menu">
@@ -63,8 +67,9 @@
                         <p>Юлия Савенко</p>
                     </div>
                 </div>
-                <div class="left-panel-body">
-                    <table id="result">
+                <!--Current order table-->
+                <div class="left-panel-body" style="overflow: auto">
+                    <table class="table table-sm table-condensed order-table">
                         <tr>
 
                         </tr>
@@ -74,22 +79,22 @@
                     <table>
                         <tr>
                             <td rowspan="2" class="table-td-1">
-                                <a href="#" onclick="ModalShow()">
+                                <a href="#" class="discount-extraCharge-modal-show">
                                     <p>скидка:</p>
-                                    <span id="discount">0.00</span><span> %</span>
+                                    <span id="discount">0</span><span> %</span>
                                     <p>надбавка:</p>
-                                    <span id="extraCharge">0.00</span><span> %</span>
+                                    <span id="extraCharge">0</span><span> %</span>
                                 </a>
                             </td>
                             <td class="table-td-2">
-                                <p>0005 Переод 1</p>
-                                <p>Основной прей</p>
+                                <p>0005 Период 1</p>
+                                <p>Основной</p>
                             </td>
                             <td class="table-td-3 first-price">
                                 <p>
                                     подытог:
                                 </p>
-                                <span id="sum">
+                                <span id="rawTotal">
                                     0
                                 </span>
                             </td>
@@ -100,16 +105,17 @@
                                     Прейскурант для блюда
                                 </p>
                             <td class="table-td-3">
-                                <p class="price" id="lastPrice">0</p>
+                                <p class="price" id="total">0</p>
                             </td>
                         </tr>
                     </table>
                 </div>
+                <!--Dish quantity control-->
                 <div class="left-panel-body-2">
-                    <a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                    <a href="#" class="add-quantity"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                    <a href="#" class="subtract-quantity"><i class="fa fa-minus" aria-hidden="true"></i></a>
                     <a href="#">123</a>
-                    <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    <a href="#" class="remove-selected-dish"><i class="fa fa-times" aria-hidden="true"></i></a>
                 </div>
             </div>
         </div>
@@ -117,7 +123,7 @@
         <div class="col-4 no-margin middle-panel">
             <div class="middle-panel-header">
                 <ul>
-                    <li><a href="#" onclick="getCategories()"><i class="fa fa-arrow-left disable" id="backward"
+                    <li><a href="#"><i class="fa fa-arrow-left disable" id="backward"
                                                                  aria-hidden="true"></i></a></li>
                     <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                     <li><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
@@ -127,9 +133,8 @@
             </div>
             <div class="middle-panel-body">
                 <div id="category">
-                    <a th:each="category : ${category}" th:text="${category.name}" th:class="middle-panel-white"
-                       th:styleappend="'background-color: ' + ${category.color}" th:id="${category.name}"
-                       th:onclick="'getProduct(\'' + ${category.name} + '\')'" href="#"></a>
+                    <a class="middle-panel-white category-item" th:each="category : ${categories}" th:text="${category.name}"
+                       th:styleappend="'background-color: ' + ${category.color}" th:id="${category.name}" href="#"></a>
                 </div>
                 <div id="dish"></div>
             </div>
@@ -185,28 +190,22 @@
         </div>
     </div>
 </section>
-<!-- Button trigger modal -->
-<style>
-    .modal {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
-    }
-</style>
 <!-- Modal -->
-<div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
+<div class="modal fade bd-example-modal-sm" id="discount-extraCharge-modal" tabindex="-1" role="dialog"
+     aria-labelledby="discount-extraCharge-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <p>Установите скидку/наценку</p>
                 <form action="#">
                     <span>Скидка:</span>
-                    <input type="tel" name="discountForm" id="discountForm" onchange="ChangeDiscount()" pattern="\d+(,\d{2})?">
+                    <input class="form-control" type="text" name="discountForm" id="discountForm"
+                           placeholder="0">
                     <span>Наценка:</span>
-                    <input type="text" name="extraChargeForm" id="extraChargeForm" onchange="ChangeExtraCharge()">
+                    <input class="form-control" type="text" name="extraChargeForm" id="extraChargeForm"
+                           placeholder="0">
                 </form>
-                <button type="button" class="btn btn-success" onclick="SaveChange()">Сохранить</button>
+                <button type="button" class="btn btn-success discount-extraCharge-modal-save">Сохранить</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
             </div>
         </div>
