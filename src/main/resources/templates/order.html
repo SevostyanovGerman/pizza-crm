@@ -17,7 +17,7 @@
     <link th:href="@{/css/style.css}"
           href="../static/css/style.css"
           rel="stylesheet" media="screen">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
@@ -32,10 +32,14 @@
         <div class="col-4">
             <p>Pizza CRM</p>
             <p></p>p></p>
-            <p class="clock-days no-margin"></p><p class="no-margin">.</p>
-            <p class="clock-months no-margin"></p><p class="no-margin">.</p>
-            <p class="clock-years no-margin"></p><p class="no-margin">&nbsp;&nbsp;</p>
-            <p class="clock-hours no-margin"></p><p class="clock-colon no-margin">:</p>
+            <p class="clock-days no-margin"></p>
+            <p class="no-margin">.</p>
+            <p class="clock-months no-margin"></p>
+            <p class="no-margin">.</p>
+            <p class="clock-years no-margin"></p>
+            <p class="no-margin">&nbsp;&nbsp;</p>
+            <p class="clock-hours no-margin"></p>
+            <p class="clock-colon no-margin">:</p>
             <p class="clock-minutes no-margin"></p>
         </div>
         <div class="col offset-7 no-margin">
@@ -124,8 +128,8 @@
             <div class="middle-panel-header">
                 <ul>
                     <li><a href="#"><i class="fa fa-arrow-left disable" id="backward"
-                                                                 aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                                       aria-hidden="true"></i></a></li>
+                    <li><a href="#" onclick="SearchModalShow()"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                     <li><a href="#"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                     <li><a href="#"><i class="fa fa-coffee" aria-hidden="true"></i></a></li>
                     <li><a href="#"><i class="fa fa-sun-o" aria-hidden="true"></i></a></li>
@@ -133,7 +137,8 @@
             </div>
             <div class="middle-panel-body">
                 <div id="category">
-                    <a class="middle-panel-white category-item" th:each="category : ${categories}" th:text="${category.name}"
+                    <a class="middle-panel-white category-item" th:each="category : ${categories}"
+                       th:text="${category.name}"
                        th:styleappend="'background-color: ' + ${category.color}" th:id="${category.name}" href="#"></a>
                 </div>
                 <div id="dish"></div>
@@ -211,5 +216,87 @@
         </div>
     </div>
 </div>
+<div class="modal fade bd-example-modal-lg" id="SearchModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>ПОИСК ТОВАРА</p>
+                <!--<button type="button" class="btn btn-success" onclick="SaveChange()">Сохранить</button>-->
+                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>-->
+                <div class="container" id="product1">
+                    <div class="row product list" id="product">
+                        <div class="col-3">
+                            <div class="productItem">
+                                <p class="nameProduct">1121</p>
+                                <p class="costProduct">450p</p>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="productItem">
+                                <p class="nameProduct">11311</p>
+                                <p class="costProduct">450p</p>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="productItem">
+                                <p class="nameProduct">11411</p>
+                                <p class="costProduct">450p</p>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="productItem">
+                                <p class="nameProduct">11211</p>
+                                <p class="costProduct">450p</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="container">
+                    <div class="row footer">
+                        <div class="footerSearch col-4">
+                            <input class="search" id="search-field" placeholder="Поиск"
+                                   style="height: 3rem; width: 100%; padding-left: 1rem; font-size: 1rem;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var options = {
+        valueNames: ['nameProduct']
+    };
+    var listObj = new List('product1', options);
+
+    function SearchModalShow() {
+        $("#SearchModal").modal('show');
+        $.ajax({
+            type: "POST",
+            url: "/get/dish",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (data) {
+                $("#product").empty();
+                var dish = JSON.parse(data);
+                dish.forEach(function (value) {
+                    $("#product").append("<div class=\"col-3\"><div class=\"productItem\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "p</p></div></div>")
+                });
+                listObj = new List('product1', options);
+            },
+            error: function (e) {
+            }
+        });
+    }
+
+    $('#search-field').on('keyup', function () {
+        var searchString = $(this).val();
+        listObj.search(searchString);
+    });
+</script>
 </body>
 </html>

@@ -291,7 +291,7 @@ section .left-panel .table-td-3 span {
     line-height: 3vh;
 }
 
-section .left-panel .table-td-3 .prace {
+section .left-panel .table-td-3 .price {
     font-size: 2.3rem;
     font-weight: 600;
 }
@@ -499,6 +499,13 @@ a .disable {
     color: #aeaeae;
 }
 
+.modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .modal-body button {
     margin-top: 0.5rem;
     display: inline-block;
@@ -533,5 +540,58 @@ a .disable {
 }
 
 .modal-content {
+    width: 100%;
     background-color: #3c3e3e;
 }
+
+#SearchModal .product {
+    margin-top: 1rem;
+}
+
+#SearchModal .productItem {
+    background-color: #ffffff;
+    color: #3c3e3e;
+    height: 3rem;
+    margin-top: 0.3rem;
+
+}
+
+#SearchModal .col-3 {
+    padding: 0rem 0.2rem;
+}
+
+#SearchModal .modal-body {
+    min-height: 10rem;
+}
+
+#SearchModal .col-6 {
+    padding: 0rem 0.2rem;
+}
+
+#SearchModal .modal-footer {
+    border-top: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: #000000;
+}
+
+.productItem .nameProduct {
+    display: inline-block;
+    width: 73%;
+    color: #3c3e3e;
+    font-weight: bold;
+/ / line-height: 1 rem;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.productItem .costProduct {
+    display: inline-block;
+    width: 24%;
+    color: #3c3e3e;
+    font-weight: lighter;
+    line-height: 1rem;
+    text-align: left;
+    font-size: 0.8rem;
+}
+
