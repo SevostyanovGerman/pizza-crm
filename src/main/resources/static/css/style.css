@@ -535,3 +535,46 @@ a .disable {
 .modal-content {
     background-color: #3c3e3e;
 }
+
+.quantity-control-modal .modal-body {
+    background-color: #3E4040;
+}
+
+.quantity-control-modal h5 {
+    color: white;
+}
+
+.quantity-control-modal .dish-name {
+    color: #C9D278;
+}
+
+.quantity-control-modal input {
+    background-color: #545454;
+    color: #888888;
+    font-size: 38px;
+}
+
+.quantity-control-modal .input-dish-unit {
+    background-color: black;
+    color: white;
+}
+
+.quantity-control-modal .btn-lg {
+    background-color: white;
+    color: black;
+    font-size: 36px;
+}
+
+.quantity-control-modal .btn-plus {
+    background-color: #E2E2E4;
+}
+
+.quantity-control-modal .quantity-control-modal-footer {
+    background-color: black;
+}
+
+.quantity-control-modal .btn-quantity-save, .btn-quantity-cancel {
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+}

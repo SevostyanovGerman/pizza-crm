@@ -11,14 +11,11 @@ function displayDateTime() {
         minute: '2-digit'
     });
     let dateTimeParts = dt.split(',');
-    let dateParts = dateTimeParts[0].split('.');
     let timeParts = dateTimeParts[1].split(':');
-    $('.clock-days').text(dateParts[0]);
-    $('.clock-months').text(dateParts[1]);
-    $('.clock-years').text(dateParts[2]);
+    $('.clock-date').text(dateTimeParts[0]);
     $('.clock-hours').text(timeParts[0]);
     $('.clock-minutes').text(timeParts[1]);
-    $(".clock-colon").css({ visibility: colonToggler ? 'visible' : 'hidden'});
+    $(".clock-colon").css({visibility: colonToggler ? 'visible' : 'hidden'});
     colonToggler = !colonToggler;
 }
 
@@ -181,3 +178,68 @@ function getRowTotal(row) {
     }
     return quantity * price;
 }
+
+// Quantity manual input
+
+$(document).ready(function () {
+    $('.quantity-control-modal-show').click(function () {
+        let tr = getSelectedRow();
+        let selectedQty = tr.find('td:eq(0)').text();
+        if (selectedQty) {
+            $('.input-quantity').val(parseFloat(selectedQty));
+            $('.dish-name').text(tr.find('td:eq(1)').text());
+            $('.quantity-control-modal').modal('show');
+        }
+    });
+});
+
+$(document).ready(function () {
+    $('.quantity-control-modal .btn-num').click(function () {
+        let qty = $('.input-quantity');
+        let qtyVal = parseFloat(qty.val());
+        if (isNaN(qtyVal) || qtyVal === 0) {
+            qty.val($(this).val());
+        } else {
+            qty.val(qty.val() + $(this).val());
+        }
+    });
+});
+
+$(document).ready(function () {
+    $('.quantity-control-modal .btn-delimiter').click(function () {
+        let qty = $('.input-quantity');
+        if (qty.val().includes('.')) {
+            return;
+        }
+        qty.val(qty.val() + $(this).val());
+    });
+});
+
+$(document).ready(function () {
+    $('.quantity-control-modal .btn-clear').click(function () {
+        $('.input-quantity').val('0');
+    });
+});
+
+$(document).ready(function () {
+    $('.quantity-control-modal .btn-plus').click(function () {
+        let qty = $('.input-quantity');
+        let qtyVal = parseFloat(qty.val());
+        if (isNaN(qtyVal)) {
+            return;
+        }
+        let qtyPlus = parseFloat($(this).val());
+        qty.val(qtyVal + qtyPlus);
+
+    });
+});
+
+$(document).ready(function () {
+    $('.btn-quantity-save').click(function () {
+        let tr = getSelectedRow();
+        let savedQty = $('.input-quantity').val();
+        tr.find('td:eq(0)').val(savedQty).text(savedQty);
+        updateTotal();
+        $('.quantity-control-modal').modal('hide');
+    });
+});
