@@ -18,6 +18,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.77/jquery.form-validator.min.js"></script>
     <script src="../static/js/order.js" th:src="@{/js/order.js}"></script>
 </head>
 
@@ -188,13 +189,21 @@
             <div class="modal-body">
                 <p>Установите скидку/наценку</p>
                 <form action="#">
-                    <span>Скидка:</span>
-                    <input class="form-control" type="text" name="discountForm" id="discountForm" placeholder="0">
-                    <span>Наценка:</span>
-                    <input class="form-control" type="text" name="extraChargeForm" id="extraChargeForm" placeholder="0">
+                    <div class="form-group">
+                        <span>Скидка:</span>
+                        <input class="form-control" type="text" name="discountForm" id="discountForm" placeholder="0"
+                               data-validation="number" data-validation-allowing="range[0;100]"
+                               data-validation-error-msg="Укажите число от 0 до 100">
+                    </div>
+                    <div class="form-group">
+                        <span>Наценка:</span>
+                        <input class="form-control" type="text" name="extraChargeForm" id="extraChargeForm" placeholder="0"
+                               data-validation="number" data-validation-allowing="range[0;100]"
+                               data-validation-error-msg="Укажите число от 0 до 100">
+                    </div>
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
                 </form>
-                <button type="button" class="btn btn-success discount-extraCharge-modal-save">Сохранить</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
             </div>
         </div>
     </div>
