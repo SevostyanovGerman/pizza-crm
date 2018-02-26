@@ -79,13 +79,18 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $('.discount-extraCharge-modal-save').click(function () {
-        let discount = parseFloat($('input[name="discountForm"]').val());
-        let extraCharge = parseFloat($('input[name="extraChargeForm"]').val());
-        $("#discount").html(discount).val(discount);
-        $("#extraCharge").html(extraCharge).val(extraCharge);
-        $("#discount-extraCharge-modal").modal('hide');
-        updateTotal();
+    $.validate( {
+        form: '#discount-extraCharge-modal',
+        lang : 'ru',
+        onSuccess: function () {
+            let discount = parseFloat($('input[name="discountForm"]').val());
+            let extraCharge = parseFloat($('input[name="extraChargeForm"]').val());
+            $("#discount").html(discount).val(discount);
+            $("#extraCharge").html(extraCharge).val(extraCharge);
+            $("#discount-extraCharge-modal").modal('hide');
+            updateTotal();
+            return false;
+        }
     });
 });
 
