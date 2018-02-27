@@ -57,10 +57,10 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         addedCategoryService.save(new AddedCategory("Pizza", "white"));
         addedCategoryService.save(new AddedCategory("Roll", "green"));
 
-        Dish dishPizza = new Dish("Pizza margarita", 500);
-        Dish dishRol = new Dish("Roll philadelphia", 350);
-        Dish dishRol1 = new Dish("Roll california", 300);
-        Dish dishRol2 = new Dish("Roll dragon", 400);
+        Dish dishPizza = new Dish("Pizza margarita", 500, "1000", "9999", "10001");
+        Dish dishRol = new Dish("Roll philadelphia", 350, "1001", "9998", "10002");
+        Dish dishRol1 = new Dish("Roll california", 300, "1002", "9997", "10003");
+        Dish dishRol2 = new Dish("Roll dragon", 400, "1003", "9996", "10004");
 
         Ingredient ingredient = new Ingredient("Dough", 1.0, "1", "kg");
 

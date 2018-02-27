@@ -10,6 +10,7 @@ function displayDateTime() {
         hour: '2-digit',
         minute: '2-digit'
     });
+    console.log(dt);
     let dateTimeParts = dt.split(',');
     let dateParts = dateTimeParts[0].split('.');
     let timeParts = dateTimeParts[1].split(':');

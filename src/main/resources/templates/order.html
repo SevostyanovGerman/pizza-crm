@@ -216,38 +216,90 @@
         </div>
     </div>
 </div>
-<div class="modal fade bd-example-modal-lg" id="SearchModal" tabindex="-1" role="dialog"
+<!-- SearchModalЕxpand -->
+<div class="modal fade bd-example-modal-lg" id="SearchModalЕxpand" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>РАСШИРЕННЫЙ ПОИСК ТОВАРА</p>
+                <!--<button type="button" class="btn btn-success" onclick="SaveChange()">Сохранить</button>-->
+                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>-->
+                <div class="container" id="product1">
+                    <div class="row product list" id="product">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="container">
+                    <div class="row footer">
+                        <div class="footerInput col-4">
+                            <input class="search" id="search-field" placeholder="Поиск"
+                                   style="height: 3rem; width: 100%; padding-left: 1rem; font-size: 1rem;"/>
+                        </div>
+                        <div class="footerSearch col-2 offset-4">
+                            <a href="#" onclick="SearchModalShow()"><i class="fa fa-search" aria-hidden="true"></i>
+                                <p>Поиск</p></a>
+                        </div>
+                        <div class="footerCancel col-2">
+                            <a href="#" onclick="SearchModalЕxpandHide()">Отмена</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- SearchModal -->
+<div class="modal bd-example-modal-lg" id="SearchModal" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <p>ПОИСК ТОВАРА</p>
-                <!--<button type="button" class="btn btn-success" onclick="SaveChange()">Сохранить</button>-->
-                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>-->
-                <div class="container" id="product1">
-                    <div class="row product list" id="product">
-                        <div class="col-3">
-                            <div class="productItem">
-                                <p class="nameProduct">1121</p>
-                                <p class="costProduct">450p</p>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4" style="padding-right: 0px;">
+                            <div class="products" id="products1">
+                                <ul class="productsItem list" id="productsItem">
+                                    <li>
+                                        <p class="name">Ролл</p>
+                                        <p class="price">100р</p>
+                                        <p class="code">Koд: 1000</p>
+                                        <p class="barcode" style="display: none">Koд: 1000</p>
+                                        <p class="vendorcode" style="display: none">Koд: 1000</p>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div class="productItem">
-                                <p class="nameProduct">11311</p>
-                                <p class="costProduct">450p</p>
+                        <div class="col-4">
+                            <div class="searchInput">
+                                <input class="search" id="SearchModalInput" placeholder=""/>
+                            </div>
+                            <div class="searchKey">
+                                <div class="searchKeyItem" onclick="SearchProduct(1)"><p>1</p></div>
+                                <div class="searchKeyItem" onclick="SearchProduct(2)"><p>2</p></div>
+                                <div class="searchKeyItem" onclick="SearchProduct(3)"><p>3</p></div>
+                                <div class="searchKeyItem" onclick="SearchProduct(4)"><p>4</p></div>
+                                <div class="searchKeyItem" onclick="SearchProduct(5)"><p>5</p></div>
+                                <div class="searchKeyItem" onclick="SearchProduct(6)"><p>6</p></div>
+                                <div class="searchKeyItem" onclick="SearchProduct(7)"><p>7</p></div>
+                                <div class="searchKeyItem" onclick="SearchProduct(8)"><p>8</p></div>
+                                <div class="searchKeyItem" onclick="SearchProduct(9)"><p>9</p></div>
+                                <div class="searchKeyItem" onclick="SearchProductDelOne()"><i class="fa fa-arrow-left"
+                                                                                              aria-hidden="true"></i>
+                                </div>
+                                <div class="searchKeyItem" onclick="SearchProduct(0)"><p>0</p></div>
+                                <div class="searchKeyItem" onclick="SearchProductDel()"><i class="fa fa-times"
+                                                                                           aria-hidden="true"></i></div>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <div class="productItem">
-                                <p class="nameProduct">11411</p>
-                                <p class="costProduct">450p</p>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="productItem">
-                                <p class="nameProduct">11211</p>
-                                <p class="costProduct">450p</p>
+                        <div class="col-4" style="padding-left: 0px;">
+                            <div class="searchButtom">
+                                <a href="#" onclick="SearchAll()" id="SearchAll">Поиск по всем полям</a>
+                                <a href="#" onclick="SearchDarCode()" id="SearchDarCode">Штрихкод</a>
+                                <a href="#" onclick="SearchCode()" id="SearchCode">Код</a>
+                                <a href="#" onclick="SearchVendorCode()" id="SearchVendorCode">Артикул</a>
                             </div>
                         </div>
                     </div>
@@ -257,8 +309,12 @@
                 <div class="container">
                     <div class="row footer">
                         <div class="footerSearch col-4">
-                            <input class="search" id="search-field" placeholder="Поиск"
-                                   style="height: 3rem; width: 100%; padding-left: 1rem; font-size: 1rem;"/>
+                            <a href="#" onclick="SearchModalЕxpandShow()"><i class="fa fa-search"
+                                                                             aria-hidden="true"></i>
+                                <p>Расширенный поиск</p></a>
+                        </div>
+                        <div class="footerCancel col-2 offset-6">
+                            <a href="#" onclick="SearchModalЕxpandHide()">Отмена</a>
                         </div>
                     </div>
                 </div>
@@ -267,13 +323,52 @@
     </div>
 </div>
 <script>
+
+    var searchString = '';
     var options = {
         valueNames: ['nameProduct']
     };
     var listObj = new List('product1', options);
 
-    function SearchModalShow() {
-        $("#SearchModal").modal('show');
+
+    var option2 = {
+        valueNames: ['code', 'barcode', 'vendorcode']
+    };
+
+    var listObj2 = new List('products1', option2);
+    // function SearchModalShow() {
+    //     $("#SearchModalЕxpand").modal('hide');
+    //     $("#SearchModal").modal('show');
+    // }
+
+    var searchAll = false;
+    var searchDarCode = false;
+    var searchCode = false;
+    var searchVendorCode = false;
+
+
+    function SearchProduct(value) {
+        searchString = searchString + value;
+        $("#SearchModalInput").val(searchString);
+        listObj2.search(searchString);
+    }
+
+    function SearchProductDel() {
+        searchString = '';
+        $("#SearchModalInput").val(searchString);
+        listObj2.search(searchString);
+    }
+
+    function SearchProductDelOne() {
+        searchString = searchString.slice(0, -1);
+        $("#SearchModalInput").val(searchString);
+        listObj2.search(searchString);
+    }
+
+
+    function SearchModalЕxpandShow() {
+        $("#SearchModal").modal('hide');
+        $("#SearchModalЕxpand").modal('show');
         $.ajax({
             type: "POST",
             url: "/get/dish",
@@ -281,7 +376,7 @@
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
             success: function (data) {
-                $("#product").empty();
+                $("#productsItem").empty();
                 var dish = JSON.parse(data);
                 dish.forEach(function (value) {
                     $("#product").append("<div class=\"col-3\"><div class=\"productItem\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "p</p></div></div>")
@@ -291,12 +386,140 @@
             error: function (e) {
             }
         });
+
+    }
+
+    function SearchModalShow() {
+        $("#SearchModalЕxpand").modal('hide');
+        $("#SearchModal").modal('show');
+        $.ajax({
+            type: "POST",
+            url: "/get/dish",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (data) {
+                $("#productsItem").empty();
+                var dish = JSON.parse(data);
+                dish.forEach(function (value) {
+                    $("#productsItem").append("<li><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
+                });
+                listObj2 = new List('products1', option2);
+            },
+            error: function (e) {
+            }
+        });
+        SearchAll();
     }
 
     $('#search-field').on('keyup', function () {
         var searchString = $(this).val();
         listObj.search(searchString);
     });
+
+    function SearchModalЕxpandHide() {
+        $("#SearchModal").modal('hide');
+        $("#SearchModalЕxpand").modal('hide');
+    }
+
+    function SearchAll() {
+        searchAll = !searchAll;
+        if (searchAll) {
+            $("#SearchCode").css({"background-color": "#ffff00"});
+            $("#SearchDarCode").css({"background-color": "#ffff00"});
+            $("#SearchVendorCode").css({"background-color": "#ffff00"});
+            option2 = {
+                valueNames: ['code', 'barcode', 'vendorcode']
+            };
+            listObj2 = new List('products1', option2);
+            searchDarCode = true;
+            searchCode = true;
+            searchVendorCode = true;
+
+        } else {
+            $("#SearchCode").css({"background-color": "#fff"});
+            $("#SearchDarCode").css({"background-color": "#fff"});
+            $("#SearchVendorCode").css({"background-color": "#fff"});
+            option2 = {
+                valueNames: []
+            };
+            listObj2 = new List('products1', option2);
+            searchDarCode = false;
+            searchCode = false;
+            searchVendorCode = false;
+        }
+    }
+
+
+    function SearchDarCode() {
+        searchDarCode = !searchDarCode;
+        if (searchDarCode) {
+            $("#SearchCode").css({"background-color": "#fff"});
+            $("#SearchDarCode").css({"background-color": "#ffff00"});
+            $("#SearchVendorCode").css({"background-color": "#fff"});
+            option2 = {
+                valueNames: ['barcode']
+            };
+            listObj2 = new List('products1', option2);
+            searchCode = false;
+            searchVendorCode = false;
+        } else {
+            $("#SearchCode").css({"background-color": "#fff"});
+            $("#SearchDarCode").css({"background-color": "#fff"});
+            $("#SearchVendorCode").css({"background-color": "#fff"});
+            option2 = {
+                valueNames: []
+            };
+            listObj2 = new List('products1', option2);
+        }
+    }
+
+    function SearchCode() {
+        searchCode = !searchCode;
+        if (searchCode) {
+            $("#SearchCode").css({"background-color": "#ffff00"});
+            $("#SearchDarCode").css({"background-color": "#fff"});
+            $("#SearchVendorCode").css({"background-color": "#fff"});
+            option2 = {
+                valueNames: ['code']
+            };
+            listObj2 = new List('products1', option2);
+            searchDarCode = false;
+            searchVendorCode = false;
+        } else {
+            $("#SearchCode").css({"background-color": "#fff"});
+            $("#SearchDarCode").css({"background-color": "#fff"});
+            $("#SearchVendorCode").css({"background-color": "#fff"});
+            option2 = {
+                valueNames: []
+            };
+            listObj2 = new List('products1', option2);
+        }
+    }
+
+    function SearchVendorCode() {
+        searchVendorCode = !searchVendorCode;
+        if (searchVendorCode) {
+            $("#SearchCode").css({"background-color": "#fff"});
+            $("#SearchDarCode").css({"background-color": "#fff"});
+            $("#SearchVendorCode").css({"background-color": "#ffff00"});
+            option2 = {
+                valueNames: ['vendorcode']
+            };
+            listObj2 = new List('products1', option2);
+            searchDarCode = false;
+            searchCode = false;
+        } else {
+            $("#SearchCode").css({"background-color": "#fff"});
+            $("#SearchDarCode").css({"background-color": "#fff"});
+            $("#SearchVendorCode").css({"background-color": "#fff"});
+            option2 = {
+                valueNames: []
+            };
+            listObj2 = new List('products1', option2);
+        }
+    }
+
 </script>
 </body>
 </html>
