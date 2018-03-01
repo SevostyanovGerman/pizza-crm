@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,8 +10,7 @@
     <title>Order</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen"/>
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
           rel="stylesheet" media="screen"/>
@@ -22,8 +22,8 @@
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    <script src="../static/js/order.js"
-            th:src="@{/js/order.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.77/jquery.form-validator.min.js"></script>
+    <script src="../static/js/order.js" th:src="@{/js/order.js}"></script>
 </head>
 
 <body>
@@ -31,16 +31,10 @@
     <div class="row header">
         <div class="col-4">
             <p>Pizza CRM</p>
-            <p></p>p></p>
-            <p class="clock-days no-margin"></p>
-            <p class="no-margin">.</p>
-            <p class="clock-months no-margin"></p>
-            <p class="no-margin">.</p>
-            <p class="clock-years no-margin"></p>
-            <p class="no-margin">&nbsp;&nbsp;</p>
-            <p class="clock-hours no-margin"></p>
-            <p class="clock-colon no-margin">:</p>
-            <p class="clock-minutes no-margin"></p>
+            <p class="clock-date ml-4 mr-2"></p>
+            <p class="clock-hours mx-0 px-0"></p>
+            <p class="clock-colon mx-0 px-0">:</p>
+            <p class="clock-minutes mx-0 px-0"></p>
         </div>
         <div class="col offset-7 no-margin">
             <p class="header-right">Юлия Савенко</p>
@@ -73,11 +67,7 @@
                 </div>
                 <!--Current order table-->
                 <div class="left-panel-body" style="overflow: auto">
-                    <table class="table table-sm table-condensed order-table">
-                        <tr>
-
-                        </tr>
-                    </table>
+                    <table class="table table-sm table-condensed order-table"></table>
                 </div>
                 <div class="left-panel-body-1">
                     <table>
@@ -118,7 +108,7 @@
                 <div class="left-panel-body-2">
                     <a href="#" class="add-quantity"><i class="fa fa-plus" aria-hidden="true"></i></a>
                     <a href="#" class="subtract-quantity"><i class="fa fa-minus" aria-hidden="true"></i></a>
-                    <a href="#">123</a>
+                    <a href="#" class="quantity-control-modal-show">123</a>
                     <a href="#" class="remove-selected-dish"><i class="fa fa-times" aria-hidden="true"></i></a>
                 </div>
             </div>
@@ -138,8 +128,8 @@
             <div class="middle-panel-body">
                 <div id="category">
                     <a class="middle-panel-white category-item" th:each="category : ${categories}"
-                       th:text="${category.name}"
-                       th:styleappend="'background-color: ' + ${category.color}" th:id="${category.name}" href="#"></a>
+                       th:text="${category.name}" th:styleappend="'background-color: ' + ${category.color}"
+                       th:id="${category.name}" href="#"></a>
                 </div>
                 <div id="dish"></div>
             </div>
@@ -203,15 +193,146 @@
             <div class="modal-body">
                 <p>Установите скидку/наценку</p>
                 <form action="#">
-                    <span>Скидка:</span>
-                    <input class="form-control" type="text" name="discountForm" id="discountForm"
-                           placeholder="0">
-                    <span>Наценка:</span>
-                    <input class="form-control" type="text" name="extraChargeForm" id="extraChargeForm"
-                           placeholder="0">
+                    <div class="form-group">
+                        <span>Скидка:</span>
+                        <input class="form-control" type="text" name="discountForm" id="discountForm" placeholder="0"
+                               data-validation="number" data-validation-allowing="range[0;100]"
+                               data-validation-error-msg="Укажите число от 0 до 100">
+                    </div>
+                    <div class="form-group">
+                        <span>Наценка:</span>
+                        <input class="form-control" type="text" name="extraChargeForm" id="extraChargeForm"
+                               placeholder="0"
+                               data-validation="number" data-validation-allowing="range[0;100]"
+                               data-validation-error-msg="Укажите число от 0 до 100">
+                    </div>
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
                 </form>
-                <button type="button" class="btn btn-success discount-extraCharge-modal-save">Сохранить</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Quantity control modal -->
+<div class="modal fade quantity-control-modal" tabindex="-1" role="dialog"
+     aria-labelledby="quantity-control-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="text-center">Количество</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="dish-name text-center my-1"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="col-12 mx-1 px-0">
+                                    <input type="text" class="input-quantity text-center mx-0 px-0 py-4 my-0" value=""
+                                           readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-num" value="1">1</button>
+                                </div>
+                                <div class="col-4 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-num" value="2">2</button>
+                                </div>
+                                <div class="col-4 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-num" value="3">3</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-num" value="4">4</button>
+                                </div>
+                                <div class="col-4 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-num" value="5">5</button>
+                                </div>
+                                <div class="col-4 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-num" value="6">6</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-num" value="7">7</button>
+                                </div>
+                                <div class="col-4 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-num" value="8">8</button>
+                                </div>
+                                <div class="col-4 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-num" value="9">9</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-delimiter" value=".">,</button>
+                                </div>
+                                <div class="col-4 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-num" value="0">0</button>
+                                </div>
+                                <div class="col-4 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-clear">X</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col mx-1 px-0">
+                                    <input type="text" class="input-dish-unit text-center mx-0 px-0 py-4 my-0"
+                                           value="порц" readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-plus" value="0.25">0,25</button>
+                                </div>
+                                <div class="col-6 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-plus" value="0.33">0,33</button>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-6 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-plus" value="0.5">0,5</button>
+                                </div>
+                                <div class="col-6 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-plus" value="0.75">0,75</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-plus" value="1.25">1,25</button>
+                                </div>
+                                <div class="col-6 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-plus" value="1.33">1,33</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-plus" value="1.5">1,5</button>
+                                </div>
+                                <div class="col-6 mx-0 px-1">
+                                    <button class="btn btn-lg btn-block btn-plus" value="1.75">1,75</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row py-3 mx-0 quantity-control-modal-footer">
+                <div class="col text-right">
+                    <button type="button" class="btn btn-quantity-save">OK</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-quantity-cancel" data-dismiss="modal">Отмена</button>
+                </div>
             </div>
         </div>
     </div>

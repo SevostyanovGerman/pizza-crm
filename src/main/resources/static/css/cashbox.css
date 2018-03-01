@@ -1,101 +1,86 @@
-html {
-  position: relative;
-  min-height: 100%;
+.header {
+    background-color: #000;
+    color: white;
+    height: 22px;
+    line-height: 22px;
 }
 
-.body {
-    margin-bottom: 60px;
+.header-cyan {
+    background-color: #74909c;
+    color: white;
 }
 
-.cashbox-header-menu {
-    height: 7vh;
+.input-cash, .input-cash-postfix {
+    border: transparent;
+    outline: transparent;
+    width: 100%;
+}
+
+.order-table {
+    height: 18vh;
     background-color: #fff;
-    position: relative;
-}
-
-.cashbox-header-menu p {
-    height: 7vh;
-    line-height: 7vh;
-    text-align: center;
-    font-size: 25px;
-}
-
-.cashbox-header-menu a {
-    height: 7vh;
-    line-height: 7vh;
     color: #000;
-    float: right;
-    text-align: center;
-    font-size: 3.5rem;
 }
 
-.cashbox-panel-total {
-    height: 100px;
-    line-height: 100px;
+.payment-type-table {
+    height: 18vh;
+    background-color: #fff;
+    color: #000;
 }
 
-.cashbox-total {
+.order-total-dark {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.order-total-light {
     background-color: white;
-    color: black;
-    text-align: right;
-    height: 100px;
-    line-height: 100px;
-    font-size: 82px;
+    color: #1a1a1a;
 }
 
-.cahsbox-left-panel-body {
-    height: 24vh;
-    background-color: #fff;
+.header-menu a {
     color: #000;
+    font-size: 36px;
 }
 
-.cashbox-left-panel-header {
-    height: 7vh;
-    line-height: 7vh;
+.paid-header {
     background-color: #DCE0E4;
     color: black;
-    font-size: 1.5rem;
 }
 
-.cashbox-panel-btn {
-    border-radius: 0;
-    padding: 22px;
-    font-size: 24px;
-    opacity: 0.8
-}
-
-.cashbox-col {
+.dialer .col {
     padding-left: 2px;
     padding-right: 2px;
 }
 
-.cashbox-first-col {
-    padding-right: 2px;
+.dialer .btn-dialer, .btn-dialer-clear, .btn-dialer-delimiter {
+    border-radius: 0;
+    padding: 30px;
+    font-size: 30px;
+    font-weight: 600;
+    background-color: #404040;
+    color: white
+        
 }
 
-.cashbox-btn-darker {
+.dialer .btn-dialer-plus {
+    border-radius: 0;
+    padding: 30px;
+    font-size: 30px;
+    font-weight: 600;
     background-color: #282828;
+    color: white
+        
 }
 
-.disabled {
-    color: lightgray;
-}
-
-.cashbox-footer {
-    position: relative;
+.footer {
+    position: fixed;
     bottom: 0;
     width: 100%;
+    color: white;
     background-color: #1a1a1a;
-    height: 60px;
-    line-height: 60px;
 }
 
-.cashbox-footer-item {
-    color: #fff;
-    display: inline-block;
-    text-align: center;
-    height: 60px;
-    line-height: 60px;
-    font-size: 18px;
-    margin-top: 10px;
+.footer i {
+    font-size: 36px;
 }
