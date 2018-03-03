@@ -37,6 +37,22 @@ public class Schedule {
         this.endTime = endTime;
     }
 
+    public Schedule(String name, LocalTime beginTime, LocalTime endTime, Boolean monday, Boolean tuesday, Boolean wednesday, Boolean thursday, Boolean friday, Boolean saturday, Boolean sunday) {
+        this.name = name;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+        this.monday = monday;
+        this.tuesday = tuesday;
+        this.wednesday = wednesday;
+        this.thursday = thursday;
+        this.friday = friday;
+        this.saturday = saturday;
+        this.sunday = sunday;
+    }
+
+    public Schedule() {
+    }
+
     public Long getId() {
         return id;
     }

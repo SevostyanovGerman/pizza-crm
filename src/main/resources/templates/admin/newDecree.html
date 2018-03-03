@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Новый приказ</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
@@ -11,7 +13,7 @@
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
+    <script th:src="@{js/newDecree.js}"></script>
 
 
 </head>
@@ -51,10 +53,13 @@
             <div class="col-sm-4">
                 <div class="form-group row ">
                     <label for="activePeriod" class="d-flex col-sm-6 col-form-label justify-content-end">Период действия приказа:</label>
-                    <div class="col-sm-5">
-                        <input type="email" class="form-control" id="activePeriod" >
+                    <div class="col-sm-4">
+                        <select class="form-control" name="" id="activePeriod">
+                            <option th:each="schedule : ${schedules}" th:text="${schedule.getName()}"></option>
+                        </select>
                     </div>
                     <button type="button" class="form-control col-sm-1 btn btn-success"  data-toggle="modal" data-target="#schedule" >+</button>
+                    <a class="btn btn-info col-sm-1" href="#" th:href="@{/validity}" role="button">...</a>
                 </div>
                 <div class="form-group row ">
                     <label for="comment" class="d-flex col-sm-6 col-form-label justify-content-end">Комментарий:</label>
@@ -133,6 +138,8 @@
         </div>
     </div>
 
+
+    <!--Modal window-->
     <div id="schedule" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -140,46 +147,44 @@
                     <h4 class="modal-title">Новое рассписание</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="#" th:action="@{/newDecree/save}" method="post">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="scheduleName">Введите название:</label>
-                            <input class="form-control" type="text" id="scheduleName" required="required" name="name">
-                        </div>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th><label for="beginTime">Начало</label></th>
-                                    <th><label for="endTime">Окончание</label> </th>
-                                    <th><label for="monday">Пн</label> </th>
-                                    <th><label for="tuesday">Вт</label> </th>
-                                    <th><label for="wednesday">Ср</label> </th>
-                                    <th><label for="thursday">Чт</label> </th>
-                                    <th><label for="friday">Пт</label> </th>
-                                    <th><label for="saturday">Сб</label> </th>
-                                    <th><label for="sunday">Вс</label> </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="time" id="beginTime" name="beginTime"/></td>
-                                    <td><input type="time" id="endTime" name="endTime"/></td>
-                                    <td><input type="checkbox" id="monday" name="monday" /></td>
-                                    <td><input type="checkbox" id="tuesday" name="tuesday" /></td>
-                                    <td><input type="checkbox" id="wednesday" name="wednesday" /></td>
-                                    <td><input type="checkbox" id="thursday" name="thursday"/></td>
-                                    <td><input type="checkbox" id="friday" name="friday"/></td>
-                                    <td><input type="checkbox" id="saturday" name="saturday"/></td>
-                                    <td><input type="checkbox" id="sunday" name="sunday"/></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="scheduleName">Введите название:</label>
+                        <input class="form-control" type="text" id="scheduleName" required="required" name="name">
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th><label for="beginTime">Начало</label></th>
+                            <th><label for="endTime">Окончание</label> </th>
+                            <th><label for="monday">Пн</label> </th>
+                            <th><label for="tuesday">Вт</label> </th>
+                            <th><label for="wednesday">Ср</label> </th>
+                            <th><label for="thursday">Чт</label> </th>
+                            <th><label for="friday">Пт</label> </th>
+                            <th><label for="saturday">Сб</label> </th>
+                            <th><label for="sunday">Вс</label> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><input type="time" id="beginTime" name="beginTime" required="required"/></td>
+                            <td><input type="time" id="endTime" name="endTime" required="required"/></td>
+                            <td><input type="checkbox" id="monday" name="monday"  /></td>
+                            <td><input type="checkbox" id="tuesday" name="tuesday" /></td>
+                            <td><input type="checkbox" id="wednesday" name="wednesday" /></td>
+                            <td><input type="checkbox" id="thursday" name="thursday" /></td>
+                            <td><input type="checkbox" id="friday" name="friday"/></td>
+                            <td><input type="checkbox" id="saturday" name="saturday"/></td>
+                            <td><input type="checkbox" id="sunday" name="sunday"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" onclick="addSchedule()">Сохранить</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+                </div>
             </div>
         </div>
     </div>
