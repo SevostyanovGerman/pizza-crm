@@ -13,11 +13,17 @@ public class Dish {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-	@NotBlank
+    @NotBlank
     @Column(name = "name", unique = true)
     private String name;
 
     private double price;
+
+    private String code;
+
+    private String barcode;
+
+    private String vendorCode;
 
     @ManyToMany
     @JoinTable(name = "Dish_Ingredient",
@@ -37,6 +43,43 @@ public class Dish {
     public Dish(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
+    public String getVendorCode() {
+        return vendorCode;
+    }
+
+    public void setVendorCode(String vendorCode) {
+        this.vendorCode = vendorCode;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Dish(@NotBlank String name, double price, String code, String barcode, String vendorCode) {
+        this.name = name;
+        this.price = price;
+        this.code = code;
+        this.barcode = barcode;
+        this.vendorCode = vendorCode;
+
     }
 
     public Dish(String name) {
@@ -78,7 +121,7 @@ public class Dish {
 
     public void setIngredient(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
-	}
+    }
 
     public Set<Ingredient> getIngredients() {
         return ingredients;
@@ -105,6 +148,6 @@ public class Dish {
     @Override
     public String toString() {
         return name;
-	}
+    }
 
 }

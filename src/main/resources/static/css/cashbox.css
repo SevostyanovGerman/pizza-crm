@@ -10,6 +10,12 @@
     color: white;
 }
 
+.input-cash, .input-cash-postfix {
+    border: transparent;
+    outline: transparent;
+    width: 100%;
+}
+
 .order-table {
     height: 18vh;
     background-color: #fff;
@@ -47,7 +53,7 @@
     padding-right: 2px;
 }
 
-.dialer .btn-dialer {
+.dialer .btn-dialer, .btn-dialer-clear, .btn-dialer-delimiter {
     border-radius: 0;
     padding: 30px;
     font-size: 30px;
@@ -68,6 +74,9 @@
 }
 
 .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     color: white;
     background-color: #1a1a1a;
 }

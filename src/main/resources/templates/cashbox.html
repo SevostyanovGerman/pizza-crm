@@ -18,7 +18,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script src="../static/js/order.js" th:src="@{/js/order.js}"></script>
+    <script src="../static/js/cashbox.js" th:src="@{/js/cashbox.js}"></script>
 
 </head>
 
@@ -114,7 +114,7 @@
                     <h2 class="text-left text-uppercase">Сдача</h2>
                 </div>
                 <div class="col">
-                    <h2 class="text-right text-uppercase font-weight-bold">1000,00</h2>
+                    <h2 class="text-right text-uppercase font-weight-bold">0,00</h2>
                 </div>
             </div>
 
@@ -141,80 +141,83 @@
         <!--Right panel-->
         <div class="col-8">
             <div class="row">
-                <div class="col">
-                    <h1 class="display-2 text-right">2000,00</h1>
+                <div class="col-11">
+                    <input type="tel" class="input-cash display-2 text-right" value="0.00">
+                </div>
+                <div class="col mr-0 px-0 ml-1">
+                    <input type="text" class="input-cash-postfix display-2 text-left" value="р.">
                 </div>
             </div>
             <div class="dialer">
                 <div class="row">
                     <div class="col">
-                        <button class="btn btn-block btn-dialer">1</button>
+                        <button class="btn btn-block btn-dialer" value="1">1</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-block btn-dialer">2</button>
+                        <button class="btn btn-block btn-dialer" value="2">2</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-block btn-dialer">3</button>
+                        <button class="btn btn-block btn-dialer" value="3">3</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-block btn-dialer-plus">+1</button>
+                        <button class="btn btn-block btn-dialer-plus" value="1">+1</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-block btn-dialer-plus">+5</button>
-                    </div>
-                </div>
-                <div class="w-100 mt-1"></div>
-                <div class="row">
-                    <div class="col">
-                        <button class="btn btn-block btn-dialer">4</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-block btn-dialer">5</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-block btn-dialer">6</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-block btn-dialer-plus">+10</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-block btn-dialer-plus">+50</button>
+                        <button class="btn btn-block btn-dialer-plus" value="5">+5</button>
                     </div>
                 </div>
                 <div class="w-100 mt-1"></div>
                 <div class="row">
                     <div class="col">
-                        <button class="btn btn-block btn-dialer">7</button>
+                        <button class="btn btn-block btn-dialer" value="4">4</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-block btn-dialer">8</button>
+                        <button class="btn btn-block btn-dialer" value="5">5</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-block btn-dialer">9</button>
+                        <button class="btn btn-block btn-dialer" value="6">6</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-block btn-dialer-plus">+100</button>
+                        <button class="btn btn-block btn-dialer-plus" value="10">+10</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-block btn-dialer-plus">+500</button>
+                        <button class="btn btn-block btn-dialer-plus" value="50">+50</button>
                     </div>
                 </div>
                 <div class="w-100 mt-1"></div>
                 <div class="row">
                     <div class="col">
-                        <button class="btn btn-block btn-dialer">,</button>
+                        <button class="btn btn-block btn-dialer" value="7">7</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-block btn-dialer">0</button>
+                        <button class="btn btn-block btn-dialer" value="8">8</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-block btn-dialer">X</button>
+                        <button class="btn btn-block btn-dialer" value="9">9</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-block btn-dialer-plus">+1000</button>
+                        <button class="btn btn-block btn-dialer-plus" value="100">+100</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-block btn-dialer-plus">+5000</button>
+                        <button class="btn btn-block btn-dialer-plus" value="500">+500</button>
+                    </div>
+                </div>
+                <div class="w-100 mt-1"></div>
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-block btn-dialer-delimiter" value=".">.</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-block btn-dialer" value="0">0</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-block btn-dialer-clear">X</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-block btn-dialer-plus" value="1000">+1000</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-block btn-dialer-plus" value="5000">+5000</button>
                     </div>
                 </div>
             </div>
