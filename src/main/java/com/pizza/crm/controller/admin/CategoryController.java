@@ -6,7 +6,6 @@ import com.pizza.crm.model.Dish;
 import com.pizza.crm.service.AddedCategoryService;
 import com.pizza.crm.service.CategoryService;
 import com.pizza.crm.service.DishService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,14 +20,17 @@ import java.util.Set;
 @Controller
 public class CategoryController {
 
-    @Autowired
     private CategoryService categoryService;
 
-    @Autowired
     private AddedCategoryService addedCategoryService;
 
-    @Autowired
     private DishService dishService;
+
+    public CategoryController(CategoryService categoryService, AddedCategoryService addedCategoryService, DishService dishService) {
+        this.categoryService = categoryService;
+        this.addedCategoryService = addedCategoryService;
+        this.dishService = dishService;
+    }
 
     @RequestMapping("/categories")
     public String categories(Model model) {

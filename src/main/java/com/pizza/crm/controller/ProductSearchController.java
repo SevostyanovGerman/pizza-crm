@@ -1,7 +1,6 @@
 package com.pizza.crm.controller;
 
 import com.pizza.crm.service.DishService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ProductSearchController {
 
-    @Autowired
     private DishService dishService;
+
+    public ProductSearchController(DishService dishService) {
+        this.dishService = dishService;
+    }
 
     @GetMapping("/productSearch")
     public String productSearchPage(Model model) {

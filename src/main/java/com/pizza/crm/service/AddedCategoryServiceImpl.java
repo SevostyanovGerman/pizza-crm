@@ -2,7 +2,6 @@ package com.pizza.crm.service;
 
 import com.pizza.crm.model.AddedCategory;
 import com.pizza.crm.repository.AddedCategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +9,11 @@ import java.util.List;
 @Service
 public class AddedCategoryServiceImpl implements AddedCategoryService {
 
-    @Autowired
     private AddedCategoryRepository addedCategoryRepository;
+
+    public AddedCategoryServiceImpl(AddedCategoryRepository addedCategoryRepository) {
+        this.addedCategoryRepository = addedCategoryRepository;
+    }
 
     @Override
     public void save(AddedCategory category) {

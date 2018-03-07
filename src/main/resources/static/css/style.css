@@ -752,3 +752,7 @@ a .disable {
     color: white;
     font-weight: bold;
 }
+
+.fa-angle-down {
+    font-size: 9vh;
+}

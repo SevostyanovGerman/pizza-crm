@@ -3,7 +3,6 @@ package com.pizza.crm.service;
 import com.pizza.crm.model.Category;
 import com.pizza.crm.model.Dish;
 import com.pizza.crm.repository.CategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -13,8 +12,11 @@ import java.util.Set;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
     private CategoryRepository categoryRepository;
+
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
     @Override
     public Collection<Category> getAll() {

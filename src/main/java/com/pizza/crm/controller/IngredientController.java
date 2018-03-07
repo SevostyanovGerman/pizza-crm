@@ -2,7 +2,6 @@ package com.pizza.crm.controller;
 
 import com.pizza.crm.model.Ingredient;
 import com.pizza.crm.service.IngredientService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +15,11 @@ import java.util.Optional;
 @RequestMapping("/admin/ingredient")
 public class IngredientController {
 
-    @Autowired
     private IngredientService ingredientService;
+
+    public IngredientController(IngredientService ingredientService) {
+        this.ingredientService = ingredientService;
+    }
 
     @GetMapping({"", "/"})
     public String ingredientList(Model model) {

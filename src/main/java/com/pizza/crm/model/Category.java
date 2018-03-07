@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 @Table(name = "Category")
@@ -55,7 +56,10 @@ public class Category {
     }
 
     public Set<Dish> getDishes() {
-        return dishes;
+        Comparator<Dish> comp = (Dish o1, Dish o2) -> (o1.getName().compareTo(o2.getName()));
+        Set dish = new TreeSet(comp);
+        dish.addAll(dishes);
+        return dish;
     }
 
     public void setDishes(Set<Dish> dishes) {

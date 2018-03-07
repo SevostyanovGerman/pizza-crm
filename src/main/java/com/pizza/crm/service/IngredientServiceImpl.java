@@ -2,7 +2,6 @@ package com.pizza.crm.service;
 
 import com.pizza.crm.model.Ingredient;
 import com.pizza.crm.repository.IngredientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -11,8 +10,11 @@ import java.util.Optional;
 @Service
 public class IngredientServiceImpl implements IngredientService {
 
-    @Autowired
     private IngredientRepository ingredientRepository;
+
+    public IngredientServiceImpl(IngredientRepository ingredientRepository) {
+        this.ingredientRepository = ingredientRepository;
+    }
 
     @Override
     public Collection<Ingredient> getAll() {

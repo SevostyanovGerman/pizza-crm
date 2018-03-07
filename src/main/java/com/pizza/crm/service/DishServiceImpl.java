@@ -1,12 +1,11 @@
 package com.pizza.crm.service;
 
-import com.pizza.crm.model.Dish;
 import com.pizza.crm.model.Category;
+import com.pizza.crm.model.Dish;
 import com.pizza.crm.model.Ingredient;
 import com.pizza.crm.repository.CategoryRepository;
 import com.pizza.crm.repository.DishRepository;
 import com.pizza.crm.repository.IngredientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -15,14 +14,17 @@ import java.util.Optional;
 @Service
 public class DishServiceImpl implements DishService {
 
-    @Autowired
     private DishRepository dishRepository;
 
-    @Autowired
     private CategoryRepository categoryRepository;
 
-    @Autowired
     private IngredientRepository ingredientRepository;
+
+    public DishServiceImpl(DishRepository dishRepository, CategoryRepository categoryRepository, IngredientRepository ingredientRepository) {
+        this.dishRepository = dishRepository;
+        this.categoryRepository = categoryRepository;
+        this.ingredientRepository = ingredientRepository;
+    }
 
     @Override
     public Collection<Dish> getAll() {

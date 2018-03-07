@@ -3,7 +3,6 @@ package com.pizza.crm.service;
 import com.pizza.crm.exceptions.NotFoundException;
 import com.pizza.crm.model.Schedule;
 import com.pizza.crm.repository.ScheduleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.List;
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 
-    @Autowired
     private ScheduleRepository scheduleRepository;
+
+    public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
+        this.scheduleRepository = scheduleRepository;
+    }
 
     @Override
     public void save(Schedule schedule) {

@@ -35,6 +35,7 @@ $(document).ready(function () {
     $(".category-item").click(function () {
         $("#backward").removeClass("disable");
         $("#category").css({"display": "none"});
+        var buttonName = $(this).text();
         $.ajax({
             type: "POST",
             url: "/get/categoriesdish",
@@ -44,18 +45,39 @@ $(document).ready(function () {
             },
             success: function (data) {
                 $("#dish").empty().css({"display": "block"});
-                $.each(data, function (key, value) {
+                if (data.length > 23){
+                    for (var i = 0; i<23; i++) {
+                        $("#dish").append($([
+                            "<a href='#' class='order-item middle-panel-white'",
+                            "data-item-name='" + data[i].name + "'",
+                            "data-quantity='1'",
+                            "data-price=" + data[i].price,
+                            ">",
+                            "<p>" + data[i].name + "</p>",
+                            "<p>" + data[i].price + "</p>",
+                            "</a>"
+                        ].join("\n")));
+                    }
                     $("#dish").append($([
-                        "<a href='#' class='order-item middle-panel-white'",
-                        "data-item-name=\"" + value.name + "\"",
-                        "data-quantity='1'",
-                        "data-price=" + value.price,
-                        ">",
-                        "<p>" + value.name + "</p>",
-                        "<p>" + value.price + "</p>",
-                        "</a>"
+                        '<a href="#" class="middle-panel-white" onclick="showMoreDishes(\''+buttonName+'\')">' +
+                        '<p><i class=\'fa fa-angle-down\' aria-hidden=\'true\'></i></p>'+
+                        '</a>'
                     ].join("\n")));
-                });
+
+                } else {
+                    $.each(data, function (key, value) {
+                        $("#dish").append($([
+                            "<a href='#' class='order-item middle-panel-white'",
+                            "data-item-name=\"" + value.name + "\"",
+                            "data-quantity='1'",
+                            "data-price=" + value.price,
+                            ">",
+                            "<p>" + value.name + "</p>",
+                            "<p>" + value.price + "</p>",
+                            "</a>"
+                        ].join("\n")));
+                    });
+                }
             },
             error: function (e) {
             }
@@ -249,3 +271,31 @@ $(document).ready(function () {
         $('.quantity-control-modal').modal('hide');
     });
 });
+
+function showMoreDishes(name) {
+    $.ajax({
+        type: "POST",
+        url: "/get/categoriesdish",
+        data: "name=" + name,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (data) {
+            $("#dish").empty().css({"display": "block"});
+                for (var i = 23; i<data.length; i++) {
+                    $("#dish").append($([
+                        "<a href='#' class='order-item middle-panel-white'",
+                        "data-item-name='" + data[i].name + "'",
+                        "data-quantity='1'",
+                        "data-price=" + data[i].price,
+                        ">",
+                        "<p>" + data[i].name + "</p>",
+                        "<p>" + data[i].price + "</p>",
+                        "</a>"
+                    ].join("\n")));
+                }
+        },
+        error: function (e) {
+        }
+    });
+}
