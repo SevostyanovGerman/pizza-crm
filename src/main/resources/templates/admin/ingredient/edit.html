@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dish</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+
+</head>
+<body>
+
+<div class="container mt-4">
+
+    <div class="row">
+        <h2>Ингредиент</h2>
+    </div>
+
+    <div class="row mt-2">
+
+        <div class="col">
+            <form th:object="${ingredient}" th:action="@{/admin/ingredient}" th:method="post">
+                <input type="hidden" th:field="*{id}"/>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Наименование</label>
+                    <input type="text" class="form-control" th:field="*{name}">
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Стоимость</label>
+                    <input type="text" class="form-control" th:field="*{price}">
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Тип</label>
+                    <input type="text" class="form-control" th:field="*{type}">
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Единица измерения</label>
+                    <input type="text" class="form-control" th:field="*{unit}">
+                </div>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </form>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+.header {
+    background-color: #000;
+    color: white;
+    height: 22px;
+    line-height: 22px;
+}
+
+.header-cyan {
+    background-color: #74909c;
+    color: white;
+}
+
+.input-cash, .input-cash-postfix {
+    border: transparent;
+    outline: transparent;
+    width: 100%;
+}
+
+.order-table {
+    overflow: auto;
+    height: 18vh;
+    background-color: #fff;
+    color: #000;
+}
+
+.order-table tr td {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.borderless td {
+    border: none;
+}
+
+.payment-type-table {
+    height: 18vh;
+    background-color: #fff;
+    color: #000;
+}
+
+.order-total-dark {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.order-total-light {
+    background-color: white;
+    color: #1a1a1a;
+}
+
+.header-menu a {
+    color: #000;
+    font-size: 36px;
+}
+
+.paid-header {
+    background-color: #DCE0E4;
+    color: black;
+}
+
+.dialer .col {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.dialer .btn-dialer, .btn-dialer-clear, .btn-dialer-delimiter {
+    border-radius: 0;
+    padding: 30px;
+    font-size: 30px;
+    font-weight: 600;
+    background-color: #404040;
+    color: white
+        
+}
+
+.dialer .btn-dialer-plus {
+    border-radius: 0;
+    padding: 30px;
+    font-size: 30px;
+    font-weight: 600;
+    background-color: #282828;
+    color: white
+        
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    background-color: #1a1a1a;
+}
+
+.footer i {
+    font-size: 36px;
+}

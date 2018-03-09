@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Index</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <h2 style="margin-top: 1rem">Категории</h2>
+    <form class="form-inline" th:object="${category}" style="margin-top: 1rem" action="#"
+          th:action="@{/categories/add}" method="POST">
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Название категории">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Добавить категорию</button>
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Del</th>
+            <th scope="col">UpdateName</th>
+            <th scope="col">Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category:${category}">
+            <td th:utext="${category.id}">...</td>
+            <td th:utext="${category.name}"></td>
+            <td><a class="btn btn-success btn-control" th:href="@{/category/del?id=} + ${category.id}">Удалить</a>
+            </td>
+            <td>
+                <form class="form-inline" th:object="${category}" action="#" th:action="@{/category/update}"
+                      method="POST">
+                    <input type="hidden" name="id" th:value="${category.id}">
+                    <input type="text" class="form-control" name="name" placeholder="Название категории"
+                           style="margin-bottom: 8px; margin-right: 2px;">
+                    <button type="submit" class="btn btn-primary mb-2">Обновить название категории</button>
+                </form>
+            </td>
+            <td><a class="btn btn-success btn-control" th:href="@{/categories/update?id=} + ${category.id}">Обновить
+                категорию</a>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Добавить кнопку категории на панель кассира</h2>
+    <form class="form-inline" action="#" th:action="@{/admin/add}" method="post" >
+        <div class="form-group" style="margin-left: 15px">
+            <label for="category.name">Выберите категорию</label>
+            <select class="form-control" name="name" id="category.name" required="required">
+                <option th:each="category : ${category}" th:value="${category.name}" th:text="${category.name}"></option>
+            </select>
+        </div>
+        <div class="form-group" style="margin-left: 15px">
+            <label for="category.color">Выберите цвет</label>
+            <select class="form-control" name="color" id="category.color" required="required">
+                <option th:value="white" th:text="Белый"></option>
+                <option th:value="green" th:text="Зеленый"></option>
+                <option th:value="yellow" th:text="Желтый"></option>
+                <option th:value="deepskyblue" th:text="Синий"></option>
+                <option th:value="dimgrey" th:text="Серый"></option>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Добавить" style="margin-left: 15px"/>
+    </form>
+
+    <h2>Удалить кнопку категории с панели кассира</h2>
+    <form class="form-inline" action="#" th:action="@{/admin/delete}" method="post" >
+        <div class="form-group" style="margin-left: 15px">
+            <label for="category.name2">Выберите категорию</label>
+            <select class="form-control" name="name" id="category.name2" required="required">
+                <option th:each="category : ${addedCategories}" th:value="${category.name}" th:text="${category.name}"></option>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-danger" value="Удалить" style="margin-left: 15px"/>
+    </form>
+</div>
+</body>
+</html>

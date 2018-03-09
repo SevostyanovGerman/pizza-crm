@@ -1,0 +1,114 @@
+body {
+    height: 100vh;
+}
+.info {
+    height: 3vh;
+    line-height: 3vh;
+    background-color: #201c21;
+    color: wheat;
+    font-size: 10px;
+}
+.header {
+    height: 7vh;
+    line-height: 7vh;
+}
+
+table {
+    background-color: white;
+}
+
+.main-row {
+    background-color: #888d8b;
+    font-size: 13px;
+    height: 82vh
+}
+
+.person-table-row {
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-top: 1vh;
+}
+.person-table {
+    background-color: white;
+    border-top-color: darkorchid;
+}
+.person-table-header {
+    background-color: darkorchid;
+    border-color: darkorchid;
+    color: white
+}
+
+
+
+.guest-table-row {
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-top: 1vh;
+}
+.guest-table {
+    background-color: white;
+    border-top-color: #4b80d7;
+    border: 2px;
+}
+.guest-table-header {
+    background-color: #4b80d7;
+    border-color: #4b80d7;
+    color: white;
+}
+
+.personal-table-row {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+.personal-table {
+    background-color: white;
+    border-color: #875ad7;
+}
+.personal-table-header {
+    background-color: #875ad7;
+    border-color: #875ad7;
+    color: white;
+}
+
+.service-table-row  {
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-top: 1vh;
+}
+.service-table {
+    background-color: white;
+    border-color: #1a8f7c;
+}
+.service-table-header {
+    background-color: #1a8f7c;
+    border-color: #1a8f7c;
+    color: white;
+}
+
+.main-table-row  {
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-top: 1vh;
+}
+.main-table {
+    background-color: white;
+    border-color: #3aae8e;
+}
+.main-table-header-cashier {
+    background-color: #3aae8e;
+    border-color: #3aae8e;
+    color: white;
+
+}
+.main-table-header {
+    background-color: #3aae8e;
+    border-color: #3aae8e;
+    color: white;
+    font-size: 10px;
+}
+
+.footer {
+    /*height: 40px;*/
+    /*line-height: 40px;*/
+}
+

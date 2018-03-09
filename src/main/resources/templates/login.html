@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Login</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link href="../static/css/login.css"
+          th:href="@{/css/login.css}"
+          rel="stylesheet" media="screen"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="../static/js/login.js"
+            th:src="@{/js/login.js}"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3 offset-7">
+            <button class="btn btn-dark btn-block">
+                <i class="fa fa-truck fa-fw mr-2" aria-hidden="true"></i>Назначить курьеров
+            </button>
+        </div>
+    </div>
+    <div class="row-spacer-75"></div>
+    <div class="row-spacer-75"></div>
+    <div class="row">
+        <div class="col-3 offset-7">
+            <form th:action="@{/login}" th:method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="pincode" id="pincode">
+                    <input type="submit" style="display: none">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 offset-7">
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-dark btn-block" onclick="pinbuttonClick(1)">1</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-block" onclick="pinbuttonClick(2)">2</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-block" onclick="pinbuttonClick(3)">3</button>
+                </div>
+                <div class="w-100 mt-1"></div>
+                <div class="col">
+                    <button class="btn btn-dark btn-block" onclick="pinbuttonClick(4)">4</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-block" onclick="pinbuttonClick(5)">5</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-block" onclick="pinbuttonClick(6)">6</button>
+                </div>
+                <div class="w-100 mt-1"></div>
+                <div class="col">
+                    <button class="btn btn-dark btn-block" onclick="pinbuttonClick(7)">7</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-block" onclick="pinbuttonClick(8)">8</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-block" onclick="pinbuttonClick(9)">9</button>
+                </div>
+                <div class="w-100 mt-1"></div>
+                <div class="col">
+                    <button class="btn btn-dark btn-block" onclick="removeLast()"><i class="fa fa-arrow-left"
+                                                                                     aria-hidden="true"></i></button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-block" onclick="pinbuttonClick(0)">0</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-dark btn-block" onclick="clearInput()"><i class="fa fa-times"
+                                                                                     aria-hidden="true"></i></button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <p>Pizza CRM</p>
+            </div>
+            <div class="col-9 text-center">
+                <p>Компания: [QTPZY] Школа пиццы Дата окончания лицензии: Никогда</p>
+            </div>
+            <div class="col-1 text-right">
+                <i class="fa fa-power-off" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
