@@ -3,6 +3,7 @@ package com.pizza.crm.controller.admin.rest;
 import com.pizza.crm.model.Category;
 import com.pizza.crm.model.Dish;
 import com.pizza.crm.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -15,6 +16,7 @@ public class CategoryControllerRest {
 
     private CategoryService categoryService;
 
+    @Autowired
     public CategoryControllerRest(CategoryService categoryService) {
         this.categoryService = categoryService;
     }

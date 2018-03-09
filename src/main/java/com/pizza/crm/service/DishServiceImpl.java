@@ -6,6 +6,7 @@ import com.pizza.crm.model.Ingredient;
 import com.pizza.crm.repository.CategoryRepository;
 import com.pizza.crm.repository.DishRepository;
 import com.pizza.crm.repository.IngredientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -20,6 +21,7 @@ public class DishServiceImpl implements DishService {
 
     private IngredientRepository ingredientRepository;
 
+    @Autowired
     public DishServiceImpl(DishRepository dishRepository, CategoryRepository categoryRepository, IngredientRepository ingredientRepository) {
         this.dishRepository = dishRepository;
         this.categoryRepository = categoryRepository;

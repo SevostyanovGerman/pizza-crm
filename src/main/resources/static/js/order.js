@@ -158,13 +158,39 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#dish').on('click', '.order-item', function (e) {
+        var quantity = $(this).data('quantity');
+        var itemName = $(this).data('itemName');
+        var price = $(this).data('price');
         e.preventDefault();
-        $('.order-table').append($([
-            "<tr>",
-            "<td>" + $(this).data('quantity') + "</td>",
-            "<td>" + $(this).data('itemName') + "</td>",
-            "<td>" + $(this).data('price') + "</td>",
-        ].join("/n")));
+        var tableRow = $('.order-table tr').length;
+        if (tableRow == 0){
+            $('.order-table').append($([
+                "<tr>",
+                "<td>" + $(this).data('quantity') + "</td>",
+                "<td>" + $(this).data('itemName') + "</td>",
+                "<td>" + $(this).data('price') + "</td>",
+            ].join("/n")));
+            return;
+        } else {
+            var go = true;
+            $('.order-table tr').each(function (i) {
+                if (itemName == $(this).find('td:eq(1)').text()){
+                    var quantity2 = $(this).find('td:eq(0)').text();
+                    quantity2++;
+                    go = false ;
+                    $(this).find('td:eq(0)').text(quantity2);
+                }
+            });
+            if (go){
+                $('.order-table').append($([
+                    "<tr>",
+                    "<td>" + quantity + "</td>",
+                    "<td>" + itemName + "</td>",
+                    "<td>" + price + "</td>",
+                ].join("/n")));
+            }
+
+        }
         updateTotal();
     });
 });

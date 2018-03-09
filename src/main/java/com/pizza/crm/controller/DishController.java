@@ -4,6 +4,7 @@ import com.pizza.crm.model.Dish;
 import com.pizza.crm.service.CategoryService;
 import com.pizza.crm.service.DishService;
 import com.pizza.crm.service.IngredientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class DishController {
 
     private IngredientService ingredientService;
 
+    @Autowired
     public DishController(DishService dishService, CategoryService categoryService, IngredientService ingredientService) {
         this.dishService = dishService;
         this.categoryService = categoryService;

@@ -2,6 +2,7 @@ package com.pizza.crm.controller.admin;
 
 import com.pizza.crm.model.Schedule;
 import com.pizza.crm.service.ScheduleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ public class ValidityController {
 
     private ScheduleService scheduleService;
 
+    @Autowired
     public ValidityController(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }

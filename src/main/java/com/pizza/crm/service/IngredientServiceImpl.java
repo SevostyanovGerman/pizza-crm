@@ -2,6 +2,7 @@ package com.pizza.crm.service;
 
 import com.pizza.crm.model.Ingredient;
 import com.pizza.crm.repository.IngredientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -12,6 +13,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     private IngredientRepository ingredientRepository;
 
+    @Autowired
     public IngredientServiceImpl(IngredientRepository ingredientRepository) {
         this.ingredientRepository = ingredientRepository;
     }

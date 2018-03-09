@@ -18,28 +18,34 @@ import java.util.Collections;
 import java.util.HashSet;
 
 @Component
-public class  DbDataGenerator implements ApplicationListener<ContextRefreshedEvent> {
+public class DbDataGenerator implements ApplicationListener<ContextRefreshedEvent> {
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private RoleService roleService;
 
-    @Autowired
     private AddedCategoryService addedCategoryService;
 
-    @Autowired
     private CategoryService categoryService;
 
-    @Autowired
     private DishService dishService;
 
-    @Autowired
     private IngredientService ingredientService;
 
-    @Autowired
     private ScheduleService scheduleService;
+
+    @Autowired
+    public DbDataGenerator(UserService userService, RoleService roleService, AddedCategoryService addedCategoryService,
+                           CategoryService categoryService, DishService dishService, IngredientService ingredientService,
+                           ScheduleService scheduleService) {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.addedCategoryService = addedCategoryService;
+        this.categoryService = categoryService;
+        this.dishService = dishService;
+        this.ingredientService = ingredientService;
+        this.scheduleService = scheduleService;
+    }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
