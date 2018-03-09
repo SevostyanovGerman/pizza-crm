@@ -154,6 +154,7 @@ $(document).ready(function () {
             "<td>" + $(this).data('quantity') + "</td>",
             "<td>" + $(this).data('itemName') + "</td>",
             "<td>" + $(this).data('price') + "</td>",
+            "</tr>"
         ].join("/n")));
         updateTotal();
     });
@@ -259,5 +260,27 @@ $(document).ready(function () {
         tr.find('td:eq(0)').val(savedQty).text(savedQty);
         updateTotal();
         $('.quantity-control-modal').modal('hide');
+    });
+});
+
+// Order-cashbox
+$(document).ready(function () {
+    $('.open-cashbox').click(function () {
+        let orderItems = [];
+        $('.order-table tr').each(function () {
+            orderItems.push({
+                quantity: $(this).find('td:eq(0)').text(),
+                dishName: $(this).find('td:eq(1)').text(),
+                price: $(this).find('td:eq(2)').text()
+            });
+        });
+        let orderList = {
+            orderItems: orderItems,
+            total: $('#total').text(),
+            rawTotal: $('#rawTotal').text(),
+            discount: $('#discount').text(),
+            extraCharge: $('#extraCharge').text()
+        };
+        sessionStorage.setItem('order-list', JSON.stringify(orderList));
     });
 });
