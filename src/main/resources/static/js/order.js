@@ -2,16 +2,18 @@ let csrfToken = $("meta[name='_csrf']").attr("content");
 let csrfHeader = $("meta[name='_csrf_header']").attr("content");
 let colonToggler = false;
 
-function displayDateTime() {
-    let dt = new Date().toLocaleTimeString('ru-RU', {
+function getLocaleTimeString() {
+    return new Date().toLocaleTimeString('ru-RU', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
         hour: '2-digit',
         minute: '2-digit'
     });
-    console.log(dt);
-    let dateTimeParts = dt.split(',');
+}
+
+function displayDateTime() {
+    let dateTimeParts = getLocaleTimeString().split(',');
     let timeParts = dateTimeParts[1].split(':');
     $('.clock-date').text(dateTimeParts[0]);
     $('.clock-hours').text(timeParts[0]);
@@ -25,11 +27,10 @@ $(document).ready(function () {
     setInterval(displayDateTime, 1000);
 });
 
-$(document).ready(function () {
-    let dt = new Date();
-    let time = dt.getHours() + ":" + dt.getMinutes();
-    $('#orderTime').html(time);
-});
+function setOrderTimestamp() {
+    let dateTimeParts = getLocaleTimeString().split(',');
+    $('#orderTime').html(dateTimeParts[1]);
+}
 
 $(document).ready(function () {
     $(".category-item").click(function () {
@@ -108,6 +109,11 @@ $(document).ready(function () {
         onSuccess: function () {
             let discount = parseFloat($('input[name="discountForm"]').val());
             let extraCharge = parseFloat($('input[name="extraChargeForm"]').val());
+            if (discount > 0) {
+                extraCharge = 0;
+            } else if (extraCharge > 0) {
+                discount = 0;
+            }
             $("#discount").html(discount).val(discount);
             $("#extraCharge").html(extraCharge).val(extraCharge);
             $("#discount-extraCharge-modal").modal('hide');
@@ -153,6 +159,9 @@ $(document).ready(function () {
         tr.prev().addClass('highlight').siblings().removeClass('highlight');
         updateTotal();
         tr.remove();
+        if ($('.order-table tr').length === 0) {
+            $('#orderTime').html('');
+        }
     });
 });
 
@@ -164,6 +173,7 @@ $(document).ready(function () {
         e.preventDefault();
         var tableRow = $('.order-table tr').length;
         if (tableRow == 0){
+            setOrderTimestamp();
             $('.order-table').append($([
                 "<tr>",
                 "<td>" + $(this).data('quantity') + "</td>",

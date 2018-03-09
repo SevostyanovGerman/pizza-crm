@@ -499,14 +499,6 @@ a .disable {
     color: #aeaeae;
 }
 
-.modal {
-    //position: absolute;
-    //left: 50%;
-    //top: 50%;
-    //transform: translate(-50%, -50%);
-    transform: translateY(25%);
-}
-
 .modal-body button {
     margin-top: 0.5rem;
     display: inline-block;
