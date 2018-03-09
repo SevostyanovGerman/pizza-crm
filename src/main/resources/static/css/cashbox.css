@@ -17,9 +17,19 @@
 }
 
 .order-table {
+    overflow: auto;
     height: 18vh;
     background-color: #fff;
     color: #000;
+}
+
+.order-table tr td {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.borderless td {
+    border: none;
 }
 
 .payment-type-table {

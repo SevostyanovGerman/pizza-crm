@@ -167,10 +167,10 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#dish').on('click', '.order-item', function (e) {
+    	e.preventDefault();
         var quantity = $(this).data('quantity');
         var itemName = $(this).data('itemName');
         var price = $(this).data('price');
-        e.preventDefault();
         var tableRow = $('.order-table tr').length;
         if (tableRow == 0){
             setOrderTimestamp();
@@ -307,7 +307,6 @@ $(document).ready(function () {
         $('.quantity-control-modal').modal('hide');
     });
 });
-
 function showMoreDishes(name) {
     $.ajax({
         type: "POST",
@@ -335,3 +334,24 @@ function showMoreDishes(name) {
         }
     });
 }
+// Order-cashbox
+$(document).ready(function () {
+    $('.open-cashbox').click(function () {
+        let orderItems = [];
+        $('.order-table tr').each(function () {
+            orderItems.push({
+                quantity: $(this).find('td:eq(0)').text(),
+                dishName: $(this).find('td:eq(1)').text(),
+                price: $(this).find('td:eq(2)').text()
+            });
+        });
+        let orderList = {
+            orderItems: orderItems,
+            total: $('#total').text(),
+            rawTotal: $('#rawTotal').text(),
+            discount: $('#discount').text(),
+            extraCharge: $('#extraCharge').text()
+        };
+        sessionStorage.setItem('order-list', JSON.stringify(orderList));
+    });
+});

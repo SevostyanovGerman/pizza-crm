@@ -75,13 +75,9 @@
                 </div>
             </div>
 
-            <div class="row order-table">
+            <div class="row">
                 <div class="col">
-                    <table class="order-table table">
-                        <tr>
-
-                        </tr>
-                    </table>
+                    <table class="table table-sm table-condensed order-table borderless"></table>
                 </div>
             </div>
             <div class="row">
@@ -89,21 +85,21 @@
                     <div class="row">
                         <div class="col-3 mt-1 mx-1 order-total-light">
                             <p class="text-center pt-2 text-uppercase mb-0">Скидка</p>
-                            <h3 class="text-center font-weight-bold mt-0">0%</h3>
+                            <h3 id="discount" class="text-center font-weight-bold mt-0">0%</h3>
                         </div>
                         <div class="col order-total-dark">
                             <p class="text-center pt-2 text-uppercase mb-0">Подытог</p>
-                            <h3 class="text-center mt-0">1220,00 р.</h3>
+                            <h3 id="rawTotal" class="text-center mt-0">0,00 р.</h3>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-3 mb-1 ml-1 order-total-light">
                             <p class="text-center pt-2 text-uppercase mb-0">Надбавка</p>
-                            <h3 class="text-center font-weight-bold mt-0">0%</h3>
+                            <h3 id="extraCharge" class="text-center font-weight-bold mt-0">0%</h3>
                         </div>
                         <div class="col px-2 mb-1 mr-1 order-total-light">
-                            <h2 class="text-center pt-2 font-weight-bold pt-3">1220,00 р.</h2>
+                            <h2 id="total" class="text-center pt-2 font-weight-bold pt-3">0,00 р.</h2>
                         </div>
                     </div>
                 </div>
@@ -114,7 +110,7 @@
                     <h2 class="text-left text-uppercase">Сдача</h2>
                 </div>
                 <div class="col">
-                    <h2 class="text-right text-uppercase font-weight-bold">0,00</h2>
+                    <h2 id="change" class="text-right text-uppercase font-weight-bold">0,00</h2>
                 </div>
             </div>
 

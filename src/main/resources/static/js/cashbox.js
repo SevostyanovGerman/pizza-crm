@@ -34,3 +34,23 @@ $(document).ready(function () {
         $('.input-cash').val('0.00');
     });
 });
+
+$(document).ready(function () {
+    let orderList = JSON.parse(sessionStorage.getItem('order-list'));
+    if (orderList === undefined) {
+        return
+    }
+    orderList.orderItems.forEach(function (elem) {
+        $('.order-table').append($([
+            "<tr>",
+            "<td>" + elem.quantity + "</td>",
+            "<td class='text-center'>" + elem.dishName + "</td>",
+            "<td>" + elem.price + "</td>",
+            "</td>"
+        ].join("/n")));
+    });
+    $('#discount').html(orderList.discount);
+    $('#extraCharge').html(orderList.extraCharge);
+    $('#rawTotal').html(orderList.rawTotal);
+    $('#total').html(orderList.total);
+});
