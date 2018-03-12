@@ -34,10 +34,12 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
     private ScheduleService scheduleService;
 
+    private DiscountService discountService;
+
     @Autowired
     public DbDataGenerator(UserService userService, RoleService roleService, AddedCategoryService addedCategoryService,
                            CategoryService categoryService, DishService dishService, IngredientService ingredientService,
-                           ScheduleService scheduleService) {
+                           ScheduleService scheduleService, DiscountService discountService) {
         this.userService = userService;
         this.roleService = roleService;
         this.addedCategoryService = addedCategoryService;
@@ -45,6 +47,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.dishService = dishService;
         this.ingredientService = ingredientService;
         this.scheduleService = scheduleService;
+        this.discountService = discountService;
     }
 
     @Override
@@ -134,8 +137,12 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                 dish5, dish6, dish7, dish8, dish9, dish10, dish11, dish12, dish13, dish14, dish15, dish16, dish17,
                 dish18, dish19, dish20, dish21, dish22, dish23, dish24, dish25))));
 
-        scheduleService.save(new Schedule("Lunch", LocalTime.of(12,00), LocalTime.of(13, 00), true, true, true, true, true, false, false));
-        scheduleService.save(new Schedule("Dinner", LocalTime.of(18,00), LocalTime.of(19, 00), false, false, false, false, false, true, true));
+        scheduleService.save(new Schedule("Lunch", LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true, true, true, false, false));
+        scheduleService.save(new Schedule("Dinner", LocalTime.of(18, 00), LocalTime.of(19, 00), false, false, false, false, false, true, true));
 
+        ActionTime actionTime1 = new ActionTime(LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true , true ,true, false, false);
+        ActionTime actionTime2 = new ActionTime(LocalTime.of(9, 00), LocalTime.of(10, 00), true, true, false , false ,false, false, false);
+
+        discountService.save(new Discount("Discount example", "Discount example", "Discount and extracharge", true, 500, Arrays.asList(actionTime1, actionTime2)));
     }
 }

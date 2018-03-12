@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Скидки и надбавки</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/discountandextracharge/new.css}"
+          href="../static/css/discountandextracharge/new.css"
+          rel="stylesheet" media="screen">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/discountandextracharge/new.js}"></script>
+</head>
+<body>
+    <div class="container">
+        <h3>Основные параметры скидки</h3>
+        <h5>Укажите основные параметры скидки</h5>
+            <div class="form-group row">
+                <label for="name" class="col-sm-3 col-form-label">Название:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="name" placeholder="Название">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="checkName" class="col-sm-3 col-form-label">Название в чеке:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="checkName" placeholder="Название в чеке">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="type" class="col-sm-3 col-form-label">Тип в скидке:</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="type">
+                        <option selected="selected" value="Discount and extracharge">Скидки и надбавки</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="acceptManualDiscount">
+                        <label class="form-check-label" for="acceptManualDiscount">
+                            Подтвердить выбор скидки вручную при наличию других скидок
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h2>Ограничения</h2>
+            <div class="form-group row">
+                <label for="minSum" class="col-sm col-form-label">Сумма заказа не менее:</label>
+                <div class="col-sm">
+                    <input type="number" class="form-control" id="minSum" value="0">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="acceptOnlyInPeriod">
+                        <label class="form-check-label" for="acceptOnlyInPeriod">
+                            Применять только в период
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1">
+                        <label class="form-check-label" for="exampleRadios1">
+                            По времени печати каждого блюда
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2">
+                        <label class="form-check-label" for="exampleRadios2">
+                            По времени печати первого блюда
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <button class="btn btn-success" onclick="addNewRow()">Добавить</button>
+                <button class="btn btn-danger" onclick="deleteRow()">Удалить</button>
+            </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Начало</th>
+                <th>Окончание</th>
+                <th>Пн</th>
+                <th>Вт</th>
+                <th>Ср</th>
+                <th>Чт</th>
+                <th>Пт</th>
+                <th>Сб</th>
+                <th>Вс</th>
+            </tr>
+            </thead>
+            <tbody class="tbody">
+
+            </tbody>
+        </table>
+        <div class="offset-sm-10 ">
+            <button class="btn btn-danger">Отмена</button>
+            <button class="btn btn-info" onclick="next()">Далее</button>
+        </div>
+    </div>
+</body>
+</html>
