@@ -25,6 +25,8 @@ public class Dish {
 
     private String vendorCode;
 
+    private int position;
+
     @ManyToMany
     @JoinTable(name = "Dish_Ingredient",
             joinColumns = @JoinColumn(name = "dish"),
@@ -79,8 +81,17 @@ public class Dish {
         this.code = code;
         this.barcode = barcode;
         this.vendorCode = vendorCode;
-
     }
+
+    public Dish(@NotBlank String name, double price, String code, String barcode, String vendorCode, int position) {
+        this.name = name;
+        this.price = price;
+        this.code = code;
+        this.barcode = barcode;
+        this.vendorCode = vendorCode;
+        this.position = position;
+    }
+
 
     public Dish(String name) {
         this.name = name;
@@ -148,6 +159,14 @@ public class Dish {
     @Override
     public String toString() {
         return name;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
 }
