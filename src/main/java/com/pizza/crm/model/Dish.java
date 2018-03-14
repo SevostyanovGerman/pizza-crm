@@ -1,5 +1,7 @@
 package com.pizza.crm.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
@@ -25,8 +27,6 @@ public class Dish {
 
     private String vendorCode;
 
-    private int position;
-
     @ManyToMany
     @JoinTable(name = "Dish_Ingredient",
             joinColumns = @JoinColumn(name = "dish"),
@@ -39,12 +39,38 @@ public class Dish {
             inverseJoinColumns = @JoinColumn(name = "category"))
     private Set<Category> categories;
 
+    @ManyToMany
+    @JoinTable(name = "DishQuickMenu_Dish",
+            joinColumns = @JoinColumn(name = "dish"),
+            inverseJoinColumns = @JoinColumn(name = "dishQuickMenu"))
+    @JsonBackReference
+    private Set<DishQuickMenu> dishQuickMenu;
+
     public Dish() {
     }
 
     public Dish(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Dish(@NotBlank String name, double price, String code, String barcode, String vendorCode, Set<Ingredient> ingredients, Set<Category> categories, Set<DishQuickMenu> dishQuickMenu) {
+        this.name = name;
+        this.price = price;
+        this.code = code;
+        this.barcode = barcode;
+        this.vendorCode = vendorCode;
+        this.ingredients = ingredients;
+        this.categories = categories;
+        this.dishQuickMenu = dishQuickMenu;
+    }
+
+    public Set<DishQuickMenu> getDishQuickMenu() {
+        return dishQuickMenu;
+    }
+
+    public void setDishQuickMenu(Set<DishQuickMenu> dishQuickMenu) {
+        this.dishQuickMenu = dishQuickMenu;
     }
 
     public String getCode() {
@@ -82,16 +108,6 @@ public class Dish {
         this.barcode = barcode;
         this.vendorCode = vendorCode;
     }
-
-    public Dish(@NotBlank String name, double price, String code, String barcode, String vendorCode, int position) {
-        this.name = name;
-        this.price = price;
-        this.code = code;
-        this.barcode = barcode;
-        this.vendorCode = vendorCode;
-        this.position = position;
-    }
-
 
     public Dish(String name) {
         this.name = name;
@@ -158,15 +174,16 @@ public class Dish {
 
     @Override
     public String toString() {
-        return name;
+        return "Dish{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", code='" + code + '\'' +
+                ", barcode='" + barcode + '\'' +
+                ", vendorCode='" + vendorCode + '\'' +
+                ", ingredients=" + ingredients +
+                ", categories=" + categories +
+                ", dishQuickMenu=" + dishQuickMenu +
+                '}';
     }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
 }

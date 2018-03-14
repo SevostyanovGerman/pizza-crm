@@ -484,7 +484,6 @@
     var searchVendorCode = false;
 
 
-
     GetQuickMenu();
 
     function SearchProduct(value) {
@@ -544,7 +543,7 @@
                 console.log(dish);
                 dish.forEach(function (value) {
                     // $("#productsItem").append("<li onclick=\"addOrder(\"" + value.name + "\",\"" + value.price + "\")\"><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
-                    $("#productsItem").append("<li onclick=\"addOrder("+ value.name + "," + value.price +")\"><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
+                    $("#productsItem").append("<li onclick=\"addOrder(" + value.name + "," + value.price + ")\"><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
 
                 });
                 listObj2 = new List('products1', option2);
@@ -683,16 +682,16 @@
                 $(".right-panel-body-2").empty();
                 $(".right-panel-body-3").empty();
 
-                quickMenu[0].dishes.forEach(function (value) {
+                quickMenu[0].dishQuickMenu.forEach(function (value) {
                     console.log(value);
                     if (value.position == 1) {
-                        $(".right-panel-body-1").append("<a class=\"middle-panel-yellow\" href=\"#\">" + value.name + "</a>");
+                        $(".right-panel-body-1").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
                     }
                     if (value.position == 2) {
-                        $(".right-panel-body-2").append("<a class=\"middle-panel-yellow\" href=\"#\">" + value.name + "</a>");
+                        $(".right-panel-body-2").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
                     }
                     if (value.position == 3) {
-                        $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" href=\"#\">" + value.name + "</a>");
+                        $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
                     }
 
                 });
@@ -706,15 +705,15 @@
         $(".right-panel-body-1").empty();
         $(".right-panel-body-2").empty();
         $(".right-panel-body-3").empty();
-        quickMenu[numMenu - 1].dishes.forEach(function (value) {
+        quickMenu[numMenu - 1].dishQuickMenu.forEach(function (value) {
             if (value.position == 1) {
-                $(".right-panel-body-1").append("<a class=\"middle-panel-yellow\" href=\"#\">" + value.name + "</a>");
+                $(".right-panel-body-1").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
             }
             if (value.position == 2) {
-                $(".right-panel-body-2").append("<a class=\"middle-panel-yellow\" href=\"#\">" + value.name + "</a>");
+                $(".right-panel-body-2").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
             }
             if (value.position == 3) {
-                $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" href=\"#\">" + value.name + "</a>");
+                $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
             }
         });
     }

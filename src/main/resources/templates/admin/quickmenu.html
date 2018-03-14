@@ -198,18 +198,18 @@
         $("#sortablePoduct, #menu-item-1, #menu-item-2, #menu-item-3").sortable({
             connectWith: ".connectedSortable",
             stop: function (event, ui) {
-                console.log(ui.item[0].parentElement.id.substr(-1));
-                console.log(ui.item[0].children[3].innerHTML);
-                console.log(quickMenu[activeMenu - 1].dishes);
+                console.log("Куда переместили: " + ui.item[0].parentElement.id.substr(-1));
+                console.log("ID продукта: " + ui.item[0].children[3].innerHTML);
+                console.log("Active menu: " + activeMenu);
                 i = 0;
                 flag = false;
-                quickMenu[activeMenu - 1].dishes.forEach(function (value) {
-                    if(value.id == ui.item[0].children[3].innerHTML) {
+                quickMenu[activeMenu - 1].dishQuickMenu.forEach(function (value) {
+                    if (value.id == ui.item[0].children[3].innerHTML) {
                         flag = true;
                         if (ui.item[0].parentElement.id.substr(-1) == "t") {
                             flag = true;
                             value.position = 0;
-                            delete quickMenu[activeMenu - 1].dishes[i];
+                            delete quickMenu[activeMenu - 1].dishQuickMenu[i];
                         } else {
                             value.position = ui.item[0].parentElement.id.substr(-1);
                         }
@@ -218,16 +218,19 @@
                 });
                 if (flag == false) {
                     dish.forEach(function (value) {
-                        if(value.id == ui.item[0].children[3].innerHTML) {
-                            value.position = ui.item[0].parentElement.id.substr(-1);
-                            quickMenu[activeMenu - 1].dishes.push(value);
-                            console.log(dish);
+                        if (value.id == ui.item[0].children[3].innerHTML) {
+                            console.log("!!!!");
+                            var temp = {};
+                            temp.id = null;
+                            temp.color = "red";
+                            temp.position = parseInt(ui.item[0].parentElement.id.substr(-1));
+                            temp.dish = [value];
+                            quickMenu[activeMenu - 1].dishQuickMenu.unshift(temp);
                         }
                     });
-                    //quickMenu[activeMenu - 1].dishes.next =
                 }
             }
-        }).disableSelection();
+        });
     });
 
 
@@ -254,15 +257,15 @@
         $("#menu-item-2").empty();
         $("#menu-item-3").empty();
 
-        quickMenu[activeMenu - 1].dishes.forEach(function (value) {
+        quickMenu[activeMenu - 1].dishQuickMenu.forEach(function (value) {
             if (value.position == 1) {
-                $("#menu-item-1").append("<li class=\"menu-product-item\"><p class=\"name\">" + value.name + "</p><p class=\"category\">" + value.categories[0].name + "</p><p class=\"code\">Код - " + value.code + "</p><p сlass=\"id\" style=\"display: none\">" + value.id + "</p></li>");
+                $("#menu-item-1").append("<li class=\"menu-product-item\" style=\"background-color:" + value.color + "\"><p class=\"name\"> " + value.dish[0].name + "</p><p class=\"category\">" + value.dish[0].categories[0].name + "</p><p class=\"code\">Код - " + value.dish[0].code + "</p><p сlass=\"id\" style=\"display: none\">" + value.id + "</p></li>");
             }
             if (value.position == 2) {
-                $("#menu-item-2").append("<li class=\"menu-product-item\"><p class=\"name\">" + value.name + "</p><p class=\"category\">" + value.categories[0].name + "</p><p class=\"code\">Код - " + value.code + "</p><p сlass=\"id\" style=\"display: none\">" + value.id + "</p></li>");
+                $("#menu-item-2").append("<li class=\"menu-product-item\" style=\"background-color:" + value.color + "\"><p class=\"name\"> " + value.dish[0].name + "</p><p class=\"category\">" + value.dish[0].categories[0].name + "</p><p class=\"code\">Код - " + value.dish[0].code + "</p><p сlass=\"id\" style=\"display: none\">" + value.id + "</p></li>");
             }
             if (value.position == 3) {
-                $("#menu-item-3").append("<li class=\"menu-product-item\"><p class=\"name\">" + value.name + "</p><p class=\"category\">" + value.categories[0].name + "</p><p class=\"code\">Код - " + value.code + "</p><p сlass=\"id\" style=\"display: none\">" + value.id + "</p></li>");
+                $("#menu-item-3").append("<li class=\"menu-product-item\" style=\"background-color:" + value.color + "\"><p class=\"name\"> " + value.dish[0].name + "</p><p class=\"category\">" + value.dish[0].categories[0].name + "</p><p class=\"code\">Код - " + value.dish[0].code + "</p><p сlass=\"id\" style=\"display: none\">" + value.id + "</p></li>");
             }
 
         });
@@ -285,6 +288,7 @@
             }
         });
     }
+
     function GetQuickMenu(day) {
         var index = 1;
         $.ajax({
@@ -300,7 +304,6 @@
                 $(".head-item-menu-3").empty();
                 quickMenu = JSON.parse(data);
                 quickMenu.forEach(function (value) {
-
                     $(".head-item-menu-" + index).append("<p id=\"head-item-" + index + "\" onclick=\"ClickToHeadMenu(" + index + ")\">" + value.name + "</p>");
                     index = index + 1;
                 });
@@ -309,15 +312,15 @@
                 $("#menu-item-2").empty();
                 $("#menu-item-3").empty();
 
-                quickMenu[0].dishes.forEach(function (value) {
+                quickMenu[0].dishQuickMenu.forEach(function (value) {
                     if (value.position == 1) {
-                        $("#menu-item-1").append("<li class=\"menu-product-item\"><p class=\"name\">" + value.name + "</p><p class=\"category\">" + value.categories[0].name + "</p><p class=\"code\">Код - " + value.code + "</p><p сlass=\"id\" style=\"display: none\">" + value.id + "</p></li>");
+                        $("#menu-item-1").append("<li class=\"menu-product-item\" style=\"background-color:" + value.color + "\"><p class=\"name\"> " + value.dish[0].name + "</p><p class=\"category\">" + value.dish[0].categories[0].name + "</p><p class=\"code\">Код - " + value.dish[0].code + "</p><p сlass=\"id\" style=\"display: none\">" + value.id + "</p></li>");
                     }
                     if (value.position == 2) {
-                        $("#menu-item-2").append("<li class=\"menu-product-item\"><p class=\"name\">" + value.name + "</p><p class=\"category\">" + value.categories[0].name + "</p><p class=\"code\">Код - " + value.code + "</p><p сlass=\"id\" style=\"display: none\">" + value.id + "</p></li>");
+                        $("#menu-item-2").append("<li class=\"menu-product-item\" style=\"background-color:" + value.color + "\"><p class=\"name\"> " + value.dish[0].name + "</p><p class=\"category\">" + value.dish[0].categories[0].name + "</p><p class=\"code\">Код - " + value.dish[0].code + "</p><p сlass=\"id\" style=\"display: none\">" + value.id + "</p></li>");
                     }
                     if (value.position == 3) {
-                        $("#menu-item-3").append("<li class=\"menu-product-item\"><p class=\"name\">" + value.name + "</p><p class=\"category\">" + value.categories[0].name + "</p><p class=\"code\">Код - " + value.code + "</p><p сlass=\"id\" style=\"display: none\">" + value.id + "</p></li>");
+                        $("#menu-item-3").append("<li class=\"menu-product-item\" style=\"background-color:" + value.color + "\"><p class=\"name\"> " + value.dish[0].name + "</p><p class=\"category\">" + value.dish[0].categories[0].name + "</p><p class=\"code\">Код - " + value.dish[0].code + "</p><p сlass=\"id\" style=\"display: none\">" + value.id + "</p></li>");
                     }
 
                 });

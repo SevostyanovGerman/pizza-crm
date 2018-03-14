@@ -262,7 +262,7 @@ ul {
 
 .middle-panel-menu-body li {
     display: inline-block;
-    background-color: #dfe487;
+    background-color: red;
     width: 100%;
     margin-top: 1rem;
     text-align: center;
@@ -278,6 +278,9 @@ ul {
 .middle-panel-menu-body ul {
     width: 100%;
     display: inline-block;
-    min-height: 5rem;
-    //border: 1px solid #1a8f7c;
+    min-height: 3rem;
+    border: 1px solid rgba(0, 0, 66, 0.1);
 }
+
+#menu-item-1 .ui-selected { background: #F39814; color: white; }
+#menu-item-1 .ui-selecting { background: #FECA40; }
