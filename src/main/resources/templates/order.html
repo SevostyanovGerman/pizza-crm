@@ -383,7 +383,7 @@
                         <div class="col-4" style="padding-right: 0px;">
                             <div class="products" id="products1">
                                 <ul class="productsItem list" id="productsItem">
-                                    <li>
+                                    <li class="product-search" data-quantity="1">
                                         <p class="name">Ролл</p>
                                         <p class="price">100р</p>
                                         <p class="code">Koд: 1000</p>
@@ -500,7 +500,7 @@
                 $("#productsItem").empty();
                 var dish = JSON.parse(data);
                 dish.forEach(function (value) {
-                    $("#product").append("<div class=\"col-3\"><div class=\"productItem\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "p</p></div></div>")
+                    $("#product").append("<div class=\"col-3\"><div class=\"productItem\" data-quantity=\"1\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "p</p></div></div>")
                 });
                 listObj = new List('product1', options);
             },
@@ -523,7 +523,7 @@
                 $("#productsItem").empty();
                 var dish = JSON.parse(data);
                 dish.forEach(function (value) {
-                    $("#productsItem").append("<li><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
+                    $("#productsItem").append("<li class=\"product-search\" data-quantity=\"1\"><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
                 });
                 listObj2 = new List('products1', option2);
             },
