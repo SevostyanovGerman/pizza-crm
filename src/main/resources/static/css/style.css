@@ -701,6 +701,11 @@ a .disable {
     font-weight: bold;
 }
 
+div#products1.products {
+    display: inline-block;
+    height: 20rem;
+    overflow-y: auto;
+}
 
 .quantity-control-modal .modal-body {
     background-color: #3E4040;
