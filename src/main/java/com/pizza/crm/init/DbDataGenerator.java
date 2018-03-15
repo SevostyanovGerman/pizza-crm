@@ -1,6 +1,7 @@
 package com.pizza.crm.init;
 
 
+import com.github.javafaker.Faker;
 import com.pizza.crm.model.*;
 import com.pizza.crm.model.security.Role;
 import com.pizza.crm.model.security.User;
@@ -13,31 +14,26 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class DbDataGenerator implements ApplicationListener<ContextRefreshedEvent> {
 
-    private UserService userService;
-
-    private RoleService roleService;
-
-    private AddedCategoryService addedCategoryService;
-
-    private CategoryService categoryService;
-
-    private DishService dishService;
-
-    private IngredientService ingredientService;
-
-    private ScheduleService scheduleService;
+    private final UserService userService;
+    private final RoleService roleService;
+    private final AddedCategoryService addedCategoryService;
+    private final CategoryService categoryService;
+    private final DishService dishService;
+    private final IngredientService ingredientService;
+    private final ScheduleService scheduleService;
+    private final EmployeeService employeeService;
 
     @Autowired
     public DbDataGenerator(UserService userService, RoleService roleService, AddedCategoryService addedCategoryService,
                            CategoryService categoryService, DishService dishService, IngredientService ingredientService,
-                           ScheduleService scheduleService) {
+                           ScheduleService scheduleService, PositionService positionService, EmployeeService employeeService) {
         this.userService = userService;
         this.roleService = roleService;
         this.addedCategoryService = addedCategoryService;
@@ -45,6 +41,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.dishService = dishService;
         this.ingredientService = ingredientService;
         this.scheduleService = scheduleService;
+        this.employeeService = employeeService;
     }
 
     @Override
@@ -137,5 +134,37 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         scheduleService.save(new Schedule("Lunch", LocalTime.of(12,00), LocalTime.of(13, 00), true, true, true, true, true, false, false));
         scheduleService.save(new Schedule("Dinner", LocalTime.of(18,00), LocalTime.of(19, 00), false, false, false, false, false, true, true));
 
+        generateFakeStaff();
+
+    }
+
+    private void generateFakeStaff() {
+        Faker faker = new Faker(new Locale("ru"));
+
+        List<Department> fakeDepartments = Stream.generate(() ->
+                    new Department(faker.commerce().department()))
+                .limit(7)
+                .collect(Collectors.toList());
+
+        List<Position> fakePositions = Stream.generate(() ->
+                    new Position(faker.job().position(), faker.bothify("??###")))
+                .limit(7)
+                .collect(Collectors.toList());
+
+        List<Employee> fakeEmployees = Stream.generate(() ->
+                    new Employee(faker.name().name(), faker.letterify("???"), faker.numerify("####")))
+                .limit(10)
+                .collect(Collectors.toList());
+        fakeEmployees.add(new Employee("admin", "admin", "admin"));
+
+
+        Random random = new Random();
+        fakeEmployees.forEach((e) -> {
+            Department department = fakeDepartments.get(random.nextInt(fakeDepartments.size()));
+            e.addDepartment(department);
+            Position position = fakePositions.get(random.nextInt(fakePositions.size()));
+            e.addPosition(position);
+        });
+        employeeService.saveAll(fakeEmployees);
     }
 }
