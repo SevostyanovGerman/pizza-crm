@@ -5,12 +5,12 @@ function next() {
     var id = $('#id').val();
     var active = $('#active').prop('checked');
     var advancedOptions = {
-        id : id,
-        active : active
+        id: id,
+        active: active
     };
     $.ajax({
         type: "POST",
-        url: "/discountandextracharge/saveAdvancedOptions3",
+        url: "/discountandextracharge/saveStepFour",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(advancedOptions),
         beforeSend: function (xhr) {
@@ -23,4 +23,9 @@ function next() {
             alert("error")
         }
     });
+}
+
+function back() {
+    var id = $('#id').val();
+    window.location.replace("/discountandextracharge/step3/" + id);
 }

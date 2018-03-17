@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Скидки и надбавки</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/discountandextracharge/stepThree.css}"
+          href="../static/css/discountandextracharge/stepThree.css"
+          rel="stylesheet" media="screen">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/discountandextracharge/stepThree.js}"></script>
+</head>
+<body>
+<div class="container">
+    <input type="hidden" id="id" th:value="${id}">
+    <h4>Укажите размер и тип (скидка или надбавка)</h4>
+    <div class="row">
+        <div class="col-sm-4 top-left-column">
+            <h5>Метод применения</h5>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="type1" id="toFullPriceDiscount"
+                       value="toFullPriceDiscount">
+                <label class="form-check-label" for="toFullPriceDiscount">
+                    К полной сумме заказа
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="type1" id="withOtherDiscount"
+                       value="withOtherDiscount">
+                <label class="form-check-label" for="withOtherDiscount">
+                    С учетом другой скидки
+                </label>
+            </div>
+            <div class="form-group row">
+                <label for="priority" class="col-sm-6 col-form-label">Приоретет</label>
+                <select id="priority" class="col-sm-2" disabled>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-8 top-right-column">
+            <h5>Тип</h5>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="discountType"
+                               id="discount" value="DISCOUNT" th:field="${discount.discountType}">
+                        <label class="form-check-label" for="discount">
+                            Скидка
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="discountType"
+                               id="extracharge" value="EXTRACHARGE" th:field="${discount.discountType}">
+                        <label class="form-check-label" for="extracharge">
+                            Надбавка
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="discountValueType"
+                               id="percent" value="PERCENT" th:field="${discount.discountValueType}">
+                        <label class="form-check-label" for="percent">
+                            Процент
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="discountValueType"
+                               id="fixeddiscount" value="FIXEDDISCOUNT" th:field="${discount.discountValueType}">
+                        <label class="form-check-label" for="fixeddiscount">
+                            Фиксированная сумма
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="value" class="col-sm-3 col-form-label">Процент:</label>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" id="value" placeholder="1%" th:value="${discount.value}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="applyForAllType"
+                       th:checked="${discount?.applyForAllType}">
+                <label class="form-check-label" for="applyForAllType">
+                    Применять для всех видов блюд
+                </label>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="printDetails">
+                <label class="form-check-label" for="printDetails">
+                    Детализировать при печати
+                </label>
+            </div>
+        </div>
+    </div>
+    <!--<button class="btn btn-success" onclick="addNewRow()">Добавить</button>-->
+    <!--<button class="btn btn-danger">Удалить</button>-->
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Категория</th>
+            <th>Тип</th>
+            <th>Процент</th>
+        </tr>
+        </thead>
+        <tbody id="categoryDiscounts">
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.name}" class="name"></td>
+            <td>
+                <select class="type">
+                    <option value="NONE">Не применяется</option>
+                    <option value="DISCOUNT">Скидка</option>
+                    <option value="EXTRACHARGE">Наценка</option>
+                </select>
+            </td>
+            <td><input type="number" value="0" class="value"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="col-sm">
+        <p>Комментарий:</p>
+        <textarea name="comment" cols="130" rows="3"></textarea>
+    </div>
+    <div>
+        <div class="offset-sm-9 buttons">
+            <a href="#" th:href="@{/discountandextracharge}" class="btn btn-danger">Отмена</a>
+            <button class="btn btn-info" onclick="back()">Назад</button>
+            <button class="btn btn-success" onclick="next()">Далее</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

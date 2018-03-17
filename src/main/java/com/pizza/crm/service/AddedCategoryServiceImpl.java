@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class AddedCategoryServiceImpl implements AddedCategoryService {
 
-    private AddedCategoryRepository addedCategoryRepository;
+    private final AddedCategoryRepository addedCategoryRepository;
 
     @Autowired
     public AddedCategoryServiceImpl(AddedCategoryRepository addedCategoryRepository) {

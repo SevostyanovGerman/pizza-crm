@@ -140,9 +140,11 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         scheduleService.save(new Schedule("Lunch", LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true, true, true, false, false));
         scheduleService.save(new Schedule("Dinner", LocalTime.of(18, 00), LocalTime.of(19, 00), false, false, false, false, false, true, true));
 
-        ActionTime actionTime1 = new ActionTime(LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true , true ,true, false, false);
-        ActionTime actionTime2 = new ActionTime(LocalTime.of(9, 00), LocalTime.of(10, 00), true, true, false , false ,false, false, false);
+        ActionTime actionTime1 = new ActionTime(LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true, true, true, false, false);
+        ActionTime actionTime2 = new ActionTime(LocalTime.of(9, 00), LocalTime.of(10, 00), true, true, false, false, false, false, false);
 
-        discountService.save(new Discount("Discount example", "Discount example", "Discount and extracharge", true, 500, Arrays.asList(actionTime1, actionTime2)));
+        discountService.save(new Discount("Discount example", "Discount example", "Discount and extracharge",
+                true, 500, Arrays.asList(actionTime1, actionTime2), new DiscountAndPayment()));
+
     }
 }

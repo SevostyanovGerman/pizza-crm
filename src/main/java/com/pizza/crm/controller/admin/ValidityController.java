@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ValidityController {
 
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
 
     @Autowired
     public ValidityController(ScheduleService scheduleService) {
@@ -21,19 +21,19 @@ public class ValidityController {
     }
 
     @RequestMapping("/validity")
-    public String validity(Model model){
+    public String validity(Model model) {
         model.addAttribute("schedules", scheduleService.findAllSchedules());
         return "admin/validity";
     }
 
     @PostMapping("/validity/save")
-    public String save(@RequestBody Schedule schedule){
+    public String save(@RequestBody Schedule schedule) {
         scheduleService.save(schedule);
         return "redirect:/validity";
     }
 
     @PostMapping("/validity/delete")
-    public String delete(@RequestParam String name){
+    public String delete(@RequestParam String name) {
         scheduleService.deleteByName(name);
         return "redirect:/validity";
     }

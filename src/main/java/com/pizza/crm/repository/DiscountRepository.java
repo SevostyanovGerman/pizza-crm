@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import javax.transaction.Transactional;
 import java.util.List;
 
+@Transactional
 public interface DiscountRepository extends JpaRepository<Discount, Long> {
 
     Discount getByName(String name);
@@ -14,9 +15,7 @@ public interface DiscountRepository extends JpaRepository<Discount, Long> {
 
     List<Discount> findAll();
 
-    @Transactional
     void deleteByName(String name);
 
-    @Transactional
     void deleteById(Long id);
 }

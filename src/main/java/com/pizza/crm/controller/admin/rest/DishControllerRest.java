@@ -13,7 +13,7 @@ import java.util.Collection;
 @RestController
 public class DishControllerRest {
 
-    private DishService dishService;
+    private final DishService dishService;
 
     @Autowired
     public DishControllerRest(DishService dishService) {

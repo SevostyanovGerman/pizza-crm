@@ -1,49 +1,63 @@
 package com.pizza.crm.controller.admin;
 
+import com.pizza.crm.model.Discount;
+import com.pizza.crm.service.CategoryService;
 import com.pizza.crm.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class DiscountAndExtraChargeController {
 
-    private DiscountService discountService;
+    private final DiscountService discountService;
+
+    private final CategoryService categoryService;
 
     @Autowired
-    public DiscountAndExtraChargeController(DiscountService discountService) {
+    public DiscountAndExtraChargeController(DiscountService discountService, CategoryService categoryService) {
         this.discountService = discountService;
+        this.categoryService = categoryService;
     }
 
     @RequestMapping("/discountandextracharge")
-    public String show(Model model){
+    public String show(Model model) {
         model.addAttribute("discounts", discountService.findAll());
         return "admin/DiscountAndExtraCharge/discountandextracharge";
     }
 
-    @RequestMapping("/discountandextracharge/new")
-    public String addNew(){
-        return "admin/DiscountAndExtraCharge/new";
+    @GetMapping("/discountandextracharge/update/step1/{id}")
+    public String updateStepOne(@PathVariable Long id, Model model) {
+        model.addAttribute("discount", discountService.getById(id));
+        return "admin/DiscountAndExtraCharge/stepOne";
     }
 
-    @RequestMapping("/discountandextracharge/new2/{id}")
-    public String addNew2(@PathVariable Long id, Model model){
-        model.addAttribute("id", id);
-        return "admin/DiscountAndExtraCharge/new2";
+    @RequestMapping("/discountandextracharge/new/step1")
+    public String addNewStepOne() {
+        return "admin/DiscountAndExtraCharge/stepOne";
     }
 
-    @RequestMapping("/discountandextracharge/new3/{id}")
-    public String addNew3(@PathVariable Long id, Model model){
+    @RequestMapping("/discountandextracharge/step2/{id}")
+    public String stepTwo(@PathVariable Long id, Model model) {
         model.addAttribute("id", id);
-        return "admin/DiscountAndExtraCharge/new3";
+        model.addAttribute("discount", discountService.getById(id));
+        return "admin/DiscountAndExtraCharge/stepTwo";
     }
 
-    @RequestMapping("/discountandextracharge/new4/{id}")
-    public String addNew4(@PathVariable Long id, Model model){
+    @RequestMapping("/discountandextracharge/step3/{id}")
+    public String stepThree(@PathVariable Long id, Model model) {
         model.addAttribute("id", id);
-        return "admin/DiscountAndExtraCharge/new4";
+        model.addAttribute("discount", discountService.getById(id));
+        model.addAttribute("categories", categoryService.getAll());
+        return "admin/DiscountAndExtraCharge/stepThree";
+    }
+
+    @RequestMapping("/discountandextracharge/step4/{id}")
+    public String stepFour(@PathVariable Long id, Model model) {
+        model.addAttribute("id", id);
+        model.addAttribute("discount", discountService.getById(id));
+        return "admin/DiscountAndExtraCharge/stepFour";
     }
 
 }

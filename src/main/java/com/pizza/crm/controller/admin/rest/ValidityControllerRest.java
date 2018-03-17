@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ValidityControllerRest {
 
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
 
     @Autowired
     public ValidityControllerRest(ScheduleService scheduleService) {
@@ -18,7 +18,7 @@ public class ValidityControllerRest {
     }
 
     @RequestMapping(value = "/validity/get", method = RequestMethod.POST)
-    public Schedule getSchedule(String name){
+    public Schedule getSchedule(String name) {
         return scheduleService.getScheduleByName(name);
     }
 

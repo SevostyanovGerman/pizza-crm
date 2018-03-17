@@ -21,11 +21,11 @@ import java.util.Set;
 @Controller
 public class CategoryController {
 
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
-    private AddedCategoryService addedCategoryService;
+    private final AddedCategoryService addedCategoryService;
 
-    private DishService dishService;
+    private final DishService dishService;
 
     @Autowired
     public CategoryController(CategoryService categoryService, AddedCategoryService addedCategoryService, DishService dishService) {
@@ -74,8 +74,8 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/admin/add", method = RequestMethod.POST)
-    public String addCategory(AddedCategory category){
-        if (addedCategoryService.getCategoryByName(category.getName()) == null){
+    public String addCategory(AddedCategory category) {
+        if (addedCategoryService.getCategoryByName(category.getName()) == null) {
             addedCategoryService.save(category);
         } else {
             AddedCategory db = addedCategoryService.getCategoryByName(category.getName());
@@ -86,9 +86,9 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/admin/delete", method = RequestMethod.POST)
-    public String deleteCategory(String name){
+    public String deleteCategory(String name) {
         AddedCategory db = addedCategoryService.getCategoryByName(name);
-        if (db != null){
+        if (db != null) {
             addedCategoryService.delete(db.getId());
         }
         return "redirect:/categories";

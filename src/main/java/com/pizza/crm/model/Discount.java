@@ -1,7 +1,13 @@
 package com.pizza.crm.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Discount")
@@ -31,27 +37,49 @@ public class Discount {
 
     private Boolean active;
 
+    private Boolean applyForAllType;
+
+    @Enumerated(EnumType.STRING)
+    private DiscountType discountType;
+
+    @Enumerated(EnumType.STRING)
+    private DiscountValueType discountValueType;
+
+    private Integer value;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "DiscountAndPayment_id")
+    private DiscountAndPayment discountAndPayment;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "discount_id")
     private List<ActionTime> actionTimeList;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "discount_id")
+    @Fetch(FetchMode.SELECT)
+    private List<CategoryDiscount> categoryDiscounts;
 
     public Discount() {
         minSum = 0;
         manualInput = false;
         setAuto = false;
-        stewardChoice =false;
+        stewardChoice = false;
         discountWithOther = false;
         active = false;
+        discountAndPayment = new DiscountAndPayment();
+        categoryDiscounts = new ArrayList<>();
     }
 
     public Discount(String name, String checkName, String type, Boolean acceptManualDiscount,
-                    Integer minSum, List<ActionTime> actionTimeList) {
+                    Integer minSum, List<ActionTime> actionTimeList, DiscountAndPayment discountAndPayment) {
         this.name = name;
         this.checkName = checkName;
         this.type = type;
         this.acceptManualDiscount = acceptManualDiscount;
         this.minSum = minSum;
         this.actionTimeList = actionTimeList;
+        this.discountAndPayment = discountAndPayment;
     }
 
     public Long getId() {
@@ -148,5 +176,53 @@ public class Discount {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public DiscountAndPayment getDiscountAndPayment() {
+        return discountAndPayment;
+    }
+
+    public void setDiscountAndPayment(DiscountAndPayment discountAndPayment) {
+        this.discountAndPayment = discountAndPayment;
+    }
+
+    public List<CategoryDiscount> getCategoryDiscounts() {
+        return categoryDiscounts;
+    }
+
+    public void setCategoryDiscounts(List<CategoryDiscount> categoryDiscounts) {
+        this.categoryDiscounts = categoryDiscounts;
+    }
+
+    public Boolean getApplyForAllType() {
+        return applyForAllType;
+    }
+
+    public void setApplyForAllType(Boolean applyForAllType) {
+        this.applyForAllType = applyForAllType;
+    }
+
+    public DiscountType getDiscountType() {
+        return discountType;
+    }
+
+    public void setDiscountType(DiscountType discountType) {
+        this.discountType = discountType;
+    }
+
+    public DiscountValueType getDiscountValueType() {
+        return discountValueType;
+    }
+
+    public void setDiscountValueType(DiscountValueType discountValueType) {
+        this.discountValueType = discountValueType;
+    }
+
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
     }
 }

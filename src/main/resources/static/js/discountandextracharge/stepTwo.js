@@ -1,7 +1,7 @@
 var csrfToken = $("meta[name='_csrf']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
-$(document).ready(function() {
+$(document).ready(function () {
     var id = $('#id').val();
     $.ajax({
         type: "POST",
@@ -30,25 +30,30 @@ function next() {
     var stewardChoice = $("#stewardChoice").prop('checked');
     var discountWithOther = $("#discountWithOther").prop('checked');
     var advancedOptions = {
-        id : id,
-        manualInput : manualInput,
-        setAuto : setAuto,
-        stewardChoice : stewardChoice,
-        discountWithOther : discountWithOther
+        id: id,
+        manualInput: manualInput,
+        setAuto: setAuto,
+        stewardChoice: stewardChoice,
+        discountWithOther: discountWithOther
     };
     $.ajax({
         type: "POST",
-        url: "/discountandextracharge/saveAdvancedOptions",
+        url: "/discountandextracharge/saveStepTwo",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(advancedOptions),
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function (data) {
-            window.location.replace("/discountandextracharge/new3/"+data);
+            window.location.replace("/discountandextracharge/step3/" + data);
         },
         error: function (e) {
             alert("error")
         }
     });
+}
+
+function back() {
+    var id = $('#id').val();
+    window.location.replace("/discountandextracharge/update/step1/" + id);
 }

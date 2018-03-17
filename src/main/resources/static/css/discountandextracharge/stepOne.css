@@ -1,0 +1,19 @@
+.table {
+    margin-top: 1rem;
+}
+
+.item-active {
+    background: #dfe385;
+}
+
+body {
+    background: #9ab69d;
+}
+
+.container {
+    border: 2px solid;
+}
+
+.buttons {
+    margin-bottom: 2rem;
+}

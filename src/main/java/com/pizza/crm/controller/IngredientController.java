@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/admin/ingredient")
 public class IngredientController {
 
-    private IngredientService ingredientService;
+    private final IngredientService ingredientService;
 
     @Autowired
     public IngredientController(IngredientService ingredientService) {

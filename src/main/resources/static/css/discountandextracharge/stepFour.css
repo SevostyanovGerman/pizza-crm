@@ -1,0 +1,21 @@
+body {
+    background: #9ab69d;
+}
+
+h3 {
+    margin-top: 2rem;
+    margin-left: 2rem;
+}
+
+.container {
+    border: 2px solid;
+}
+
+.form-check {
+    margin-left: 7rem;
+    margin-top: 2rem;
+}
+
+.offset-sm-8 {
+    margin-bottom: 2rem;
+}

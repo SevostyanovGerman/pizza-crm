@@ -3,50 +3,87 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!--<meta name="_csrf" th:content="${_csrf.token}"/>-->
-    <!--<meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Скидки и надбавки</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
           rel="stylesheet" media="screen"/>
-    <!--<link th:href="@{/css/DiscountAndExtraCharge/discountandextracharge.css}"-->
-          <!--href="../static/css/discountandextracharge/discountandextracharge.css"-->
-          <!--rel="stylesheet" media="screen">-->
+    <link th:href="@{/css/discountandextracharge/discountandextracharge.css}"
+          href="../static/css/discountandextracharge/discountandextracharge.css"
+          rel="stylesheet" media="screen">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    <!--<script th:src="@{js/validity.js}"></script>-->
+    <script th:src="@{/js/discountandextracharge/discountandextracharge.js}"></script>
 </head>
 <body>
-    <div class="container-fluid">
-        <h3>Скидки и надбавки</h3>
-        <a href="#" th:href="@{/discountandextracharge/new}" class="btn btn-success">Добавить</a>
-        <button class="btn btn-info">Изменить</button>
-        <button class="btn btn-danger">Удалить</button>
+<div class="container-fluid">
+    <h3>Скидки и надбавки</h3>
+    <a href="#" th:href="@{/discountandextracharge/new/step1}" class="btn btn-success">Добавить</a>
+    <button class="btn btn-info" onclick="updateDiscount()">Изменить</button>
+    <button class="btn btn-danger" onclick="deleteDiscount()">Удалить</button>
 
+</div>
+<div class="container-fluid ">
+    <div class="row col-sm-8">
+        <table class="table table-bordered discounts">
+            <thead>
+            <tr>
+                <th>Название</th>
+                <th>Название в перечне</th>
+                <th>Тип скидки</th>
+                <th>Активна</th>
+            </tr>
+            </thead>
+            <tbody class="discountMain">
+            <tr th:each="discount : ${discounts}">
+                <td th:text="${discount.name}"></td>
+                <td th:text="${discount.checkName}"></td>
+                <td th:text="${discount.type}"></td>
+                <td><input th:type="checkbox" th:checked="${discount.active}" class="activated"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="container-fluid ">
-        <div class="row col-sm-8">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Название</th>
-                    <th>Название в перечне</th>
-                    <th>Тип скидки</th>
-                    <th>Активна</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="discount : ${discounts}">
-                        <td th:text="${discount.name}"></td>
-                        <td th:text="${discount.checkName}"></td>
-                        <td th:text="${discount.type}"></td>
-                        <td><input th:type="checkbox" th:checked="${discount.active}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div>
+        <table class="table table-bordered" id="paymentTypes">
+            <thead>
+            <tr>
+                <th>Название</th>
+                <th>Оплата картой</th>
+                <th>Diners</th>
+                <th>MasterCard Electronic</th>
+                <th>Visa</th>
+                <th>Mastercard</th>
+                <th>Visa Electron</th>
+                <th>Maestro</th>
+                <th>Наличные</th>
+                <th>Оплата онлайн</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="discount : ${discounts}">
+                <td th:text="${discount.name}"></td>
+                <td><input th:type="checkbox" class="paymentByCard"
+                           th:checked="${discount.discountAndPayment.paymentByCard}"></td>
+                <td><input th:type="checkbox" class="diners" th:checked="${discount.discountAndPayment.diners}"></td>
+                <td><input th:type="checkbox" class="masterCardElectronics"
+                           th:checked="${discount.discountAndPayment.masterCardElectronics}"></td>
+                <td><input th:type="checkbox" class="visa" th:checked="${discount.discountAndPayment.visa}"></td>
+                <td><input th:type="checkbox" class="masterCard" th:checked="${discount.discountAndPayment.masterCard}">
+                </td>
+                <td><input th:type="checkbox" class="visaElectron"
+                           th:checked="${discount.discountAndPayment.visaElectron}"></td>
+                <td><input th:type="checkbox" class="maestro" th:checked="${discount.discountAndPayment.maestro}"></td>
+                <td><input th:type="checkbox" class="cash" th:checked="${discount.discountAndPayment.cash}"></td>
+                <td><input th:type="checkbox" class="onlinePayment"
+                           th:checked="${discount.discountAndPayment.onlinePayment}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+</div>
 </body>
 </html>

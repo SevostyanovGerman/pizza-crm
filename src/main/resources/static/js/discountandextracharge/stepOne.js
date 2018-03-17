@@ -1,7 +1,7 @@
 var csrfToken = $("meta[name='_csrf']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
-function addNewRow(){
+function addNewRow() {
     $('.tbody').append($([
         "<tr>" +
         "<td><input class='beginTime' type='time'></td>" +
@@ -17,7 +17,7 @@ function addNewRow(){
     ].join('/n')))
 }
 
-$(document).ready(function(){
+$(document).ready(function () {
     $('.tbody').on('click', 'tr', function () {
         $(this).addClass('item-active').siblings().removeClass('item-active');
     });
@@ -41,42 +41,43 @@ function next() {
         var saturday = $(this).find(".saturday").prop('checked');
         var sunday = $(this).find('.sunday').prop('checked');
         var time = {
-            beginTime : beginTime,
-            endTime : endTime,
-            monday : monday,
-            tuesday : tuesday,
-            thursday : thursday,
-            wednesday : wednesday,
-            friday : friday,
-            saturday : saturday,
-            sunday : sunday
+            beginTime: beginTime,
+            endTime: endTime,
+            monday: monday,
+            tuesday: tuesday,
+            thursday: thursday,
+            wednesday: wednesday,
+            friday: friday,
+            saturday: saturday,
+            sunday: sunday
         };
         timeArray.push(time);
     });
-
+    var id = $('#id').val();
     var name = $('#name').val();
     var checkName = $('#checkName').val();
     var type = $('#type').val();
     var acceptManualDiscount = $('#acceptManualDiscount').prop('checked');
     var minSum = $('#minSum').val();
     var discount = {
-        name : name,
-        checkName : checkName,
-        type : type,
-        acceptManualDiscount : acceptManualDiscount,
-        minSum : minSum,
-        actionTimeList : timeArray
+        id: id,
+        name: name,
+        checkName: checkName,
+        type: type,
+        acceptManualDiscount: acceptManualDiscount,
+        minSum: minSum,
+        actionTimeList: timeArray
     };
     $.ajax({
         type: "POST",
-        url: "/discountandextracharge/save",
+        url: "/discountandextracharge/saveStepOne",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(discount),
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
-        success: function (data) {
-            window.location.replace("/discountandextracharge/new2/"+data);
+        success: function (id) {
+            window.location.replace("/discountandextracharge/step2/" + id);
         },
         error: function (e) {
             alert("error")

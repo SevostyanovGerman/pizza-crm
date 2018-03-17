@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Скидки и надбавки</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/discountandextracharge/stepTwo.css}"
+          href="../static/css/discountandextracharge/stepTwo.css"
+          rel="stylesheet" media="screen">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/discountandextracharge/stepTwo.js}"></script>
+<body>
+<div class="container">
+    <h3>Укажите настройки скидки</h3>
+    <div>
+        <input type="hidden" id="id" th:value="${id}">
+    </div>
+    <div class="form-check checkboxes">
+        <input class="form-check-input" type="checkbox" value="" id="manualInput">
+        <label class="form-check-label" for="manualInput">
+            Можно назначать вручную
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="setAuto">
+        <label class="form-check-label" for="setAuto">
+            Устанавливать автоматически
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="stewardChoice">
+        <label class="form-check-label" for="stewardChoice">
+            Выбор блюд на усмотрение официанта
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="discountWithOther">
+        <label class="form-check-label" for="discountWithOther">
+            Можно использовать с другими скидками
+        </label>
+    </div>
+    <div class="offset-sm-8 buttons">
+        <a href="#" th:href="@{/discountandextracharge}" class="btn btn-danger">Отмена</a>
+        <button class="btn btn-info" onclick="back()">Назад</button>
+        <button class="btn btn-success" onclick="next()">Далее</button>
+    </div>
+</div>
+</body>
+</html>

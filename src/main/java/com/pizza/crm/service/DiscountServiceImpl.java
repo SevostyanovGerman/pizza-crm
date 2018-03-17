@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class DiscountServiceImpl implements DiscountService {
 
-    private DiscountRepository discountRepository;
+    private final DiscountRepository discountRepository;
 
     @Autowired
     public DiscountServiceImpl(DiscountRepository discountRepository) {
@@ -19,8 +19,8 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public Long save(Discount discount) {
-        Discount discount1 = discountRepository.save(discount);
-        return discount1.getId();
+        Discount discountDb = discountRepository.save(discount);
+        return discountDb.getId();
     }
 
     @Override

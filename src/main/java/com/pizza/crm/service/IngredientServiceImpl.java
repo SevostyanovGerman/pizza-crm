@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class IngredientServiceImpl implements IngredientService {
 
-    private IngredientRepository ingredientRepository;
+    private final IngredientRepository ingredientRepository;
 
     @Autowired
     public IngredientServiceImpl(IngredientRepository ingredientRepository) {
