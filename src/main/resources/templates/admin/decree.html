@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>Быстрое меню</title>
+    <title>Приказы об изменении прейскуранта</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
           rel="stylesheet" media="screen"/>
-    <link th:href="@{/css/quickmenu.css}" href="../static/css/decree.css" rel="stylesheet" media="screen">
+    <link th:href="@{/css/decree.css}" href="../static/css/decree.css" rel="stylesheet" media="screen">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -25,8 +25,7 @@
     <div class="row">
         <div class="col-12" style="padding: 0;">
             <div class="head">
-                <h3>Быстрое меню</h3>
-                <button type="button" class="btn btn-success" onclick="Save()">Сохранить</button>
+                <h3>Приказы об изменении прейскуранта</h3>
             </div>
         </div>
 
@@ -35,127 +34,47 @@
         <div class="col-4 left-panel">
             <p>Тут пока не знаю что, но думаю что тут будет меню для перехода между режимами админки</p>
         </div>
-        <div class="col-4 middle-panel">
-            <div class="row middle-panel-head">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-6 middle-panel-head-l">
-                            <p>Отделение:</p>
+        <div class="col-8 right-panel">
+            <div class="row head-right-panel-1">
+                <div class="col-8">
+                    <button type="button" class="btn btn-primary">Создать</button>
+                    <button type="button" class="btn btn-primary">Копия</button>
+                    <button type="button" class="btn btn-primary">Открыть</button>
+                    <button type="button" class="btn btn-warning">Удалить</button>
+                </div>
+                <div class="col-4 head-right-panel-r">
+                    <button type="button" class="btn btn-info">Обновить</button>
+                    <button type="button" class="btn btn-info">Excel</button>
+                </div>
+            </div>
+            <div class="row head-right-panel-2">
+                <div class="col-8">
+                    <div class="form-group row">
+                        <label for="exampleSelect1" class="col-form-label">За переод</label>
+                        <div class="col-3">
+                            <select class="form-control" id="exampleSelect1">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <select class="form-control" id="exampleSelect">
-                                    <option>Общий</option>
-                                    <option>Зал</option>
-                                </select>
-                            </div>
+                        <label for="example-date-input-1" class="col-form-label">с</label>
+                        <div class="col-3">
+                            <input class="form-control" type="date" value="2011-08-19" id="example-date-input-1">
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 offset-6">
-                            <button type="button" class="btn btn-info">Удалить текущее меню</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-info">Очистить текущую закладку</button>
-                        </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-info">Очистить выбранную позицию</button>
+                        <label for="example-date-input-2" class="col-form-label">до</label>
+                        <div class="col-3">
+                            <input class="form-control" type="date" value="2011-08-19" id="example-date-input-2">
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row middle-panel-menu-head">
-                <div class="col-4">
-                    <div class="head-item head-item-menu-1">
-                        <p id="head-item-1" onclick="ClickToHeadMenu(1)">Салаты/супы</p>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="head-item head-item-menu-2">
-                        <p id="head-item-2" onclick="ClickToHeadMenu(2)">Напитки</p>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="head-item head-item-menu-3">
-                        <p id="head-item-3" onclick="ClickToHeadMenu(3)">Выпечка</p>
-                    </div>
+                <div class="col-4 head-right-panel-r">
+                    <button type="button" class="btn btn-info">Показать изменения</button>
                 </div>
             </div>
-            <div class="row middle-panel-menu-body">
-                <div class="col-4">
-                    <ul class="connectedSortable" id="menu-item-1">
-                    </ul>
-                </div>
-                <div class="col-4">
-                    <ul class="connectedSortable" id="menu-item-2">
-                    </ul>
-                </div>
-                <div class="col-4">
-                    <ul class="connectedSortable" id="menu-item-3">
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-4 right-panel">
-            <div class="row right-panel-head">
-                <div class="col-6 right-panel-head-l">
-                    <div class="form-group">
-                        <select class="form-control" id="exampleSelect1">
-                            <option value="1" selected="selected">Понедельник</option>
-                            <option value="2">Вторник</option>
-                            <option value="3">Среда</option>
-                            <option value="4">Четверг</option>
-                            <option value="5">Пятница</option>
-                            <option value="6">Суббота</option>
-                            <option value="7">Воскресенье</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <button type="button" class="btn btn-primary">Копировать меню</button>
-                    <button type="button" class="btn btn-primary" onclick="ShowChangeNameHeadMenu()">Переименовать
-                        выбр.закладку
-                    </button>
-                    <button type="button" class="btn btn-primary">Изменить цвет выбранного блюда</button>
-                    <button type="button" class="btn btn-primary">Excel</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input">
-                            Показать только продукты, включенные в меню
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="row right-panel-search">
-                <div class="col-7">
-                    <div class="form-group">
-                        <input type="text" id="SearchInput" class="form-control" placeholder="Поиск">
-                    </div>
-                </div>
-                <div class="col-5">
-                    <button type="button" class="btn btn-danger" onclick="clearInputSearch()">Очистить</button>
-                </div>
-            </div>
-            <div class="row right-panel-product">
-                <div class="col-12">
-                    <div id="prouctList">
-                        <ul id="sortablePoduct" class="connectedSortable list">
-                            <li class="ui-state-default product-item" th:each="product : ${products}">
-                                <p class="name" th:text="${product.name}">Маргарита</p>
-                                <p class="category" th:text="${product.categories}">Пицца</p>
-                                <p class="code" th:text="${product.code}">Код - 123</p>
-                                <p сlass="id" style="display: none" th:text="${product.id}"></p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <hr>
         </div>
     </div>
 </section>
