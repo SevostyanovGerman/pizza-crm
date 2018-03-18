@@ -2,6 +2,7 @@ var csrfToken = $("meta[name='_csrf']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
 function addSchedule(){
+    console.log("1111");
     var name = $("#scheduleName").val();
     var beginTime = $('#beginTime').val();
     var endTime = $('#endTime').val();

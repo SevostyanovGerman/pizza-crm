@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Новый приказ</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{js/newDecree.js}"></script>
+
+
+</head>
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Del</th>
+        <th scope="col">UpdateName</th>
+        <th scope="col">Update</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="schedule:${schedule}">
+        <td th:utext="${category.id}">...</td>
+        <td th:utext="${category.name}"></td>
+        <td><a class="btn btn-success btn-control" th:href="@{/category/del?id=} + ${category.id}">Удалить</a>
+        </td>
+        <td>
+            <form class="form-inline" th:object="${category}" action="#" th:action="@{/category/update}"
+                  method="POST">
+                <input type="hidden" name="id" th:value="${category.id}">
+                <input type="text" class="form-control" name="name" placeholder="Название категории"
+                       style="margin-bottom: 8px; margin-right: 2px;">
+                <button type="submit" class="btn btn-primary mb-2">Обновить название категории</button>
+            </form>
+        </td>
+        <td><a class="btn btn-success btn-control" th:href="@{/categories/update?id=} + ${category.id}">Обновить
+            категорию</a>
+    </tr>
+    </tbody>
+</table>
+<option th:each="schedule : ${schedules}" th:text="${schedule.getName()}"></option>
+</body>
+</html>
