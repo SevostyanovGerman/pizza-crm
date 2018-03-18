@@ -15,4 +15,6 @@ public interface ScheduleService {
     Schedule getScheduleByName(String name);
 
     List<Schedule> findAllSchedules();
+
+    void deleteByName(String name);
 }

@@ -16,8 +16,12 @@ import java.util.Optional;
 @RequestMapping("/admin/ingredient")
 public class IngredientController {
 
-    @Autowired
     private IngredientService ingredientService;
+
+    @Autowired
+    public IngredientController(IngredientService ingredientService) {
+        this.ingredientService = ingredientService;
+    }
 
     @GetMapping({"", "/"})
     public String ingredientList(Model model) {

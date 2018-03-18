@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ProductSearchController {
 
-    @Autowired
     private DishService dishService;
+
+    @Autowired
+    public ProductSearchController(DishService dishService) {
+        this.dishService = dishService;
+    }
 
     @GetMapping("/productSearch")
     public String productSearchPage(Model model) {

@@ -15,14 +15,18 @@ import java.util.Optional;
 @RequestMapping("/admin/dish")
 public class DishController {
 
-    @Autowired
     private DishService dishService;
 
-    @Autowired
     private CategoryService categoryService;
 
-    @Autowired
     private IngredientService ingredientService;
+
+    @Autowired
+    public DishController(DishService dishService, CategoryService categoryService, IngredientService ingredientService) {
+        this.dishService = dishService;
+        this.categoryService = categoryService;
+        this.ingredientService = ingredientService;
+    }
 
     @GetMapping({"", "/"})
     public String dishList(Model model) {

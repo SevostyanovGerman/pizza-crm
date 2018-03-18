@@ -14,8 +14,12 @@ import java.util.Set;
 @RestController
 public class CategoryControllerRest {
 
-    @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    public CategoryControllerRest(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @RequestMapping(value = "/update/categoriesdish/{id}")
     public ResponseEntity<?> updateCategories1(@RequestBody @Validated Set<Dish> dish, @PathVariable("id") @Validated long id, BindingResult bindingResult) {

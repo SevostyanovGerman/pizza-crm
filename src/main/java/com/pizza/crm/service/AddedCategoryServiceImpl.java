@@ -10,8 +10,12 @@ import java.util.List;
 @Service
 public class AddedCategoryServiceImpl implements AddedCategoryService {
 
-    @Autowired
     private AddedCategoryRepository addedCategoryRepository;
+
+    @Autowired
+    public AddedCategoryServiceImpl(AddedCategoryRepository addedCategoryRepository) {
+        this.addedCategoryRepository = addedCategoryRepository;
+    }
 
     @Override
     public void save(AddedCategory category) {

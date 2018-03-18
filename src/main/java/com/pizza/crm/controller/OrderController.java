@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class OrderController {
 
-    @Autowired
     private AddedCategoryService categoryService;
+
+    @Autowired
+    public OrderController(AddedCategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @RequestMapping("/order")
     public String orderPage(Model model) {

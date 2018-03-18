@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class QuickMenuController {
 
-
     private final QuickMenuService quickMenuService;
 
     private final DishService dishService;
@@ -27,4 +26,3 @@ public class QuickMenuController {
         return "admin/quickmenu";
     }
 }
-

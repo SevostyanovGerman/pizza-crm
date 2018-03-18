@@ -189,7 +189,7 @@
                 </div>
 
                 <div class="footer-item footer-item-1">
-                    <a href="#">
+                    <a href="/cashbox" class="open-cashbox">
                         <i class="fa fa-money" aria-hidden="true"></i>
                         <p>Касса</p>
                     </a>
@@ -353,12 +353,10 @@
 <!-- SearchModalЕxpand -->
 <div class="modal fade bd-example-modal-lg" id="SearchModalЕxpand" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <p>РАСШИРЕННЫЙ ПОИСК ТОВАРА</p>
-                <!--<button type="button" class="btn btn-success" onclick="SaveChange()">Сохранить</button>-->
-                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>-->
                 <div class="container" id="product1">
                     <div class="row product list" id="product">
                     </div>
@@ -387,7 +385,7 @@
 <!-- SearchModal -->
 <div class="modal bd-example-modal-lg" id="SearchModal" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <p>ПОИСК ТОВАРА</p>
@@ -396,7 +394,7 @@
                         <div class="col-4" style="padding-right: 0px;">
                             <div class="products" id="products1">
                                 <ul class="productsItem list" id="productsItem">
-                                    <li>
+                                    <li class="product-search" data-quantity="1">
                                         <p class="name">Ролл</p>
                                         <p class="price">100р</p>
                                         <p class="code">Koд: 1000</p>
@@ -481,7 +479,6 @@
 
     date = new Date;
     var day = date.getDay();
-    console.log(day);
     if (day == 0) {
         GetQuickMenu(7);
     } else {
@@ -521,7 +518,7 @@
                 var dish = JSON.parse(data);
                 console.log(dish);
                 dish.forEach(function (value) {
-                    $("#product").append("<div class=\"col-3\"><div class=\"productItem\" onclick=\"addOrder(\"" + value.name + "\",\"" + value.price + "\")\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "</p></div></div>");
+                    $("#product").append("<div class=\"col-3\"><div class=\"productItem\" data-quantity=\"1\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "p</p></div></div>");
                 });
                 listObj = new List('product1', options);
             },
@@ -544,9 +541,7 @@
                 var dish = JSON.parse(data);
                 console.log(dish);
                 dish.forEach(function (value) {
-                    // $("#productsItem").append("<li onclick=\"addOrder(\"" + value.name + "\",\"" + value.price + "\")\"><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
-                    $("#productsItem").append("<li onclick=\"addOrder(" + value.name + "," + value.price + ")\"><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
-
+                    $("#productsItem").append("<li class=\"product-search\" data-quantity=\"1\"><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
                 });
                 listObj2 = new List('products1', option2);
             },
@@ -722,11 +717,7 @@
             }
         });
     }
-
-    function addOrder(name, price) {
-        $('.order-table').append("<tr><td>1</td><td>" + name + "</td><td>" + price + "</td></tr>");
-    }
-
+    
     function headerQuickMenu(num) {
         var id = "#headerQuickMenu-" + num;
         $("#headerQuickMenu-1").css({"background-color": "#3e4040", "color": "#fff"});
@@ -734,7 +725,6 @@
         $("#headerQuickMenu-3").css({"background-color": "#3e4040", "color": "#fff"});
         $(id).css({"background-color": "#dfe487", "color": "#3e4040"});
     }
-
 
 </script>
 </body>

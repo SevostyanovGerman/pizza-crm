@@ -517,14 +517,6 @@ a .disable {
     color: #aeaeae;
 }
 
-.modal {
-    //position: absolute;
-    //left: 50%;
-    //top: 50%;
-    //transform: translate(-50%, -50%);
-    transform: translateY(25%);
-}
-
 .modal-body button {
     margin-top: 0.5rem;
     display: inline-block;
@@ -727,6 +719,11 @@ a .disable {
     font-weight: bold;
 }
 
+div#products1.products {
+    display: inline-block;
+    height: 20rem;
+    overflow-y: auto;
+}
 
 .quantity-control-modal .modal-body {
     background-color: #3E4040;
@@ -769,4 +766,8 @@ a .disable {
     background-color: transparent;
     color: white;
     font-weight: bold;
+}
+
+.fa-angle-down {
+    font-size: 9vh;
 }

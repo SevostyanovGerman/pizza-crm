@@ -1,5 +1,6 @@
 package com.pizza.crm.service;
 
+import com.pizza.crm.exceptions.NotFoundException;
 import com.pizza.crm.model.Schedule;
 import com.pizza.crm.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,12 @@ import java.util.List;
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 
-    @Autowired
     private ScheduleRepository scheduleRepository;
+
+    @Autowired
+    public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
+        this.scheduleRepository = scheduleRepository;
+    }
 
     @Override
     public void save(Schedule schedule) {
@@ -27,10 +32,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public Schedule getSchedule(Long id) {
-        if (scheduleRepository.existsById(id)){
-            return scheduleRepository.findById(id).get();
-        }
-        return null;
+        return scheduleRepository.findById(id).orElseThrow(()-> new NotFoundException(""));
     }
 
     @Override
@@ -41,5 +43,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<Schedule> findAllSchedules() {
         return scheduleRepository.findAll();
+    }
+
+    @Override
+    public void deleteByName(String name) {
+        scheduleRepository.deleteByName(name);
     }
 }

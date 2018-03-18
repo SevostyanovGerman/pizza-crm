@@ -13,8 +13,12 @@ import java.util.Collection;
 @RestController
 public class DishControllerRest {
 
-    @Autowired
     private DishService dishService;
+
+    @Autowired
+    public DishControllerRest(DishService dishService) {
+        this.dishService = dishService;
+    }
 
     @RequestMapping(value = "/get/dish")
     public String productSearchPage() throws JsonProcessingException {

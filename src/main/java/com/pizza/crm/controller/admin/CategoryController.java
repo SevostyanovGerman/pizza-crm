@@ -21,14 +21,18 @@ import java.util.Set;
 @Controller
 public class CategoryController {
 
-    @Autowired
     private CategoryService categoryService;
 
-    @Autowired
     private AddedCategoryService addedCategoryService;
 
-    @Autowired
     private DishService dishService;
+
+    @Autowired
+    public CategoryController(CategoryService categoryService, AddedCategoryService addedCategoryService, DishService dishService) {
+        this.categoryService = categoryService;
+        this.addedCategoryService = addedCategoryService;
+        this.dishService = dishService;
+    }
 
     @RequestMapping("/categories")
     public String categories(Model model) {
