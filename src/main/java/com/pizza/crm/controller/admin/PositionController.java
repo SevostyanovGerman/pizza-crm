@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/back-office/staff")
 public class PositionController {
 
     private final PositionService positionService;
@@ -20,24 +19,24 @@ public class PositionController {
         this.positionService = positionService;
     }
 
-    @GetMapping("/position")
+    @GetMapping("/admin/staff/position")
     public String getAllPositions(Model model) {
         model.addAttribute("allPositions", positionService.getAll());
         return "admin/staff/position";
     }
 
-    @GetMapping("/position/{id}")
+    @GetMapping("/admin/staff/position/{id}")
     public @ResponseBody Position getPosition(@PathVariable Long id) {
         return positionService.findById(id).orElseThrow(NotFoundException::new);
     }
 
-    @DeleteMapping("/position/{id}")
+    @DeleteMapping("/admin/staff/position/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deletePosition(@PathVariable Long id) {
         positionService.deleteById(id);
     }
 
-    @PostMapping("/position")
+    @PostMapping("/admin/staff/position")
     @ResponseStatus(HttpStatus.OK)
     public void savePosition(Position position) {
         positionService.save(position);

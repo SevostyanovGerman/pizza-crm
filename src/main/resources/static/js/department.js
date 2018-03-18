@@ -2,36 +2,51 @@ let csrfToken = $("meta[name='_csrf']").attr("content");
 let csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
 $(document).ready(function () {
-    $('.btn-position-edit').click(function (e) {
+    $('.btn-department-edit').click(function (e) {
         e.preventDefault();
         $.ajax({
-            type: "GET",
+            type: 'GET',
             url: $(this).attr('href'),
             success: function (response) {
-                $('.modal-title').text('Редактирование <' + response.name + '>');
-                $('#position-id').val(response.id);
-                $('#position-name').val(response.name);
-                $('#position-shortname').val(response.shortName);
-                $('#position-comment').val(response.comment);
-                $('#position-enabled').prop('checked', response.enabled);
-                $('#position-edit-modal').modal('show');
+                $('#department-id').val(response.id);
+                $('#department-name').val(response.name);
+                $('#department-edit-modal').modal('show');
             }
         });
     });
 });
 
 $(document).ready(function () {
-    $('.btn-position-save').click(function (e) {
+    $('.btn-department-delete').click(function (e) {
         e.preventDefault();
         $.ajax({
-            type: "POST",
+            type: 'DELETE',
+            url: $(this).attr('href'),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function () {
+                location.reload();
+            }
+        });
+    });
+});
+
+$(document).ready(function () {
+    $('.btn-department-save').click(function (e) {
+        e.preventDefault();
+        let departmentName = $('#department-name');
+        departmentName.removeClass('is-invalid');
+        if (isBlank(departmentName.val())) {
+            departmentName.addClass('is-invalid');
+            return;
+        }
+        $.ajax({
+            type: 'POST',
             url: $(this).attr('href'),
             data: {
-                id: $('#position-id').val(),
-                name:  $('#position-name').val(),
-                shortName: $('#position-shortname').val(),
-                comment: $('#position-comment').val(),
-                enabled: $('#position-enabled').val()
+                id: $('#department-id').val(),
+                name: departmentName.val()
             },
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
@@ -43,18 +58,6 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function () {
-    $('.btn-position-delete').click(function (e) {
-        e.preventDefault();
-        $.ajax({
-            type: "DELETE",
-            url: $(this).attr('href'),
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-            },
-            success: function () {
-                location.reload();
-            }
-        });
-    });
-});
+function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
+}

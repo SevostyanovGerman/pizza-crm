@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -53,6 +54,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         roleService.save(userRole);
 
         userService.save(new User("admin", true, Arrays.asList(adminRole, userRole)));
+        userService.save(new User("123", true, Arrays.asList(adminRole, userRole)));
         userService.save(new User("user", true, Collections.singletonList(userRole)));
 
         addedCategoryService.save(new AddedCategory("Pizza", "white"));
@@ -131,8 +133,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                 dish5, dish6, dish7, dish8, dish9, dish10, dish11, dish12, dish13, dish14, dish15, dish16, dish17,
                 dish18, dish19, dish20, dish21, dish22, dish23, dish24, dish25))));
 
-        scheduleService.save(new Schedule("Lunch", LocalTime.of(12,00), LocalTime.of(13, 00), true, true, true, true, true, false, false));
-        scheduleService.save(new Schedule("Dinner", LocalTime.of(18,00), LocalTime.of(19, 00), false, false, false, false, false, true, true));
+        scheduleService.save(new Schedule("Lunch", LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true, true, true, false, false));
+        scheduleService.save(new Schedule("Dinner", LocalTime.of(18, 00), LocalTime.of(19, 00), false, false, false, false, false, true, true));
 
         generateFakeStaff();
 
@@ -142,21 +144,29 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         Faker faker = new Faker(new Locale("ru"));
 
         List<Department> fakeDepartments = Stream.generate(() ->
-                    new Department(faker.commerce().department()))
+                new Department(faker.commerce().department()))
                 .limit(7)
                 .collect(Collectors.toList());
 
         List<Position> fakePositions = Stream.generate(() ->
-                    new Position(faker.job().position(), faker.bothify("??###")))
+                new Position(faker.job().position(), faker.bothify("??###")))
                 .limit(7)
                 .collect(Collectors.toList());
 
-        List<Employee> fakeEmployees = Stream.generate(() ->
-                    new Employee(faker.name().name(), faker.letterify("???"), faker.numerify("####")))
+        List<Employee> fakeEmployees = Stream.generate(() -> {
+            EmployeeInfo employeeInfo = new EmployeeInfo(faker.bothify("??###"), faker.name().firstName(),
+                    faker.name().nameWithMiddle(), faker.name().lastName(), "", LocalDate.now(),
+                    faker.phoneNumber().phoneNumber(), faker.phoneNumber().phoneNumber(), faker.phoneNumber().cellPhone(),
+                    faker.internet().emailAddress(), faker.business().creditCardNumber());
+            Address address = new Address(faker.address().fullAddress());
+            Employee employee = new Employee(faker.name().name(), faker.letterify("???"), faker.numerify("####"));
+            employee.setEmployeeInfo(employeeInfo);
+            employee.setAddress(address);
+            return employee;
+        })
                 .limit(10)
                 .collect(Collectors.toList());
         fakeEmployees.add(new Employee("admin", "admin", "admin"));
-
 
         Random random = new Random();
         fakeEmployees.forEach((e) -> {
