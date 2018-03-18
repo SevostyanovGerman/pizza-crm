@@ -405,7 +405,6 @@ section .right-panel-header ul li a {
 
 section .right-panel-header ul li a:hover {
     background-color: #dfe487;
-    color: #3e4040;
     text-decoration: none;
 }
 

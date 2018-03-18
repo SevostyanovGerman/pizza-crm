@@ -16,7 +16,6 @@ public class QuickMenu {
     private Long id;
 
     @NotBlank
-    @Column(name = "name", unique = true)
     private String name;
 
     @ManyToMany

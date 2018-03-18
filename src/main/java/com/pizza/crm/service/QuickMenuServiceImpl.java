@@ -1,7 +1,5 @@
 package com.pizza.crm.service;
 
-import com.pizza.crm.model.Category;
-import com.pizza.crm.model.Dish;
 import com.pizza.crm.model.DishQuickMenu;
 import com.pizza.crm.model.QuickMenu;
 import com.pizza.crm.repository.DishQuickMenuRepository;
@@ -10,16 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class QuickMenuServiceImpl implements QuickMenuService {
 
-
     private final QuickMenuRepository quickMenuRepository;
-
 
     private final DishQuickMenuRepository dishQuickMenuRepository;
 
@@ -63,7 +57,7 @@ public class QuickMenuServiceImpl implements QuickMenuService {
     public void updateQuickMenu(int day, Collection<QuickMenu> quickMenus) {
         for (QuickMenu quickMenu : quickMenus) {
             for (DishQuickMenu dishQuickMenu : quickMenu.getDishQuickMenu()) {
-                if(dishQuickMenu != null) {
+                if (dishQuickMenu != null) {
                     dishQuickMenuRepository.save(dishQuickMenu);
                 }
             }

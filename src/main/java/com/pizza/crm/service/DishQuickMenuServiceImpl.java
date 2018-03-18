@@ -12,7 +12,7 @@ import java.util.Optional;
 public class DishQuickMenuServiceImpl implements DishQuickMenuService {
 
 
-    private DishQuickMenuRepository dishQuickMenuRepository;
+    private final DishQuickMenuRepository dishQuickMenuRepository;
 
     @Autowired
     public DishQuickMenuServiceImpl(DishQuickMenuRepository dishQuickMenuRepository) {

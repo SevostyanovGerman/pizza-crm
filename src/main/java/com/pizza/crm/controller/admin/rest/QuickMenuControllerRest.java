@@ -28,11 +28,9 @@ public class QuickMenuControllerRest {
     }
 
     @RequestMapping(value = "/get/quickmenu/{day}")
-    public String getQuickMenu(@PathVariable("day") @Validated int day) throws JsonProcessingException {
+    public ResponseEntity<?> getQuickMenu(@PathVariable("day") @Validated int day) {
         Collection<QuickMenu> quickMenu = quickMenuService.getQuickMenuByDay(day);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String quickMenuString = objectMapper.writeValueAsString(quickMenu);
-        return quickMenuString;
+        return ResponseEntity.ok(quickMenu);
     }
 
     @RequestMapping(value = "/update/quickmenu/{day}")

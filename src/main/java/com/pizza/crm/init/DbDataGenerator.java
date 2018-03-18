@@ -19,29 +19,33 @@ import java.util.HashSet;
 @Component
 public class DbDataGenerator implements ApplicationListener<ContextRefreshedEvent> {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final RoleService roleService;
+                  
+    private final AddedCategoryService addedCategoryService;
+
+    private final CategoryService categoryService;
+
+    private final DishService dishService;
+
+    private final IngredientService ingredientService;
+
+    private final QuickMenuService quickMenuService;
+
+    private final DishQuickMenuService dishQuickMenuService;
 
     @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private AddedCategoryService addedCategoryService;
-
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private DishService dishService;
-
-    @Autowired
-    private IngredientService ingredientService;
-
-    @Autowired
-    private QuickMenuService quickMenuService;
-
-    @Autowired
-    private DishQuickMenuService dishQuickMenuService;
+    public DbDataGenerator(UserService userService, RoleService roleService, AddedCategoryService addedCategoryService, CategoryService categoryService, DishService dishService, IngredientService ingredientService, QuickMenuService quickMenuService, DishQuickMenuService dishQuickMenuService) {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.addedCategoryService = addedCategoryService;
+        this.categoryService = categoryService;
+        this.dishService = dishService;
+        this.ingredientService = ingredientService;
+        this.quickMenuService = quickMenuService;
+        this.dishQuickMenuService = dishQuickMenuService;
+    }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -77,22 +81,42 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         categoryService.save(new Category("Roll", new HashSet<>(Arrays.asList(dishRol, dishRol1, dishRol2))));
 
         DishQuickMenu dishQuickMenu1 = new DishQuickMenu("green", 1, new HashSet<>(Arrays.asList(dishPizza)));
-        DishQuickMenu dishQuickMenu2 = new DishQuickMenu("red", 1, new HashSet<>(Arrays.asList(dishPizza)));
-        DishQuickMenu dishQuickMenu3 = new DishQuickMenu("red", 2, new HashSet<>(Arrays.asList(dishPizza)));
-        DishQuickMenu dishQuickMenu4 = new DishQuickMenu("red", 2, new HashSet<>(Arrays.asList(dishPizza)));
+        DishQuickMenu dishQuickMenu2 = new DishQuickMenu("red", 1, new HashSet<>(Arrays.asList(dishRol)));
+        DishQuickMenu dishQuickMenu3 = new DishQuickMenu("red", 2, new HashSet<>(Arrays.asList(dishRol1)));
+        DishQuickMenu dishQuickMenu4 = new DishQuickMenu("red", 2, new HashSet<>(Arrays.asList(dishRol2)));
 
         dishQuickMenuService.save(dishQuickMenu1);
         dishQuickMenuService.save(dishQuickMenu2);
         dishQuickMenuService.save(dishQuickMenu3);
         dishQuickMenuService.save(dishQuickMenu4);
 
-        quickMenuService.save(new QuickMenu("Roll", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu2)), 1));
-        quickMenuService.save(new QuickMenu("Pizza", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu3)), 1));
-        quickMenuService.save(new QuickMenu("Test", new HashSet<>(Arrays.asList(dishQuickMenu4)), 1));
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 1));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 1));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 1));
 
         quickMenuService.save(new QuickMenu("|", new HashSet<>(), 2));
         quickMenuService.save(new QuickMenu("||", new HashSet<>(), 2));
         quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 2));
+
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 3));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 3));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 3));
+
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 4));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 4));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 4));
+
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 5));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 5));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 5));
+
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 6));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 6));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 6));
+
+        quickMenuService.save(new QuickMenu("Roll", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu2)), 7));
+        quickMenuService.save(new QuickMenu("Pizza", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu3)), 7));
+        quickMenuService.save(new QuickMenu("Test", new HashSet<>(Arrays.asList(dishQuickMenu4)), 7));
 
     }
 }

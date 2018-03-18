@@ -138,9 +138,9 @@
         <div class="col-4 no-margin right-panel">
             <div class="right-panel-header">
                 <ul id="head-quick-menu">
-                    <li><a href="#">I</a></li>
-                    <li><a href="#">II</a></li>
-                    <li><a href="#">III</a></li>
+                    <li><a href="#" onclick="headerQuickMenu(1)" id="headerQuickMenu-1">I</a></li>
+                    <li><a href="#" onclick="headerQuickMenu(2)" id="headerQuickMenu-2">II</a></li>
+                    <li><a href="#" onclick="headerQuickMenu(3)" id="headerQuickMenu-3">III</a></li>
                 </ul>
             </div>
             <div class="right-panel-body">
@@ -473,18 +473,20 @@
     };
 
     var listObj2 = new List('products1', option2);
-    // function SearchModalShow() {
-    //     $("#SearchModalЕxpand").modal('hide');
-    //     $("#SearchModal").modal('show');
-    // }
 
     var searchAll = false;
     var searchDarCode = false;
     var searchCode = false;
     var searchVendorCode = false;
 
-
-    GetQuickMenu();
+    date = new Date;
+    var day = date.getDay();
+    console.log(day);
+    if (day == 0) {
+        GetQuickMenu(7);
+    } else {
+        GetQuickMenu(day);
+    }
 
     function SearchProduct(value) {
         searchString = searchString + value;
@@ -661,20 +663,20 @@
         }
     }
 
-    function GetQuickMenu() {
+    function GetQuickMenu(day) {
         var index = 1;
         $.ajax({
             type: "GET",
-            url: "/get/quickmenu/1",
+            url: "/get/quickmenu/" + day,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
             success: function (data) {
                 console.log(data);
                 $("#head-quick-menu").empty();
-                quickMenu = JSON.parse(data);
+                quickMenu = data;
                 quickMenu.forEach(function (value) {
-                    $("#head-quick-menu").append("<li><a href=\"#\" onclick=\'ChangeQuickMenu(" + index + ")\'>" + value.name + "</a></li>");
+                    $("#head-quick-menu").append("<li><a href=\"#\" onclick=\'ChangeQuickMenu(" + index + ")\' id=\"headerQuickMenu-" + index + "\">" + value.name + "</a></li>");
                     index = index + 1;
                 });
 
@@ -695,6 +697,8 @@
                     }
 
                 });
+
+                headerQuickMenu(1);
             },
             error: function (e) {
             }
@@ -702,6 +706,7 @@
     }
 
     function ChangeQuickMenu(numMenu) {
+        headerQuickMenu(numMenu)
         $(".right-panel-body-1").empty();
         $(".right-panel-body-2").empty();
         $(".right-panel-body-3").empty();
@@ -719,9 +724,17 @@
     }
 
     function addOrder(name, price) {
-        console.log("ddd");
         $('.order-table').append("<tr><td>1</td><td>" + name + "</td><td>" + price + "</td></tr>");
     }
+
+    function headerQuickMenu(num) {
+        var id = "#headerQuickMenu-" + num;
+        $("#headerQuickMenu-1").css({"background-color": "#3e4040", "color": "#fff"});
+        $("#headerQuickMenu-2").css({"background-color": "#3e4040", "color": "#fff"});
+        $("#headerQuickMenu-3").css({"background-color": "#3e4040", "color": "#fff"});
+        $(id).css({"background-color": "#dfe487", "color": "#3e4040"});
+    }
+
 
 </script>
 </body>
