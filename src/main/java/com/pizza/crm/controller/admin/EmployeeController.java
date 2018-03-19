@@ -35,6 +35,12 @@ public class EmployeeController {
         return "/admin/staff/employee";
     }
 
+    @GetMapping("/admin/staff/employee/new")
+    public String newEmployee(Model model) {
+        model.addAttribute("employee", new Employee("Новый сотрудник", "password", "1234"));
+        return "/admin/staff/employeeCard";
+    }
+
     @GetMapping("/admin/staff/employee/{id}")
     public String getEmployee(@PathVariable Long id, Model model) {
         Employee employee = employeeService.findById(id).orElseThrow(NotFoundException::new);
@@ -59,5 +65,10 @@ public class EmployeeController {
         employeeService.deleteById(id);
     }
 
+    @GetMapping("/admin/staff/employee/find")
+    @ResponseBody
+    public Employee findEmployeeByPincode(@RequestParam("pincode") String pincode) {
+        return employeeService.findByPincode(pincode).orElseGet(Employee::new);
+    }
 
 }

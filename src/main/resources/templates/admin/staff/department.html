@@ -40,12 +40,21 @@
                     <td th:text="${department.id}"></td>
                     <td th:text="${department.name}"></td>
                     <td>
-                        <a class="btn btn-sm btn-success btn-department-edit" th:href="${'department/' + department.id}">Редактировать</a>
-                        <a class="btn btn-sm btn-danger btn-department-delete" th:href="${'department/' + department.id}">Удалить</a>
+                        <a class="btn btn-sm btn-success btn-department-edit" href="#"
+                           th:href="${'department/' + department.id}">Редактировать</a>
+                        <a class="btn btn-sm btn-danger btn-department-delete" href="#"
+                           th:href="${'department/' + department.id}">Удалить</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#department-edit-modal">
+                Новое подразделение
+            </button>
         </div>
     </div>
 </div>
@@ -66,14 +75,15 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="department-name-desc">Наименование</span>
                     </div>
-                    <input type="text" class="form-control" id="department-name" aria-describedby="department-name-desc">
+                    <input type="text" class="form-control" id="department-name"
+                           aria-describedby="department-name-desc">
                     <div class="invalid-feedback">
                         Укажите наименование.
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-primary btn-department-save" th:href="@{department}">Сохранить</a>
+                <a class="btn btn-primary btn-department-save" href="#" th:href="@{department}">Сохранить</a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
             </div>
         </div>

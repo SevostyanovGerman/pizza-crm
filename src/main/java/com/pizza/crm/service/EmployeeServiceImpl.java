@@ -49,4 +49,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         LOGGER.debug("Deleting by id {}", id);
         employeeRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<Employee> findByPincode(String pincode) {
+        return employeeRepository.findByPincode(pincode);
+    }
 }

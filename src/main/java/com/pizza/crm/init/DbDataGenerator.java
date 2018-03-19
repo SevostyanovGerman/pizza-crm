@@ -154,12 +154,24 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                 .collect(Collectors.toList());
 
         List<Employee> fakeEmployees = Stream.generate(() -> {
-            EmployeeInfo employeeInfo = new EmployeeInfo(faker.bothify("??###"), faker.name().firstName(),
-                    faker.name().nameWithMiddle(), faker.name().lastName(), "", LocalDate.now(),
-                    faker.phoneNumber().phoneNumber(), faker.phoneNumber().phoneNumber(), faker.phoneNumber().cellPhone(),
-                    faker.internet().emailAddress(), faker.business().creditCardNumber());
+            EmployeeInfo employeeInfo = new EmployeeInfo(
+                    faker.bothify("??###"),
+                    faker.name().firstName(),
+                    faker.name().nameWithMiddle(),
+                    faker.name().lastName(),
+                    "",
+                    LocalDate.now(),
+                    faker.phoneNumber().phoneNumber(),
+                    faker.phoneNumber().phoneNumber(),
+                    faker.phoneNumber().cellPhone(),
+                    faker.internet().emailAddress(),
+                    faker.business().creditCardNumber());
             Address address = new Address(faker.address().fullAddress());
-            Employee employee = new Employee(faker.name().name(), faker.letterify("???"), faker.numerify("####"));
+            Employee employee = new Employee(
+                    faker.name().name(),
+                    faker.name().name(),
+                    faker.internet().password(20, 21),
+                    faker.numerify("####"));
             employee.setEmployeeInfo(employeeInfo);
             employee.setAddress(address);
             return employee;
