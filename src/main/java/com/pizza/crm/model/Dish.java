@@ -37,6 +37,12 @@ public class Dish {
             inverseJoinColumns = @JoinColumn(name = "category"))
     private Set<Category> categories;
 
+    @ManyToMany
+    @JoinTable(name = "Dish_Dicree",
+            joinColumns = @JoinColumn(name = "dish"),
+            inverseJoinColumns = @JoinColumn(name = "decree"))
+    private Set<Decree> decrees;
+
     public Dish() {
     }
 

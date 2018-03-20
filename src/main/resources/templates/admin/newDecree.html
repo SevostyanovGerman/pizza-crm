@@ -25,7 +25,7 @@
                 <div class="form-group row ">
                     <label for="id" class="d-flex col-sm-6 col-form-label justify-content-end">Номер документа:</label>
                     <div class="col-sm-6">
-                        <input type="email" class="form-control" id="id" value="0001">
+                        <input type="email" class="form-control" id="id">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -64,7 +64,7 @@
                 <div class="form-group row ">
                     <label for="comment" class="d-flex col-sm-6 col-form-label justify-content-end">Комментарий:</label>
                     <div class="col-sm-6">
-                        <input type="email" class="form-control" id="comment" >
+                        <input type="email" class="form-control" id="comment">
                     </div>
                 </div>
                 <div class="form-group row ">
@@ -105,7 +105,7 @@
                     <th>Флайерная прорамма</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-body">
                     <tr>
                         <td>1</td>
                         <td><input type="checkbox"></td>
@@ -126,18 +126,17 @@
         </div>
         <div class="row">
             <div class="col-2">
-                <button>Выйти без сохранения</button>
+                <button onclick="Cancel()">Выйти без сохранения</button>
             </div>
             <div class="offset-6 col-sm-2">
                 <input type="checkbox" class="form-check-input" id="decreeTrue">
-                <label class="form-check-label" for="decreeTrue">Приказ действует</label>
+                <label class="form-check-label" for="decreeTrue" id="decreeEnable">Приказ действует</label>
             </div>
             <div class="offset-1 ">
-                <button class="" onclick="addSchedule()">Сохранить</button>
+                <button class="" onclick="SaveDecree()">Сохранить</button>
             </div>
         </div>
     </div>
-
 
     <!--Modal window-->
     <div id="schedule" class="modal fade" tabindex="-1">

@@ -1,55 +1,49 @@
 package com.pizza.crm.service;
 
+import com.pizza.crm.model.Decree;
 import com.pizza.crm.model.Discount;
+import com.pizza.crm.model.Dish;
+import com.pizza.crm.repository.DecreeRepository;
 import com.pizza.crm.repository.DiscountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class DiscountServiceImpl implements DiscountService {
+public class DecreeServiceImpl implements DecreeService {
 
-    private final DiscountRepository discountRepository;
+    private final DecreeRepository decreeRepository;
 
     @Autowired
-    public DiscountServiceImpl(DiscountRepository discountRepository) {
-        this.discountRepository = discountRepository;
+    public DecreeServiceImpl(DecreeRepository decreeRepository) {
+        this.decreeRepository = decreeRepository;
     }
 
     @Override
-    public Long save(Discount discount) {
-        Discount discountDb = discountRepository.save(discount);
-        return discountDb.getId();
+    public Collection<Decree> getAll() {
+        return decreeRepository.findAll();
     }
 
     @Override
-    public void delete(Discount discount) {
-        discountRepository.delete(discount);
+    public Optional<Decree> findById(Long id) {
+        return decreeRepository.findById(id);
     }
 
     @Override
-    public void deleteByName(String name) {
-        discountRepository.deleteByName(name);
+    public Decree save(Decree decree) {
+        return decreeRepository.save(decree);
+    }
+
+    @Override
+    public Collection<Decree> saveAll(Collection<Decree> decree) {
+        return decreeRepository.saveAll(decree);
     }
 
     @Override
     public void deleteById(Long id) {
-        discountRepository.deleteById(id);
-    }
-
-    @Override
-    public Discount getByName(String name) {
-        return discountRepository.getByName(name);
-    }
-
-    @Override
-    public Discount getById(Long id) {
-        return discountRepository.getById(id);
-    }
-
-    @Override
-    public List<Discount> findAll() {
-        return discountRepository.findAll();
+        decreeRepository.deleteById(id);
     }
 }

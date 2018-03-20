@@ -12,7 +12,9 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -20,26 +22,28 @@ import java.util.HashSet;
 @Component
 public class DbDataGenerator implements ApplicationListener<ContextRefreshedEvent> {
 
-    private UserService userService;
+    private final UserService userService;
 
-    private RoleService roleService;
+    private final RoleService roleService;
 
-    private AddedCategoryService addedCategoryService;
+    private final AddedCategoryService addedCategoryService;
 
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
-    private DishService dishService;
+    private final DishService dishService;
 
-    private IngredientService ingredientService;
+    private final IngredientService ingredientService;
 
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
 
-    private DiscountService discountService;
+    private final DiscountService discountService;
+
+    private final DecreeService decreeService;
 
     @Autowired
     public DbDataGenerator(UserService userService, RoleService roleService, AddedCategoryService addedCategoryService,
                            CategoryService categoryService, DishService dishService, IngredientService ingredientService,
-                           ScheduleService scheduleService, DiscountService discountService) {
+                           ScheduleService scheduleService, DiscountService discountService, DecreeService decreeService) {
         this.userService = userService;
         this.roleService = roleService;
         this.addedCategoryService = addedCategoryService;
@@ -48,6 +52,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.ingredientService = ingredientService;
         this.scheduleService = scheduleService;
         this.discountService = discountService;
+        this.decreeService = decreeService;
     }
 
     @Override
@@ -145,6 +150,14 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
         discountService.save(new Discount("Discount example", "Discount example", "Discount and extracharge",
                 true, 500, Arrays.asList(actionTime1, actionTime2), new DiscountAndPayment()));
+
+        String now = "2016-11-09 10:30";
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        LocalDateTime formatDateTime = LocalDateTime.parse(now, formatter);
+
+        decreeService.save(new Decree("001", formatDateTime, formatDateTime, "123", "1111", false));
 
     }
 }

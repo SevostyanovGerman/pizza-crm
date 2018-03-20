@@ -120,28 +120,32 @@ ul {
 }
 
 .head-right-panel-1 {
-    margin: 1rem;
+    margin-top: 1rem;
 }
 
 .head-right-panel-2 {
     margin-top: 1.2rem;
-    margin-left: 2rem;
+    margin-left: 0.5rem;
     margin-right: 1rem;
 }
 
 
 .head-right-panel-1 button {
-    margin: 0rem 0.2rem;
-    width: 8rem;
+    margin: 0rem 0.1rem;
+    width: 7rem;
 }
 
 .head-right-panel-2 button {
-    margin: 0rem 0.2rem;
+    margin: 0rem 0.1rem;
     width: 14rem;
 }
 
 .head-right-panel-r {
     text-align: right;
+}
+
+table {
+    font-size: 1rem;
 }
 
 
