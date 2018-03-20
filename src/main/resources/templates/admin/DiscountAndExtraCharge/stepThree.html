@@ -20,22 +20,21 @@
 </head>
 <body>
 <div class="container">
-    <input type="hidden" id="id" th:value="${id}">
     <h4>Укажите размер и тип (скидка или надбавка)</h4>
     <div class="row">
         <div class="col-sm-4 top-left-column">
             <h5>Метод применения</h5>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="type1" id="toFullPriceDiscount"
-                       value="toFullPriceDiscount">
-                <label class="form-check-label" for="toFullPriceDiscount">
+                <input class="form-check-input" type="radio" name="applicationMethod" id="FULLPRICE"
+                       value="FULLPRICE">
+                <label class="form-check-label" for="FULLPRICE">
                     К полной сумме заказа
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="type1" id="withOtherDiscount"
-                       value="withOtherDiscount">
-                <label class="form-check-label" for="withOtherDiscount">
+                <input class="form-check-input" type="radio" name="applicationMethod" id="WITHOTHER"
+                       value="WITHOTHER">
+                <label class="form-check-label" for="WITHOTHER">
                     С учетом другой скидки
                 </label>
             </div>
@@ -61,14 +60,14 @@
                 <div class="col-sm-6">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="discountType"
-                               id="discount" value="DISCOUNT" th:field="${discount.discountType}">
+                               id="discount" value="DISCOUNT" >
                         <label class="form-check-label" for="discount">
                             Скидка
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="discountType"
-                               id="extracharge" value="EXTRACHARGE" th:field="${discount.discountType}">
+                               id="extracharge" value="EXTRACHARGE" >
                         <label class="form-check-label" for="extracharge">
                             Надбавка
                         </label>
@@ -77,14 +76,14 @@
                 <div class="col-sm-6">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="discountValueType"
-                               id="percent" value="PERCENT" th:field="${discount.discountValueType}">
+                               id="percent" value="PERCENT">
                         <label class="form-check-label" for="percent">
                             Процент
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="discountValueType"
-                               id="fixeddiscount" value="FIXEDDISCOUNT" th:field="${discount.discountValueType}">
+                               id="fixeddiscount" value="FIXEDDISCOUNT">
                         <label class="form-check-label" for="fixeddiscount">
                             Фиксированная сумма
                         </label>
@@ -92,9 +91,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="value" class="col-sm-3 col-form-label">Процент:</label>
+                <label for="value" class="col-sm-3 col-form-label" id="labelForValue"></label>
                 <div class="col-sm-2">
-                    <input type="number" class="form-control" id="value" placeholder="1%" th:value="${discount.value}">
+                    <input type="number" class="form-control" id="value">
                 </div>
             </div>
         </div>
@@ -102,8 +101,7 @@
     <div class="form-group row">
         <div class="col-sm-4">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="applyForAllType"
-                       th:checked="${discount?.applyForAllType}">
+                <input class="form-check-input" type="checkbox" id="applyForAllType">
                 <label class="form-check-label" for="applyForAllType">
                     Применять для всех видов блюд
                 </label>
@@ -118,8 +116,6 @@
             </div>
         </div>
     </div>
-    <!--<button class="btn btn-success" onclick="addNewRow()">Добавить</button>-->
-    <!--<button class="btn btn-danger">Удалить</button>-->
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -148,7 +144,7 @@
     </div>
     <div>
         <div class="offset-sm-9 buttons">
-            <a href="#" th:href="@{/discountandextracharge}" class="btn btn-danger">Отмена</a>
+            <button class="btn btn-danger" onclick="cancel()">Отмена</button>
             <button class="btn btn-info" onclick="back()">Назад</button>
             <button class="btn btn-success" onclick="next()">Далее</button>
         </div>

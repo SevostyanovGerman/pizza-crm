@@ -20,17 +20,16 @@
 </head>
 <body>
 <div class="container">
-    <input type="hidden" id="id" th:value="${id}">
     <h3>Укажите статус скидки</h3>
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="active" th:checked="${discount?.active}">
+        <input class="form-check-input" type="checkbox" id="active">
         <label class="form-check-label" for="active">
             Активировать скидку
         </label>
     </div>
     <div>
         <div class="offset-sm-8">
-            <a href="#" th:href="@{/discountandextracharge}" class="btn btn-danger">Отмена</a>
+            <button class="btn btn-danger" onclick="cancel()">Отмена</button>
             <button class="btn btn-info" onclick="back()">Назад</button>
             <button class="btn btn-success" onclick="next()">Далее</button>
         </div>

@@ -59,7 +59,6 @@ function checkCheckbox(data) {
 function save() {
     var name = $("#scheduleListName").val();
     var id = $('#id').val();
-    // $('#showSchedule tr').each(function() {
     var beginTime = $('#showSchedule tr').find("input[type=time]").eq(0).val();
     var endTime = $('#showSchedule tr').find("input[type=time]").eq(1).val();
     var monday = $(".monday").prop('checked');
@@ -69,7 +68,6 @@ function save() {
     var friday = $(".friday").prop('checked');
     var saturday = $(".saturday").prop('checked');
     var sunday = $('.sunday').prop('checked');
-    // });
     var schedule = {
         id: id,
         name: name,
