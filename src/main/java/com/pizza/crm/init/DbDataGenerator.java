@@ -1,5 +1,6 @@
 package com.pizza.crm.init;
 
+import com.github.javafaker.Faker;
 import com.pizza.crm.model.*;
 import com.pizza.crm.model.security.Role;
 import com.pizza.crm.model.security.User;
@@ -11,36 +12,31 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class DbDataGenerator implements ApplicationListener<ContextRefreshedEvent> {
 
     private final UserService userService;
-
     private final RoleService roleService;
-
     private final AddedCategoryService addedCategoryService;
-
     private final CategoryService categoryService;
-
     private final DishService dishService;
-
     private final IngredientService ingredientService;
-
-    private final QuickMenuService quickMenuService;
-
-    private final DishQuickMenuService dishQuickMenuService;
-
     private final ScheduleService scheduleService;
+	private final QuickMenuService quickMenuService;
+    private final DishQuickMenuService dishQuickMenuService;
+    private final EmployeeService employeeService;
 
     @Autowired
     public DbDataGenerator(UserService userService, RoleService roleService, AddedCategoryService addedCategoryService,
                            CategoryService categoryService, DishService dishService, IngredientService ingredientService,
-                           ScheduleService scheduleService, QuickMenuService quickMenuService, DishQuickMenuService dishQuickMenuService) {
+                           ScheduleService scheduleService, QuickMenuService quickMenuService, DishQuickMenuService dishQuickMenuService,
+                           EmployeeService employeeService) {
         this.userService = userService;
         this.roleService = roleService;
         this.addedCategoryService = addedCategoryService;
@@ -50,6 +46,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.scheduleService = scheduleService;
         this.quickMenuService = quickMenuService;
         this.dishQuickMenuService = dishQuickMenuService;
+        this.employeeService = employeeService;
     }
 
     @Override
@@ -61,6 +58,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         roleService.save(userRole);
 
         userService.save(new User("admin", true, Arrays.asList(adminRole, userRole)));
+        userService.save(new User("123", true, Arrays.asList(adminRole, userRole)));
         userService.save(new User("user", true, Collections.singletonList(userRole)));
 
         addedCategoryService.save(new AddedCategory("Pizza", "white"));
@@ -179,6 +177,58 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         quickMenuService.save(new QuickMenu("Roll", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu2)), 7));
         quickMenuService.save(new QuickMenu("Pizza", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu3)), 7));
         quickMenuService.save(new QuickMenu("Test", new HashSet<>(Arrays.asList(dishQuickMenu4)), 7));
+        
+        generateFakeStaff();
 
+    }
+
+    private void generateFakeStaff() {
+        Faker faker = new Faker(new Locale("ru"));
+
+        List<Department> fakeDepartments = Stream.generate(() ->
+                new Department(faker.commerce().department()))
+                .limit(7)
+                .collect(Collectors.toList());
+
+        List<Position> fakePositions = Stream.generate(() ->
+                new Position(faker.job().position(), faker.bothify("??###")))
+                .limit(7)
+                .collect(Collectors.toList());
+
+        List<Employee> fakeEmployees = Stream.generate(() -> {
+            EmployeeInfo employeeInfo = new EmployeeInfo(
+                    faker.bothify("??###"),
+                    faker.name().firstName(),
+                    faker.name().nameWithMiddle(),
+                    faker.name().lastName(),
+                    "",
+                    LocalDate.now(),
+                    faker.phoneNumber().phoneNumber(),
+                    faker.phoneNumber().phoneNumber(),
+                    faker.phoneNumber().cellPhone(),
+                    faker.internet().emailAddress(),
+                    faker.business().creditCardNumber());
+            Address address = new Address(faker.address().fullAddress());
+            Employee employee = new Employee(
+                    faker.name().name(),
+                    faker.name().name(),
+                    faker.internet().password(20, 21),
+                    faker.numerify("####"));
+            employee.setEmployeeInfo(employeeInfo);
+            employee.setAddress(address);
+            return employee;
+        })
+                .limit(10)
+                .collect(Collectors.toList());
+        fakeEmployees.add(new Employee("admin", "admin", "admin"));
+
+        Random random = new Random();
+        fakeEmployees.forEach((e) -> {
+            Department department = fakeDepartments.get(random.nextInt(fakeDepartments.size()));
+            e.addDepartment(department);
+            Position position = fakePositions.get(random.nextInt(fakePositions.size()));
+            e.addPosition(position);
+        });
+        employeeService.saveAll(fakeEmployees);
     }
 }

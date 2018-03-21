@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee card</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
+          th:href="@{/webjars/bootstrap-toggle/css/bootstrap-toggle.min.css}"
+          rel="stylesheet" media="screen"/>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"
+            th:src="@{/webjars/bootstrap-toggle/js/bootstrap-toggle.min.js}"></script>
+    <script src="../static/js/employeeCard.js"
+            th:src="@{/js/employeeCard.js}"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row my-3">
+        <div class="col">
+            <h3 th:text="'Карточка сотрудника - ' + ${employee.name}">Карточка сотрудника</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form action="#" th:action="@{.}" th:object="${employee}" method="post">
+            <nav>
+                <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-main-tab" data-toggle="tab" href="#nav-main"
+                       role="tab" aria-controls="nav-main" aria-selected="true">Основное</a>
+                    <a class="nav-item nav-link" id="nav-info-tab" data-toggle="tab" href="#nav-info" role="tab"
+                       aria-controls="nav-info" aria-selected="false">Дополнительное</a>
+                    <a class="nav-item nav-link" id="nav-positions-tab" data-toggle="tab" href="#nav-positions"
+                       role="tab"
+                       aria-controls="nav-positions" aria-selected="false">Должности</a>
+                    <a class="nav-item nav-link" id="nav-departments-tab" data-toggle="tab" href="#nav-departments"
+                       role="tab"
+                       aria-controls="nav-departments" aria-selected="false">Подразделения</a>
+                </div>
+            </nav>
+            <div class="tab-content mb-3 ml-3" id="nav-tabContent">
+                <!--Main tab-->
+                <div class="tab-pane fade show active" id="nav-main" role="tabpanel">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="form-group row">
+                        <label for="input-name" class="col-2 col-form-label">Имя в системе</label>
+                        <div class="col-3">
+                            <input type="text" class="form-control" id="input-name" th:field="*{name}"
+                                th:class="${#fields.hasErrors('name')} ? 'form-control is-invalid' : 'form-control'">
+                            <div class="invalid-feedback" th:errors="*{name}"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="input-login" class="col-2 col-form-label">Имя для входа в систему</label>
+                        <div class="col-3">
+                            <input type="text" class="form-control" id="input-login" th:field="*{login}"
+                                   th:class="${#fields.hasErrors('login')} ? 'form-control is-invalid' : 'form-control'">
+                            <div class="invalid-feedback" th:errors="*{login}"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="input-password" class="col-2 col-form-label">Пароль</label>
+                        <div class="col-3">
+                            <input type="password" class="form-control" id="input-password" th:value="*{password}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="input-pincode" class="col-2 col-form-label">Пинкод</label>
+                        <div class="col-3">
+                            <input type="number" class="form-control" id="input-pincode" th:field="*{pincode}"
+                                   th:class="${#fields.hasErrors('pincode')} ? 'form-control is-invalid' : 'form-control'">
+                            <div class="invalid-feedback" th:errors="*{pincode}"></div>
+                        </div>
+                        <div class="col">
+                            <a href="#" th:href="@{find}" class="btn btn-primary btn-pincode-generator">Генерировать</a>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2 col-form-label">Уволен</div>
+                        <div class="col">
+                            <input type="checkbox" id="input-dismissed" th:field="*{dismissed}" data-toggle="toggle"
+                                   data-onstyle="danger" data-offstyle="success" data-on="Да" data-off="Нет">
+                        </div>
+                    </div>
+                </div>
+                <!--Info tab-->
+                <div class="tab-pane fade" id="nav-info" role="tabpanel">
+                    <div th:object="${employee.employeeInfo}">
+                        <div class="form-group row">
+                            <label for="input-personnelNumber" class="col-2 col-form-label">Табельный номер</label>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="input-personnelNumber" th:field="*{personnelNumber}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="input-firstName" class="col-2 col-form-label">Имя</label>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="input-firstName" th:field="*{firstName}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="input-surname" class="col-2 col-form-label">Фамилия</label>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="input-surname" th:field="*{surname}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="input-patronymic" class="col-2 col-form-label">Отчество</label>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="input-patronymic" th:field="*{patronymic}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="input-sex" class="col-2 col-form-label">Пол</label>
+                            <div class="col-3">
+                                <select class="form-control" id="input-sex" th:field="*{sex}">
+                                    <option th:value="Мужчина">Мужчина</option>
+                                    <option th:value="Женщина">Женщина</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="input-dateOfBirth" class="col-2 col-form-label">День рожденья</label>
+                            <div class="col-3">
+                                <input type="datetime-local" class="form-control" id="input-dateOfBirth" th:field="*{dateOfBirth}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="input-phoneNumber" class="col-2 col-form-label">Телефон</label>
+                            <div class="col-3">
+                                <input type="tel" class="form-control" id="input-phoneNumber" th:field="*{phoneNumber}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="input-additionPhoneNumber" class="col-2 col-form-label">Добавочный номер</label>
+                            <div class="col-3">
+                                <input type="tel" class="form-control" id="input-additionPhoneNumber" th:field="*{additionPhoneNumber}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="input-mobilePhoneNumber" class="col-2 col-form-label">Мобильный</label>
+                            <div class="col-3">
+                                <input type="tel" class="form-control" id="input-mobilePhoneNumber" th:field="*{mobilePhoneNumber}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="input-email" class="col-2 col-form-label">E-mail</label>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="input-email" th:field="*{email}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="input-cardNumber" class="col-2 col-form-label">Номер карты</label>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="input-cardNumber" th:field="*{cardNumber}">
+                            </div>
+                        </div>
+                    </div>
+                    <div th:object="${employee.address}">
+                        <div class="form-group row">
+                            <label for="input-addressRepresentation" class="col-2 col-form-label">Адрес</label>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="input-addressRepresentation" th:field="*{addressRepresentation}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Positions tab-->
+                <div class="tab-pane fade" id="nav-positions" role="tabpanel">
+                    <div class="container">
+                        <ul class="list-group">
+                            <li class="list-group-item" th:each="position : ${allPositions}">
+                                <input type="checkbox" th:field="*{positions}" th:value="${position.id}" name="id"
+                                       th:checked="${#lists.contains(employee.positions, position)}"
+                                       data-toggle="toggle" data-size="small"
+                                       data-onstyle="success" data-offstyle="secondary"
+                                       data-on="Да" data-off="Нет">
+                                <span class="mx-4" th:text="${position.name}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--Departments tab-->
+                <div class="tab-pane fade" id="nav-departments" role="tabpanel">
+                    <div class="container">
+                        <ul class="list-group">
+                            <li class="list-group-item" th:each="department : ${allDepartments}">
+                                <input type="checkbox" th:field="*{departments}" th:value="${department.id}" name="id"
+                                       th:checked="${#lists.contains(employee.departments, department)}"
+                                       data-toggle="toggle" data-size="small"
+                                       data-onstyle="success" data-offstyle="secondary"
+                                       data-on="Да" data-off="Нет">
+                                <span class="mx-4" th:text="${department.name}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+                <a href="#" th:href="@{.}" class="btn btn-secondary">Отмена</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
