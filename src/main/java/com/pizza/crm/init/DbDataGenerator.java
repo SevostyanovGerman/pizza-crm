@@ -31,12 +31,14 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 	private final QuickMenuService quickMenuService;
     private final DishQuickMenuService dishQuickMenuService;
     private final EmployeeService employeeService;
+    private final PaymentMethodService paymentMethodService;
+    private final PaymentTypeService paymentTypeService;
 
     @Autowired
     public DbDataGenerator(UserService userService, RoleService roleService, AddedCategoryService addedCategoryService,
                            CategoryService categoryService, DishService dishService, IngredientService ingredientService,
                            ScheduleService scheduleService, QuickMenuService quickMenuService, DishQuickMenuService dishQuickMenuService,
-                           EmployeeService employeeService) {
+                           EmployeeService employeeService, PaymentMethodService paymentMethodService, PaymentTypeService paymentTypeService) {
         this.userService = userService;
         this.roleService = roleService;
         this.addedCategoryService = addedCategoryService;
@@ -47,6 +49,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.quickMenuService = quickMenuService;
         this.dishQuickMenuService = dishQuickMenuService;
         this.employeeService = employeeService;
+        this.paymentMethodService = paymentMethodService;
+        this.paymentTypeService = paymentTypeService;
     }
 
     @Override
@@ -177,9 +181,24 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         quickMenuService.save(new QuickMenu("Roll", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu2)), 7));
         quickMenuService.save(new QuickMenu("Pizza", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu3)), 7));
         quickMenuService.save(new QuickMenu("Test", new HashSet<>(Arrays.asList(dishQuickMenu4)), 7));
-        
+
         generateFakeStaff();
 
+        generatePaymentMethods();
+
+    }
+
+    private void generatePaymentMethods() {
+        PaymentType card = new PaymentType("Bank card");
+        PaymentType cash = new PaymentType("Cash");
+        PaymentType woEarnings = new PaymentType("Without earnings");
+        paymentTypeService.saveAll(Arrays.asList(card, cash, woEarnings));
+
+        List<PaymentMethod> methods = new ArrayList<>();
+        methods.add(new PaymentMethod("Bank cards", card));
+        methods.add(new PaymentMethod("Cash", cash));
+        methods.add(new PaymentMethod("Without earnings", woEarnings));
+        paymentMethodService.saveAll(methods);
     }
 
     private void generateFakeStaff() {
