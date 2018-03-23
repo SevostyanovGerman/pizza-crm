@@ -33,7 +33,7 @@ public class ActionTime {
         monday = false;
         tuesday = false;
         wednesday = false;
-        thursday= false;
+        thursday = false;
         friday = false;
         saturday = false;
         sunday = false;
@@ -45,7 +45,7 @@ public class ActionTime {
         monday = false;
         tuesday = false;
         wednesday = false;
-        thursday= false;
+        thursday = false;
         friday = false;
         saturday = false;
         sunday = false;

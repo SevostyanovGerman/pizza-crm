@@ -85,16 +85,11 @@ $(document).ready(function () {
         var tr = $(this).closest('tr');
         var name = tr.find('td:eq(0)').text();
         var status = tr.find('input.paymentByCard').prop('checked');
-        var changeStatus = {
-            name: name,
-            status: status,
-            paymentType: "paymentByCard"
-        };
+        var paymentType = $(this).attr('class');
         $.ajax({
             type: "POST",
             url: "/discountandextracharge/changePayment",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(changeStatus),
+            data: {name: name, status: status, paymentType: paymentType},
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
@@ -113,16 +108,11 @@ $(document).ready(function () {
         var tr = $(this).closest('tr');
         var name = tr.find('td:eq(0)').text();
         var status = tr.find('input.diners').prop('checked');
-        var changeStatus = {
-            name: name,
-            status: status,
-            paymentType: "diners"
-        };
+        var paymentType = $(this).attr('class');
         $.ajax({
             type: "POST",
             url: "/discountandextracharge/changePayment",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(changeStatus),
+            data: {name: name, status: status, paymentType: paymentType},
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
@@ -141,16 +131,11 @@ $(document).ready(function () {
         var tr = $(this).closest('tr');
         var name = tr.find('td:eq(0)').text();
         var status = tr.find('input.masterCardElectronics').prop('checked');
-        var changeStatus = {
-            name: name,
-            status: status,
-            paymentType: 'masterCardElectronics'
-        };
+        var paymentType = $(this).attr('class');
         $.ajax({
             type: "POST",
             url: "/discountandextracharge/changePayment",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(changeStatus),
+            data: {name: name, status: status, paymentType: paymentType},
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
@@ -169,16 +154,11 @@ $(document).ready(function () {
         var tr = $(this).closest('tr');
         var name = tr.find('td:eq(0)').text();
         var status = tr.find('input.visa').prop('checked');
-        var changeStatus = {
-            name: name,
-            status: status,
-            paymentType: 'visa'
-        };
+        var paymentType = $(this).attr('class');
         $.ajax({
             type: "POST",
             url: "/discountandextracharge/changePayment",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(changeStatus),
+            data: {name: name, status: status, paymentType: paymentType},
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
@@ -197,16 +177,11 @@ $(document).ready(function () {
         var tr = $(this).closest('tr');
         var name = tr.find('td:eq(0)').text();
         var status = tr.find('input.masterCard').prop('checked');
-        var changeStatus = {
-            name: name,
-            status: status,
-            paymentType: 'masterCard'
-        };
+        var paymentType = $(this).attr('class');
         $.ajax({
             type: "POST",
             url: "/discountandextracharge/changePayment",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(changeStatus),
+            data: {name: name, status: status, paymentType: paymentType},
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
@@ -225,16 +200,11 @@ $(document).ready(function () {
         var tr = $(this).closest('tr');
         var name = tr.find('td:eq(0)').text();
         var status = tr.find('input.visaElectron').prop('checked');
-        var changeStatus = {
-            name: name,
-            status: status,
-            paymentType: 'visaElectron'
-        };
+        var paymentType = $(this).attr('class');
         $.ajax({
             type: "POST",
             url: "/discountandextracharge/changePayment",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(changeStatus),
+            data: {name: name, status: status, paymentType: paymentType},
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
@@ -253,16 +223,11 @@ $(document).ready(function () {
         var tr = $(this).closest('tr');
         var name = tr.find('td:eq(0)').text();
         var status = tr.find('input.maestro').prop('checked');
-        var changeStatus = {
-            name: name,
-            status: status,
-            paymentType: 'maestro'
-        };
+        var paymentType = $(this).attr('class');
         $.ajax({
             type: "POST",
             url: "/discountandextracharge/changePayment",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(changeStatus),
+            data: {name: name, status: status, paymentType: paymentType},
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
@@ -281,16 +246,11 @@ $(document).ready(function () {
         var tr = $(this).closest('tr');
         var name = tr.find('td:eq(0)').text();
         var status = tr.find('input.cash').prop('checked');
-        var changeStatus = {
-            name: name,
-            status: status,
-            paymentType: 'cash'
-        };
+        var paymentType = $(this).attr('class');
         $.ajax({
             type: "POST",
             url: "/discountandextracharge/changePayment",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(changeStatus),
+            data: {name: name, status: status, paymentType: paymentType},
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
@@ -309,16 +269,11 @@ $(document).ready(function () {
         var tr = $(this).closest('tr');
         var name = tr.find('td:eq(0)').text();
         var status = tr.find('input.onlinePayment').prop('checked');
-        var changeStatus = {
-            name: name,
-            status: status,
-            paymentType: 'onlinePayment'
-        };
+        var paymentType = $(this).attr('class');
         $.ajax({
             type: "POST",
             url: "/discountandextracharge/changePayment",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(changeStatus),
+            data: {name: name, status: status, paymentType: paymentType},
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },

@@ -1,22 +1,11 @@
-#paymentTypes {
-    margin-top: 10rem;
-}
+/*body {*/
+/*background: #bebbbf;*/
+/*left: 0;*/
+/*margin: 0;*/
+/*overflow: hidden;*/
+/*position: relative;*/
+/*}*/
 
-.item-active {
-    background: #dfe385;
-}
-
-.discounts {
-    margin-top: 2rem;
-}
-
-body {
-    background: #bebbbf;
-    left: 0;
-    margin: 0;
-    overflow: hidden;
-    position: relative;
-}
 
 .menu {
     background: #555 repeat left top;
@@ -52,24 +41,11 @@ body {
     background-color: #555;
 }
 
-/*.basic {*/
-/*font-size: 10px;*/
-/*text-decoration: none;*/
-/*}*/
-
 .menu a {
     color: #fff;
     font-size: 13px;
     text-decoration: none;
     /*text-transform: uppercase;*/
-}
-
-a .done {
-    color: #7ffe00;
-}
-
-.done {
-
 }
 
 .icon-close {
@@ -94,4 +70,3 @@ a .done {
 .icon-menu img {
     margin-right: 5px;
 }
-

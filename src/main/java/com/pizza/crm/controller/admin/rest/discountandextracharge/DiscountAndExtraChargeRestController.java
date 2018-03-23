@@ -1,7 +1,6 @@
 package com.pizza.crm.controller.admin.rest.discountandextracharge;
 
 import com.pizza.crm.model.Discount;
-import com.pizza.crm.model.DiscountAndPayment;
 import com.pizza.crm.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,41 +48,13 @@ public class DiscountAndExtraChargeRestController {
     }
 
     @PostMapping("/discountandextracharge/changePayment")
-    public void changePayment(@RequestBody Map<String, String> request) {
-        Discount discountDb = discountService.getByName(request.get("name"));
-        DiscountAndPayment discountAndPayment = discountDb.getDiscountAndPayment();
-        String paymentType = request.get("paymentType");
-        Boolean status = Boolean.parseBoolean(request.get("status"));
-        switch (paymentType) {
-            case "paymentByCard":
-                discountAndPayment.setPaymentByCard(status);
-                break;
-            case "diners":
-                discountAndPayment.setDiners(status);
-                break;
-            case "masterCardElectronics":
-                discountAndPayment.setMasterCardElectronics(status);
-                break;
-            case "visa":
-                discountAndPayment.setVisa(status);
-                break;
-            case "masterCard":
-                discountAndPayment.setMasterCard(status);
-                break;
-            case "visaElectron":
-                discountAndPayment.setVisaElectron(status);
-                break;
-            case "maestro":
-                discountAndPayment.setMaestro(status);
-                break;
-            case "cash":
-                discountAndPayment.setCash(status);
-                break;
-            case "onlinePayment":
-                discountAndPayment.setOnlinePayment(status);
-                break;
-            default:
-                break;
+    public void changePayment(@RequestParam String name, @RequestParam String status,
+                              @RequestParam String paymentType) {
+        Discount discountDb = discountService.getByName(name);
+        if (Boolean.parseBoolean(status)) {
+            discountDb.getDiscountAndPayment().getPaymentTypes().add(paymentType);
+        } else {
+            discountDb.getDiscountAndPayment().getPaymentTypes().remove(paymentType);
         }
         discountService.save(discountDb);
     }
