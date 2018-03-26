@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--<meta name="_csrf" th:content="${_csrf.token}"/>-->
+    <!--<meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <title>Добавить номенклатуру</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/editNomenclature.css}"
+          href="../static/css/editNomenclature.css"
+          rel="stylesheet" media="screen">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <!--<script th:src="@{js/newDecree.js}"></script>-->
+</head>
+<body>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="main-tab" data-toggle="tab" href="#main"
+           role="tab" aria-controls="main" aria-selected="true">
+            Основные свойства
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#unitOfMeasure"
+           role="tab" aria-controls="unitOfMeasure" aria-selected="false">
+            Единицы измерения
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact"
+           role="tab" aria-controls="contact" aria-selected="false">
+            Дополнительная информация
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="image-tab" data-toggle="tab" href="#images"
+           role="tab" aria-controls="images" aria-selected="false">
+            Изображения
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="goods-suppliers-tab" data-toggle="tab" href="#contact"
+           role="tab" aria-controls="contact" aria-selected="false">
+            Товары поставщиков
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="nutritional-value-tab" data-toggle="tab" href="#nutritionalValue"
+           role="tab" aria-controls="nutritionalValue" aria-selected="false">
+            Пищевая ценность
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="size-scale-tab" data-toggle="tab" href="#size-scale"
+           role="tab" aria-controls="size-scale" aria-selected="false">
+            Шкала размеров
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="technological-map-tab" data-toggle="tab" href="#technological-map"
+           role="tab" aria-controls="contact" aria-selected="false">
+            Технологические карты
+        </a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="home-tab">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-4 left-side">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-6 col-form-label">Название:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="nomenclatureType" class="col-sm-6 col-form-label">Тип номенкулатуры:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="nomenclatureType">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="accountingСategory" class="col-sm-6 col-form-label">Бухалтерская
+                            категория:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="accountingСategory">
+                        </div>
+                    </div>
+                    <div class="form-check ">
+                        <input type="checkbox" class="offset-sm-6" disabled>
+                        <label class="form-check-label">Генерировать артикул</label>
+                    </div>
+                    <div class="form-group row ">
+                        <label for="nomenclatureCode" class="col-sm-6 col-form-label">Номенклатурный
+                            код(Артикул):</label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control" id="nomenclatureCode">
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="offset-sm-6" disabled>
+                        <label class="form-check-label">Генерировать код быстрого набора</label>
+                    </div>
+                    <div class="form-group row ">
+                        <label for="iikoFrontCode" class="col-sm-6 col-form-label">
+                            Код быстрого набора в iikoFront:
+                        </label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control" id="iikoFrontCode">
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="offset-sm-5" checked>
+                        <label class="form-check-label">Время приготовления по умолчанию</label>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-6 col-form-label">Время приготовления(чч:мм:сс):</label>
+                        <div class="offset-sm-0">
+                            <label for="cookingTimeNorm" class="col-form-label">Норма:</label>
+                            <input type="time" class="form-control" id="cookingTimeNorm" disabled>
+                        </div>
+                        <div class="offset-sm-1">
+                            <label for="cookingTimeMax" class="col-form-label">Пик:</label>
+                            <input type="time" class="form-control" id="cookingTimeMax" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row ">
+                        <label for="cookingPlace" class="col-sm-6 col-form-label">Тип места приготовления:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="cookingPlace">
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="offset-sm-5" checked>
+                        <label class="form-check-label">Готовить вместе с основным блюдом</label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="modifierScheme" class="col-sm-6 col-form-label">Схема модификаторов:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="modifierScheme">
+                        </div>
+                    </div>
+                    <hr/>
+                    <h5 class="offset-sm-5">Прейскурант</h5>
+                    <div class="form-group row">
+                        <div class="offset-sm-7">
+                            <p>Цена за одну порцию:</p>
+                        </div>
+                        <label for="priceByPriceList" class="col-sm-6 col-form-label">Цена в прайс-листе
+                            ресторана:</label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control" id="priceByPriceList">
+                        </div>
+                        <div class="form-check offset-sm-6">
+                            <input type="checkbox" class="">
+                            <label class="form-check-label">Свободная цена</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="decreePrice" class="col-sm-6 col-form-label">Цена по приказу:</label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control" id="decreePrice">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <h3 class="offset-sm-5">Модификаторы</h3>
+                    <div>
+                        <button class="btn btn-success">Добавить</button>
+                        <button class="btn btn-danger">Удалить</button>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                        <th>Название</th>
+                        <th>Минимум</th>
+                        <th>По умолчанию</th>
+                        <th>Максимум</th>
+                        <th>Обязательно</th>
+                        <th>Скрывать, если к...</th>
+                        <th>Ограничена на м...</th>
+                        <th>Бесплатно</th>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="unitOfMeasure" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group row">
+                    <label for="measureUnit" class="col-sm-9 col-form-label">
+                        Базовая единица измерения, которая используется в складском учете и отчетности:
+                    </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="measureUnit">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group row">
+                    <label for="sumFact" class="col-sm-9 col-form-label">
+                        Суммарный фактический выход на 1 норму закладки (вес 1 ед. измерения), кг. :
+                    </label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="sumFact">
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <button class="btn btn-secondary" disabled>
+                    Рассчитать из тех карты
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group row">
+                    <label class="col-sm-9 col-form-label">Объем единицы измерения (л.) :</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox1">
+            <label class="form-check-label" for="inlineCheckbox1">Использовать весы для инвертаризаци товаров</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox2">
+            <label class="form-check-label" for="inlineCheckbox2">Вводить диапазон для допустимых значений</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox3">
+            <label class="form-check-label" for="inlineCheckbox3">Товар продается на вес</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox4">
+            <label class="form-check-label" for="inlineCheckbox4">Корректировать вес приготовленного блюда</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox5">
+            <label class="form-check-label" for="inlineCheckbox5">Показать удаленные</label>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <th>Код</th>
+            <th>Фасовка</th>
+            <th>Обратный...</th>
+            <th>Количество в фасовке</th>
+            <th>Ед. измерения</th>
+            </thead>
+        </table>
+    </div>
+    <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="image-tab">
+        <div class="row">
+            <button class="btn btn-info">Действия</button>
+            <div class="col-sm-2 offset-sm-4 form-group row">
+                <label class="col-sm-5 col-form-label">За период:</label>
+                <select class="col-sm-6 form-control">
+                    <option>Сегодня</option>
+                </select>
+            </div>
+            <div class="col-sm-2 form-group row">
+                <label class="col-sm-3 col-form-label">с </label>
+                <input class="col-sm-7 form-control" type="date">
+            </div>
+            <div class="col-sm-2 form-group row">
+                <label class="col-sm-3 col-form-label">по </label>
+                <input class="col-sm-7 form-control" type="date">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <table class="table">
+                    <thead>
+                    <th>Тип</th>
+                    <th>Начало</th>
+                    <th>Окончание</th>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-sm-8">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Тип документа:</label>
+                    <div class="col-sm-4">
+                        <select class="form-control">
+                            <option disabled selected></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-sm-4">
+                <button class="btn btn-secondary" disabled>Загрузить иозображение</button>
+                <button class="btn btn-secondary" disabled>Распечатать иозображение</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-sm-4">
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="tab-pane fade" id="nutritionalValue" role="tabpanel" aria-labelledby="nutritionalValue-tab">
+        <div class="row">
+            <div class="col-sm-4 form-group row">
+                <label class="col-sm-6 col-form-label">Основной способ приготовления:</label>
+                <select class="col-sm-6 form-control">
+                    <option>Запекание</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <h4>Пищевая ценность</h4>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th colspan="3">Продукт</th>
+                    <th colspan="4">Исходные значения</th>
+                    <th colspan="4">После приготовления</th>
+                </tr>
+                <tr>
+                    <th>Продукт</th>
+                    <th>Ед. изм.</th>
+                    <th>Кол.</th>
+                    <th>Белки г.</th>
+                    <th>Жиры г.</th>
+                    <th>Углеводы г.</th>
+                    <th>Калорийность</th>
+                    <th>Белки г.</th>
+                    <th>Жиры г.</th>
+                    <th>Углеводы г.</th>
+                    <th>Калорийность</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div>
+            <button class="btn btn-secondary">Расчитать</button>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 nutritionalValue">
+                <hr/>
+                <h5>Пищевая ценность на 100г.</h5>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label">Жиры:</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control">
+                    </div>
+                    <p class="col-form-label">грамм</p>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label">Белки:</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control">
+                    </div>
+                    <p class="col-form-label">грамм</p>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label">Углеводы:</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control">
+                    </div>
+                    <p class="col-form-label">грамм</p>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label">Каллорийность:</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control">
+                    </div>
+                    <p class="col-form-label">ккал.</p>
+                </div>
+            </div>
+            <div class="col-sm-4 nutritionalValue">
+                <hr/>
+                <h5>Пищевая ценность на 1 порцию</h5>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label">Жиры:</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control">
+                    </div>
+                    <p class="col-form-label">грамм</p>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label">Белки:</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control">
+                    </div>
+                    <p class="col-form-label">грамм</p>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label">Углеводы:</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control">
+                    </div>
+                    <p class="col-form-label">грамм</p>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label">Каллорийность:</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control">
+                    </div>
+                    <p class="col-form-label">ккал.</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <p class="text">
+                    Для автоматического расчета пищевой и энергетической ценности блюд и полуфабрикатов
+                    укажите основной вид тепловой кулинарной обработки, используемый при приготовлении
+                    данного блюда. Далее нажмите кнопку "расчитать". Рассчетные данные будут вставлены в
+                    таблицу. При необходимости вы можете отредактировать их вручную.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="tab-pane fade" id="size-scale" role="tabpanel" aria-labelledby="nutritionalValue-tab">
+        <div class="row">
+            <div class="col-sm-4 form-group row">
+                <label class="col-sm-6 col-form-label">Шкала размеров:</label>
+                <select class="col-sm-6 form-control">
+                    <option>Размер пиццы</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn btn-secondary" disabled>Добавить</button>
+            <button class="btn btn-secondary" disabled>Удалить</button>
+        </div>
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Размер</th>
+                    <th>Доступен</th>
+                    <th>Коэффицент</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div class="offset-sm-8">
+        <button class="btn btn-secondary">Обновить</button>
+        <button class="btn btn-secondary">Сохранить</button>
+        <button class="btn btn-secondary">Выйти без сохранения</button>
+        <button class="btn btn-secondary">Сохранить и выйти</button>
+    </div>
+</div>
+</body>
+</html>
