@@ -1,6 +1,6 @@
 package com.pizza.crm.init;
 
-
+import com.github.javafaker.Faker;
 import com.pizza.crm.model.*;
 import com.pizza.crm.model.security.Role;
 import com.pizza.crm.model.security.User;
@@ -12,34 +12,53 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class DbDataGenerator implements ApplicationListener<ContextRefreshedEvent> {
 
-    private UserService userService;
+    private final UserService userService;
 
-    private RoleService roleService;
+    private final RoleService roleService;
 
-    private AddedCategoryService addedCategoryService;
+    private final AddedCategoryService addedCategoryService;
 
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
-    private DishService dishService;
+    private final DishService dishService;
 
-    private IngredientService ingredientService;
+    private final IngredientService ingredientService;
 
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
 
-    private DiscountService discountService;
+    private final DiscountService discountService;
+
+    private final DecreeService decreeService;
+
+    private final QuickMenuService quickMenuService;
+
+    private final DishQuickMenuService dishQuickMenuService;
+
+    private final EmployeeService employeeService;
+
+    private final PaymentMethodService paymentMethodService;
+
+    private final PaymentTypeService paymentTypeService;
 
     @Autowired
     public DbDataGenerator(UserService userService, RoleService roleService, AddedCategoryService addedCategoryService,
                            CategoryService categoryService, DishService dishService, IngredientService ingredientService,
-                           ScheduleService scheduleService, DiscountService discountService) {
+                           ScheduleService scheduleService, QuickMenuService quickMenuService, DishQuickMenuService dishQuickMenuService,
+                           EmployeeService employeeService, PaymentMethodService paymentMethodService, PaymentTypeService paymentTypeService, DiscountService discountService, DecreeService decreeService) {
         this.userService = userService;
         this.roleService = roleService;
         this.addedCategoryService = addedCategoryService;
@@ -48,6 +67,12 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.ingredientService = ingredientService;
         this.scheduleService = scheduleService;
         this.discountService = discountService;
+        this.decreeService = decreeService;
+        this.quickMenuService = quickMenuService;
+        this.dishQuickMenuService = dishQuickMenuService;
+        this.employeeService = employeeService;
+        this.paymentMethodService = paymentMethodService;
+        this.paymentTypeService = paymentTypeService;
     }
 
     @Override
@@ -59,6 +84,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         roleService.save(userRole);
 
         userService.save(new User("admin", true, Arrays.asList(adminRole, userRole)));
+        userService.save(new User("123", true, Arrays.asList(adminRole, userRole)));
         userService.save(new User("user", true, Collections.singletonList(userRole)));
 
         addedCategoryService.save(new AddedCategory("Pizza", "white"));
@@ -146,5 +172,118 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         discountService.save(new Discount("Discount example", "Discount example", "Discount and extracharge",
                 true, 500, Arrays.asList(actionTime1, actionTime2), new DiscountAndPayment()));
 
+        String now = "2016-11-09 10:30";
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        LocalDateTime formatDateTime = LocalDateTime.parse(now, formatter);
+
+        decreeService.save(new Decree("001", formatDateTime, formatDateTime, "123", "1111", false));
+
+        DishQuickMenu dishQuickMenu1 = new DishQuickMenu("green", 1, new HashSet<>(Arrays.asList(dishPizza)));
+        DishQuickMenu dishQuickMenu2 = new DishQuickMenu("red", 1, new HashSet<>(Arrays.asList(dishRol)));
+        DishQuickMenu dishQuickMenu3 = new DishQuickMenu("red", 2, new HashSet<>(Arrays.asList(dishRol1)));
+        DishQuickMenu dishQuickMenu4 = new DishQuickMenu("red", 2, new HashSet<>(Arrays.asList(dishRol2)));
+
+        dishQuickMenuService.save(dishQuickMenu1);
+        dishQuickMenuService.save(dishQuickMenu2);
+        dishQuickMenuService.save(dishQuickMenu3);
+        dishQuickMenuService.save(dishQuickMenu4);
+
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 1));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 1));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 1));
+
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 2));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 2));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 2));
+
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 3));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 3));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 3));
+
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 4));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 4));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 4));
+
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 5));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 5));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 5));
+
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 6));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 6));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 6));
+
+        quickMenuService.save(new QuickMenu("Roll", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu2)), 7));
+        quickMenuService.save(new QuickMenu("Pizza", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu3)), 7));
+        quickMenuService.save(new QuickMenu("Test", new HashSet<>(Arrays.asList(dishQuickMenu4)), 7));
+
+        generateFakeStaff();
+
+        generatePaymentMethods();
+
+    }
+
+    private void generatePaymentMethods() {
+        PaymentType card = new PaymentType("Bank card");
+        PaymentType cash = new PaymentType("Cash");
+        PaymentType woEarnings = new PaymentType("Without earnings");
+        paymentTypeService.saveAll(Arrays.asList(card, cash, woEarnings));
+
+        List<PaymentMethod> methods = new ArrayList<>();
+        methods.add(new PaymentMethod("Bank cards", card));
+        methods.add(new PaymentMethod("Cash", cash));
+        methods.add(new PaymentMethod("Without earnings", woEarnings));
+        paymentMethodService.saveAll(methods);
+    }
+
+    private void generateFakeStaff() {
+        Faker faker = new Faker(new Locale("ru"));
+
+        List<Department> fakeDepartments = Stream.generate(() ->
+                new Department(faker.commerce().department()))
+                .limit(7)
+                .collect(Collectors.toList());
+
+        List<Position> fakePositions = Stream.generate(() ->
+                new Position(faker.job().position(), faker.bothify("??###")))
+                .limit(7)
+                .collect(Collectors.toList());
+
+        List<Employee> fakeEmployees = Stream.generate(() -> {
+            EmployeeInfo employeeInfo = new EmployeeInfo(
+                    faker.bothify("??###"),
+                    faker.name().firstName(),
+                    faker.name().nameWithMiddle(),
+                    faker.name().lastName(),
+                    "",
+                    LocalDate.now(),
+                    faker.phoneNumber().phoneNumber(),
+                    faker.phoneNumber().phoneNumber(),
+                    faker.phoneNumber().cellPhone(),
+                    faker.internet().emailAddress(),
+                    faker.business().creditCardNumber());
+            Address address = new Address(faker.address().fullAddress());
+            Employee employee = new Employee(
+                    faker.name().name(),
+                    faker.name().name(),
+                    faker.internet().password(20, 21),
+                    faker.numerify("####"));
+            employee.setEmployeeInfo(employeeInfo);
+            employee.setAddress(address);
+            return employee;
+        })
+                .limit(10)
+                .collect(Collectors.toList());
+        fakeEmployees.add(new Employee("admin", "admin", "admin"));
+
+        Random random = new Random();
+        fakeEmployees.forEach((e) -> {
+            Department department = fakeDepartments.get(random.nextInt(fakeDepartments.size()));
+            e.addDepartment(department);
+            Position position = fakePositions.get(random.nextInt(fakePositions.size()));
+            e.addPosition(position);
+        });
+        employeeService.saveAll(fakeEmployees);
     }
 }

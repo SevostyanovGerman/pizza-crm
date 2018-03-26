@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employees</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="../static/js/employee.js"
+            th:src="@{/js/employee.js}"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h3>Сотрудники</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-sm table-striped">
+                <thead>
+                <tr>
+                    <th>Имя в системе</th>
+                    <th>Подразделения</th>
+                    <th>Должности</th>
+                    <th>Имя входа в систему</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="employee : ${allEmployees}">
+                    <td th:text="${employee.name}"></td>
+                    <td th:text="${employee.departments}"></td>
+                    <td th:text="${employee.positions}"></td>
+                    <td th:text="${employee.login}"></td>
+                    <td>
+                        <a class="btn btn-sm btn-success" href="#" th:href="@{'employee/' + ${employee.id}}">Редактировать</a>
+                        <a class="btn btn-sm btn-danger btn-employee-delete" href="#" th:href="@{'employee/' + ${employee.id}}">Удалить</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-primary" href="#" th:href="@{employee/new}">
+                Новый сотрудник
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

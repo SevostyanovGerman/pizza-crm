@@ -11,6 +11,7 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "name", unique = true)
     private String name;
 
     private LocalTime beginTime;
