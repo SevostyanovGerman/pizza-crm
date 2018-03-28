@@ -228,12 +228,14 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         PaymentType card = new PaymentType("Bank card");
         PaymentType cash = new PaymentType("Cash");
         PaymentType woEarnings = new PaymentType("Without earnings");
-        paymentTypeService.saveAll(Arrays.asList(card, cash, woEarnings));
+        PaymentType onHouse = new PaymentType("On the house");
+        paymentTypeService.saveAll(Arrays.asList(card, cash, woEarnings, onHouse));
 
         List<PaymentMethod> methods = new ArrayList<>();
         methods.add(new PaymentMethod("Bank cards", card));
         methods.add(new PaymentMethod("Cash", cash));
         methods.add(new PaymentMethod("Without earnings", woEarnings));
+        methods.add(new PaymentMethod("On the house", onHouse));
         paymentMethodService.saveAll(methods);
     }
 

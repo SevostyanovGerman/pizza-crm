@@ -1,5 +1,7 @@
 package com.pizza.crm.model;
 
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,6 +19,7 @@ public class PaymentMethod {
 
     @NotNull
     @OneToOne
+    @JsonManagedReference
     private PaymentType paymentType;
 
     private boolean printCashBill;

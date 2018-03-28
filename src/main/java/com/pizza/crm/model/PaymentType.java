@@ -1,5 +1,7 @@
 package com.pizza.crm.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
@@ -15,6 +17,7 @@ public class PaymentType {
     private String name;
 
     @OneToOne(mappedBy = "paymentType")
+    @JsonBackReference
     private PaymentMethod paymentMethod;
 
     public PaymentType(String name) {

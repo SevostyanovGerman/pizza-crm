@@ -59,8 +59,8 @@
                     <td><i th:class="${pm.manualInput ? 'ml-4 fa fa-check-square-o' : 'ml-4 fa fa-square-o'}" aria-hidden="true"></i></td>
                     <td th:text="${pm.comment}"></td>
                     <td>
-                        <a class="btn btn-sm btn-success btn-pm-edit" href="#">Редактировать</a>
-                        <a class="btn btn-sm btn-danger btn-pm-delete" href="#">Удалить</a>
+                        <a class="btn btn-sm btn-success btn-pm-edit" href="#" th:href="${'paymentMethod/'+pm.id}">Редактировать</a>
+                        <a class="btn btn-sm btn-danger btn-pm-delete" href="#" th:href="${'paymentMethod/'+pm.id}">Удалить</a>
                     </td>
                 </tr>
                 </tbody>
@@ -81,7 +81,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Новое подразделение</h5>
+                <h5 class="modal-title">Новый метод оплаты</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -89,7 +89,7 @@
             <div class="modal-body">
                 <input type="hidden" id="pm-id">
                 <div class="form-group row">
-                    <label for="pm-name" class="col-3 col-form-label">Наименование</label>
+                    <label for="pm-name" class="col-4 col-form-label">Наименование</label>
                     <div class="col-8">
                         <input type="text" class="form-control form-control-sm" id="pm-name">
                         <div class="invalid-feedback">
@@ -138,7 +138,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-primary btn-pm-save" href="#">Сохранить</a>
+                <a class="btn btn-primary btn-pm-save" href="#" th:href="@{paymentMethod}">Сохранить</a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
