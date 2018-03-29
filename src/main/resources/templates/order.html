@@ -72,8 +72,8 @@
                 <div class="left-panel-body-1">
                     <table>
                         <tr>
-                            <td rowspan="2" class="table-td-1">
-                                <a href="#" class="discount-extraCharge-modal-show">
+                            <td rowspan="2" class="table-td-1" onclick="discountModalShow()">
+                                <a href="#" class="discount-extraCharge-modal-show-1">
                                     <p>скидка:</p>
                                     <span id="discount">0</span><span> %</span>
                                     <p>надбавка:</p>
@@ -199,29 +199,82 @@
     </div>
 </section>
 <!-- Modal -->
-<div class="modal fade bd-example-modal-sm" id="discount-extraCharge-modal" tabindex="-1" role="dialog"
+<div class="modal fade" id="discount-extraCharge-modal" tabindex="-1" role="dialog"
      aria-labelledby="discount-extraCharge-modal-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <p>Установите скидку/наценку</p>
-                <form action="#">
-                    <div class="form-group">
-                        <span>Скидка:</span>
-                        <input class="form-control" type="text" name="discountForm" id="discountForm" placeholder="0"
-                               data-validation="number" data-validation-allowing="range[0;100]"
-                               data-validation-error-msg="Укажите число от 0 до 100">
+                <div class="row discount-modal-b">
+                    <div class="col-4 discount-modal-b-left">
+                        <p class="discount-modal-b-left-1">Подытог:</p>
+                        <p class="discount-modal-b-left-2" id="rawTotalModal"></p>
+                        <span class="discount-modal-b-left-s-1"></span>
+                        <span class="discount-modal-b-left-s-1 dmbls-down-span"></span>
+                        <p class="discount-modal-b-left-1 dmbls-down-p-1">Итог:</p>
+                        <p class="discount-modal-b-left-2 dmbls-down-p-2" id="rawTotalDiscountModal"></p>
                     </div>
-                    <div class="form-group">
-                        <span>Наценка:</span>
-                        <input class="form-control" type="text" name="extraChargeForm" id="extraChargeForm"
-                               placeholder="0"
-                               data-validation="number" data-validation-allowing="range[0;100]"
-                               data-validation-error-msg="Укажите число от 0 до 100">
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-12 modal-header-menu">
+                                <h4>СКИДКИ</h4>
+                            </div>
+                        </div>
+                        <div class="row" id="discount-extraCharge-modal-item">
+                            <div class="col-4" style="padding-left: 5px; padding-right: 5px" onclick="AddDiscount()">
+                                <div class="DiscountItem">
+                                    <p class="NameDiscount">Скидка</p>
+                                    <p class="TypeDiscount">Скидка</p>
+                                    <p class="ValueDiscount">50%</p>
+                                </div>
+                            </div>
+                            <div class="col-4" style="padding-left: 5px; padding-right: 5px">
+                                <div class="DiscountItem">
+                                    <p class="NameDiscount">Скидка</p>
+                                    <p class="TypeDiscount">Скидка</p>
+                                    <p class="ValueDiscount">50%</p>
+                                </div>
+                            </div>
+                            <div class="col-4" style="padding-left: 5px; padding-right: 5px">
+                                <div class="DiscountItem">
+                                    <p class="NameDiscount">Скидка</p>
+                                    <p class="TypeDiscount">Скидка</p>
+                                    <p class="ValueDiscount">50%</p>
+                                </div>
+                            </div>
+                            <div class="col-4" style="padding-left: 5px; padding-right: 5px">
+                                <div class="DiscountItem">
+                                    <p class="NameDiscount">Скидка</p>
+                                    <p class="TypeDiscount">Скидка</p>
+                                    <p class="ValueDiscount">50%</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-success">Сохранить</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                </form>
+                </div>
+                <div class="row modal-footer-b">
+                    <div class="col-10 modal-footer-b-menu">
+                        <div class="modal-footer-b-menu-item">
+                            <p><i class="fa fa-id-card" aria-hidden="true"></i></p>
+                            <p>КАРТА ГОСТЯ</p>
+                        </div>
+                        <div class="modal-footer-b-menu-item">
+                            <p><i class="fa  fa-search" aria-hidden="true"></i></p>
+                            <p>НАЙТИ ГОСТЯ</p>
+                        </div>
+                        <div class="modal-footer-b-menu-item">
+                            <p><i class="fa  fa-plus-circle" aria-hidden="true"></i></p>
+                            <p>НОВЫЙ ГОСТЬ</p>
+                        </div>
+                        <div class="modal-footer-b-menu-item">
+                            <p><i class="fa fa-file-o" aria-hidden="true"></i></p>
+                            <p>ДОБАВИТЬ КУПОН</p>
+                        </div>
+                    </div>
+                    <div class="col-2 modal-footer-b-menu-2">
+                        <p onclick="CloseModal()">Удалить</p>
+                        <p onclick="SaveModal()">Ок</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -717,13 +770,67 @@
             }
         });
     }
-    
+
     function headerQuickMenu(num) {
         var id = "#headerQuickMenu-" + num;
         $("#headerQuickMenu-1").css({"background-color": "#3e4040", "color": "#fff"});
         $("#headerQuickMenu-2").css({"background-color": "#3e4040", "color": "#fff"});
         $("#headerQuickMenu-3").css({"background-color": "#3e4040", "color": "#fff"});
         $(id).css({"background-color": "#dfe487", "color": "#3e4040"});
+    }
+
+    function discountModalShow() {
+        var price = $("#rawTotal").text();
+        $("#discount-extraCharge-modal").modal('show');
+        console.log(price);
+        $("#rawTotalModal").text(price);
+        $("#rawTotalDiscountModal").text(price);
+        $.ajax({
+            type: "GET",
+            url: "/get/discount",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (data) {
+                console.log(data);
+                $("#discount-extraCharge-modal-item").empty();
+                var discountList = data;
+                discountList.forEach(function (value) {
+                    if (value.active == true && value.minSum <= price) {
+                        $("#discount-extraCharge-modal-item").append(
+                            "<div class=\"col-4\" style=\"padding-left: 5px; padding-right: 5px\" onclick=\"AddDiscount(" + value.value + ")\">\n" +
+                            "<div class=\"DiscountItem\">\n" +
+                            "<p class=\"NameDiscount\">" + value.checkName + "</p>\n" +
+                            "<p class=\"TypeDiscount\">" + value.discountType + "</p>\n" +
+                            "<p class=\"ValueDiscount\">" + value.value + " %" + "</p>\n" +
+                            "</div>\n" +
+                            "</div>");
+                    }
+                });
+            },
+            error: function (e) {
+            }
+        });
+    }
+
+    var globalDiscount = 0;
+
+    function AddDiscount(discount) {
+        var price = $("#rawTotal").text();
+        var newPrise = price * (100 - discount) / 100
+        $("#rawTotalDiscountModal").text(newPrise);
+        globalDiscount = discount;
+    }
+    
+    function CloseModal() {
+        $("#discount-extraCharge-modal").modal('hide');
+    }
+    
+    function SaveModal() {
+        $("#discount-extraCharge-modal").modal('hide');
+        $("#total").text($("#rawTotalDiscountModal").text());
+        $("#discount").text(globalDiscount);
+
     }
 
 </script>

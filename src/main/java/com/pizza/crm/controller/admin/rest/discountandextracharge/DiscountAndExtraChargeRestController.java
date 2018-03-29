@@ -2,13 +2,18 @@ package com.pizza.crm.controller.admin.rest.discountandextracharge;
 
 import com.pizza.crm.model.ActionTime;
 import com.pizza.crm.model.CategoryDiscount;
+import com.pizza.crm.model.Category;
 import com.pizza.crm.model.Discount;
 import com.pizza.crm.model.DiscountAndPayment;
 import com.pizza.crm.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class DiscountAndExtraChargeRestController {
@@ -171,5 +176,11 @@ public class DiscountAndExtraChargeRestController {
         DiscountAndPayment discountAndPayment = discountDb.getDiscountAndPayment();
         discountAndPayment.setOnlinePayment((Boolean.parseBoolean(status.get("status"))));
         discountService.save(discountDb);
+    }
+
+    @RequestMapping(value = "/get/discount")
+    public ResponseEntity<?> getDiscount() {
+        List<Discount> discounts = discountService.findAll();
+        return ResponseEntity.ok(discounts);
     }
 }
