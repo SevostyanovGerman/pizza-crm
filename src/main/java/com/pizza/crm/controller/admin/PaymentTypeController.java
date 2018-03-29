@@ -41,13 +41,13 @@ public class PaymentTypeController {
     }
 
     @PostMapping("/admin/paymentType")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public void savePaymentType(PaymentType paymentType) {
         paymentTypeService.save(paymentType);
     }
 
     @DeleteMapping("/admin/paymentType/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePaymentType(@PathVariable Long id) {
         paymentTypeService.deleteById(id);
     }

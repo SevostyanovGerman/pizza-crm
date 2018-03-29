@@ -69,9 +69,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <a class="btn btn-primary" href="#">
-                Новый метод оплаты
-            </a>
+            <a class="btn btn-primary btn-pm-new" href="#">Новый метод оплаты</a>
         </div>
     </div>
 </div>
@@ -101,6 +99,9 @@
                     <label for="pm-paymentType" class="col-4 col-form-label">Тип оплаты</label>
                     <div class="col-8">
                         <select class="form-control form-control-sm" id="pm-paymentType"></select>
+                        <div class="invalid-feedback">
+                            Укажите наименование.
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">

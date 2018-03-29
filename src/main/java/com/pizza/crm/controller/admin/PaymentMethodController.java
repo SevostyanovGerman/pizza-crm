@@ -2,7 +2,6 @@ package com.pizza.crm.controller.admin;
 
 import com.pizza.crm.exceptions.NotFoundException;
 import com.pizza.crm.model.PaymentMethod;
-import com.pizza.crm.model.PaymentType;
 import com.pizza.crm.service.PaymentMethodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,30 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PaymentMethodController {
-
-    private static final class PaymentMethodData {
-        private PaymentMethod paymentMethod;
-        private PaymentType paymentType;
-
-        public PaymentMethodData() {
-        }
-
-        public PaymentMethod getPaymentMethod() {
-            return paymentMethod;
-        }
-
-        public PaymentType getPaymentType() {
-            return paymentType;
-        }
-
-        public void setPaymentMethod(PaymentMethod paymentMethod) {
-            this.paymentMethod = paymentMethod;
-        }
-
-        public void setPaymentType(PaymentType paymentType) {
-            this.paymentType = paymentType;
-        }
-    }
 
     private final PaymentMethodService paymentMethodService;
 
@@ -57,17 +32,13 @@ public class PaymentMethodController {
     }
 
     @PostMapping("/admin/paymentMethod")
-    @ResponseStatus(HttpStatus.OK)
-    public void savePaymentMethod(@RequestBody PaymentMethodData paymentMethodData) {
-        PaymentMethod paymentMethod = paymentMethodData.getPaymentMethod();
-        PaymentType paymentType = paymentMethodData.getPaymentType();
-        paymentType.setPaymentMethod(paymentMethod);
-        paymentMethod.setPaymentType(paymentType);
+    @ResponseStatus(HttpStatus.CREATED)
+    public void savePaymentMethod(@RequestBody PaymentMethod paymentMethod) {
         paymentMethodService.save(paymentMethod);
     }
 
     @DeleteMapping("/admin/paymentMethod/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePaymentMethod(@PathVariable Long id) {
         paymentMethodService.deleteById(id);
     }

@@ -18,7 +18,8 @@ public class PaymentMethod {
     private String name;
 
     @NotNull
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "paymentType")
     @JsonManagedReference
     private PaymentType paymentType;
 
