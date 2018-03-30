@@ -57,8 +57,10 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     @Autowired
     public DbDataGenerator(UserService userService, RoleService roleService, AddedCategoryService addedCategoryService,
                            CategoryService categoryService, DishService dishService, IngredientService ingredientService,
-                           ScheduleService scheduleService, QuickMenuService quickMenuService, DishQuickMenuService dishQuickMenuService,
-                           EmployeeService employeeService, PaymentMethodService paymentMethodService, PaymentTypeService paymentTypeService, DiscountService discountService, DecreeService decreeService) {
+                           ScheduleService scheduleService, QuickMenuService quickMenuService,
+                           DishQuickMenuService dishQuickMenuService, EmployeeService employeeService,
+                           PaymentMethodService paymentMethodService, PaymentTypeService paymentTypeService,
+                           DiscountService discountService, DecreeService decreeService) {
         this.userService = userService;
         this.roleService = roleService;
         this.addedCategoryService = addedCategoryService;
@@ -227,13 +229,15 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     private void generatePaymentMethods() {
         PaymentType card = new PaymentType("Bank card");
         PaymentType cash = new PaymentType("Cash");
-        PaymentType woEarnings = new PaymentType("Without earnings");
-        paymentTypeService.saveAll(Arrays.asList(card, cash, woEarnings));
+        PaymentType withoutEarnings = new PaymentType("Without earnings");
+        PaymentType onHouse = new PaymentType("On the house");
+        paymentTypeService.saveAll(Arrays.asList(card, cash, withoutEarnings, onHouse));
 
         List<PaymentMethod> methods = new ArrayList<>();
         methods.add(new PaymentMethod("Bank cards", card));
         methods.add(new PaymentMethod("Cash", cash));
-        methods.add(new PaymentMethod("Without earnings", woEarnings));
+        methods.add(new PaymentMethod("Without earnings", withoutEarnings));
+        methods.add(new PaymentMethod("On the house", onHouse));
         paymentMethodService.saveAll(methods);
     }
 

@@ -16,7 +16,7 @@
     </appender>
 
     <logger name="com.pizza.crm" level="DEBUG">
-        <appender-ref ref="ROLLING_FILE"/>
+        <appender-ref ref="CONSOLE"/>
     </logger>
 
     <root level="INFO">
