@@ -40,7 +40,7 @@ $(document).ready(function () {
                     $('tr:eq('+(key+1)+')').find('.friday').prop("checked", value.thursday);
                 });
             },
-            error: function (e) {
+            error: function () {
                 alert("error")
             }
         });

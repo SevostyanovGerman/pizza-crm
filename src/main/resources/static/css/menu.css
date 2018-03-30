@@ -47,6 +47,10 @@
     /*text-transform: uppercase;*/
 }
 
+.menu a.done {
+    color: #7ffe00;
+}
+
 .icon-close {
     cursor: pointer;
     padding-left: 10px;

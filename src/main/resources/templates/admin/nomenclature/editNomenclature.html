@@ -3,20 +3,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!--<meta name="_csrf" th:content="${_csrf.token}"/>-->
-    <!--<meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Добавить номенклатуру</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
           rel="stylesheet" media="screen"/>
-    <link th:href="@{/css/editNomenclature.css}"
-          href="../static/css/editNomenclature.css"
+    <link th:href="@{/css/nomenclature/editNomenclature.css}"
+          href="../static/css/nomenclature/editNomenclature.css"
           rel="stylesheet" media="screen">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    <!--<script th:src="@{js/newDecree.js}"></script>-->
+    <script th:src="@{js/nomenclature/editNomenclature.js}"></script>
 </head>
 <body>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -73,7 +73,7 @@
     <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="home-tab">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-4 left-side">
+                <div class="col-sm-5 left-side">
                     <div class="form-group row">
                         <label for="name" class="col-sm-6 col-form-label">Название:</label>
                         <div class="col-sm-6">
@@ -83,14 +83,35 @@
                     <div class="form-group row">
                         <label for="nomenclatureType" class="col-sm-6 col-form-label">Тип номенкулатуры:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="nomenclatureType">
+                            <select id="nomenclatureType" class="form-control">
+                                <option value="DISH">Блюдо</option>
+                                <option value="PRODUCT">Товар</option>
+                                <option value="BLANK">Заготовка</option>
+                                <option value="MODIFIER">Модификатор</option>
+                                <option value="SERVICE">Услуга</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="accountingСategory" class="col-sm-6 col-form-label">Бухалтерская
+                        <label for="accountingCategory" class="col-sm-6 col-form-label">Бухалтерская
                             категория:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="accountingСategory">
+                            <select id="accountingCategory" class="form-control">
+                                <option value="PRODUCT">Товар</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="parentGroup" class="col-sm-6 col-form-label">
+                            Родительская группа:
+                        </label>
+                        <div class="col-sm-6">
+                            <select id="parentGroup" class="form-control" >
+                                <option th:each="nomenclatureParentGroup : ${nomenclatureParentGroups}"
+                                        th:text="${nomenclatureParentGroup.name}"
+                                        th:value="${nomenclatureParentGroup.id}">
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-check ">
@@ -98,8 +119,9 @@
                         <label class="form-check-label">Генерировать артикул</label>
                     </div>
                     <div class="form-group row ">
-                        <label for="nomenclatureCode" class="col-sm-6 col-form-label">Номенклатурный
-                            код(Артикул):</label>
+                        <label for="nomenclatureCode" class="col-sm-6 col-form-label">
+                            Номенклатурный код(Артикул):
+                        </label>
                         <div class="col-sm-6">
                             <input type="number" class="form-control" id="nomenclatureCode">
                         </div>
@@ -117,24 +139,26 @@
                         </div>
                     </div>
                     <div class="form-check">
-                        <input type="checkbox" class="offset-sm-5" checked>
+                        <input type="checkbox" class="offset-sm-5">
                         <label class="form-check-label">Время приготовления по умолчанию</label>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-6 col-form-label">Время приготовления(чч:мм:сс):</label>
                         <div class="offset-sm-0">
                             <label for="cookingTimeNorm" class="col-form-label">Норма:</label>
-                            <input type="time" class="form-control" id="cookingTimeNorm" disabled>
+                            <input type="time" class="form-control" id="cookingTimeNorm" step="1">
                         </div>
                         <div class="offset-sm-1">
-                            <label for="cookingTimeMax" class="col-form-label">Пик:</label>
-                            <input type="time" class="form-control" id="cookingTimeMax" disabled>
+                            <label for="cookingTimePeak" class="col-form-label">Пик:</label>
+                            <input type="time" class="form-control" id="cookingTimePeak" step="1">
                         </div>
                     </div>
                     <div class="form-group row ">
                         <label for="cookingPlace" class="col-sm-6 col-form-label">Тип места приготовления:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="cookingPlace">
+                            <select id="cookingPlace" class="form-control">
+                                <option value="KITCHEN">Кухня</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-check">
@@ -143,8 +167,12 @@
                     </div>
                     <div class="form-group row">
                         <label for="modifierScheme" class="col-sm-6 col-form-label">Схема модификаторов:</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <input type="text" class="form-control" id="modifierScheme">
+                        </div>
+                        <div >
+                            <button class="btn btn-success">+</button>
+                            <button class="btn btn-info">...</button>
                         </div>
                     </div>
                     <hr/>
@@ -170,7 +198,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-7">
                     <h3 class="offset-sm-5">Модификаторы</h3>
                     <div>
                         <button class="btn btn-success">Добавить</button>
@@ -457,8 +485,8 @@
 
     <div class="offset-sm-8">
         <button class="btn btn-secondary">Обновить</button>
-        <button class="btn btn-secondary">Сохранить</button>
-        <button class="btn btn-secondary">Выйти без сохранения</button>
+        <button class="btn btn-secondary" onclick="save()">Сохранить</button>
+        <a href="/nomenclature" class="btn btn-secondary">Выйти без сохранения</a>
         <button class="btn btn-secondary">Сохранить и выйти</button>
     </div>
 </div>
