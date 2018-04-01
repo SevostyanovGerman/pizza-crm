@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Скидки и надбавки</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/discountandextracharge/discountandextracharge.css}"
+          href="../static/css/discountandextracharge/discountandextracharge.css"
+          rel="stylesheet" media="screen">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/discountandextracharge/discountandextracharge.js}"></script>
+</head>
+<body>
+<div th:fragment="menu">
+    <div class="menu">
+        <div class="icon-close">
+            <img th:src="@{/img/close-btn.png}">
+        </div>
+        <ul>
+            <li>Товары и склады
+                <ul>
+                    <li>Справочники
+                        <ul>
+                            <li class="basic"><a class="done" href="/nomenclature">Номенклатура</a></li>
+                            <li class="basic"><a href="#">Единицы измерения</a></li>
+                            <li class="basic"><a href="#">Склады</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>Прейскурант
+                <ul>
+                    <li class="basic"><a href="/getDecree" class="done">Приказы об изменении прейскуранта</a></li>
+                    <li><a href="#">Прейскуранты товаров и услуг</a></li>
+                    <li class="basic"><a class="done" href="/validity">Периоды действия</a></li>
+                    <li class="basic"><a href="quickmenu" class="done">Быстрое меню</a></li>
+                </ul>
+            </li>
+            <li>Дисконтная система
+                <ul class="done">
+                    <li><a class="done" href="/discountandextracharge">Скидки и надбавки </a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="icon-menu">
+        <img src="/static/img/menu-ham-icon.png" th:src="@{/img/menu-ham-icon.png}">
+        <p>Меню</p>
+    </div>
+</div>
+</body>
+</html>

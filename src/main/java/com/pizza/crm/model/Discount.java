@@ -5,9 +5,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "Discount")
@@ -31,13 +29,16 @@ public class Discount {
 
     private Boolean setAuto;
 
-    private Boolean stewardChoice;
-
     private Boolean discountWithOther;
 
     private Boolean active;
 
     private Boolean applyForAllType;
+
+    @Enumerated(EnumType.STRING)
+    private ApplicationMethod applicationMethod;
+
+    private Integer priority;
 
     @Enumerated(EnumType.STRING)
     private DiscountType discountType;
@@ -64,7 +65,6 @@ public class Discount {
         minSum = 0;
         manualInput = false;
         setAuto = false;
-        stewardChoice = false;
         discountWithOther = false;
         active = false;
         discountAndPayment = new DiscountAndPayment();
@@ -154,14 +154,6 @@ public class Discount {
         this.setAuto = setAuto;
     }
 
-    public Boolean getStewardChoice() {
-        return stewardChoice;
-    }
-
-    public void setStewardChoice(Boolean stewardChoice) {
-        this.stewardChoice = stewardChoice;
-    }
-
     public Boolean getDiscountWithOther() {
         return discountWithOther;
     }
@@ -224,5 +216,21 @@ public class Discount {
 
     public void setValue(Integer value) {
         this.value = value;
+    }
+
+    public ApplicationMethod getApplicationMethod() {
+        return applicationMethod;
+    }
+
+    public void setApplicationMethod(ApplicationMethod applicationMethod) {
+        this.applicationMethod = applicationMethod;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
     }
 }

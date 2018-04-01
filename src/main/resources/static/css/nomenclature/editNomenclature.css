@@ -1,0 +1,17 @@
+body {
+    background: #eee;
+    margin: 1rem;
+    margin-top: 0;
+}
+
+.left-side {
+    border-right: 1px solid;
+}
+
+.nutritionalValue {
+    margin-top: 1rem;
+}
+
+.text {
+    margin-top: 3rem;
+}

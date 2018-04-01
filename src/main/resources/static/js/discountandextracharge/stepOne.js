@@ -1,6 +1,52 @@
 var csrfToken = $("meta[name='_csrf']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
+$(document).ready(function () {
+    var id = localStorage.getItem("id");
+    if (id != null) {
+        $.ajax({
+            type: "POST",
+            url: "/discountandextracharge/get",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(id),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (data) {
+                $('#name').val(data.name);
+                $('#checkName').val(data.checkName);
+                $('#acceptManualDiscount').prop("checked", data.acceptManualDiscount);
+                $('#minSum').val(data.minSum);
+                $.each(data.actionTimeList, function (key, value) {
+                    $(".tbody").append($([
+                        '<tr>' +
+                        '<td><input type="time" value="' + value.beginTime + '"></td>' +
+                        '<td><input type="time" value="' + value.endTime + '"></td>' +
+                        '<td><input type="checkbox" class="monday"></td>' +
+                        '<td><input type="checkbox" class="tuesday"></td>' +
+                        '<td><input type="checkbox" class="wednesday" ></td>' +
+                        '<td><input type="checkbox" class="thursday" ></td>' +
+                        '<td><input type="checkbox" class="friday"></td>' +
+                        '<td><input type="checkbox" class="saturday"></td>' +
+                        '<td><input type="checkbox" class="sunday"></td>' +
+                        '</tr>'].join("\n")));
+                    $('tr:eq('+(key+1)+') .monday').prop("checked", value.monday);
+                    $('tr:eq('+(key+1)+') .tuesday').prop("checked", value.tuesday);
+                    $('tr:eq('+(key+1)+') .wednesday').prop("checked", value.wednesday);
+                    $('tr:eq('+(key+1)+') .thursday').prop("checked", value.thursday);
+                    $('tr:eq('+(key+1)+') .friday').prop("checked", value.friday);
+                    $('tr:eq('+(key+1)+') .saturday').prop("checked", value.saturday);
+                    $('tr:eq('+(key+1)+') .sunday').prop("checked", value.sunday);
+                    $('tr:eq('+(key+1)+')').find('.friday').prop("checked", value.thursday);
+                });
+            },
+            error: function () {
+                alert("error")
+            }
+        });
+    }
+});
+
 function addNewRow() {
     $('.tbody').append($([
         "<tr>" +
@@ -53,7 +99,7 @@ function next() {
         };
         timeArray.push(time);
     });
-    var id = $('#id').val();
+    var id = localStorage.getItem("id");
     var name = $('#name').val();
     var checkName = $('#checkName').val();
     var type = $('#type').val();
@@ -68,19 +114,12 @@ function next() {
         minSum: minSum,
         actionTimeList: timeArray
     };
-    $.ajax({
-        type: "POST",
-        url: "/discountandextracharge/saveStepOne",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(discount),
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader(csrfHeader, csrfToken);
-        },
-        success: function (id) {
-            window.location.replace("/discountandextracharge/step2/" + id);
-        },
-        error: function (e) {
-            alert("error")
-        }
-    });
+    localStorage.setItem('discount', JSON.stringify(discount));
+    window.location.replace("/discountandextracharge/step2/");
+}
+
+function cancel() {
+    localStorage.removeItem("id");
+    localStorage.removeItem('discount');
+    window.location.replace("/discountandextracharge");
 }

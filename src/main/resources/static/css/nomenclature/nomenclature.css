@@ -1,0 +1,12 @@
+body {
+    background: #eee;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    padding: 0px 10px 0px;
+}
+
+.show {
+    background: gainsboro;
+}

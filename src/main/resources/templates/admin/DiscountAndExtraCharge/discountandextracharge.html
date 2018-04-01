@@ -17,16 +17,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/discountandextracharge/discountandextracharge.js}"></script>
+    <th:block th:include="admin/fragments/menu-header :: head"></th:block>
 </head>
 <body>
+    <th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
 <div class="container-fluid">
     <h3>Скидки и надбавки</h3>
     <a href="#" th:href="@{/discountandextracharge/new/step1}" class="btn btn-success">Добавить</a>
     <button class="btn btn-info" onclick="updateDiscount()">Изменить</button>
     <button class="btn btn-danger" onclick="deleteDiscount()">Удалить</button>
-
-</div>
-<div class="container-fluid ">
     <div class="row col-sm-8">
         <table class="table table-bordered discounts">
             <thead>
@@ -67,19 +66,23 @@
             <tr th:each="discount : ${discounts}">
                 <td th:text="${discount.name}"></td>
                 <td><input th:type="checkbox" class="paymentByCard"
-                           th:checked="${discount.discountAndPayment.paymentByCard}"></td>
-                <td><input th:type="checkbox" class="diners" th:checked="${discount.discountAndPayment.diners}"></td>
+                           th:checked="${discount.discountAndPayment.paymentTypes.contains('paymentByCard')}"></td>
+                <td><input th:type="checkbox" class="diners"
+                           th:checked="${discount.discountAndPayment.paymentTypes.contains('diners')}"></td>
                 <td><input th:type="checkbox" class="masterCardElectronics"
-                           th:checked="${discount.discountAndPayment.masterCardElectronics}"></td>
-                <td><input th:type="checkbox" class="visa" th:checked="${discount.discountAndPayment.visa}"></td>
-                <td><input th:type="checkbox" class="masterCard" th:checked="${discount.discountAndPayment.masterCard}">
-                </td>
+                           th:checked="${discount.discountAndPayment.paymentTypes.contains('masterCardElectronics')}"></td>
+                <td><input th:type="checkbox" class="visa"
+                           th:checked="${discount.discountAndPayment.paymentTypes.contains('visa')}"></td>
+                <td><input th:type="checkbox" class="masterCard"
+                           th:checked="${discount.discountAndPayment.paymentTypes.contains('masterCard')}"></td>
                 <td><input th:type="checkbox" class="visaElectron"
-                           th:checked="${discount.discountAndPayment.visaElectron}"></td>
-                <td><input th:type="checkbox" class="maestro" th:checked="${discount.discountAndPayment.maestro}"></td>
-                <td><input th:type="checkbox" class="cash" th:checked="${discount.discountAndPayment.cash}"></td>
+                           th:checked="${discount.discountAndPayment.paymentTypes.contains('visaElectron')}"></td>
+                <td><input th:type="checkbox" class="maestro"
+                           th:checked="${discount.discountAndPayment.paymentTypes.contains('maestro')}"></td>
+                <td><input th:type="checkbox" class="cash"
+                           th:checked="${discount.discountAndPayment.paymentTypes.contains('cash')}"></td>
                 <td><input th:type="checkbox" class="onlinePayment"
-                           th:checked="${discount.discountAndPayment.onlinePayment}"></td>
+                           th:checked="${discount.discountAndPayment.paymentTypes.contains('onlinePayment')}"></td>
             </tr>
             </tbody>
         </table>

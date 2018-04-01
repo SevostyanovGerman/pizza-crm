@@ -9,6 +9,25 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $('.icon-menu').click(function() {
+        $('.menu').animate({
+            left: '0px'
+        }, 200);
+        $('body').animate({
+            left: '285px'
+        }, 200);
+    });
+    $('.icon-close').click(function() {
+        $('.menu').animate({
+            left: '-285px'
+        }, 200);
+        $('body').animate({
+            left: '0px'
+        }, 200);
+    });
+});
+
 function getSelectedSchedule() {
     var td = $('#schedule-list td.item-active');
     var name = td.text();
@@ -59,7 +78,6 @@ function checkCheckbox(data) {
 function save() {
     var name = $("#scheduleListName").val();
     var id = $('#id').val();
-    // $('#showSchedule tr').each(function() {
     var beginTime = $('#showSchedule tr').find("input[type=time]").eq(0).val();
     var endTime = $('#showSchedule tr').find("input[type=time]").eq(1).val();
     var monday = $(".monday").prop('checked');
@@ -69,7 +87,6 @@ function save() {
     var friday = $(".friday").prop('checked');
     var saturday = $(".saturday").prop('checked');
     var sunday = $('.sunday').prop('checked');
-    // });
     var schedule = {
         id: id,
         name: name,

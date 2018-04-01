@@ -19,22 +19,30 @@
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.77/jquery.form-validator.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <th:block th:include="admin/fragments/menu-header :: head"></th:block>
 </head>
 <body>
 <section class="container-fluid">
     <div class="row">
         <div class="col-12" style="padding: 0;">
             <div class="head">
-                <h3>Приказы об изменении прейскуранта</h3>
+                <div class="row">
+                    <div class="col-1" style="color: #ffffff">
+                        <th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
+                    </div>
+                    <div class="col-11">
+                        <h3>Приказы об изменении прейскуранта</h3>
+                    </div>
+                </div>
             </div>
         </div>
 
     </div>
     <div class="row">
-        <div class="col-4 left-panel">
-            <p>Тут пока не знаю что, но думаю что тут будет меню для перехода между режимами админки</p>
-        </div>
-        <div class="col-8 right-panel">
+        <!--<div class="col-4 left-panel">-->
+            <!--<p>Тут пока не знаю что, но думаю что тут будет меню для перехода между режимами админки</p>-->
+        <!--</div>-->
+        <div class="col-12 right-panel">
             <div class="row head-right-panel-1">
                 <div class="col-7">
                     <button type="button" class="btn btn-primary" onclick="create()">Создать</button>

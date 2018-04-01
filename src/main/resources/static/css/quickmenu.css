@@ -284,3 +284,7 @@ ul {
 
 #menu-item-1 .ui-selected { background: #F39814; color: white; }
 #menu-item-1 .ui-selecting { background: #FECA40; }
+
+.left-panel {
+    background-color: #edeef0;
+}
