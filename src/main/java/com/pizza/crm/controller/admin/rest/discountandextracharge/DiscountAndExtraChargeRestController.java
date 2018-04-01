@@ -68,7 +68,7 @@ public class DiscountAndExtraChargeRestController {
 
     @RequestMapping(value = "/get/discount")
     public ResponseEntity<?> getDiscount() {
-        List<Discount> discounts = discountService.findAll();
+        List<Discount> discounts = discountService.getActiveDiscount(true, false);
         return ResponseEntity.ok(discounts);
     }
 }

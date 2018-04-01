@@ -20,4 +20,6 @@ public interface DiscountService {
 
     List<Discount> findAll();
 
+    List<Discount> getActiveDiscount(boolean active, boolean acceptManualDiscount);
+
 }

@@ -348,6 +348,7 @@ section .middle-panel-body a {
     margin-left: -4px;
     left: 4px;
     border: 2px solid #3e4040;
+    margin-top: -5px;
 }
 
 section .middle-panel-body #dish a {
@@ -355,32 +356,36 @@ section .middle-panel-body #dish a {
     width: 33%;
     font-size: 1.5rem;
     line-height: 4.5vh;
-
 }
 
 section .middle-panel-green {
     background-color: #79919d;
     color: #fff;
+    overflow: auto;
 }
 
 section .middle-panel-green1 {
     background-color: #7ffe00;
     color: #000;
+    overflow: hidden;
 }
 
 section .middle-panel-white {
     background-color: #fff;
     color: #000;
+    overflow: hidden;
 }
 
 section .middle-panel-red {
     background-color: #8b420a;
     color: #000;
+    overflow: hidden;
 }
 
 section .middle-panel-yellow {
     background-color: #fefe00;
     color: #000;
+    overflow: hidden;
 }
 
 section .right-panel-header {

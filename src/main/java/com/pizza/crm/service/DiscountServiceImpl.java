@@ -52,4 +52,9 @@ public class DiscountServiceImpl implements DiscountService {
     public List<Discount> findAll() {
         return discountRepository.findAll();
     }
+
+    @Override
+    public List<Discount> getActiveDiscount(boolean active, boolean acceptManualDiscount) {
+        return discountRepository.getActiveDiscount(active, acceptManualDiscount);
+    }
 }
