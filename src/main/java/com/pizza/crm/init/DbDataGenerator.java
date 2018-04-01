@@ -7,7 +7,6 @@ import com.pizza.crm.model.security.User;
 import com.pizza.crm.service.*;
 import com.pizza.crm.service.security.RoleService;
 import com.pizza.crm.service.security.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -62,11 +61,14 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
     private final PaymentTypeService paymentTypeService;
 
-    @Autowired
-    public DbDataGenerator(NomenclatureParentGroupService nomenclatureParentGroupService, NomenclatureService nomenclatureService, UserService userService, RoleService roleService, AddedCategoryService addedCategoryService,
-                           CategoryService categoryService, DishService dishService, IngredientService ingredientService,
-                           ScheduleService scheduleService, QuickMenuService quickMenuService, DishQuickMenuService dishQuickMenuService,
-                           EmployeeService employeeService, PaymentMethodService paymentMethodService, PaymentTypeService paymentTypeService, DiscountService discountService, DecreeService decreeService) {
+    public DbDataGenerator(NomenclatureParentGroupService nomenclatureParentGroupService,
+                           NomenclatureService nomenclatureService, UserService userService, RoleService roleService,
+                           AddedCategoryService addedCategoryService, CategoryService categoryService,
+                           DishService dishService, IngredientService ingredientService, ScheduleService scheduleService,
+                           DiscountService discountService, DecreeService decreeService,
+                           QuickMenuService quickMenuService, DishQuickMenuService dishQuickMenuService,
+                           EmployeeService employeeService, PaymentMethodService paymentMethodService,
+                           PaymentTypeService paymentTypeService) {
         this.nomenclatureParentGroupService = nomenclatureParentGroupService;
         this.nomenclatureService = nomenclatureService;
         this.userService = userService;
@@ -84,6 +86,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.paymentMethodService = paymentMethodService;
         this.paymentTypeService = paymentTypeService;
     }
+
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -262,13 +265,15 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     private void generatePaymentMethods() {
         PaymentType card = new PaymentType("Bank card");
         PaymentType cash = new PaymentType("Cash");
-        PaymentType woEarnings = new PaymentType("Without earnings");
-        paymentTypeService.saveAll(Arrays.asList(card, cash, woEarnings));
+        PaymentType withoutEarnings = new PaymentType("Without earnings");
+        PaymentType onHouse = new PaymentType("On the house");
+        paymentTypeService.saveAll(Arrays.asList(card, cash, withoutEarnings, onHouse));
 
         List<PaymentMethod> methods = new ArrayList<>();
         methods.add(new PaymentMethod("Bank cards", card));
         methods.add(new PaymentMethod("Cash", cash));
-        methods.add(new PaymentMethod("Without earnings", woEarnings));
+        methods.add(new PaymentMethod("Without earnings", withoutEarnings));
+        methods.add(new PaymentMethod("On the house", onHouse));
         paymentMethodService.saveAll(methods);
     }
 

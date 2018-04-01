@@ -1,7 +1,11 @@
 package com.pizza.crm.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "PaymentType")
@@ -14,8 +18,9 @@ public class PaymentType {
     @NotBlank
     private String name;
 
-    @OneToOne(mappedBy = "paymentType")
-    private PaymentMethod paymentMethod;
+    @OneToMany(mappedBy = "paymentType", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    private Set<PaymentMethod> paymentMethod = new HashSet<>();
 
     public PaymentType(String name) {
         this.name = name;
@@ -40,11 +45,11 @@ public class PaymentType {
         this.name = name;
     }
 
-    public PaymentMethod getPaymentMethod() {
+    public Set<PaymentMethod> getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
+    public void setPaymentMethod(Set<PaymentMethod> paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 
