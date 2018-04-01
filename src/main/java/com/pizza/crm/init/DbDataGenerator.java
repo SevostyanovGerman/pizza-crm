@@ -228,18 +228,29 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         quickMenuService.save(new QuickMenu("Pizza", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu3)), 7));
         quickMenuService.save(new QuickMenu("Test", new HashSet<>(Arrays.asList(dishQuickMenu4)), 7));
 
-        nomenclatureParentGroupService.save(new NomenclatureParentGroup("Pizza 35sm"));
-
-        nomenclatureService.save(new Nomenclature(15002, 450.00, LocalTime.of(0, 5, 15),
-                LocalTime.of(0, 8, 30), "California", DISH,
-                PRODUCT, KITCHEN));
-        Nomenclature nomenclature = new Nomenclature(15003, 430.00, LocalTime.of(0, 4, 15),
-                LocalTime.of(0, 5, 30), "Philadelphia", DISH,
+        Nomenclature philadelphia = new Nomenclature(15002, 370.00, LocalTime.of(0, 5, 15),
+                LocalTime.of(0, 6, 30), "Philadelphia", DISH,
                 PRODUCT, KITCHEN);
-        nomenclatureService.save(nomenclature);
-        NomenclatureParentGroup nomenclatureParentGroup = new NomenclatureParentGroup("Rolls");
-        nomenclatureParentGroup.setNomenclatures(new ArrayList<>(Arrays.asList(nomenclature)));
-        nomenclatureParentGroupService.save(nomenclatureParentGroup);
+        Nomenclature california = new Nomenclature(15003, 430.00, LocalTime.of(0, 4, 15),
+                LocalTime.of(0, 5, 30), "California", DISH,
+                PRODUCT, KITCHEN);
+        nomenclatureService.save(philadelphia);
+        nomenclatureService.save(california);
+        NomenclatureParentGroup rolls = new NomenclatureParentGroup("Rolls");
+        rolls.setNomenclatures(new ArrayList<>(Arrays.asList(philadelphia, california)));
+        nomenclatureParentGroupService.save(rolls);
+
+        Nomenclature margarita = new Nomenclature(15002, 370.00, LocalTime.of(0, 5, 15),
+                LocalTime.of(0, 6, 30), "Margarita", DISH,
+                PRODUCT, KITCHEN);
+        Nomenclature marinara = new Nomenclature(15003, 430.00, LocalTime.of(0, 4, 15),
+                LocalTime.of(0, 5, 30), "Marinara", DISH,
+                PRODUCT, KITCHEN);
+        nomenclatureService.save(margarita);
+        nomenclatureService.save(marinara);
+        NomenclatureParentGroup pizzas = new NomenclatureParentGroup("Pizza 35sm");
+        pizzas.setNomenclatures(new ArrayList<>(Arrays.asList(margarita, marinara)));
+        nomenclatureParentGroupService.save(pizzas);
 
 
         generateFakeStaff();
