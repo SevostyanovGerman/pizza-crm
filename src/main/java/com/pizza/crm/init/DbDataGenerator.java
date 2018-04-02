@@ -2,11 +2,15 @@ package com.pizza.crm.init;
 
 import com.github.javafaker.Faker;
 import com.pizza.crm.model.*;
+import com.pizza.crm.model.discount.Discount;
+import com.pizza.crm.model.discount.DiscountCategory;
+import com.pizza.crm.model.discount.DiscountMode;
 import com.pizza.crm.model.security.Role;
 import com.pizza.crm.model.security.User;
 import com.pizza.crm.service.*;
 import com.pizza.crm.service.security.RoleService;
 import com.pizza.crm.service.security.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -61,6 +65,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
     private final PaymentTypeService paymentTypeService;
 
+    @Autowired
     public DbDataGenerator(NomenclatureParentGroupService nomenclatureParentGroupService,
                            NomenclatureService nomenclatureService, UserService userService, RoleService roleService,
                            AddedCategoryService addedCategoryService, CategoryService categoryService,
@@ -86,7 +91,6 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.paymentMethodService = paymentMethodService;
         this.paymentTypeService = paymentTypeService;
     }
-
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -179,12 +183,6 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         scheduleService.save(new Schedule("Lunch", LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true, true, true, false, false));
         scheduleService.save(new Schedule("Dinner", LocalTime.of(18, 00), LocalTime.of(19, 00), false, false, false, false, false, true, true));
 
-        ActionTime actionTime1 = new ActionTime(LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true, true, true, false, false);
-        ActionTime actionTime2 = new ActionTime(LocalTime.of(9, 00), LocalTime.of(10, 00), true, true, false, false, false, false, false);
-
-        discountService.save(new Discount("Discount example", "Discount example", "Discount and extracharge",
-                true, 500, Arrays.asList(actionTime1, actionTime2), new DiscountAndPayment()));
-
         String now = "2016-11-09 10:30";
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -258,23 +256,48 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
         generateFakeStaff();
 
-        generatePaymentMethods();
+        generateDiscountsAndPaymentMethods();
 
     }
 
-    private void generatePaymentMethods() {
-        PaymentType card = new PaymentType("Bank card");
-        PaymentType cash = new PaymentType("Cash");
-        PaymentType withoutEarnings = new PaymentType("Without earnings");
-        PaymentType onHouse = new PaymentType("On the house");
+    private void generateDiscountsAndPaymentMethods() {
+        PaymentType card = new PaymentType("Банковские карты");
+        PaymentType cash = new PaymentType("Наличные");
+        PaymentType withoutEarnings = new PaymentType("Безналичный расчет");
+        PaymentType onHouse = new PaymentType("За счет заведения");
         paymentTypeService.saveAll(Arrays.asList(card, cash, withoutEarnings, onHouse));
 
-        List<PaymentMethod> methods = new ArrayList<>();
-        methods.add(new PaymentMethod("Bank cards", card));
-        methods.add(new PaymentMethod("Cash", cash));
-        methods.add(new PaymentMethod("Without earnings", withoutEarnings));
-        methods.add(new PaymentMethod("On the house", onHouse));
-        paymentMethodService.saveAll(methods);
+        PaymentMethod pm1 = new PaymentMethod("Visa", card);
+        PaymentMethod pm2 = new PaymentMethod("MasterCard", card);
+        PaymentMethod pm3 = new PaymentMethod("Наличные", cash);
+        PaymentMethod pm4 = new PaymentMethod("Безналичный расчет", withoutEarnings);
+//        PaymentMethod pm5 = new PaymentMethod("За счет заведения", onHouse);
+        paymentMethodService.saveAll(Arrays.asList(pm1, pm2, pm3, pm4));
+
+        List<Category> categories = new ArrayList<>(categoryService.getAll());
+
+        DiscountCategory discountCategory1 = new DiscountCategory();
+        discountCategory1.setDiscountMode(DiscountMode.DISCOUNT);
+        discountCategory1.setCategory(categories.get(0));
+
+        DiscountCategory discountCategory2 = new DiscountCategory();
+        discountCategory2.setDiscountMode(DiscountMode.EXTRA_PAY);
+        discountCategory2.setCategory(categories.get(1));
+
+        Discount discount = new Discount("Скидка");
+        discount.setType("Скидки и надбавки");
+        discount.setAutomatic(true);
+        discount.setManualSelectWithOthers(true);
+        discount.getPaymentMethods().add(pm1);
+//        discount.getPaymentMethods().add(pm3);
+        discount.setDiscountCategories(Arrays.asList(discountCategory1, discountCategory2));
+        discount.getSchedules().add(new Schedule("Расписание скидки в обед", LocalTime.of(12, 0), LocalTime.of(13, 0)));
+        discount.getSchedules().add(new Schedule("Расписание скидки вечером", LocalTime.of(14, 0), LocalTime.of(16, 0),
+                true, false, true, false, true, false, true));
+        discountService.save(discount);
+        pm1.setDiscount(discount);
+//        pm3.setDiscount(discount);
+        paymentMethodService.saveAll(Arrays.asList(pm1, pm3));
     }
 
     private void generateFakeStaff() {
