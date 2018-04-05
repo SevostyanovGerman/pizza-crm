@@ -1,14 +1,8 @@
 package com.pizza.crm.service;
 
-import java.util.List;
+import com.pizza.crm.model.UnitsOfMeasurement;
 
-public interface UnitsOfMeasurment {
+public interface UnitsOfMeasurmentService extends CrudService<UnitsOfMeasurement, Long> {
 
-    List<UnitsOfMeasurment> getAllUnits();
-    UnitsOfMeasurment getUnitById(int id);
-    UnitsOfMeasurment getUnitByName(String name);
-    void addUnit(UnitsOfMeasurment unit);
-    void updateUnit(UnitsOfMeasurment unit);
-    void deleteUnit(int id);
 }
 
