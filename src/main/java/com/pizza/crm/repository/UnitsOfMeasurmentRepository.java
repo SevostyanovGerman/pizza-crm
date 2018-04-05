@@ -1,4 +1,8 @@
 package com.pizza.crm.repository;
 
-public interface UnitsOfMeasurmentRepository {
+import com.pizza.crm.model.UnitsOfMeasurement;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+public interface UnitsOfMeasurmentRepository extends JpaRepository<UnitsOfMeasurement, Long> {
 }
