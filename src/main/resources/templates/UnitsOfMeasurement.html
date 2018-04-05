@@ -15,7 +15,34 @@
 </head>
 <body>
 
-ghfghfddf
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+
+            <!-- Table -->
+            <table class="table table-striped">
+                <tr>
+                    <th>id</th>
+                    <th>Название</th>
+                    <th>Краткое название</th>
+                    <th>Основная</th>
+                    <th>Код</th>
+                </tr>
+                <tr th:each="unit : ${allMeasurement}">
+                    <td><span th:text="${unit.id}"></span></td>
+                    <td><span th:text="${unit.name}"></span></td>
+                    <td><span th:text="${unit.description}"></span></td>
+                    <td><span th:text="${unit.basic}"></span></td>
+                    <td><span th:text="${unit.code}"></span></td>
+
+                    <td>
+            </table>
+
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>
