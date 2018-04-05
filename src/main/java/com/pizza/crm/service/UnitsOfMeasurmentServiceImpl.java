@@ -1,44 +1,46 @@
 package com.pizza.crm.service;
 
+import com.pizza.crm.model.UnitsOfMeasurement;
 import com.pizza.crm.repository.UnitsOfMeasurmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Optional;
 
-public class UnitsOfMeasurmentImpl implements UnitsOfMeasurment{
+@Service
+public class UnitsOfMeasurmentServiceImpl implements UnitsOfMeasurmentService {
 
+
+    private final UnitsOfMeasurmentRepository measurmentRepository;
 
     @Autowired
-    UnitsOfMeasurmentRepository measurmentRepository;
-
-
-    @Override
-    public List<UnitsOfMeasurment> getAllUnits() {
-        return measurmentRepository.findAll();
+    public UnitsOfMeasurmentServiceImpl(UnitsOfMeasurmentRepository measurmentRepository) {
+        this.measurmentRepository = measurmentRepository;
     }
 
     @Override
-    public UnitsOfMeasurment getUnitById(int id) {
+    public Collection<UnitsOfMeasurement> getAll() {
         return null;
     }
 
     @Override
-    public UnitsOfMeasurment getUnitByName(String name) {
+    public Optional<UnitsOfMeasurement> findById(Long aLong) {
+        return Optional.empty();
+    }
+
+    @Override
+    public UnitsOfMeasurement save(UnitsOfMeasurement unitsOfMeasurement) {
         return null;
     }
 
     @Override
-    public void addUnit(UnitsOfMeasurment unit) {
-
+    public Collection<UnitsOfMeasurement> saveAll(Collection<UnitsOfMeasurement> unitsOfMeasurements) {
+        return null;
     }
 
     @Override
-    public void updateUnit(UnitsOfMeasurment unit) {
-
-    }
-
-    @Override
-    public void deleteUnit(int id) {
+    public void deleteById(Long aLong) {
 
     }
 }
