@@ -1,86 +1,101 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dish</title>
+    <title>UnitsOfMeasurement</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen"/>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"/>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://yastatic.net/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
 </head>
 <body>
 
+<!-- Button trigger modal -->
+<button class="btn btn-primary btn-mini" data-toggle="modal" data-target="#myModal">
+    Добавить
+</button>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-4">
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Название модали</h4>
+            </div>
+            <div class="modal-body">
 
 
-
-
-
-            <!-- Table -->
-            <table class="table table-striped">
-                <tr>
-                    <th>id</th>
-                    <th>Название</th>
-                    <th>Краткое название</th>
-                    <th>Основная</th>
-                    <th>Код</th>
-                </tr>
-                <tr th:each="unit : ${allMeasurement}">
-                    <td><span th:text="${unit.id}"></span></td>
-                    <td><span th:text="${unit.name}"></span></td>
-                    <td><span th:text="${unit.description}"></span></td>
-                    <td><span th:text="${unit.basic}"></span></td>
-                    <td><span th:text="${unit.code}"></span></td>
-
-                    <td>
-            </table>
-
-        </div>
-
-        <div class="col-md-6">
-            <div th:fragment="content" class="addForm">
-
-                <form role="form" method="post" class="form-group"  th:object="${AddMeasurement}" th:action="@{/measurement/add}" >
+                <form role="form" method="post" class="form-group" th:object="${AddUnit}"
+                      th:action="@{/measurement/add}">
 
                     <div class="form-group">
                         <label for="name"> </label>
-                        <input class="form-control" id="name" type="text" placeholder="имя" th:field="${AddMeasurement.name}"/>
+                        <input class="form-control" id="name" type="text" placeholder="имя" th:field="${AddUnit.name}"/>
                     </div>
                     <div class="form-group">
-                        <label for="description">  </label>
-                        <input class="form-control" id="description" type="text" placeholder="Краткое описание" th:field="${AddMeasurement.description}"/>
+                        <label for="description"> </label>
+                        <input class="form-control" id="description" type="text" placeholder="Краткое описание"
+                               th:field="${AddUnit.description}"/>
                     </div>
 
                     <div class="form-group">
                         <label for="basic"> </label>
-                        <input class="form-control" id="basic" type="text" placeholder="Основная" th:field="${AddMeasurement.basic}"/>
+                        <input class="form-control" id="basic" type="text" placeholder="Основная"
+                               th:field="${AddUnit.basic}"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="code">  </label>
-                        <input class="form-control" id="code" type="text" placeholder="Код" th:field="${AddMeasurement.code}"/>
+                        <label for="code"> </label>
+                        <input class="form-control" id="code" type="text" placeholder="Код" th:field="${AddUnit.code}"/>
                     </div>
 
 
                     <button type="submit" class="btn btn-success">Добавить</button>
                 </form>
+
+
             </div>
-
-
-
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary">Сохранить изменения</button>
+            </div>
         </div>
-
     </div>
+</div>
+<!-- Table -->
+<table class="table table-striped">
+    <tr>
+        <th>id</th>
+        <th>Название</th>
+        <th>Краткое название</th>
+        <th>Основная</th>
+        <th>Код</th>
+    </tr>
+    <tr th:each="unit : ${allMeasurement}">
+        <td><span th:text="${unit.id}"></span></td>
+        <td><span th:text="${unit.name}"></span></td>
+        <td><span th:text="${unit.description}"></span></td>
+        <td><span th:text="${unit.basic}"></span></td>
+        <td><span th:text="${unit.code}"></span></td>
+
+        <td>
+</table>
+
 </div>
 
 
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="../../dist/js/bootstrap.min.js"></script>
+<script src="../../assets/js/docs.min.js"></script>
 </body>
 </html>
