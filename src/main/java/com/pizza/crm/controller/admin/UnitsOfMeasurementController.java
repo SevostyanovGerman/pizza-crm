@@ -25,7 +25,7 @@ public class UnitsOfMeasurementController {
         return "UnitsOfMeasurement";
     }
 
-    @RequestMapping(value = "/add")
+    @RequestMapping(value = "/measurement/add")
     public String addUser(@ModelAttribute("AddUnit") UnitsOfMeasurement unit){
         unitsOfMeasurment.save(unit);
         return "redirect:/measurement";
