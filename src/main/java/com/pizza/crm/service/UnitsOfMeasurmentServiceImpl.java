@@ -21,7 +21,7 @@ public class UnitsOfMeasurmentServiceImpl implements UnitsOfMeasurmentService {
 
     @Override
     public Collection<UnitsOfMeasurement> getAll() {
-        return null;
+        return measurmentRepository.findAll();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class UnitsOfMeasurmentServiceImpl implements UnitsOfMeasurmentService {
 
     @Override
     public UnitsOfMeasurement save(UnitsOfMeasurement unitsOfMeasurement) {
-        return null;
+        return measurmentRepository.save(unitsOfMeasurement);
     }
 
     @Override
