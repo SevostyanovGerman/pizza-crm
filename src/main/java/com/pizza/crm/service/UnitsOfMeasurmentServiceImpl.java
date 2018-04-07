@@ -36,11 +36,11 @@ public class UnitsOfMeasurmentServiceImpl implements UnitsOfMeasurmentService {
 
     @Override
     public Collection<UnitsOfMeasurement> saveAll(Collection<UnitsOfMeasurement> unitsOfMeasurements) {
-        return null;
+        return measurmentRepository.saveAll(unitsOfMeasurements);
     }
 
     @Override
-    public void deleteById(Long aLong) {
-
+    public void deleteById(Long id) {
+        measurmentRepository.deleteById(id);
     }
 }
