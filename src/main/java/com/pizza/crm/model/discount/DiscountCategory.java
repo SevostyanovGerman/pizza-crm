@@ -74,4 +74,15 @@ public class DiscountCategory {
     public void setValue(int value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "DiscountCategory{" +
+                "id=" + id +
+                ", discount=" + discount +
+                ", category=" + category +
+                ", discountMode=" + discountMode +
+                ", value=" + value +
+                '}';
+    }
 }

@@ -137,4 +137,20 @@ public class PaymentMethod {
     public void setDiscount(Discount discount) {
         this.discount = discount;
     }
+
+    @Override
+    public String toString() {
+        return "PaymentMethod{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", paymentType=" + paymentType +
+                ", discount=" + discount +
+                ", printCashBill=" + printCashBill +
+                ", nameInCashBill='" + nameInCashBill + '\'' +
+                ", combinable=" + combinable +
+                ", manualInput=" + manualInput +
+                ", comment='" + comment + '\'' +
+                ", enabled=" + enabled +
+                '}';
+    }
 }

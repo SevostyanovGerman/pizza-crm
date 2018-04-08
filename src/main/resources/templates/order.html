@@ -787,7 +787,7 @@
         $("#rawTotalDiscountModal").text(price);
         $.ajax({
             type: "GET",
-            url: "/get/discount",
+            url: "/get/discount/" + price,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },

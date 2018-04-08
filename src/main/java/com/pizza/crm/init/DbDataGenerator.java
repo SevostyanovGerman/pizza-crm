@@ -287,11 +287,13 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         Discount discount = new Discount("Скидка");
         discount.setType("Скидки и надбавки");
         discount.setAutomatic(true);
+        discount.setManualInput(true);
         discount.setManualSelectWithOthers(true);
+        discount.setScheduleRestriction(false);
         discount.getPaymentMethods().add(pm1);
 //        discount.getPaymentMethods().add(pm3);
         discount.setDiscountCategories(Arrays.asList(discountCategory1, discountCategory2));
-        discount.getSchedules().add(new Schedule("Расписание скидки в обед", LocalTime.of(12, 0), LocalTime.of(13, 0)));
+        discount.getSchedules().add(new Schedule("Расписание скидки в обед", LocalTime.of(0, 0), LocalTime.of(1, 0), false, false, true, false, true, false, true));
         discount.getSchedules().add(new Schedule("Расписание скидки вечером", LocalTime.of(14, 0), LocalTime.of(16, 0),
                 true, false, true, false, true, false, true));
         discountService.save(discount);

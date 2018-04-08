@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface DiscountService extends CrudService<Discount, Long> {
 
-    List<Discount> getActiveDiscount(boolean active);
+    List<Discount> getActiveDiscount(boolean active, boolean manualInput, int minSum);
 
 }

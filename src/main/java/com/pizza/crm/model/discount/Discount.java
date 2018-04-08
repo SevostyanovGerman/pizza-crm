@@ -1,5 +1,6 @@
 package com.pizza.crm.model.discount;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pizza.crm.model.PaymentMethod;
 import com.pizza.crm.model.Schedule;
 import org.hibernate.annotations.Fetch;
@@ -69,6 +70,7 @@ public class Discount {
 
     @OneToMany(mappedBy = "discount", cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
+    @JsonIgnore
     private List<PaymentMethod> paymentMethods = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
@@ -307,5 +309,35 @@ public class Discount {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return "Discount{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", nameInCheck='" + nameInCheck + '\'' +
+                ", type='" + type + '\'' +
+                ", minSum=" + minSum +
+                ", minSumRestriction=" + minSumRestriction +
+                ", scheduleRestriction=" + scheduleRestriction +
+                ", manualSelectWithOthers=" + manualSelectWithOthers +
+                ", manualInput=" + manualInput +
+                ", manualDishSelect=" + manualDishSelect +
+                ", automatic=" + automatic +
+                ", combinable=" + combinable +
+                ", enabled=" + enabled +
+                ", applyForAllDiscountCategories=" + applyForAllDiscountCategories +
+                ", priority=" + priority +
+                ", value=" + value +
+                ", comment='" + comment + '\'' +
+                ", discountApplicationMethod=" + discountApplicationMethod +
+                ", discountMode=" + discountMode +
+                ", discountAssignMode=" + discountAssignMode +
+                ", discountCalculationMode=" + discountCalculationMode +
+                ", paymentMethods=" + paymentMethods +
+                ", schedules=" + schedules +
+                ", discountCategories=" + discountCategories +
+                '}';
     }
 }
