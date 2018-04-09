@@ -5,9 +5,11 @@ import com.pizza.crm.service.UnitsOfMeasurmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class UnitsOfMeasurementController {
@@ -34,8 +36,14 @@ public class UnitsOfMeasurementController {
 
 
     @RequestMapping(value = "/measurement/delete/{id}")
-    public String deteteUnit(@PathVariable("id") Long id) {
+    public String deleteUnit(@PathVariable("id") Long id) {
         unitsOfMeasurment.deleteById(id);
+        return "redirect:/measurement";
+    }
+
+    @RequestMapping(value = "/measurement/update", method = RequestMethod.POST)
+    public String updateUser(@ModelAttribute("user") UnitsOfMeasurement unit){
+        unitsOfMeasurment.save(unit);
         return "redirect:/measurement";
     }
 
