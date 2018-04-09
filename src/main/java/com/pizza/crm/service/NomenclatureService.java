@@ -15,4 +15,6 @@ public interface NomenclatureService {
     Nomenclature getNomenclatureByName(String name);
 
     List<Nomenclature> findAllNomenclatures();
+
+    List<Nomenclature> getNomenclatureModifiers();
 }

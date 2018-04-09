@@ -41,4 +41,9 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     public List<Nomenclature> findAllNomenclatures() {
         return nomenclatureRepository.findAll();
     }
+
+    @Override
+    public List<Nomenclature> getNomenclatureModifiers() {
+        return nomenclatureRepository.getNomenclaturesModifiers();
+    }
 }

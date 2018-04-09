@@ -11,20 +11,17 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.pizza.crm.model.AccountingCategory.PRODUCT;
-import static com.pizza.crm.model.CookingPlace.KITCHEN;
 import static com.pizza.crm.model.NomenclatureType.DISH;
+import static com.pizza.crm.model.NomenclatureType.MODIFIER;
 
 @Component
 public class DbDataGenerator implements ApplicationListener<ContextRefreshedEvent> {
@@ -232,26 +229,51 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         quickMenuService.save(new QuickMenu("Test", new HashSet<>(Arrays.asList(dishQuickMenu4)), 7));
 
         Nomenclature philadelphia = new Nomenclature(15002, 370.00, LocalTime.of(0, 5, 15),
-                LocalTime.of(0, 6, 30), "Philadelphia", DISH,
-                PRODUCT, KITCHEN);
+                LocalTime.of(0, 6, 30), "Филадельфия", DISH,
+                PRODUCT, "Kitchen");
         Nomenclature california = new Nomenclature(15003, 430.00, LocalTime.of(0, 4, 15),
-                LocalTime.of(0, 5, 30), "California", DISH,
-                PRODUCT, KITCHEN);
+                LocalTime.of(0, 5, 30), "Калифорния", DISH,
+                PRODUCT, "Kitchen");
         nomenclatureService.save(philadelphia);
         nomenclatureService.save(california);
-        NomenclatureParentGroup rolls = new NomenclatureParentGroup("Rolls");
+        NomenclatureParentGroup rolls = new NomenclatureParentGroup("Роллы");
         rolls.setNomenclatures(new ArrayList<>(Arrays.asList(philadelphia, california)));
         nomenclatureParentGroupService.save(rolls);
 
+        Nomenclature pineapple = new Nomenclature(15081, 50.00, null,
+                null, "Ананас", MODIFIER,
+                PRODUCT, "Kitchen");
+        Nomenclature ham = new Nomenclature(15082, 50.00, null,
+                null, "Ветчина", MODIFIER,
+                PRODUCT, "Kitchen");
+        Nomenclature mushrooms = new Nomenclature(15083, 50.00, null,
+                null, "Грибы", MODIFIER,
+                PRODUCT, "Kitchen");
+        Nomenclature beackon = new Nomenclature(15084, 50.00, null,
+                null, "Бекон", MODIFIER,
+                PRODUCT, "Kitchen");
+        Nomenclature kolbaski = new Nomenclature(15085, 50.00, null,
+                null, "Колбаски", MODIFIER,
+                PRODUCT, "Kitchen");
+        nomenclatureService.save(pineapple);
+        nomenclatureService.save(ham);
+        nomenclatureService.save(mushrooms);
+        nomenclatureService.save(beackon);
+        nomenclatureService.save(kolbaski);
+        NomenclatureParentGroup topings = new NomenclatureParentGroup("Топпинги");
+        topings.setNomenclatures(new ArrayList<>(Arrays.asList(pineapple, ham)));
+        nomenclatureParentGroupService.save(topings);
+
         Nomenclature margarita = new Nomenclature(15002, 370.00, LocalTime.of(0, 5, 15),
-                LocalTime.of(0, 6, 30), "Margarita", DISH,
-                PRODUCT, KITCHEN);
+                LocalTime.of(0, 6, 30), "Маргарита", DISH,
+                PRODUCT, "Kitchen");
         Nomenclature marinara = new Nomenclature(15003, 430.00, LocalTime.of(0, 4, 15),
-                LocalTime.of(0, 5, 30), "Marinara", DISH,
-                PRODUCT, KITCHEN);
+                LocalTime.of(0, 5, 30), "Охотничая", DISH,
+                PRODUCT, "Kitchen");
+        margarita.setNomenclatureList(new ArrayList<>(Arrays.asList(pineapple, ham)));
         nomenclatureService.save(margarita);
         nomenclatureService.save(marinara);
-        NomenclatureParentGroup pizzas = new NomenclatureParentGroup("Pizza 35sm");
+        NomenclatureParentGroup pizzas = new NomenclatureParentGroup("Пицца 35см");
         pizzas.setNomenclatures(new ArrayList<>(Arrays.asList(margarita, marinara)));
         nomenclatureParentGroupService.save(pizzas);
 
