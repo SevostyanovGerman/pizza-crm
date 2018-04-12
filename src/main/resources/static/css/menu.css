@@ -12,6 +12,7 @@
     height: 100%;
     position: fixed;
     width: 285px;
+    z-index: 9999;
 }
 
 .menu ul {
@@ -63,13 +64,25 @@
     cursor: pointer;
     font-family: 'Open Sans', sans-serif;
     font-size: 20px;
-    padding-bottom: 25px;
+    //padding-bottom: 25px;
     padding-left: 25px;
-    padding-top: 25px;
+    //padding-top: 25px;
     text-decoration: none;
     text-transform: uppercase;
+    height: 5.5vh;
+    line-height: 5.5vh;
 }
 
 .icon-menu img {
+    display: inline-block;
     margin-right: 5px;
+    line-height: 5.5vh;
+    width: 1.5rem;
+}
+
+.icon-menu p {
+    display: inline-block;
+    line-height: 5.5vh;
+    margin: 0;
+    vertical-align: middle;
 }

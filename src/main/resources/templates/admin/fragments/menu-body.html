@@ -16,7 +16,6 @@
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/discountandextracharge/discountandextracharge.js}"></script>
 </head>
 <body>
 <div th:fragment="menu">
@@ -38,10 +37,10 @@
             </li>
             <li>Прейскурант
                 <ul>
-                    <li><a href="#">Приказы об изменении прейскуранта</a></li>
+                    <li class="basic"><a href="/getDecree" class="done">Приказы об изменении прейскуранта</a></li>
                     <li><a href="#">Прейскуранты товаров и услуг</a></li>
-                    <li><a class="done" href="/validity">Периоды действия</a></li>
-                    <li><a href="#">Быстрое меню</a></li>
+                    <li class="basic"><a class="done" href="/validity">Периоды действия</a></li>
+                    <li class="basic"><a href="quickmenu" class="done">Быстрое меню</a></li>
                 </ul>
             </li>
             <li>Дисконтная система
@@ -53,7 +52,7 @@
     </div>
     <div class="icon-menu">
         <img src="/static/img/menu-ham-icon.png" th:src="@{/img/menu-ham-icon.png}">
-        Меню
+        <p>Меню</p>
     </div>
 </div>
 </body>

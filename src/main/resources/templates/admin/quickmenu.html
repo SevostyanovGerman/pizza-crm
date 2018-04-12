@@ -19,21 +19,32 @@
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.77/jquery.form-validator.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <th:block th:include="admin/fragments/menu-header :: head"></th:block>
 </head>
 <body>
 <section class="container-fluid">
     <div class="row">
         <div class="col-12" style="padding: 0;">
             <div class="head">
-                <h3>Быстрое меню</h3>
-                <button type="button" class="btn btn-success" onclick="Save()">Сохранить</button>
+                <div class="row">
+                    <div class="col-1" style="color: #ffffff">
+                        <th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
+                    </div>
+                    <div class="col-11">
+                        <h3>Быстрое меню</h3>
+                        <button type="button" class="btn btn-success" onclick="Save()">Сохранить</button>
+                    </div>
+                </div>
+                <!--<h3>Быстрое меню</h3>-->
+                <!--<button type="button" class="btn btn-success" onclick="Save()">Сохранить</button>-->
             </div>
+
         </div>
 
     </div>
     <div class="row">
-        <div class="col-4 left-panel">
-            <p>Тут пока не знаю что, но думаю что тут будет меню для перехода между режимами админки</p>
+        <div class="col-2 left-panel">
+            <p></p>
         </div>
         <div class="col-4 middle-panel">
             <div class="row middle-panel-head">

@@ -15,9 +15,9 @@
           th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet" media="screen"/>
     <link th:href="@{/css/cashbox.css}" href="../static/css/cashbox.css" rel="stylesheet" media="screen">
 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script src="../static/js/cashbox.js" th:src="@{/js/cashbox.js}"></script>
 
 </head>
@@ -39,16 +39,16 @@
     </div>
 
     <div class="row header-menu">
-        <div class="col-3">
-            <p class="font-weight-bold text-uppercase text-muted pt-3">Безналичный расчет</p>
+        <div class="col-3 payment-method-item">
+            <p class="font-weight-bold text-uppercase pt-3">Безналичный расчет</p>
         </div>
-        <div class="col-2">
-            <p class="font-weight-bold text-uppercase text-muted pt-3">Без выручки</p>
+        <div class="col-2 payment-method-item">
+            <p class="font-weight-bold text-uppercase pt-3">Без выручки</p>
         </div>
-        <div class="col-3">
-            <p class="font-weight-bold text-uppercase text-muted pt-3">Банковские карты</p>
+        <div class="col-3 payment-method-item">
+            <p class="font-weight-bold text-uppercase pt-3">Банковские карты</p>
         </div>
-        <div class="col-2">
+        <div class="col-2 payment-method-item">
             <p class="font-weight-bold text-uppercase pt-3">Оплата наличными</p>
         </div>
         <div class="col text-right">
@@ -77,7 +77,9 @@
 
             <div class="row">
                 <div class="col">
-                    <table class="table table-sm table-condensed order-table borderless"></table>
+                    <div style="height: 250px">
+                        <table class="table table-sm table-condensed order-table borderless"></table>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -116,11 +118,9 @@
 
             <div class="row">
                 <div class="col">
-                    <table class="table payment-type-table">
-                        <tr>
-
-                        </tr>
-                    </table>
+                    <div style="height: 200px">
+                        <table class="table table-sm payment-method-table borderless"></table>
+                    </div>
                 </div>
             </div>
 
@@ -129,7 +129,7 @@
                     <h2 class="text-left text-uppercase">Внесено</h2>
                 </div>
                 <div class="col">
-                    <h2 class="text-right text-uppercase font-weight-bold">1000,00</h2>
+                    <h2 class="text-right text-uppercase font-weight-bold deposit">0,00</h2>
                 </div>
             </div>
 
@@ -223,12 +223,12 @@
     <div class="row footer mt-1">
         <div class="col pt-1">
             <div class="row">
-                <div class="col ml-2">
+                <div class="col ml-2 btn-back">
                     <i class="fa fa-chevron-left" aria-hidden="true"></i>
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col btn-back">
                     <p class="text-uppercase">Назад</p>
                 </div>
             </div>
@@ -247,10 +247,10 @@
             </div>
         </div>
 
-        <div class="col mx-2">
+        <div class="col mx-2 exact-sum">
             <p class="font-weight-bold text-uppercase pt-4">Точная сумма</p>
         </div>
-        <div class="col mx-2">
+        <div class="col mx-2 do-pay">
             <p class="font-weight-bold text-uppercase pt-4">Оплатить</p>
         </div>
     </div>
