@@ -14,10 +14,10 @@ public class UnitsOfMeasurement {
     private String name;
 
     @Column
-    private String description;
+    private String shortName;
 
     @Column
-    private String basic;
+    private boolean basic;
 
     @Column
     private int code;
@@ -26,9 +26,10 @@ public class UnitsOfMeasurement {
     public UnitsOfMeasurement() {
     }
 
-    public UnitsOfMeasurement(String name, String description, String basic, int code) {
+    public UnitsOfMeasurement(Long id, String name, String shortName, boolean basic, int code) {
+        this.id = id;
         this.name = name;
-        this.description = description;
+        this.shortName = shortName;
         this.basic = basic;
         this.code = code;
     }
@@ -50,19 +51,19 @@ public class UnitsOfMeasurement {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getShortName() {
+        return shortName;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
-    public String getBasic() {
+    public boolean getBasic() {
         return basic;
     }
 
-    public void setBasic(String basic) {
+    public void setBasic(boolean basic) {
         this.basic = basic;
     }
 
@@ -79,7 +80,7 @@ public class UnitsOfMeasurement {
         return "UnitsOfMeasurement{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                ", shortName='" + shortName + '\'' +
                 ", basic='" + basic + '\'' +
                 ", code=" + code +
                 '}';

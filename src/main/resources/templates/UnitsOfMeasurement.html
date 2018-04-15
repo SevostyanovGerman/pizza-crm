@@ -13,83 +13,58 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://yastatic.net/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-
+    <script th:src="@{js/UnitsOfMeasurment.js}"></script>
 </head>
 <body>
-
-
 <div>
-
-
     <!-- Button trigger modal -->
-    <button class="btn btn-primary btn-mini" data-toggle="modal" data-target="#myModal">
-        Добавить
-    </button>
-
-
-    <!-- Drop-down Button  -->
-    <div class="btn-group">
-        <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">Кнопка <span
-                class="caret"></span></button>
-        <ul class="dropdown-menu">
-            <li><a href="#">Пункт 1</a></li>
-            <li><a href="#">Пункт 2</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Пункт 3</a></li>
-        </ul>
-    </div>
-
+    <button class="btn btn-primary btn-mini" data-toggle="modal" data-target="#myModal">Добавить</button>
 
     <!-- add Modal-->
-
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Название модали</h4>
+                    <h4 class="modal-title" id="myModalLabel">Добавить единицу измерения</h4>
                 </div>
                 <div class="modal-body">
-
-
                     <form th:id="addForm" role="form" method="post" class="form-group" th:object="${AddUnit}"
                           th:action="@{/measurement/add}">
-
                         <div class="form-group">
-                            <label for="name"> </label>
-                            <input class="form-control" id="name" type="text" placeholder="имя"
+                            <label for="addName"> Название </label>
+                            <input class="form-control" id="addName" type="text" placeholder="Название"
                                    th:field="${AddUnit.name}"/>
                         </div>
                         <div class="form-group">
-                            <label for="description"> </label>
-                            <input class="form-control" id="description" type="text" placeholder="Краткое описание"
-                                   th:field="${AddUnit.description}"/>
+                            <label for="addShortName"> Краткое название </label>
+                            <input class="form-control" id="addShortName" type="text" placeholder="Краткое название"
+                                   th:field="${AddUnit.shortName}"/>
                         </div>
 
                         <div class="form-group">
-                            <label for="basic"> </label>
-                            <input class="form-control" id="basic" type="text" placeholder="Основная"
+                            <label for="addBasic"> Основная </label>
+                            <input class="checkbox" id="addBasic" type="checkbox" placeholder="Основная"
                                    th:field="${AddUnit.basic}"/>
                         </div>
 
                         <div class="form-group">
-                            <label for="code"> </label>
-                            <input class="form-control" id="code" type="text" placeholder="Код"
+                            <label for="addCode"> Код </label>
+                            <input class="form-control" id="addCode" type="text" placeholder="Код"
                                    th:field="${AddUnit.code}"/>
                         </div>
+
+
                     </form>
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                    <button th:form="addForm" type="submit" class="btn btn-primary">Сохранить</button>
+                    <button th:form="addForm" type="submit" class="btn btn-primary" >Сохранить</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <!-- Unit table-->
 <div class="col-md-4">
@@ -106,104 +81,82 @@
         <tr th:each="unit : ${allMeasurement}">
             <!--  <td><span th:text="${unit.id}"></span></td>-->
             <td><span th:text="${unit.name}"></span></td>
-            <td><span th:text="${unit.description}"></span></td>
-            <td><span th:text="${unit.basic}"></span></td>
+            <td><span th:text="${unit.shortName}"></span></td>
+            <td><input type="checkbox" th:checked="${unit.basic}"></td>
             <td><span th:text="${unit.code}"></span></td>
-
             <td>
                 <!-- Delete button -->
                 <a th:href="@{/measurement/delete/{id}/(id=${unit.id})}"
                    class="btn btn-primary btn-md" role="button">Удалить</a>
             </td>
-
             <td>
                 <!-- Modal update button -->
+
+
                 <a th:attr="data-target=@{#__${unit.id}__}" class="btn btn-primary"
                    data-toggle="modal">Изменить</a>
             </td>
 
 
+
+
             <!-- Update Modal -->
-
-
             <div th:id="${unit.id}" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
 
                         <!-- Заголовок модального окна -->
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"
-                                    aria-hidden="true">×
-                            </button>
-                            <h4 class="modal-title">Edit user</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Изменить единицу измерения</h4>
                         </div>
 
                         <!-- Основное содержимое модального окна -->
                         <div class="modal-body">
-
-                            <form th:id="editForm+${unit.id}" role="form" class="form-group"
-                                  method="post" th:action="@{/measurement/update}">
-
+                            <form  th:id="UpdateForm+${unit.id}" role="form" class="form-group" method="post" th:action="@{/measurement/update}">
 
                                 <div class="form-group">
-                                    <label for="name"> id </label>
-                                    <input class="form-control" th:readonly="condition"
-                                           id="id" name="id" placeholder="id"
-                                           th:value="${unit.id}"/>
+                                    <label for="updateid"> id </label>
+                                    <input class="form-control" th:readonly="condition" id="updateid" name="id" placeholder="id" th:value="${unit.id}"/>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="name"> Название </label>
-                                    <input class="form-control" type="text" id="name"
-                                           name="name" placeholder="name"
-                                           th:value="${unit.name}"/>
+                                    <label for="updateName"> Название </label>
+                                    <input class="form-control" type="text" id="updateName" name="name" placeholder="Название" th:value="${unit.name}"/>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="description"> Краткое название </label>
-                                    <input class="form-control" type="text" id="description"
-                                           name="description" placeholder="description"
-                                           th:value="${unit.description}"/>
+                                    <label for="updateShortName"> Краткое название </label>
+                                    <input class="form-control" type="text" id="updateShortName" name="shortName" placeholder="Краткое название" th:value="${unit.shortName}"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="updateBasic"> Основная </label>
+                                    <input class="checkbox" type="checkbox" id="updateBasic" name="basic" placeholder="Основная" th:checked="${unit.basic}"/>
                                 </div>
 
                                 <div class="form-group ">
-                                    <label for="basic"> Основная </label>
-                                    <input class="form-control" id="basic" type="text"
-                                           name="basic" placeholder="password"
-                                           th:value="${unit.basic}"/>
+                                    <label for="updateCode"> Код </label>
+                                    <input class="form-control" id="updateCode" type="text" name="code" placeholder="Код" th:value="${unit.code}"/>
                                 </div>
-
-
-                                <div class="form-group ">
-                                    <label for="code"> Код </label>
-                                    <input class="form-control" id="code" type="text"
-                                           name="code" placeholder="password"
-                                           th:value="${unit.code}"/>
-                                </div>
-
-
                             </form>
-
                         </div>
                         <!-- Футер модального окна -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default"
                                     data-dismiss="modal">Закрыть
                             </button>
-                            <button th:form="editForm+${unit.id}" type="submit"
-                                    class="btn btn-primary">Сохранить
-                            </button>
+                            <button th:form="UpdateForm+${unit.id}" type="submit" class="btn btn-primary">Сохранить</button>
                         </div>
-
                     </div>
                 </div>
             </div>
 
 
+
+
     </table>
 </div>
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="../../dist/js/bootstrap.min.js"></script>
 <script src="../../assets/js/docs.min.js"></script>

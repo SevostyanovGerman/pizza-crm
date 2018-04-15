@@ -6,15 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.LinkedList;
+import java.util.List;
 
 @Controller
 public class UnitsOfMeasurementController {
 
-    public final UnitsOfMeasurmentService unitsOfMeasurment;
+    private final UnitsOfMeasurmentService unitsOfMeasurment;
 
     @Autowired
     public UnitsOfMeasurementController(UnitsOfMeasurmentService unitsOfMeasurment) {
@@ -25,6 +25,7 @@ public class UnitsOfMeasurementController {
     public String getAllUnits(Model model) {
         model.addAttribute("allMeasurement", unitsOfMeasurment.getAll());
         model.addAttribute("AddUnit", new UnitsOfMeasurement());
+        model.addAttribute("UpdateUnit", new UnitsOfMeasurement());
         return "UnitsOfMeasurement";
     }
 
@@ -41,12 +42,18 @@ public class UnitsOfMeasurementController {
         return "redirect:/measurement";
     }
 
-    @RequestMapping(value = "/measurement/update", method = RequestMethod.POST)
-    public String updateUser(@ModelAttribute("user") UnitsOfMeasurement unit){
+    @RequestMapping(value = "/measurement/update")
+    public String updateUser(
+            @RequestParam("id") Long id,
+            @RequestParam("name") String name,
+            @RequestParam("shortName") String shortName,
+            @RequestParam(value = "basic", defaultValue = "false") boolean basic,
+            @RequestParam("code") int code){
+
+        UnitsOfMeasurement unit = new UnitsOfMeasurement(id, name, shortName, basic, code);
         unitsOfMeasurment.save(unit);
         return "redirect:/measurement";
     }
-
 
 
 
