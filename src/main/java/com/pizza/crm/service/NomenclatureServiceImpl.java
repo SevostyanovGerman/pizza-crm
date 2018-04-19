@@ -46,4 +46,9 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     public List<Nomenclature> getNomenclatureModifiers() {
         return nomenclatureRepository.getNomenclaturesModifiers();
     }
+
+    @Override
+    public List<Nomenclature> getNomenclaturesWithoutParentGroup() {
+        return nomenclatureRepository.getNomenclaturesWithoutParentGroup();
+    }
 }

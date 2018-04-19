@@ -44,4 +44,9 @@ public class NomenclatureControllerRest {
     public void saveParentGroup(@RequestBody NomenclatureParentGroup nomenclatureParentGroup) {
         nomenclatureParentGroupService.save(nomenclatureParentGroup);
     }
+
+    @PostMapping("/nomenclature/getNomenclatureId")
+    public Long getId(@RequestParam String name) {
+        return nomenclatureService.getNomenclatureByName(name).getId();
+    }
 }

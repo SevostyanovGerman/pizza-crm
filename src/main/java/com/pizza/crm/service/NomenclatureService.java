@@ -17,4 +17,6 @@ public interface NomenclatureService {
     List<Nomenclature> findAllNomenclatures();
 
     List<Nomenclature> getNomenclatureModifiers();
+
+    List<Nomenclature> getNomenclaturesWithoutParentGroup();
 }

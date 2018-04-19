@@ -40,7 +40,7 @@ $(document).ready(function () {
                         '<td>' + data[i].price + '</td>' +
                         '<td>' + data[i].price + '</td>' +
                         '<td></td>' +
-                        '<td></td>' +
+                        '<td style="color: ' + data[i].fontColor + '; background: ' + data[i].backgroundColor + '">Цвет кнопки</td>' +
                         '<td>' + data[i].cookingTimeNorm + '</td>' +
                         '<td>' + data[i].cookingTimePeak + '</td>' +
                         '</tr>').insertAfter($('tr:eq(' + (tr + 1) + ')'));
@@ -55,11 +55,20 @@ $(document).ready(function () {
         });
     });
 });
-
-$(function () {
-    $('.example').draggable({
+$(document).ready(function () {
+    $('.shown').draggable({
         helper: 'clone'
     });
+});
+
+$(document).ready(function () {
+    $('tbody').on('click', '.shown', function () {
+        $('.shown').removeClass('item-active');
+        $(this).addClass('item-active');
+    });
+});
+
+$(function () {
     $(".parent").droppable({containment: "parent"});
     $(".parent").droppable({
         drop: function (event, ui) {
@@ -153,6 +162,25 @@ function saveParentGroup() {
         },
         success: function () {
             window.location.replace("/nomenclature");
+        },
+        error: function () {
+            alert("error")
+        }
+    });
+}
+
+function editNomenclature() {
+    var name = $('.item-active').find('td:eq(0)').text();
+    $.ajax({
+        type: "POST",
+        url: "/nomenclature/getNomenclatureId",
+        data: {name: name},
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (data) {
+            // window.location.replace("/editNomenclature/"+data);
+            window.location.href = "/editNomenclature/" + data;
         },
         error: function () {
             alert("error")

@@ -33,6 +33,7 @@
 <div class="">
     <a class="btn btn-secondary" href="/editNomenclature">Добавить</a>
     <button class="btn btn-secondary" data-toggle="modal" data-target="#addParentGroup">Добавить группу</button>
+    <button class="btn btn-secondary" onclick="editNomenclature()">Изменить</button>
     <button class="btn btn-secondary">Действия</button>
     <button class="btn btn-secondary">Вид</button>
     <button class="btn btn-secondary">Обновить</button>
@@ -68,9 +69,27 @@
             <td>Цена р.</td>
             <td>Себестоимость</td>
             <td>Места продаж</td>
-            <td th:style="'color: ' + ${nomenclatureParentGroup.fontColor} + '; background: ' + ${nomenclatureParentGroup.backgroundColor}">Цвет кнопки</td>
+            <td th:style="'color: ' + ${nomenclatureParentGroup.fontColor} + '; background: ' + ${nomenclatureParentGroup.backgroundColor}">
+                Цвет кнопки
+            </td>
             <td></td>
             <td></td>
+        </tr>
+        <tr class="shown" th:each="nomenclatureWithoutParentGroup : ${nomenclaturesWithoutParentGroup}">
+            <td th:text="${nomenclatureWithoutParentGroup?.name}"></td>
+            <td></td>
+            <td></td>
+            <td th:text="${nomenclatureWithoutParentGroup?.nomenclatureType}"></td>
+            <td>Остаток</td>
+            <td>Ед. изм.</td>
+            <td th:text="${nomenclatureWithoutParentGroup?.price}">Цена р.</td>
+            <td>Себестоимость</td>
+            <td>Места продаж</td>
+            <td th:style="'color: ' + ${nomenclatureWithoutParentGroup?.fontColor} + '; background: ' + ${nomenclatureWithoutParentGroup?.backgroundColor}">
+                Цвет кнопки
+            </td>
+            <td th:text="${nomenclatureWithoutParentGroup?.cookingTimeNorm}"></td>
+            <td th:text="${nomenclatureWithoutParentGroup?.cookingTimePeak}"></td>
         </tr>
         </tbody>
     </table>
@@ -199,20 +218,20 @@
                     </div>
                     <div class="tab-pane fade" id="buttonColor" role="tabpanel" aria-labelledby="buttonColor-tab">
                         <h3>Настройка оформления кнопки</h3>
-                        <div class="col-sm-8 form-group row">
+                        <div class="col-sm-4 form-group row">
                             <label for="fontColor" class="col-sm-8 col-form-label">
                                 Цвет текста
                             </label>
                             <div class="col-sm-4">
-                                <input type="color" class="form-control" id="fontColor">
+                                <input type="color" id="fontColor">
                             </div>
                         </div>
-                        <div class="col-sm-8 form-group row">
+                        <div class="col-sm-4 form-group row">
                             <label for="backgroundColor" class="col-sm-8 col-form-label">
                                 Цвет фона
                             </label>
                             <div class="col-sm-4">
-                                <input type="color" class="form-control" id="backgroundColor">
+                                <input type="color" id="backgroundColor">
                             </div>
                         </div>
                         <button class="btn btn-primary" onclick="showColors()">Color</button>

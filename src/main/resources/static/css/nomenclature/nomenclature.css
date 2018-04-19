@@ -27,3 +27,7 @@ body {
     text-align: center;
     line-height: 100px;
 }
+
+.item-active {
+    background: #79919d;
+}

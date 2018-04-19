@@ -16,7 +16,8 @@
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    <script th:src="@{js/nomenclature/editNomenclature.js}"></script>
+    <script src="../static/js/nomenclature/editNomenclature.js"
+            th:src="@{/js/nomenclature/editNomenclature.js}"></script>
 </head>
 <body>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -27,13 +28,13 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#unitOfMeasure"
+        <a class="nav-link" id="unitOfMeasure-tab" data-toggle="tab" href="#unitOfMeasure"
            role="tab" aria-controls="unitOfMeasure" aria-selected="false">
             Единицы измерения
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact"
+        <a class="nav-link" id="advancedOptions-tab" data-toggle="tab" href="#advancedOptions"
            role="tab" aria-controls="contact" aria-selected="false">
             Дополнительная информация
         </a>
@@ -69,26 +70,44 @@
         </a>
     </li>
 </ul>
+
 <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="home-tab">
+    <!--MAIN TAB-->
+    <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="main-tab">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-5 left-side">
                     <div class="form-group row">
                         <label for="name" class="col-sm-6 col-form-label">Название:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="name">
+                            <input type="text" class="form-control" id="name" th:value="${nomenclature?.name}">
+                            <input id="id" type="hidden" th:value="${nomenclature?.id}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="nomenclatureType" class="col-sm-6 col-form-label">Тип номенкулатуры:</label>
                         <div class="col-sm-6">
                             <select id="nomenclatureType" class="form-control">
-                                <option value="DISH">Блюдо</option>
-                                <option value="PRODUCT">Товар</option>
-                                <option value="BLANK">Заготовка</option>
-                                <option value="MODIFIER">Модификатор</option>
-                                <option value="SERVICE">Услуга</option>
+                                <option value="DISH"
+                                        th:selected="${nomenclature?.nomenclatureType==T(com.pizza.crm.model.NomenclatureType).DISH}">
+                                    Блюдо
+                                </option>
+                                <option value="PRODUCT"
+                                        th:selected="${nomenclature?.nomenclatureType==T(com.pizza.crm.model.NomenclatureType).PRODUCT}">
+                                    Товар
+                                </option>
+                                <option value="BLANK"
+                                        th:selected="${nomenclature?.nomenclatureType==T(com.pizza.crm.model.NomenclatureType).BLANK}">
+                                    Заготовка
+                                </option>
+                                <option value="MODIFIER"
+                                        th:selected="${nomenclature?.nomenclatureType==T(com.pizza.crm.model.NomenclatureType).MODIFIER}">
+                                    Модификатор
+                                </option>
+                                <option value="SERVICE"
+                                        th:selected="${nomenclature?.nomenclatureType==T(com.pizza.crm.model.NomenclatureType).SERVICE}">
+                                    Услуга
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -106,11 +125,13 @@
                             Родительская группа:
                         </label>
                         <div class="col-sm-6">
-                            <select id="parentGroup" class="form-control" >
+                            <select id="parentGroup" class="form-control">
                                 <option th:each="nomenclatureParentGroup : ${nomenclatureParentGroups}"
                                         th:text="${nomenclatureParentGroup.name}"
-                                        th:value="${nomenclatureParentGroup.id}">
+                                        th:value="${nomenclatureParentGroup.id}"
+                                        th:selected="${nomenclatureParentGroup.name == parentGroupName}">
                                 </option>
+                                <!--<option value="null">Без группы</option>-->
                             </select>
                         </div>
                     </div>
@@ -146,11 +167,13 @@
                         <label class="col-sm-6 col-form-label">Время приготовления(чч:мм:сс):</label>
                         <div class="offset-sm-0">
                             <label for="cookingTimeNorm" class="col-form-label">Норма:</label>
-                            <input type="time" class="form-control" id="cookingTimeNorm" step="1">
+                            <input type="time" class="form-control" id="cookingTimeNorm" step="1"
+                                   th:value="${nomenclature?.cookingTimeNorm}">
                         </div>
                         <div class="offset-sm-1">
                             <label for="cookingTimePeak" class="col-form-label">Пик:</label>
-                            <input type="time" class="form-control" id="cookingTimePeak" step="1">
+                            <input type="time" class="form-control" id="cookingTimePeak" step="1"
+                                   th:value="${nomenclature?.cookingTimePeak}">
                         </div>
                     </div>
                     <div class="form-group row ">
@@ -170,7 +193,7 @@
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="modifierScheme">
                         </div>
-                        <div >
+                        <div>
                             <button class="btn btn-success">+</button>
                             <button class="btn btn-info">...</button>
                         </div>
@@ -185,7 +208,8 @@
                             Цена в прайс-листе ресторана:
                         </label>
                         <div class="col-sm-6">
-                            <input type="number" class="form-control" id="priceByPriceList">
+                            <input type="number" class="form-control" id="priceByPriceList"
+                                   th:value="${nomenclature?.price}">
                         </div>
                         <div class="form-check offset-sm-6">
                             <input type="checkbox" class="">
@@ -195,7 +219,8 @@
                     <div class="form-group row">
                         <label for="decreePrice" class="col-sm-6 col-form-label">Цена по приказу:</label>
                         <div class="col-sm-6">
-                            <input type="number" class="form-control" id="decreePrice">
+                            <input type="number" class="form-control" id="decreePrice"
+                                   th:value="${nomenclature?.price}">
                         </div>
                     </div>
                 </div>
@@ -213,19 +238,32 @@
                         <th>Максимум</th>
                         <th>Обязательно</th>
                         <th>Скрывать, если</th>
-                        <th>Ограничена на </th>
+                        <th>Ограничена на</th>
                         <th>Бесплатно</th>
                         </thead>
                         <tbody class="tbody">
-
+                        <tr th:each="nomenclatureModifier : ${nomenclature?.nomenclatureList}">
+                            <td class="modifierName" th:text="${nomenclatureModifier?.name}"></td>
+                            <td><input type="number" class="inputs"></td>
+                            </td>
+                            <td><input type="number" class="inputs"></td>
+                            </td>
+                            <td><input type="number" class="inputs"></td>
+                            </td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="number" class="inputs"></td>
+                            <input class="hideId" type="hidden" th:value="${nomenclatureModifier.id}">
+                        </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="tab-pane fade" id="unitOfMeasure" role="tabpanel" aria-labelledby="profile-tab">
+    <!--UnitsOfMeasure Tab-->
+    <div class="tab-pane fade" id="unitOfMeasure" role="tabpanel" aria-labelledby="unitOfMeasure-tab">
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group row">
@@ -233,7 +271,12 @@
                         Базовая единица измерения, которая используется в складском учете и отчетности:
                     </label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" id="measureUnit">
+                        <select id="measureUnit" class="form-control">
+                            <option>порц</option>
+                            <option>кг</option>
+                            <option>шт</option>
+                            <option>л</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -285,17 +328,245 @@
             <input class="form-check-input" type="checkbox" id="inlineCheckbox5">
             <label class="form-check-label" for="inlineCheckbox5">Показать удаленные</label>
         </div>
+        <br/>
+        <button class="btn btn-primary" onclick="addPackagingRow()">Добавить</button>
+        <button class="btn btn-danger" onclick="deletePackagingRow()">Удалить</button>
         <table class="table table-bordered">
             <thead>
             <th>Код</th>
             <th>Фасовка</th>
-            <th>Обратный...</th>
+            <th>Обратный ...</th>
             <th>Количество в фасовке</th>
             <th>Ед. измерения</th>
             </thead>
+            <tbody class="packaging">
+            <tr class="packagingRow" th:each="packaging : ${nomenclature?.packagingList}">
+                <td><input type="number" th:value="${packaging?.code}"></td>
+                <td><input type="text" th:value="${packaging?.name}"></td>
+                <td><input type="checkbox" th:checked="${packaging?.backIn}"></td>
+                <td><input type="number" th:value="${packaging?.quantityInPackaging}"></td>
+                <input type="hidden" th:value="${packaging?.id}">
+            </tr>
+            </tbody>
         </table>
     </div>
+    <!--Advanced options-->
+    <div class="tab-pane fade" id="advancedOptions" role="tabpanel" aria-labelledby="advancedOptions-tab">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" href="#common" aria-controls="common" role="tab" data-toggle="tab">Общее</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="#extraCharge" aria-controls="extraCharge" role="tab"
+                   data-toggle="tab">Наценка</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="#losses" aria-controls="losses" role="tab" data-toggle="tab">% Потерь</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="#stockLevel" aria-controls="stockLevel" role="tab" data-toggle="tab">Уровни
+                    запасов</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="#alcohol" aria-controls="alcohol" role="tab" data-toggle="tab">Алкогольная
+                    декларация</a>
+            </li>
+        </ul>
+        <!--Tabs inside advancedOptions-->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="common">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="text-center">Информация для прайс листа</div>
+                        <div class="form-group">
+                            <label for="advancedName">Полное название:</label>
+                            <input type="text" class="form-control" id="advancedName">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Описание:</label>
+                            <textarea rows="5" class="form-control" id="description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="advancedForeignName">Полное название на иностанном языке:</label>
+                            <input type="text" class="form-control" id="advancedForeignName">
+                        </div>
+                        <div class="form-group">
+                            <label for="foreignDescription">Описание на иностранном языке:</label>
+                            <textarea rows="5" class="form-control" id="foreignDescription"></textarea>
+                        </div>
+                        <hr/>
+                        <div class="text-center">Настройка цвета кнопки</div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group row">
+                                    <label for="fontColor" class="col-sm-4 ">
+                                        Цвет текста
+                                    </label>
+                                    <div class="col-sm-6">
+                                        <input type="color" id="fontColor">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="backgroundColor" class="col-sm-4 ">
+                                        Цвет фона
+                                    </label>
+                                    <div class="col-sm-4">
+                                        <input type="color" id="backgroundColor">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="row">
+                                    <div class="showColors">
+                                        <p>Текст</p>
+                                    </div>
+                                    <button class="offset-1 btn btn-primary" onclick="showColors()">Посмотреть цвет
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="text-center">Информация для повара</div>
+                        <div class="form-group">
+                            <label>Адаптированное название для кухни:</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="text-center">Себестоимость</div>
+                        <br/>
+                        <div class="form-group row">
+                            <label class="col-sm-6 col-form-label">Оценочная себестоимотость</label>
+                            <div class="col-sm-4">
+                                <input type="number" class="form-control">
+                            </div>
+                            <div class="col-form-label">
+                                За одну порц
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="text-center">Категория</div>
+                        <br/>
+                        <div class="form-group">
+                            <label class="col-sm-6 col-form-label">Категория:</label>
+                            <div class="col">
+                                <select type="number" class="form-control">
+                                    <option>Какая то категория</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="text-center">Ндс</div>
+                        <br/>
+                        <div class="form-group">
+                            <label class="col-sm-6 col-form-label">Налоговая категория:</label>
+                            <div class="col">
+                                <select type="number" class="form-control">
+                                    <option>Не задана</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="text-center">Срок хранения</div>
+                        <br/>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Срок хранения</label>
+                            <div class="col-sm-3">
+                                <input type="time" class="form-control">
+                            </div>
+                            <div class="col-form-label">М:Д</div>
+                            <div class="col-sm-3">
+                                <input type="time" class="form-control">
+                            </div>
+                            <div class="col-form-label">Ч:М</div>
+                        </div>
+                        <div class="text-center">Дополнительно</div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck1">
+                            <label class="form-check-label" for="gridCheck1">
+                                Не выгружать техкарты в резервную БД
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck2" disabled>
+                            <label class="form-check-label" for="gridCheck2">
+                                Учавстует во флаерной программе
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck3">
+                            <label class="form-check-label" for="gridCheck3">
+                                Печать при добавлении
+                            </label>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="extraCharge">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group row">
+                            <label class="col-sm-8 col-form-label">Наценка по умолчанию (%)</label>
+                            <div class="col-sm-4">
+                                <input type="number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox">
+                            <label class="form-check-label">
+                                Фиксированная цена
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="losses">
+                <div class="col-sm-5">
+                    <div class="form-group row">
+                        <label class="col-sm-7 col-form-label">Процент потерь при холодной обработке (%)</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="form-group row">
+                        <label class="col-sm-7 col-form-label">Процент потерь при горячей обработке (%)</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="stockLevel">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <label class="col-sm-5 col-form-label">Минимум при умолчанию:</label>
+                            <div class="col-sm-3">
+                                <input type="number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group row">
+                            <label class="col-sm-5 col-form-label">Максимум при умолчанию:</label>
+                            <div class="col-sm-3">
+                                <input type="number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="alcohol">
+                h
+            </div>
+        </div>
+    </div>
 
+    <!--Images-->
     <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="image-tab">
         <div class="row">
             <button class="btn btn-info">Действия</button>
@@ -347,7 +618,7 @@
             </div>
         </div>
     </div>
-
+    <!--nutritionalValue-->
     <div class="tab-pane fade" id="nutritionalValue" role="tabpanel" aria-labelledby="nutritionalValue-tab">
         <div class="row">
             <div class="col-sm-4 form-group row">
@@ -460,7 +731,7 @@
             </div>
         </div>
     </div>
-
+    <!--size-scale-->
     <div class="tab-pane fade" id="size-scale" role="tabpanel" aria-labelledby="nutritionalValue-tab">
         <div class="row">
             <div class="col-sm-4 form-group row">
@@ -486,15 +757,16 @@
             </table>
         </div>
     </div>
-
+    <!--Navigation buttons-->
     <div class="offset-sm-8">
         <button class="btn btn-secondary">Обновить</button>
         <button class="btn btn-secondary" onclick="save()">Сохранить</button>
-        <a href="/nomenclature" class="btn btn-secondary">Выйти без сохранения</a>
-        <button class="btn btn-secondary">Сохранить и выйти</button>
+        <a href="/nomenclature" class="btn btn-secondary" onclick="exit()">Выйти без сохранения</a>
+        <button class="btn btn-secondary" onclick="saveAndExit()">Сохранить и выйти</button>
     </div>
 
     <!--Modal-->
+    <!--Modifiers-->
     <div class="modal fade" id="addModifier" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -521,7 +793,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary" onclick="saveModifiers()" data-dismiss="modal">Сохранить</button>
+                    <button type="button" class="btn btn-primary" onclick="saveModifiers()" data-dismiss="modal">
+                        Сохранить
+                    </button>
                 </div>
             </div>
         </div>

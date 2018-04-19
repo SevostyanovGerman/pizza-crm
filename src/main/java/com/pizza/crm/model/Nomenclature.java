@@ -1,5 +1,8 @@
 package com.pizza.crm.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.List;
@@ -25,6 +28,10 @@ public class Nomenclature {
 
     private String name;
 
+    private String backgroundColor;
+
+    private String fontColor;
+
     @Enumerated(EnumType.STRING)
     private NomenclatureType nomenclatureType;
 
@@ -44,6 +51,11 @@ public class Nomenclature {
             joinColumns = @JoinColumn(name = "nomenclature_1"),
             inverseJoinColumns = @JoinColumn(name = "nomenclature_2"))
     private List<Nomenclature> nomenclatureList;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "packaging")
+    @Fetch(FetchMode.SELECT)
+    private List<Packaging> packagingList;
 
     public Nomenclature() {
     }
@@ -159,5 +171,29 @@ public class Nomenclature {
 
     public void setNomenclatureList(List<Nomenclature> nomenclatureList) {
         this.nomenclatureList = nomenclatureList;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public String getFontColor() {
+        return fontColor;
+    }
+
+    public void setFontColor(String fontColor) {
+        this.fontColor = fontColor;
+    }
+
+    public List<Packaging> getPackagingList() {
+        return packagingList;
+    }
+
+    public void setPackagingList(List<Packaging> packagingList) {
+        this.packagingList = packagingList;
     }
 }

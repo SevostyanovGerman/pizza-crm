@@ -27,3 +27,16 @@ body {
 .inputs {
     width: 50px;
 }
+
+.packagingRow-active {
+    background: #aeaeae
+}
+
+.showColors {
+    width: 100px;
+    height: 100px;
+    background: white;
+    color: #000;
+    text-align: center;
+    line-height: 100px;
+}
