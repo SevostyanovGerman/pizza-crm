@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class TodayOrders {
+public class TodayOrdersController {
 
     @GetMapping("/todayOrders")
     public String todayOrders() {
