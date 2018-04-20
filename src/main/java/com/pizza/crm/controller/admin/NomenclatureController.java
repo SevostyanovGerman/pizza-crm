@@ -38,7 +38,7 @@ public class NomenclatureController {
         if (id != null) {
             model.addAttribute("nomenclature", nomenclatureService.getNomenclature(id));
             model.addAttribute("parentGroupName",
-                    nomenclatureService.getNomenclature(id).getNomenclatureParentGroupSet().stream().findFirst().get().getName());
+                    nomenclatureService.getNomenclature(id).getNomenclatureParentGroupSet().iterator().next());
         }
         model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());
         model.addAttribute("modifierNomenclatures", nomenclatureService.getNomenclatureModifiers());

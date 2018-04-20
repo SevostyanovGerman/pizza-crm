@@ -14,12 +14,10 @@ public interface NomenclatureRepository extends JpaRepository<Nomenclature, Long
 
     List<Nomenclature> findAll();
 
-    @Query("SELECT n FROM Nomenclature n WHERE " +
-            "n.nomenclatureType = com.pizza.crm.model.NomenclatureType.MODIFIER")
+    @Query("SELECT n FROM Nomenclature n WHERE n.nomenclatureType = com.pizza.crm.model.NomenclatureType.MODIFIER")
     List<Nomenclature> getNomenclaturesModifiers();
 
-    @Query("SELECT n FROM Nomenclature n WHERE " +
-            "n.nomenclatureParentGroupSet is empty")
+    @Query("SELECT n FROM Nomenclature n WHERE n.nomenclatureParentGroupSet is empty")
     List<Nomenclature> getNomenclaturesWithoutParentGroup();
 
 }
