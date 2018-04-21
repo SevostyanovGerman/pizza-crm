@@ -1,7 +1,7 @@
 package com.pizza.crm.controller.admin;
 
 import com.pizza.crm.model.UnitsOfMeasurement;
-import com.pizza.crm.service.UnitsOfMeasurmentService;
+import com.pizza.crm.service.UnitsOfMeasurementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UnitsOfMeasurementController {
 
-    private final UnitsOfMeasurmentService unitsOfMeasurment;
+    private final UnitsOfMeasurementService unitsOfMeasurement;
 
     @Autowired
-    public UnitsOfMeasurementController(UnitsOfMeasurmentService unitsOfMeasurment) {
-        this.unitsOfMeasurment = unitsOfMeasurment;
+    public UnitsOfMeasurementController(UnitsOfMeasurementService unitsOfMeasurment) {
+        this.unitsOfMeasurement = unitsOfMeasurment;
     }
 
     @RequestMapping("/measurement")
     public String getAllUnits(Model model) {
-        model.addAttribute("allMeasurement", unitsOfMeasurment.getAll());
+        model.addAttribute("allMeasurement", unitsOfMeasurement.getAll());
         model.addAttribute("AddUnit", new UnitsOfMeasurement());
         model.addAttribute("UpdateUnit", new UnitsOfMeasurement());
         return "UnitsOfMeasurement";
@@ -27,14 +27,14 @@ public class UnitsOfMeasurementController {
 
     @RequestMapping(value = "/measurement/add")
     public String addUnit(@ModelAttribute("AddUnit") UnitsOfMeasurement unit) {
-        unitsOfMeasurment.save(unit);
+        unitsOfMeasurement.save(unit);
         return "redirect:/measurement";
     }
 
 
     @RequestMapping(value = "/measurement/delete/{id}")
     public String deleteUnit(@PathVariable("id") Long id) {
-        unitsOfMeasurment.deleteById(id);
+        unitsOfMeasurement.deleteById(id);
         return "redirect:/measurement";
     }
 
@@ -47,15 +47,15 @@ public class UnitsOfMeasurementController {
             @RequestParam("code") int code) {
 
         UnitsOfMeasurement unit = new UnitsOfMeasurement(id, name, shortName, basic, code);
-        unitsOfMeasurment.save(unit);
+        unitsOfMeasurement.save(unit);
         return "redirect:/measurement";
     }
 
     @PostMapping(value = "/measurement/changeBasic")
     public String changeBasic(@RequestParam String name, @RequestParam Boolean basic) {
-        UnitsOfMeasurement measurement = unitsOfMeasurment.findByName(name);
+        UnitsOfMeasurement measurement = unitsOfMeasurement.findByName(name);
         measurement.setBasic(basic);
-        unitsOfMeasurment.save(measurement);
+        unitsOfMeasurement.save(measurement);
         return "redirect:/measurement";
     }
 

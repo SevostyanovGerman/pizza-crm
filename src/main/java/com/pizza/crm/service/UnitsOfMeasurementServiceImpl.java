@@ -1,7 +1,7 @@
 package com.pizza.crm.service;
 
 import com.pizza.crm.model.UnitsOfMeasurement;
-import com.pizza.crm.repository.UnitsOfMeasurmentRepository;
+import com.pizza.crm.repository.UnitsOfMeasurementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,13 +9,13 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Service
-public class UnitsOfMeasurmentServiceImpl implements UnitsOfMeasurmentService {
+public class UnitsOfMeasurementServiceImpl implements UnitsOfMeasurementService {
 
 
-    private final UnitsOfMeasurmentRepository measurmentRepository;
+    private final UnitsOfMeasurementRepository measurmentRepository;
 
     @Autowired
-    public UnitsOfMeasurmentServiceImpl(UnitsOfMeasurmentRepository measurmentRepository) {
+    public UnitsOfMeasurementServiceImpl(UnitsOfMeasurementRepository measurmentRepository) {
         this.measurmentRepository = measurmentRepository;
     }
 
