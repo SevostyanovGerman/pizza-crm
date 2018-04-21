@@ -26,7 +26,7 @@ public class UnitsOfMeasurmentServiceImpl implements UnitsOfMeasurmentService {
 
     @Override
     public Optional<UnitsOfMeasurement> findById(Long aLong) {
-        return Optional.empty();
+        return measurmentRepository.findById(aLong);
     }
 
     @Override
@@ -42,5 +42,10 @@ public class UnitsOfMeasurmentServiceImpl implements UnitsOfMeasurmentService {
     @Override
     public void deleteById(Long id) {
         measurmentRepository.deleteById(id);
+    }
+
+    @Override
+    public UnitsOfMeasurement findByName(String name) {
+        return measurmentRepository.findByName(name);
     }
 }

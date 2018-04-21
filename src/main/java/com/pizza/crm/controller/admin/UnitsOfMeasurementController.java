@@ -5,11 +5,7 @@ import com.pizza.crm.service.UnitsOfMeasurmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.LinkedList;
-import java.util.List;
 
 @Controller
 public class UnitsOfMeasurementController {
@@ -48,13 +44,20 @@ public class UnitsOfMeasurementController {
             @RequestParam("name") String name,
             @RequestParam("shortName") String shortName,
             @RequestParam(value = "basic", defaultValue = "false") boolean basic,
-            @RequestParam("code") int code){
+            @RequestParam("code") int code) {
 
         UnitsOfMeasurement unit = new UnitsOfMeasurement(id, name, shortName, basic, code);
         unitsOfMeasurment.save(unit);
         return "redirect:/measurement";
     }
 
+    @PostMapping(value = "/measurement/changeBasic")
+    public String changeBasic(@RequestParam String name, @RequestParam Boolean basic) {
+        UnitsOfMeasurement measurement = unitsOfMeasurment.findByName(name);
+        measurement.setBasic(basic);
+        unitsOfMeasurment.save(measurement);
+        return "redirect:/measurement";
+    }
 
 
 }
