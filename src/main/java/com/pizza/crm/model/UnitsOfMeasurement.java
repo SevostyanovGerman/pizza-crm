@@ -34,7 +34,6 @@ public class UnitsOfMeasurement {
         this.code = code;
     }
 
-
     public Long getId() {
         return id;
     }

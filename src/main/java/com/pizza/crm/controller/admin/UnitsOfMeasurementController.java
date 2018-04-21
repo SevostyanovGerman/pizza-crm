@@ -31,7 +31,6 @@ public class UnitsOfMeasurementController {
         return "redirect:/measurement";
     }
 
-
     @RequestMapping(value = "/measurement/delete/{id}")
     public String deleteUnit(@PathVariable("id") Long id) {
         unitsOfMeasurement.deleteById(id);
@@ -58,6 +57,4 @@ public class UnitsOfMeasurementController {
         unitsOfMeasurement.save(measurement);
         return "redirect:/measurement";
     }
-
-
 }
