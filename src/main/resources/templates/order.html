@@ -225,6 +225,7 @@
                                     <p class="NameDiscount">Скидка</p>
                                     <p class="TypeDiscount">Скидка</p>
                                     <p class="ValueDiscount">50%</p>
+                                    <p class="ValueDiscountCount">-124p</p>
                                 </div>
                             </div>
                             <div class="col-4" style="padding-left: 5px; padding-right: 5px">
@@ -796,16 +797,18 @@
                 $("#discount-extraCharge-modal-item").empty();
                 var discountList = data;
                 discountList.forEach(function (value) {
-                    if (value.active == true && value.minSum <= price) {
+                        var price = $("#rawTotal").text();
+                        var newPrise = CountDiscount(value.value, value.discountCalculationMode);
+                        console.log(value);
                         $("#discount-extraCharge-modal-item").append(
-                            "<div class=\"col-4\" style=\"padding-left: 5px; padding-right: 5px\" onclick=\"AddDiscount(" + value.value + ")\">\n" +
+                            "<div class=\"col-4\" style=\"padding-left: 5px; padding-right: 5px; cursor: pointer;\" onclick=\"AddDiscount(" + value.value + ", \'" + value.discountCalculationMode + "\'" + ")\">\n" +
                             "<div class=\"DiscountItem\">\n" +
-                            "<p class=\"NameDiscount\">" + value.checkName + "</p>\n" +
-                            "<p class=\"TypeDiscount\">" + value.discountType + "</p>\n" +
+                            "<p class=\"NameDiscount\">" + value.name + "</p>\n" +
+                            "<p class=\"TypeDiscount\">" + value.type + "</p>\n" +
                             "<p class=\"ValueDiscount\">" + value.value + " %" + "</p>\n" +
+                            "<p class=\"ValueDiscountCount\">" + "- " + newPrise + " p" + "</p>\n" +
                             "</div>\n" +
                             "</div>");
-                    }
                 });
             },
             error: function (e) {
@@ -815,11 +818,27 @@
 
     var globalDiscount = 0;
 
-    function AddDiscount(discount) {
+    function AddDiscount(discount, type) {
         var price = $("#rawTotal").text();
-        var newPrise = price * (100 - discount) / 100
+        var newPrise;
+        if (type == "PERCENT") {
+            newPrise = price * (100 - discount) / 100;
+        } else {
+            newPrise = price - discount;
+        }
         $("#rawTotalDiscountModal").text(newPrise);
         globalDiscount = discount;
+    }
+
+    function CountDiscount(discount, type) {
+        var price = $("#rawTotal").text();
+        var newPrise;
+        if (type == "PERCENT") {
+            newPrise = price * (discount) / 100;
+        } else {
+            newPrise = discount;
+        }
+        return newPrise;
     }
     
     function CloseModal() {

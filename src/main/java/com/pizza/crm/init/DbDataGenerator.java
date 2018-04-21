@@ -289,17 +289,18 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         discount.setAutomatic(true);
         discount.setManualInput(true);
         discount.setManualSelectWithOthers(true);
-        discount.setScheduleRestriction(false);
+        discount.setScheduleRestriction(true);
+        discount.setCombinable(true);
+        discount.setValue(10);
         discount.getPaymentMethods().add(pm1);
-//        discount.getPaymentMethods().add(pm3);
         discount.setDiscountCategories(Arrays.asList(discountCategory1, discountCategory2));
         discount.getSchedules().add(new Schedule("Расписание скидки в обед", LocalTime.of(0, 0), LocalTime.of(1, 0), false, false, true, false, true, false, true));
-        discount.getSchedules().add(new Schedule("Расписание скидки вечером", LocalTime.of(14, 0), LocalTime.of(16, 0),
+        discount.getSchedules().add(new Schedule("Расписание скидки вечером", LocalTime.of(11, 0), LocalTime.of(16, 0),
                 true, false, true, false, true, false, true));
         discountService.save(discount);
         pm1.setDiscount(discount);
-//        pm3.setDiscount(discount);
         paymentMethodService.saveAll(Arrays.asList(pm1, pm3));
+
     }
 
     private void generateFakeStaff() {
