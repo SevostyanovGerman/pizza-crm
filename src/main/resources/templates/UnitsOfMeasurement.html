@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+
     <title>UnitsOfMeasurement</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Latest compiled and minified CSS -->
+
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
-    <!-- Optional theme -->
+
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"/>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://yastatic.net/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <script th:src="@{js/UnitsOfMeasurment.js}"></script>
+    <link th:href="@{/css/units.css}" href="../static/css/units.css" rel="stylesheet" media="screen">
+    <script th:src="@{/js/units.js}"></script>
+
 </head>
 <body>
 <div>
@@ -34,27 +36,25 @@
                         <div class="form-group">
                             <label for="addName"> Название </label>
                             <input class="form-control" id="addName" type="text" placeholder="Название"
-                                   th:field="${AddUnit.name}"/>
+                                   th:field="${AddUnit.name}" />
                         </div>
                         <div class="form-group">
                             <label for="addShortName"> Краткое название </label>
                             <input class="form-control" id="addShortName" type="text" placeholder="Краткое название"
-                                   th:field="${AddUnit.shortName}"/>
+                                   th:field="${AddUnit.shortName}" />
                         </div>
 
                         <div class="form-group">
                             <label for="addBasic"> Основная </label>
                             <input class="checkbox" id="addBasic" type="checkbox" placeholder="Основная"
-                                   th:field="${AddUnit.basic}"/>
+                                   th:field="${AddUnit.basic}" />
                         </div>
 
                         <div class="form-group">
                             <label for="addCode"> Код </label>
                             <input class="form-control" id="addCode" type="text" placeholder="Код"
-                                   th:field="${AddUnit.code}"/>
+                                   th:field="${AddUnit.code}" />
                         </div>
-
-
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -71,6 +71,7 @@
 
     <!-- Table -->
     <table class="table table-striped table table-hover table-responsive">
+        <thead>
         <tr>
             <!--<th>id</th>-->
             <th>Название</th>
@@ -78,11 +79,13 @@
             <th>Основная</th>
             <th>Код</th>
         </tr>
+        </thead>
+        <tbody class="getUnit">
         <tr th:each="unit : ${allMeasurement}">
             <!--  <td><span th:text="${unit.id}"></span></td>-->
             <td><span th:text="${unit.name}"></span></td>
             <td><span th:text="${unit.shortName}"></span></td>
-            <td><input type="checkbox" th:checked="${unit.basic}"></td>
+            <td><input th:type="checkbox" th:checked="${unit.basic}" class="activated" value="true"></td>
             <td><span th:text="${unit.code}"></span></td>
             <td>
                 <!-- Delete button -->
@@ -91,15 +94,9 @@
             </td>
             <td>
                 <!-- Modal update button -->
-
-
                 <a th:attr="data-target=@{#__${unit.id}__}" class="btn btn-primary"
                    data-toggle="modal">Изменить</a>
             </td>
-
-
-
-
             <!-- Update Modal -->
             <div th:id="${unit.id}" class="modal fade">
                 <div class="modal-dialog">
@@ -117,12 +114,12 @@
 
                                 <div class="form-group">
                                     <label for="updateid"> id </label>
-                                    <input class="form-control" th:readonly="condition" id="updateid" name="id" placeholder="id" th:value="${unit.id}"/>
+                                    <input class="form-control" th:readonly="condition" id="updateid" name="id" placeholder="id" th:value="${unit.id}" />
                                 </div>
 
                                 <div class="form-group">
                                     <label for="updateName"> Название </label>
-                                    <input class="form-control" type="text" id="updateName" name="name" placeholder="Название" th:value="${unit.name}"/>
+                                    <input class="form-control" type="text" id="updateName" name="name" placeholder="Название" th:value="${unit.name}" required/>
                                 </div>
 
                                 <div class="form-group">
@@ -154,11 +151,9 @@
 
 
 
-
+            </tbody>
     </table>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="../../dist/js/bootstrap.min.js"></script>
-<script src="../../assets/js/docs.min.js"></script>
 </body>
 </html>
