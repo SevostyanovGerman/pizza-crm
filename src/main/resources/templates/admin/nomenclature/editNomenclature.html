@@ -242,19 +242,19 @@
                         <th>Бесплатно</th>
                         </thead>
                         <tbody class="tbody">
-                        <tr th:each="nomenclatureModifier : ${nomenclature?.nomenclatureList}">
-                            <td class="modifierName" th:text="${nomenclatureModifier?.name}"></td>
-                            <td><input type="number" class="inputs"></td>
+                        <tr th:each="modifierProperty : ${nomenclature?.modifierPropertyList}">
+                            <td class="modifierName" th:text="${modifierProperty.name}"></td>
+                            <td><input type="number" class="inputs" th:value="${modifierProperty.minimum}"></td>
                             </td>
-                            <td><input type="number" class="inputs"></td>
+                            <td><input type="number" class="inputs" th:value="${modifierProperty.byDefault}"></td>
                             </td>
-                            <td><input type="number" class="inputs"></td>
+                            <td><input type="number" class="inputs" th:value="${modifierProperty.maximum}"></td>
                             </td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="checkbox"></td>
-                            <td><input type="number" class="inputs"></td>
-                            <input class="hideId" type="hidden" th:value="${nomenclatureModifier.id}">
+                            <td><input type="checkbox" th:checked="${modifierProperty.necessarily}"></td>
+                            <td><input type="checkbox" th:checked="${modifierProperty.hideIf}"></td>
+                            <td><input type="checkbox" th:checked="${modifierProperty.restricted}"></td>
+                            <td><input type="number" class="inputs" th:value="${modifierProperty.free}"></td>
+                            <input class="hideId" type="hidden" th:value="${modifierProperty.modifierId}">
                         </tr>
                         </tbody>
                     </table>

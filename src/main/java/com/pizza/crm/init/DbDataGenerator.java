@@ -268,7 +268,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         Nomenclature marinara = new Nomenclature(15003, 430.00, LocalTime.of(0, 4, 15),
                 LocalTime.of(0, 5, 30), "Охотничая", DISH,
                 PRODUCT, "Kitchen");
-        margarita.setNomenclatureList(new ArrayList<>(Arrays.asList(pineapple, ham)));
+
         nomenclatureService.save(margarita);
         nomenclatureService.save(marinara);
         NomenclatureParentGroup pizzas = new NomenclatureParentGroup("Пицца 35см");

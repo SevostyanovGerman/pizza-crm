@@ -69,15 +69,31 @@ function save() {
     };
     parentGroups.push(nomenclatureParentGroupSet);
 
-    var nomenclatureList = [];
+    var modifierPropertyList = [];
     $('.modifierName').each(function () {
         var modifierName = $(this).text();
-        var id = $(this).closest('tr').find('input[type=hidden]').val();
-        var modifier = {
+        var modifierId = $(this).closest('tr').find('input[type=hidden]').val();
+        var minimum = $(this).closest('tr').find('td:eq(1)').find('input[type=number]').val();
+        var byDefault = $(this).closest('tr').find('td:eq(2)').find('input[type=number]').val();
+        var maximum = $(this).closest('tr').find('td:eq(3)').find('input[type=number]').val();
+        var necessarily = $(this).closest('tr').find('td:eq(4)').find('input[type=checkbox]').prop('checked');
+        var hideIf = $(this).closest('tr').find('td:eq(5)').find('input[type=checkbox]').prop('checked');
+        var restricted = $(this).closest('tr').find('td:eq(6)').find('input[type=checkbox]').prop('checked');
+        var free = $(this).closest('tr').find('td:eq(7)').find('input[type=number]').val();
+        var modifierProperty = {
+            nomenclatureId: id,
+            modifierId: modifierId,
             modifierName: modifierName,
-            id: id
+            name: modifierName,
+            minimum: minimum,
+            byDefault: byDefault,
+            maximum: maximum,
+            necessarily: necessarily,
+            hideIf: hideIf,
+            restricted: restricted,
+            free: free
         };
-        nomenclatureList.push(modifier);
+        modifierPropertyList.push(modifierProperty);
     });
 
     var packagingList = [];
@@ -108,7 +124,7 @@ function save() {
         cookingPlace: cookingPlace,
         nomenclatureParentGroupSet: parentGroups,
         price: price,
-        nomenclatureList: nomenclatureList,
+        modifierPropertyList: modifierPropertyList,
         backgroundColor: backgroundColor,
         fontColor: fontColor,
         packagingList: packagingList
@@ -153,15 +169,31 @@ function saveAndExit() {
     };
     parentGroups.push(nomenclatureParentGroupSet);
 
-    var nomenclatureList = [];
+    var modifierPropertyList = [];
     $('.modifierName').each(function () {
         var modifierName = $(this).text();
-        var id = $(this).closest('tr').find('input[type=hidden]').val();
-        var modifier = {
+        var modifierId = $(this).closest('tr').find('input[type=hidden]').val();
+        var minimum = $(this).closest('tr').find('td:eq(1)').find('input[type=number]').val();
+        var byDefault = $(this).closest('tr').find('td:eq(2)').find('input[type=number]').val();
+        var maximum = $(this).closest('tr').find('td:eq(3)').find('input[type=number]').val();
+        var necessarily = $(this).closest('tr').find('td:eq(4)').find('input[type=checkbox]').prop('checked');
+        var hideIf = $(this).closest('tr').find('td:eq(5)').find('input[type=checkbox]').prop('checked');
+        var restricted = $(this).closest('tr').find('td:eq(6)').find('input[type=checkbox]').prop('checked');
+        var free = $(this).closest('tr').find('td:eq(7)').find('input[type=number]').val();
+        var modifierProperty = {
+            nomenclatureId: id,
+            modifierId: modifierId,
             modifierName: modifierName,
-            id: id
+            name: modifierName,
+            minimum: minimum,
+            byDefault: byDefault,
+            maximum: maximum,
+            necessarily: necessarily,
+            hideIf: hideIf,
+            restricted: restricted,
+            free: free
         };
-        nomenclatureList.push(modifier);
+        modifierPropertyList.push(modifierProperty);
     });
 
     var packagingList = [];
@@ -192,7 +224,7 @@ function saveAndExit() {
         cookingPlace: cookingPlace,
         nomenclatureParentGroupSet: parentGroups,
         price: price,
-        nomenclatureList: nomenclatureList,
+        modifierPropertyList: modifierPropertyList,
         backgroundColor: backgroundColor,
         fontColor: fontColor,
         packagingList: packagingList

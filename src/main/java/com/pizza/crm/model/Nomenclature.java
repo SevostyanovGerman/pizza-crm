@@ -46,14 +46,12 @@ public class Nomenclature {
             inverseJoinColumns = @JoinColumn(name = "NomenclatureParentGroup"))
     private Set<NomenclatureParentGroup> nomenclatureParentGroupSet;
 
-    @ManyToMany
-    @JoinTable(name = "nomenclature_nomenclature",
-            joinColumns = @JoinColumn(name = "nomenclature_1"),
-            inverseJoinColumns = @JoinColumn(name = "nomenclature_2"))
-    private List<Nomenclature> nomenclatureList;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "nomenclatureId")
+    private List<ModifierProperty> modifierPropertyList;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "packaging")
+    @JoinColumn(name = "nomenclatureId")
     @Fetch(FetchMode.SELECT)
     private List<Packaging> packagingList;
 
@@ -165,12 +163,12 @@ public class Nomenclature {
         this.nomenclatureParentGroupSet = nomenclatureParentGroupSet;
     }
 
-    public List<Nomenclature> getNomenclatureList() {
-        return nomenclatureList;
+    public List<ModifierProperty> getModifierPropertyList() {
+        return modifierPropertyList;
     }
 
-    public void setNomenclatureList(List<Nomenclature> nomenclatureList) {
-        this.nomenclatureList = nomenclatureList;
+    public void setModifierPropertyList(List<ModifierProperty> modifierPropertyList) {
+        this.modifierPropertyList = modifierPropertyList;
     }
 
     public String getBackgroundColor() {

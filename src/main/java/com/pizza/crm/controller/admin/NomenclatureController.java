@@ -37,8 +37,10 @@ public class NomenclatureController {
     public String editNomenclature(@PathVariable Long id, Model model) {
         if (id != null) {
             model.addAttribute("nomenclature", nomenclatureService.getNomenclature(id));
-            model.addAttribute("parentGroupName",
-                    nomenclatureService.getNomenclature(id).getNomenclatureParentGroupSet().iterator().next());
+            if (!nomenclatureService.getNomenclature(id).getNomenclatureParentGroupSet().isEmpty()) {
+                model.addAttribute("parentGroupName",
+                        nomenclatureService.getNomenclature(id).getNomenclatureParentGroupSet().iterator().next().getName());
+            }
         }
         model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());
         model.addAttribute("modifierNomenclatures", nomenclatureService.getNomenclatureModifiers());
