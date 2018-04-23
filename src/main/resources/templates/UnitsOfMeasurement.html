@@ -15,12 +15,15 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://yastatic.net/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <link th:href="@{/css/units.css}" href="../static/css/units.css" rel="stylesheet" media="screen">
     <script th:src="@{/js/units.js}"></script>
-
+    <th:block th:include="admin/fragments/menu-header :: head"></th:block>
 </head>
 <body>
-<div>
+<th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
+
+<div class="divMain">
     <!-- Button trigger modal -->
     <button class="btn btn-primary btn-mini" data-toggle="modal" data-target="#myModal">Добавить</button>
 
@@ -38,7 +41,7 @@
                         <div class="form-group">
                             <label for="addName"> Название </label>
                             <input class="form-control" id="addName" type="text" placeholder="Название"
-                                   th:field="${AddUnit.name}" />
+                                   th:field="${AddUnit.name}" required/>
                         </div>
                         <div class="form-group">
                             <label for="addShortName"> Краткое название </label>
@@ -156,6 +159,6 @@
             </tbody>
     </table>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
 </body>
 </html>
