@@ -32,6 +32,8 @@ public class Nomenclature {
 
     private String fontColor;
 
+    private String unitOfMeasurement;
+
     @Enumerated(EnumType.STRING)
     private NomenclatureType nomenclatureType;
 
@@ -185,6 +187,14 @@ public class Nomenclature {
 
     public void setFontColor(String fontColor) {
         this.fontColor = fontColor;
+    }
+
+    public String getUnitOfMeasurement() {
+        return unitOfMeasurement;
+    }
+
+    public void setUnitOfMeasurement(String unitOfMeasurement) {
+        this.unitOfMeasurement = unitOfMeasurement;
     }
 
     public List<Packaging> getPackagingList() {

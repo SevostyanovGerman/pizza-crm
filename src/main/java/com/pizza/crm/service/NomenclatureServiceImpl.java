@@ -28,6 +28,11 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     }
 
     @Override
+    public void deleteByName(String name) {
+        nomenclatureRepository.deleteByName(name);
+    }
+
+    @Override
     public Nomenclature getNomenclature(Long id) {
         return nomenclatureRepository.getOne(id);
     }

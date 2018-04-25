@@ -188,6 +188,26 @@ function editNomenclature() {
     });
 }
 
+function deleteNomenclature() {
+    var tr = $('.item-active').closest('tr');
+    var name = tr.find('td:eq(0)').text();
+    $.ajax({
+        type: "POST",
+        url: "nomenclature/delete",
+        data: {name: name},
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function () {
+            tr.remove();
+            window.location.replace("/nomenclature");
+        },
+        error: function () {
+            alert("error")
+        }
+    });
+}
+
 function showColors() {
     var backgroundColor = $('#backgroundColor').val();
     var fontColor = $('#fontColor').val();

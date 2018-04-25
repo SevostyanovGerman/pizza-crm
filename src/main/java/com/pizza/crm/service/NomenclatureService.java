@@ -10,6 +10,8 @@ public interface NomenclatureService {
 
     void delete(Long id);
 
+    void deleteByName(String name);
+
     Nomenclature getNomenclature(Long id);
 
     Nomenclature getNomenclatureByName(String name);

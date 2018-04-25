@@ -272,10 +272,8 @@
                     </label>
                     <div class="col-sm-3">
                         <select id="measureUnit" class="form-control">
-                            <option>порц</option>
-                            <option>кг</option>
-                            <option>шт</option>
-                            <option>л</option>
+                            <option th:each="unit : ${unitsOfMeasurement}" th:text="${unit.name}"
+                                    th:selected="${nomenclature.unitOfMeasurement == unit.name}" ></option>
                         </select>
                     </div>
                 </div>
@@ -345,6 +343,10 @@
                 <td><input type="text" th:value="${packaging?.name}"></td>
                 <td><input type="checkbox" th:checked="${packaging?.backIn}"></td>
                 <td><input type="number" th:value="${packaging?.quantityInPackaging}"></td>
+                <td><select class="form-control addOption">
+                    <option th:each="unit : ${unitsOfMeasurement}" th:text="${unit.name}"
+                            th:selected="${packaging.unitOfMeasurement == unit.name}" ></option>
+                </select></td>
                 <input type="hidden" th:value="${packaging?.id}">
             </tr>
             </tbody>
@@ -758,7 +760,7 @@
         </div>
     </div>
     <!--Navigation buttons-->
-    <div class="offset-sm-8">
+    <div class="footer offset-sm-8">
         <button class="btn btn-secondary">Обновить</button>
         <button class="btn btn-secondary" onclick="save()">Сохранить</button>
         <a href="/nomenclature" class="btn btn-secondary" onclick="exit()">Выйти без сохранения</a>

@@ -62,6 +62,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
     private final PaymentTypeService paymentTypeService;
 
+    private final UnitsOfMeasurementService unitsOfMeasurementService;
+
     @Autowired
     public DbDataGenerator(NomenclatureParentGroupService nomenclatureParentGroupService,
                            NomenclatureService nomenclatureService, UserService userService, RoleService roleService,
@@ -70,7 +72,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                            DiscountService discountService, DecreeService decreeService,
                            QuickMenuService quickMenuService, DishQuickMenuService dishQuickMenuService,
                            EmployeeService employeeService, PaymentMethodService paymentMethodService,
-                           PaymentTypeService paymentTypeService) {
+                           PaymentTypeService paymentTypeService, UnitsOfMeasurementService unitsOfMeasurementService) {
         this.nomenclatureParentGroupService = nomenclatureParentGroupService;
         this.nomenclatureService = nomenclatureService;
         this.userService = userService;
@@ -87,6 +89,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.employeeService = employeeService;
         this.paymentMethodService = paymentMethodService;
         this.paymentTypeService = paymentTypeService;
+        this.unitsOfMeasurementService = unitsOfMeasurementService;
     }
 
     @Override
@@ -275,6 +278,12 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         pizzas.setNomenclatures(new ArrayList<>(Arrays.asList(margarita, marinara)));
         nomenclatureParentGroupService.save(pizzas);
 
+        UnitsOfMeasurement kg = new UnitsOfMeasurement("Киллограммы", "кг", true, 4747);
+        UnitsOfMeasurement l = new UnitsOfMeasurement("Литры", "л", true, 4748);
+        UnitsOfMeasurement portion = new UnitsOfMeasurement("Порция", "порц", true, 4749);
+        unitsOfMeasurementService.save(kg);
+        unitsOfMeasurementService.save(l);
+        unitsOfMeasurementService.save(portion);
 
         generateFakeStaff();
 

@@ -49,4 +49,9 @@ public class NomenclatureControllerRest {
     public Long getId(@RequestParam String name) {
         return nomenclatureService.getNomenclatureByName(name).getId();
     }
+
+    @PostMapping("nomenclature/delete")
+    public void deleteNomenclature(String name) {
+        nomenclatureService.deleteByName(name);
+    }
 }

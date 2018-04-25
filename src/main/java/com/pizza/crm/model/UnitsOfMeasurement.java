@@ -17,17 +17,16 @@ public class UnitsOfMeasurement {
     private String shortName;
 
     @Column
-    private boolean basic;
+    private Boolean basic;
 
     @Column
-    private int code;
+    private Integer code;
 
 
     public UnitsOfMeasurement() {
     }
 
-    public UnitsOfMeasurement(Long id, String name, String shortName, boolean basic, int code) {
-        this.id = id;
+    public UnitsOfMeasurement(String name, String shortName, Boolean basic, Integer code) {
         this.name = name;
         this.shortName = shortName;
         this.basic = basic;
@@ -58,19 +57,19 @@ public class UnitsOfMeasurement {
         this.shortName = shortName;
     }
 
-    public boolean getBasic() {
+    public Boolean getBasic() {
         return basic;
     }
 
-    public void setBasic(boolean basic) {
+    public void setBasic(Boolean basic) {
         this.basic = basic;
     }
 
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 

@@ -61,6 +61,7 @@ function save() {
     var price = $('#priceByPriceList').val();
     var backgroundColor = $('#backgroundColor').val();
     var fontColor = $('#fontColor').val();
+    var unitOfMeasurement = $("#measureUnit option:selected").text();
 
     var parentGroups = [];
     var nomenclatureParentGroupSet = {
@@ -104,12 +105,14 @@ function save() {
         var code = tr.find('td:eq(0)').find('input[type=number]').val();
         var backIn = tr.find('td:eq(2)').find('input[type=checkbox]').prop('checked');
         var quantityInPackaging = tr.find('td:eq(3)').find('input[type=number]').val();
+        var unitOfMeasurement = tr.find('.addOption option:selected').text();
         var packaging = {
             id: id,
             name: name,
             code: code,
             backIn: backIn,
-            quantityInPackaging: quantityInPackaging
+            quantityInPackaging: quantityInPackaging,
+            unitOfMeasurement: unitOfMeasurement
         };
         packagingList.push(packaging);
     });
@@ -127,7 +130,8 @@ function save() {
         modifierPropertyList: modifierPropertyList,
         backgroundColor: backgroundColor,
         fontColor: fontColor,
-        packagingList: packagingList
+        packagingList: packagingList,
+        unitOfMeasurement: unitOfMeasurement
     };
 
     $.ajax({
@@ -161,6 +165,7 @@ function saveAndExit() {
     var price = $('#priceByPriceList').val();
     var backgroundColor = $('#backgroundColor').val();
     var fontColor = $('#fontColor').val();
+    var unitOfMeasurement = $("#measureUnit option:selected").text();
 
     var parentGroups = [];
     var nomenclatureParentGroupSet = {
@@ -204,12 +209,14 @@ function saveAndExit() {
         var code = tr.find('td:eq(0)').find('input[type=number]').val();
         var backIn = tr.find('td:eq(2)').find('input[type=checkbox]').prop('checked');
         var quantityInPackaging = tr.find('td:eq(3)').find('input[type=number]').val();
+        var unitOfMeasurement = tr.find('.addOption option:selected').text();
         var packaging = {
             id: id,
             name: name,
             code: code,
             backIn: backIn,
-            quantityInPackaging: quantityInPackaging
+            quantityInPackaging: quantityInPackaging,
+            unitOfMeasurement: unitOfMeasurement
         };
         packagingList.push(packaging);
     });
@@ -227,7 +234,8 @@ function saveAndExit() {
         modifierPropertyList: modifierPropertyList,
         backgroundColor: backgroundColor,
         fontColor: fontColor,
-        packagingList: packagingList
+        packagingList: packagingList,
+        unitOfMeasurement: unitOfMeasurement
     };
 
     $.ajax({
@@ -252,19 +260,20 @@ function exit() {
 }
 
 function addPackagingRow() {
+
     $(".packaging").append($([
         '<tr class="packagingRow">' +
         '<td><input type="number"></td>' +
         '<td><input type="text"></td>' +
         '<td><input type="checkbox"></td>' +
         '<td><input type="number"></td>' +
-        '<td><select class="form-control">' +
-        '<option>порц</option>' +
-        '<option>кг</option>' +
-        '<option>шт</option>' +
-        '<option>л</option>' +
+        '<td><select class="addOption form-control">' +
         '</select></td>' +
         '</tr>'].join("\n")));
+
+    $("#measureUnit option").each(function () {
+        $('.packaging tr:last').find('.addOption').append($("<option></option>").text($(this).text()));
+    });
 }
 
 $(document).ready(function () {

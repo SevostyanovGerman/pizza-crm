@@ -18,6 +18,8 @@ public class Packaging {
 
     private Boolean backIn;
 
+    private String unitOfMeasurement;
+
     public Packaging() {
     }
 
@@ -59,5 +61,13 @@ public class Packaging {
 
     public void setBackIn(Boolean backIn) {
         this.backIn = backIn;
+    }
+
+    public String getUnitOfMeasurement() {
+        return unitOfMeasurement;
+    }
+
+    public void setUnitOfMeasurement(String unitOfMeasurement) {
+        this.unitOfMeasurement = unitOfMeasurement;
     }
 }
