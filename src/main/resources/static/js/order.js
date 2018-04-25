@@ -205,6 +205,87 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $('#productsItem').on('click', '.product-search', function (e) {
+
+        var quantity = $(this).data('quantity');
+        var itemName = $(this).children()[0].innerHTML;
+        var price = $(this).children()[1].innerHTML.slice(0, -1);
+        var tableRow = $('.order-table tr').length;
+        if (tableRow == 0){
+            setOrderTimestamp();
+            $('.order-table').append($([
+                "<tr>",
+                "<td>" + $(this).data('quantity') + "</td>",
+                "<td>" + $(this).children()[0].innerHTML + "</td>",
+                "<td>" + $(this).children()[1].innerHTML.slice(0, -1) + "</td>",
+            ].join("/n")));
+            return;
+        } else {
+            var go = true;
+            $('.order-table tr').each(function (i) {
+                if (itemName == $(this).find('td:eq(1)').text()){
+                    var quantity2 = $(this).find('td:eq(0)').text();
+                    quantity2++;
+                    go = false ;
+                    $(this).find('td:eq(0)').text(quantity2);
+                }
+            });
+            if (go){
+                $('.order-table').append($([
+                    "<tr>",
+                    "<td>" + quantity + "</td>",
+                    "<td>" + itemName + "</td>",
+                    "<td>" + price + "</td>",
+                ].join("/n")));
+            }
+
+        }
+        updateTotal();
+    });
+});
+
+$(document).ready(function () {
+    $('#product').on('click', '.productItem', function (e) {
+
+        var quantity = $(this).data('quantity');
+        var itemName = $(this).children()[0].innerHTML;
+        var price = $(this).children()[1].innerHTML.slice(0, -1);
+        var tableRow = $('.order-table tr').length;
+        if (tableRow == 0){
+            setOrderTimestamp();
+            $('.order-table').append($([
+                "<tr>",
+                "<td>" + $(this).data('quantity') + "</td>",
+                "<td>" + $(this).children()[0].innerHTML + "</td>",
+                "<td>" + $(this).children()[1].innerHTML.slice(0, -1) + "</td>",
+            ].join("/n")));
+            return;
+        } else {
+            var go = true;
+            $('.order-table tr').each(function (i) {
+                if (itemName == $(this).find('td:eq(1)').text()){
+                    var quantity2 = $(this).find('td:eq(0)').text();
+                    quantity2++;
+                    go = false ;
+                    $(this).find('td:eq(0)').text(quantity2);
+                }
+            });
+            if (go){
+                $('.order-table').append($([
+                    "<tr>",
+                    "<td>" + quantity + "</td>",
+                    "<td>" + itemName + "</td>",
+                    "<td>" + price + "</td>",
+                ].join("/n")));
+            }
+
+        }
+        updateTotal();
+    });
+});
+
+
 function getSelectedRow() {
     let tr = $('.order-table tr.highlight');
     if (tr.length === 0) {

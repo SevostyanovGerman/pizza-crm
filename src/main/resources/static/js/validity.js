@@ -1,8 +1,8 @@
 var csrfToken = $("meta[name='_csrf']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
-$(document).ready(function(){
-    $('#schedule-list td').click(function(){
+$(document).ready(function () {
+    $('#schedule-list td').click(function () {
         $('td').removeClass();
         $(this).addClass('item-active');
         getSelectedSchedule();
@@ -28,8 +28,8 @@ function showSchedule(name) {
             $('#id').val(data.id);
             $('#showSchedule').empty();
             $('#showSchedule').append('<tr>' +
-                '<td><input type="time" value="'+data.beginTime +'"></td>' +
-                '<td><input type="time" value="'+ data.endTime +'"></td>' +
+                '<td><input type="time" value="' + data.beginTime + '"></td>' +
+                '<td><input type="time" value="' + data.endTime + '"></td>' +
                 '<td><input type="checkbox" class="monday"></td>' +
                 '<td><input type="checkbox" class="tuesday"></td>' +
                 '<td><input type="checkbox" class="wednesday"></td>' +
@@ -59,7 +59,6 @@ function checkCheckbox(data) {
 function save() {
     var name = $("#scheduleListName").val();
     var id = $('#id').val();
-    // $('#showSchedule tr').each(function() {
     var beginTime = $('#showSchedule tr').find("input[type=time]").eq(0).val();
     var endTime = $('#showSchedule tr').find("input[type=time]").eq(1).val();
     var monday = $(".monday").prop('checked');
@@ -69,19 +68,18 @@ function save() {
     var friday = $(".friday").prop('checked');
     var saturday = $(".saturday").prop('checked');
     var sunday = $('.sunday').prop('checked');
-    // });
     var schedule = {
-        id : id,
-        name : name,
-        beginTime : beginTime,
-        endTime : endTime,
-        monday : monday,
-        tuesday : tuesday,
-        thursday : thursday,
-        wednesday : wednesday,
-        friday : friday,
-        saturday : saturday,
-        sunday : sunday
+        id: id,
+        name: name,
+        beginTime: beginTime,
+        endTime: endTime,
+        monday: monday,
+        tuesday: tuesday,
+        thursday: thursday,
+        wednesday: wednesday,
+        friday: friday,
+        saturday: saturday,
+        sunday: sunday
     };
     $.ajax({
         type: "POST",
@@ -104,11 +102,11 @@ function exit() {
     window.location.replace("/newDecree");
 }
 
-function saveAndExit(){
+function saveAndExit() {
 
 }
 
-function addSchedule(){
+function addSchedule() {
     var name = $("#scheduleName").val();
     var beginTime = $('#beginTime').val();
     var endTime = $('#endTime').val();
@@ -120,16 +118,16 @@ function addSchedule(){
     var saturday = $("#saturday").prop('checked');
     var sunday = $('#sunday').prop('checked');
     var schedule = {
-        name : name,
-        beginTime : beginTime,
-        endTime : endTime,
-        monday : monday,
-        tuesday : tuesday,
-        thursday : thursday,
-        wednesday : wednesday,
-        friday : friday,
-        saturday : saturday,
-        sunday : sunday
+        name: name,
+        beginTime: beginTime,
+        endTime: endTime,
+        monday: monday,
+        tuesday: tuesday,
+        thursday: thursday,
+        wednesday: wednesday,
+        friday: friday,
+        saturday: saturday,
+        sunday: sunday
     };
     $.ajax({
         type: "POST",
@@ -149,12 +147,12 @@ function addSchedule(){
 }
 
 function deleteSchedule() {
-    let selected = $('.item-active').html();
-    if (selected !== undefined){
+    var selected = $('.item-active').html();
+    if (selected !== undefined) {
         $.ajax({
             type: "POST",
             url: "/validity/delete",
-            data: {name : selected},
+            data: {name: selected},
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },

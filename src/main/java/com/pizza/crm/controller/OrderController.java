@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class OrderController {
 
-    private AddedCategoryService categoryService;
+    private final AddedCategoryService categoryService;
 
     @Autowired
     public OrderController(AddedCategoryService categoryService) {

@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+import java.util.Set;
+
 @Controller
 public class DecreeController {
 
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
 
     @Autowired
     public DecreeController(ScheduleService scheduleService) {
@@ -20,15 +23,22 @@ public class DecreeController {
     }
 
     @RequestMapping("/newDecree")
-    public String newDecree(Model model){
+    public String newDecree(Model model) {
         model.addAttribute("schedules", scheduleService.findAllSchedules());
         return "admin/newDecree";
     }
 
     @PostMapping("/newDecree/save")
-    public String save(@RequestBody Schedule schedule){
+    public String save(@RequestBody Schedule schedule) {
         scheduleService.save(schedule);
         return "redirect:/newDecree";
     }
+
+    @RequestMapping("/getDecree")
+    public String getDecree(Model model) {
+        model.addAttribute("schedules", scheduleService.findAllSchedules());
+        return "admin/decree";
+    }
+
 
 }

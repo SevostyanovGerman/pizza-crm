@@ -1,0 +1,33 @@
+body {
+    background: #eee;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    padding: 0px 10px 0px;
+}
+
+.shown {
+    background: gainsboro;
+}
+
+.ui-droppable-active {
+    background: antiquewhite;
+}
+
+.ui-droppable-hover {
+    background: #1a8f7c;
+}
+
+.showColors {
+    width: 100px;
+    height: 100px;
+    background: white;
+    color: #000;
+    text-align: center;
+    line-height: 100px;
+}
+
+.item-active {
+    background: #79919d;
+}

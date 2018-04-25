@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 
-    private ScheduleRepository scheduleRepository;
+    private final ScheduleRepository scheduleRepository;
 
     @Autowired
     public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
@@ -25,14 +25,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void delete(Long id) {
-        if (scheduleRepository.existsById(id)){
+        if (scheduleRepository.existsById(id)) {
             scheduleRepository.deleteById(id);
         }
     }
 
     @Override
     public Schedule getSchedule(Long id) {
-        return scheduleRepository.findById(id).orElseThrow(()-> new NotFoundException(""));
+        return scheduleRepository.findById(id).orElseThrow(() -> new NotFoundException(""));
     }
 
     @Override

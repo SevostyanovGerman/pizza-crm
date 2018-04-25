@@ -15,11 +15,11 @@ import java.util.Optional;
 @Service
 public class DishServiceImpl implements DishService {
 
-    private DishRepository dishRepository;
+    private final DishRepository dishRepository;
 
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    private IngredientRepository ingredientRepository;
+    private final IngredientRepository ingredientRepository;
 
     @Autowired
     public DishServiceImpl(DishRepository dishRepository, CategoryRepository categoryRepository, IngredientRepository ingredientRepository) {

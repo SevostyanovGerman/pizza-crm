@@ -137,14 +137,27 @@
         <!-- middle-panel -->
         <div class="col-4 no-margin right-panel">
             <div class="right-panel-header">
-                <ul>
-                    <li><a href="#">I</a></li>
-                    <li><a href="#">II</a></li>
-                    <li><a href="#">III</a></li>
+                <ul id="head-quick-menu">
+                    <li><a href="#" onclick="headerQuickMenu(1)" id="headerQuickMenu-1">I</a></li>
+                    <li><a href="#" onclick="headerQuickMenu(2)" id="headerQuickMenu-2">II</a></li>
+                    <li><a href="#" onclick="headerQuickMenu(3)" id="headerQuickMenu-3">III</a></li>
                 </ul>
             </div>
             <div class="right-panel-body">
-                <a class="middle-panel-yellow" href="#">С собой</a>
+                <div class="right-panel-body-1">
+                    <a class="middle-panel-yellow" href="#">С собой</a>
+                    <a class="middle-panel-yellow" href="#">С собой</a>
+                    <a class="middle-panel-yellow" href="#">С собой</a>
+                </div>
+                <div class="right-panel-body-2">
+                    <a class="middle-panel-yellow" href="#">С собой</a>
+                    <!--<a class="middle-panel-yellow" href="#">С собой</a>-->
+                </div>
+                <div class="right-panel-body-3">
+                    <!--<a class="middle-panel-yellow" href="#">С собой</a>-->
+                    <!--<a class="middle-panel-yellow" href="#">С собой</a>-->
+                    <a class="middle-panel-yellow" href="#">С собой</a>
+                </div>
             </div>
         </div>
         <!-- right-panel -->
@@ -159,7 +172,7 @@
                     </a>
                 </div>
                 <div class="footer-item footer-item-1">
-                    <a href="#">
+                    <a href="/todayOrders">
                         <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
                         <p>Закрытые заказы</p>
                     </a>
@@ -344,8 +357,6 @@
         <div class="modal-content">
             <div class="modal-body">
                 <p>РАСШИРЕННЫЙ ПОИСК ТОВАРА</p>
-                <!--<button type="button" class="btn btn-success" onclick="SaveChange()">Сохранить</button>-->
-                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>-->
                 <div class="container" id="product1">
                     <div class="row product list" id="product">
                     </div>
@@ -383,7 +394,7 @@
                         <div class="col-4" style="padding-right: 0px;">
                             <div class="products" id="products1">
                                 <ul class="productsItem list" id="productsItem">
-                                    <li>
+                                    <li class="product-search" data-quantity="1">
                                         <p class="name">Ролл</p>
                                         <p class="price">100р</p>
                                         <p class="code">Koд: 1000</p>
@@ -445,28 +456,34 @@
 </div>
 <script>
 
+    var quickMenu;
+
     var searchString = '';
+
     var options = {
         valueNames: ['nameProduct']
     };
-    var listObj = new List('product1', options);
 
+    var listObj = new List('product1', options);
 
     var option2 = {
         valueNames: ['code', 'barcode', 'vendorcode']
     };
 
     var listObj2 = new List('products1', option2);
-    // function SearchModalShow() {
-    //     $("#SearchModalЕxpand").modal('hide');
-    //     $("#SearchModal").modal('show');
-    // }
 
     var searchAll = false;
     var searchDarCode = false;
     var searchCode = false;
     var searchVendorCode = false;
 
+    date = new Date;
+    var day = date.getDay();
+    if (day == 0) {
+        GetQuickMenu(7);
+    } else {
+        GetQuickMenu(day);
+    }
 
     function SearchProduct(value) {
         searchString = searchString + value;
@@ -499,15 +516,15 @@
             success: function (data) {
                 $("#productsItem").empty();
                 var dish = JSON.parse(data);
+                console.log(dish);
                 dish.forEach(function (value) {
-                    $("#product").append("<div class=\"col-3\"><div class=\"productItem\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "p</p></div></div>")
+                    $("#product").append("<div class=\"col-3\"><div class=\"productItem\" data-quantity=\"1\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "p</p></div></div>");
                 });
                 listObj = new List('product1', options);
             },
             error: function (e) {
             }
         });
-
     }
 
     function SearchModalShow() {
@@ -522,8 +539,9 @@
             success: function (data) {
                 $("#productsItem").empty();
                 var dish = JSON.parse(data);
+                console.log(dish);
                 dish.forEach(function (value) {
-                    $("#productsItem").append("<li><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
+                    $("#productsItem").append("<li class=\"product-search\" data-quantity=\"1\"><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
                 });
                 listObj2 = new List('products1', option2);
             },
@@ -570,7 +588,6 @@
             searchVendorCode = false;
         }
     }
-
 
     function SearchDarCode() {
         searchDarCode = !searchDarCode;
@@ -639,6 +656,74 @@
             };
             listObj2 = new List('products1', option2);
         }
+    }
+
+    function GetQuickMenu(day) {
+        var index = 1;
+        $.ajax({
+            type: "GET",
+            url: "/get/quickmenu/" + day,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (data) {
+                console.log(data);
+                $("#head-quick-menu").empty();
+                quickMenu = data;
+                quickMenu.forEach(function (value) {
+                    $("#head-quick-menu").append("<li><a href=\"#\" onclick=\'ChangeQuickMenu(" + index + ")\' id=\"headerQuickMenu-" + index + "\">" + value.name + "</a></li>");
+                    index = index + 1;
+                });
+
+                $(".right-panel-body-1").empty();
+                $(".right-panel-body-2").empty();
+                $(".right-panel-body-3").empty();
+
+                quickMenu[0].dishQuickMenu.forEach(function (value) {
+                    console.log(value);
+                    if (value.position == 1) {
+                        $(".right-panel-body-1").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
+                    }
+                    if (value.position == 2) {
+                        $(".right-panel-body-2").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
+                    }
+                    if (value.position == 3) {
+                        $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
+                    }
+
+                });
+
+                headerQuickMenu(1);
+            },
+            error: function (e) {
+            }
+        });
+    }
+
+    function ChangeQuickMenu(numMenu) {
+        headerQuickMenu(numMenu)
+        $(".right-panel-body-1").empty();
+        $(".right-panel-body-2").empty();
+        $(".right-panel-body-3").empty();
+        quickMenu[numMenu - 1].dishQuickMenu.forEach(function (value) {
+            if (value.position == 1) {
+                $(".right-panel-body-1").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
+            }
+            if (value.position == 2) {
+                $(".right-panel-body-2").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
+            }
+            if (value.position == 3) {
+                $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
+            }
+        });
+    }
+    
+    function headerQuickMenu(num) {
+        var id = "#headerQuickMenu-" + num;
+        $("#headerQuickMenu-1").css({"background-color": "#3e4040", "color": "#fff"});
+        $("#headerQuickMenu-2").css({"background-color": "#3e4040", "color": "#fff"});
+        $("#headerQuickMenu-3").css({"background-color": "#3e4040", "color": "#fff"});
+        $(id).css({"background-color": "#dfe487", "color": "#3e4040"});
     }
 
 </script>

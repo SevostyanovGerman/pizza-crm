@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Приказы об изменении прейскуранта</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/decree.css}" href="../static/css/decree.css" rel="stylesheet" media="screen">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.77/jquery.form-validator.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <th:block th:include="admin/fragments/menu-header :: head"></th:block>
+</head>
+<body>
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-12" style="padding: 0;">
+            <div class="head">
+                <div class="row">
+                    <div class="col-1" style="color: #ffffff">
+                        <th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
+                    </div>
+                    <div class="col-11">
+                        <h3>Приказы об изменении прейскуранта</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <!--<div class="col-4 left-panel">-->
+            <!--<p>Тут пока не знаю что, но думаю что тут будет меню для перехода между режимами админки</p>-->
+        <!--</div>-->
+        <div class="col-12 right-panel">
+            <div class="row head-right-panel-1">
+                <div class="col-7">
+                    <button type="button" class="btn btn-primary" onclick="create()">Создать</button>
+                    <button type="button" class="btn btn-primary">Копия</button>
+                    <button type="button" class="btn btn-primary" onclick="getOneDecree()">Открыть</button>
+                    <button type="button" class="btn btn-warning" onclick="deleteAcveDecree()">Удалить</button>
+                </div>
+                <div class="col-5 head-right-panel-r">
+                </div>
+            </div>
+            <div class="row head-right-panel-2">
+                <div class="col-9">
+                    <div class="form-group row">
+                        <label for="exampleSelect1" class="col-form-label">За переод</label>
+                        <div class="col-2">
+                            <select class="form-control" id="exampleSelect1">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                        <label for="example-date-input-1" class="col-form-label">с</label>
+                        <div class="col-4">
+                            <input class="form-control" type="date" value="2011-08-19" id="example-date-input-1">
+                        </div>
+                        <label for="example-date-input-2" class="col-form-label">до</label>
+                        <div class="col-4">
+                            <input class="form-control" type="date" value="2011-08-19" id="example-date-input-2">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 head-right-panel-r">
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Дата применения</th>
+                            <th>№ документа</th>
+                            <th>Дата окончания</th>
+                            <th>Доп.информация</th>
+                            <th>Торговые предприятия</th>
+                            <th>Действует</th>
+                            <th>Концепция</th>
+                            <th>Комментарий</th>
+                            <th>Расписание</th>
+                        </tr>
+                        </thead>
+                        <tbody id="table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade bd-example-modal-sm" id="ChangeNameHeadMenu" tabindex="-1" role="dialog"
+     aria-labelledby="discount-extraCharge-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Переименовать выбранную закладку</p>
+                <!--<form action="">-->
+                <div class="form-group">
+                    <input class="form-control" type="text" name="nameHeadMenu" id="nameHeadMenu">
+                </div>
+                <button type="submit" class="btn btn-success" onclick="ChangeNameHeadMenu()">Сохранить</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <!--</form>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+    var activeDecree = null;
+
+    getDecree();
+
+    function create() {
+        location.href = "/newDecree"
+    }
+
+    function getDecree() {
+        $.ajax({
+            type: "POST",
+            url: "/get/decree",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (data) {
+                $("#table-body").empty();
+                data.forEach(function (value) {
+                    $("#table-body").append("<tr onclick=\"focusDecree(" + value.id + ")\" id=\"tr-" + value.id + "\"><td>" + value.startTime + "</td><td>" + value.numberDecree + "</td><td>" + value.endTime + "</td><td>Доп.информация</td><td>Торговые предприятия</td><td>" + value.enable + "</td><td>Концепция</td><td>Комментарий</td><td>Расписание</td></tr>");
+                });
+            },
+            error: function (e) {
+
+            }
+        });
+    }
+
+    function focusDecree(newActiveDecree) {
+        idold = "#tr-" + activeDecree;
+        id = "#tr-" + newActiveDecree;
+
+        $(id).css({"background-color": "#fff"});
+        $(idold).css({"background-color": "#d5d0d6"});
+
+        activeDecree = newActiveDecree;
+    }
+
+    function deleteAcveDecree() {
+        id = "#tr-" + activeDecree;
+        $(id).empty();
+
+        $.ajax({
+            type: "POST",
+            url: "/delete/decree/" + activeDecree,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (data) {
+            },
+            error: function (e) {
+
+            }
+        });
+    }
+
+    function getOneDecree() {
+        if(activeDecree != null) {
+            location.href = "/newDecree?id=" + activeDecree;
+        }
+    }
+
+</script>
+
+</body>
+</html>

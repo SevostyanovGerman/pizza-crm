@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Payment methods</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
+          th:href="@{/webjars/bootstrap-toggle/css/bootstrap-toggle.min.css}"
+          rel="stylesheet" media="screen"/>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"
+            th:src="@{/webjars/bootstrap-toggle/js/bootstrap-toggle.min.js}"></script>
+    <script src="../static/js/paymentMethod.js"
+            th:src="@{/js/paymentMethod.js}"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h3>Методы оплат</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-sm table-striped">
+                <thead>
+                <tr>
+                    <th>Наименование</th>
+                    <th>Тип оплаты</th>
+                    <th>Печать чека</th>
+                    <th>Имя в чеке</th>
+                    <th>Комбинирует с другими</th>
+                    <th>Вводится вручную</th>
+                    <th>Комментарий</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pm : ${allPaymentMethods}">
+                    <td th:text="${pm.name}"></td>
+                    <td th:text="${pm.paymentType}"></td>
+                    <td><i th:class="${pm.printCashBill ? 'ml-4 fa fa-check-square-o' : 'ml-4 fa fa-square-o'}" aria-hidden="true"></i></td>
+                    <td th:text="${pm.nameInCashBill}"></td>
+                    <td><i th:class="${pm.combinable ? 'ml-4 fa fa-check-square-o' : 'ml-4 fa fa-square-o'}" aria-hidden="true"></i></td>
+                    <td><i th:class="${pm.manualInput ? 'ml-4 fa fa-check-square-o' : 'ml-4 fa fa-square-o'}" aria-hidden="true"></i></td>
+                    <td th:text="${pm.comment}"></td>
+                    <td>
+                        <a class="btn btn-sm btn-success btn-pm-edit" href="#" th:href="${'paymentMethod/'+pm.id}">Редактировать</a>
+                        <a class="btn btn-sm btn-danger btn-pm-delete" href="#" th:href="${'paymentMethod/'+pm.id}">Удалить</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-primary btn-pm-new" href="#">Новый метод оплаты</a>
+        </div>
+    </div>
+</div>
+<!--Modal-->
+<div class="modal fade" id="pm-edit-modal" tabindex="-1" role="dialog"
+     aria-labelledby="pm-edit-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Новый метод оплаты</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="pm-id">
+                <div class="form-group row">
+                    <label for="pm-name" class="col-4 col-form-label">Наименование</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control form-control-sm" id="pm-name">
+                        <div class="invalid-feedback">
+                            Укажите наименование.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="pm-paymentType" class="col-4 col-form-label">Тип оплаты</label>
+                    <div class="col-8">
+                        <select class="form-control form-control-sm" id="pm-paymentType"></select>
+                        <div class="invalid-feedback">
+                            Укажите наименование.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="pm-printCashBill" class="col-4 col-form-label">Печать чека</label>
+                    <div class="col">
+                        <input type="checkbox" id="pm-printCashBill" data-toggle="toggle"
+                               data-onstyle="success" data-offstyle="secondary" data-on="Да" data-off="Нет">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="pm-nameInCashBill" class="col-4 col-form-label">Имя в чеке</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control form-control-sm" id="pm-nameInCashBill">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="pm-combinable" class="col-4 col-form-label">Комбинирует с другими</label>
+                    <div class="col">
+                        <input type="checkbox" id="pm-combinable" data-toggle="toggle"
+                               data-onstyle="success" data-offstyle="secondary" data-on="Да" data-off="Нет">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="pm-manualInput" class="col-4 col-form-label">Вводится вручную</label>
+                    <div class="col">
+                        <input type="checkbox" id="pm-manualInput" data-toggle="toggle"
+                               data-onstyle="success" data-offstyle="secondary" data-on="Да" data-off="Нет">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="pm-comment" class="col-4 col-form-label">Комментарий</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control form-control-sm" id="pm-comment">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary btn-pm-save" href="#" th:href="@{paymentMethod}">Сохранить</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
