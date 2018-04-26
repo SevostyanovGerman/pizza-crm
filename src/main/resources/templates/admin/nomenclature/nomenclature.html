@@ -224,7 +224,7 @@
                                 Цвет текста
                             </label>
                             <div class="col-sm-4">
-                                <input type="color" id="fontColor">
+                                <input type="color" id="fontColor" th:value="${pickFontColor}">
                             </div>
                         </div>
                         <div class="col-sm-4 form-group row">
@@ -232,7 +232,7 @@
                                 Цвет фона
                             </label>
                             <div class="col-sm-4">
-                                <input type="color" id="backgroundColor">
+                                <input type="color" id="backgroundColor" th:value="${pickBackgroundColor}">
                             </div>
                         </div>
                         <button class="btn btn-primary" onclick="showColors()">Color</button>

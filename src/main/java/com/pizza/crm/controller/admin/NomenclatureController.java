@@ -39,6 +39,8 @@ public class NomenclatureController {
         model.addAttribute("nomenclatures", nomenclatureService.findAllNomenclatures());
         model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());
         model.addAttribute("nomenclaturesWithoutParentGroup", nomenclatureService.getNomenclaturesWithoutParentGroup());
+        model.addAttribute("pickFontColor", BLACK_FONT_COLOR);
+        model.addAttribute("pickBackgroundColor", WHITE_BACKGROUND_COLOR);
         return "admin/nomenclature/nomenclature";
     }
 
