@@ -170,15 +170,16 @@ section .left-panel-header-item-2 p {
 }
 
 section .left-panel-header-item-3 {
-    white-space: nowrap;
+    margin-right: 2vh;
 }
 
 section .left-panel-header-item-3 p {
-    white-space: nowrap;
-    padding: 0 0.3rem;
-    display: inline-block;
+    display:inline-block;
     line-height: 2.6vh;
-    text-align: left;
+    text-align: center;
+    font-size: 1.9vh;
+    font-weight: 400;
+    padding-top: 0.5vh;
 }
 
 section .left-panel-body {
@@ -553,11 +554,6 @@ a .disable {
     font-weight: 100;
 }
 
-.modal-content {
-    width: 100%;
-    background-color: #3c3e3e;
-}
-
 #SearchModalЕxpand .product {
     margin-top: 1rem;
 }
@@ -856,6 +852,7 @@ section .link-right {
 
 .modal-content {
     width: 100vh;
+    background-color: #3c3e3e;
 }
 
 .input-group-lg {
@@ -884,6 +881,11 @@ section .link-right {
 
 .input-group-text {
     padding-top: 5vh;
+}
+
+.checkModal-table td {
+    vertical-align: bottom;
+    width: 48vh;
 }
 
 /* FORM */

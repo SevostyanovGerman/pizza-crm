@@ -37,7 +37,7 @@
             <p class="clock-minutes mx-0 px-0"></p>
         </div>
         <div class="col offset-7 no-margin">
-            <p class="header-right">Юлия Савенко</p>
+            <p th:text="${employeeLogin}" class="header-right"></p>
             <span></span>
         </div>
     </div>
@@ -52,17 +52,16 @@
                     <div class="col-3 left-panel-header-item-1">
                         <p><i class="fa fa-align-justify" aria-hidden="true"></i></p>
                     </div>
-                    <div class="col-3 left-panel-header-item-2">
+                    <div class="left-panel-header-item-3">
                         <p id="orderTime"></p>
-                        <p></p>
                     </div>
-                    <div class="col-3 left-panel-header-item-3">
+                    <div class="left-panel-header-item-3">
                         <p><i class="fa fa-list-alt" aria-hidden="true"></i></p>
                         <p>8567</p>
                     </div>
-                    <div class="col-3 left-panel-header-item-3">
+                    <div class="left-panel-header-item-3">
                         <p><i class="fa fa-id-card" aria-hidden="true"></i></p>
-                        <p>Юлия Савенко</p>
+                        <p th:text="${employeeLogin}"></p>
                     </div>
                 </div>
                 <!--Current order table-->

@@ -170,15 +170,16 @@ section .left-panel-header-item-2 p {
 }
 
 section .left-panel-header-item-3 {
-    white-space: nowrap;
+    margin-right: 2vh;
 }
 
 section .left-panel-header-item-3 p {
-    white-space: nowrap;
-    padding: 0 0.3rem;
-    display: inline-block;
+    display:inline-block;
     line-height: 2.6vh;
-    text-align: left;
+    text-align: center;
+    font-size: 1.9vh;
+    font-weight: 400;
+    padding-top: 0.5vh;
 }
 
 section .left-panel-body {
@@ -651,8 +652,8 @@ a .disable {
     background-color: #ffffff;
     color: #3e4040;
     border-top: 1px solid #3e4040;
-    //border: 1px solid #3e4040;
-    //margin-right: 4px;
+//border: 1px solid #3e4040;
+//margin-right: 4px;
     margin-left: -2px;
     text-align: center;
     cursor: pointer;
@@ -679,7 +680,7 @@ a .disable {
 }
 
 /*#SearchModal p {*/
-    /*margin-bottom: 1rem;*/
+/*margin-bottom: 1rem;*/
 /*}*/
 
 .searchButtom a {
