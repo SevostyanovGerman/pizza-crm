@@ -1,7 +1,11 @@
 package com.pizza.crm.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,7 +16,7 @@ public class Nomenclature {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long articul;
+    private Long vendorCode;
 
     private Integer code;
 
@@ -24,14 +28,19 @@ public class Nomenclature {
 
     private String name;
 
+    private String backgroundColor;
+
+    private String fontColor;
+
+    private String unitOfMeasurement;
+
     @Enumerated(EnumType.STRING)
     private NomenclatureType nomenclatureType;
 
     @Enumerated(EnumType.STRING)
     private AccountingCategory accountingCategory;
 
-    @Enumerated(EnumType.STRING)
-    private CookingPlace cookingPlace;
+    private String cookingPlace;
 
     @ManyToMany
     @JoinTable(name = "Nomenclature_NomenclatureParentGroup",
@@ -39,12 +48,25 @@ public class Nomenclature {
             inverseJoinColumns = @JoinColumn(name = "NomenclatureParentGroup"))
     private Set<NomenclatureParentGroup> nomenclatureParentGroupSet;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "nomenclatureId")
+    private List<ModifierProperty> modifierPropertyList;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "nomenclatureId")
+    @Fetch(FetchMode.SELECT)
+    private List<Packaging> packagingList;
+
     public Nomenclature() {
+    }
+
+    public Nomenclature(String name) {
+        this.name = name;
     }
 
     public Nomenclature(Integer code, Double price, LocalTime cookingTimeNorm,
                         LocalTime cookingTimePeak, String name, NomenclatureType nomenclatureType,
-                        AccountingCategory accountingCategory, CookingPlace cookingPlace) {
+                        AccountingCategory accountingCategory, String cookingPlace) {
         this.code = code;
         this.price = price;
         this.cookingTimeNorm = cookingTimeNorm;
@@ -63,12 +85,12 @@ public class Nomenclature {
         this.id = id;
     }
 
-    public Long getArticul() {
-        return articul;
+    public Long getVendorCode() {
+        return vendorCode;
     }
 
-    public void setArticul(Long articul) {
-        this.articul = articul;
+    public void setVendorCode(Long vendorCode) {
+        this.vendorCode = vendorCode;
     }
 
     public Integer getCode() {
@@ -127,11 +149,11 @@ public class Nomenclature {
         this.accountingCategory = accountingCategory;
     }
 
-    public CookingPlace getCookingPlace() {
+    public String getCookingPlace() {
         return cookingPlace;
     }
 
-    public void setCookingPlace(CookingPlace cookingPlace) {
+    public void setCookingPlace(String cookingPlace) {
         this.cookingPlace = cookingPlace;
     }
 
@@ -141,5 +163,45 @@ public class Nomenclature {
 
     public void setNomenclatureParentGroupSet(Set<NomenclatureParentGroup> nomenclatureParentGroupSet) {
         this.nomenclatureParentGroupSet = nomenclatureParentGroupSet;
+    }
+
+    public List<ModifierProperty> getModifierPropertyList() {
+        return modifierPropertyList;
+    }
+
+    public void setModifierPropertyList(List<ModifierProperty> modifierPropertyList) {
+        this.modifierPropertyList = modifierPropertyList;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public String getFontColor() {
+        return fontColor;
+    }
+
+    public void setFontColor(String fontColor) {
+        this.fontColor = fontColor;
+    }
+
+    public String getUnitOfMeasurement() {
+        return unitOfMeasurement;
+    }
+
+    public void setUnitOfMeasurement(String unitOfMeasurement) {
+        this.unitOfMeasurement = unitOfMeasurement;
+    }
+
+    public List<Packaging> getPackagingList() {
+        return packagingList;
+    }
+
+    public void setPackagingList(List<Packaging> packagingList) {
+        this.packagingList = packagingList;
     }
 }

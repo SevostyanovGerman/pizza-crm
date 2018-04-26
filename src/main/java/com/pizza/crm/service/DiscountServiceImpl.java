@@ -1,11 +1,12 @@
 package com.pizza.crm.service;
 
-import com.pizza.crm.model.Discount;
+import com.pizza.crm.model.discount.Discount;
 import com.pizza.crm.repository.DiscountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class DiscountServiceImpl implements DiscountService {
@@ -18,38 +19,27 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
-    public Long save(Discount discount) {
-        Discount discountDb = discountRepository.save(discount);
-        return discountDb.getId();
+    public Collection<Discount> getAll() {
+        return discountRepository.findAll();
     }
 
     @Override
-    public void delete(Discount discount) {
-        discountRepository.delete(discount);
+    public Optional<Discount> findById(Long id) {
+        return discountRepository.findById(id);
     }
 
     @Override
-    public void deleteByName(String name) {
-        discountRepository.deleteByName(name);
+    public Discount save(Discount discount) {
+        return discountRepository.save(discount);
+    }
+
+    @Override
+    public Collection<Discount> saveAll(Collection<Discount> discounts) {
+        return discountRepository.saveAll(discounts);
     }
 
     @Override
     public void deleteById(Long id) {
         discountRepository.deleteById(id);
-    }
-
-    @Override
-    public Discount getByName(String name) {
-        return discountRepository.getByName(name);
-    }
-
-    @Override
-    public Discount getById(Long id) {
-        return discountRepository.getById(id);
-    }
-
-    @Override
-    public List<Discount> findAll() {
-        return discountRepository.findAll();
     }
 }

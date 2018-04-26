@@ -10,9 +10,15 @@ public interface NomenclatureService {
 
     void delete(Long id);
 
+    void deleteByName(String name);
+
     Nomenclature getNomenclature(Long id);
 
     Nomenclature getNomenclatureByName(String name);
 
     List<Nomenclature> findAllNomenclatures();
+
+    List<Nomenclature> getNomenclatureModifiers();
+
+    List<Nomenclature> getNomenclaturesWithoutParentGroup();
 }

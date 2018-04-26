@@ -18,24 +18,35 @@
 
 .order-table {
     overflow: auto;
-    height: 18vh;
     background-color: #fff;
     color: #000;
 }
 
-.order-table tr td {
-    margin: 0 !important;
-    padding: 0 !important;
+.order-table tr {
+    line-height: 25px;
+    min-height: 25px;
+    height: 25px;
 }
 
 .borderless td {
     border: none;
 }
 
-.payment-type-table {
-    height: 18vh;
+.payment-method-table {
+    overflow: auto;
     background-color: #fff;
     color: #000;
+}
+
+.payment-method-table tr {
+    line-height: 25px;
+    min-height: 25px;
+    height: 25px;
+
+}
+
+.payment-method-table td {
+    vertical-align: middle;
 }
 
 .order-total-dark {
@@ -51,6 +62,20 @@
 .header-menu a {
     color: #000;
     font-size: 36px;
+}
+
+.header-menu {
+    cursor: pointer;
+}
+
+.highlight {
+    background-color: #dfe385;
+}
+
+.exact-sum,
+.do-pay,
+.btn-back {
+    cursor: pointer;
 }
 
 .paid-header {
