@@ -13,9 +13,6 @@ public class ScaleOfSize {
     private Long id;
 
     @Column
-    private List<ScaleOfSize> scales = new ArrayList();
-
-    @Column
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
