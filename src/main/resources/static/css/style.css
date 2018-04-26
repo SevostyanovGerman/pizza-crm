@@ -905,6 +905,14 @@ span.dmbls-down-span{
     font-weight: bold;
 }
 
+.enableDiscount {
+    background-color: #dfe487;
+}
+
+.disableDiscount {
+    background-color: #e2e2e2;
+}
+
 
 
 

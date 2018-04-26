@@ -294,9 +294,9 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         discount.setValue(10);
         discount.getPaymentMethods().add(pm1);
         discount.setDiscountCategories(Arrays.asList(discountCategory1, discountCategory2));
-        discount.getSchedules().add(new Schedule("Расписание скидки в обед", LocalTime.of(0, 0), LocalTime.of(1, 0), false, false, true, false, true, false, true));
-        discount.getSchedules().add(new Schedule("Расписание скидки вечером", LocalTime.of(11, 0), LocalTime.of(16, 0),
-                true, false, true, false, true, false, true));
+        discount.getSchedules().add(new Schedule("Расписание скидки в обед", LocalTime.of(1, 0), LocalTime.of(10, 0), false, true, true, false, true, false, true));
+        discount.getSchedules().add(new Schedule("Расписание скидки вечером", LocalTime.of(19, 0), LocalTime.of(23, 0),
+                true, true, true, true, true, true, true));
         discountService.save(discount);
         pm1.setDiscount(discount);
         paymentMethodService.saveAll(Arrays.asList(pm1, pm3));

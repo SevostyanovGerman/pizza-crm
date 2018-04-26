@@ -510,6 +510,8 @@
 </div>
 <script>
 
+    var arrDiscount = [];
+
     var quickMenu;
 
     var searchString = '';
@@ -797,12 +799,17 @@
                 $("#discount-extraCharge-modal-item").empty();
                 var discountList = data;
                 discountList.forEach(function (value) {
+                        var classDis = "disableDiscount";
+                        if(arrDiscount.indexOf(value.id) != -1) {
+                           classDis = "enableDiscount";
+                            AddDiscountActive(value.value, value.discountCalculationMode);
+                        }
                         var price = $("#rawTotal").text();
-                        var newPrise = CountDiscount(value.value, value.discountCalculationMode);
+                        var newPrise = CountDiscount(value.value, value.discountCalculationMode, value.id);
                         console.log(value);
                         $("#discount-extraCharge-modal-item").append(
-                            "<div class=\"col-4\" style=\"padding-left: 5px; padding-right: 5px; cursor: pointer;\" onclick=\"AddDiscount(" + value.value + ", \'" + value.discountCalculationMode + "\'" + ")\">\n" +
-                            "<div class=\"DiscountItem\">\n" +
+                            "<div class=\"col-4\" style=\"padding-left: 5px; padding-right: 5px; cursor: pointer;\" onclick=\"AddDiscount(" + value.value + ", \'" + value.discountCalculationMode + "\'" + "," + value.id + ")\">\n" +
+                            "<div class=\"DiscountItem " + classDis + " discount_id_" + value.id + "\">\n" +
                             "<p class=\"NameDiscount\">" + value.name + "</p>\n" +
                             "<p class=\"TypeDiscount\">" + value.type + "</p>\n" +
                             "<p class=\"ValueDiscount\">" + value.value + " %" + "</p>\n" +
@@ -818,19 +825,41 @@
 
     var globalDiscount = 0;
 
-    function AddDiscount(discount, type) {
+    function AddDiscount(discount, type, idDis) {
+        var id = ".discount_id_" + idDis;
         var price = $("#rawTotal").text();
         var newPrise;
+        if($(id).attr("class").indexOf("disableDiscount") + 1) {
+            arrDiscount.push(idDis);
+            $(id).removeClass("disableDiscount");
+            $(id).addClass("enableDiscount");
+            if (type == "PERCENT") {
+                newPrise = price * (100 - discount) / 100;
+            } else {
+                newPrise = price - discount;
+            }
+            $("#rawTotalDiscountModal").text(newPrise);
+            globalDiscount = discount;
+        } else {
+            globalDiscount = 0;
+            arrDiscount.pop(idDis);
+            $(id).removeClass("enableDiscount");
+            $(id).addClass("disableDiscount");
+            $("#rawTotalDiscountModal").text(price);
+        }
+    }
+
+    function AddDiscountActive(discount, type) {
+        var price = $("#rawTotal").text();
         if (type == "PERCENT") {
             newPrise = price * (100 - discount) / 100;
         } else {
             newPrise = price - discount;
         }
         $("#rawTotalDiscountModal").text(newPrise);
-        globalDiscount = discount;
     }
 
-    function CountDiscount(discount, type) {
+    function CountDiscount(discount, type, idDis) {
         var price = $("#rawTotal").text();
         var newPrise;
         if (type == "PERCENT") {
@@ -843,6 +872,10 @@
     
     function CloseModal() {
         $("#discount-extraCharge-modal").modal('hide');
+        globalDiscount = 0;
+        $("#discount").text(globalDiscount);
+        $("#total").text($("#rawTotal").text());
+
     }
     
     function SaveModal() {
