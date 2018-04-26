@@ -28,6 +28,11 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     }
 
     @Override
+    public void deleteByName(String name) {
+        nomenclatureRepository.deleteByName(name);
+    }
+
+    @Override
     public Nomenclature getNomenclature(Long id) {
         return nomenclatureRepository.getOne(id);
     }
@@ -40,5 +45,15 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     @Override
     public List<Nomenclature> findAllNomenclatures() {
         return nomenclatureRepository.findAll();
+    }
+
+    @Override
+    public List<Nomenclature> getNomenclatureModifiers() {
+        return nomenclatureRepository.getNomenclaturesModifiers();
+    }
+
+    @Override
+    public List<Nomenclature> getNomenclaturesWithoutParentGroup() {
+        return nomenclatureRepository.getNomenclaturesWithoutParentGroup();
     }
 }

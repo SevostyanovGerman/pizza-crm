@@ -15,6 +15,14 @@ public class NomenclatureParentGroup {
 
     private String name;
 
+    private Integer vendorCode;
+
+    private Integer iikoCode;
+
+    private String fontColor;
+
+    private String backgroundColor;
+
     @ManyToMany
     @JoinTable(name = "Nomenclature_NomenclatureParentGroup",
             joinColumns = @JoinColumn(name = "NomenclatureParentGroup"),
@@ -43,6 +51,38 @@ public class NomenclatureParentGroup {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getVendorCode() {
+        return vendorCode;
+    }
+
+    public void setVendorCode(Integer vendorCode) {
+        this.vendorCode = vendorCode;
+    }
+
+    public Integer getIikoCode() {
+        return iikoCode;
+    }
+
+    public void setIikoCode(Integer iikoCode) {
+        this.iikoCode = iikoCode;
+    }
+
+    public String getFontColor() {
+        return fontColor;
+    }
+
+    public void setFontColor(String fontColor) {
+        this.fontColor = fontColor;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 
     public List<Nomenclature> getNomenclatures() {

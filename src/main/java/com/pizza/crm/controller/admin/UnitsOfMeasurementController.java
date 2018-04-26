@@ -38,14 +38,7 @@ public class UnitsOfMeasurementController {
     }
 
     @RequestMapping(value = "/measurement/update")
-    public String updateUser(
-            @RequestParam("id") Long id,
-            @RequestParam("name") String name,
-            @RequestParam("shortName") String shortName,
-            @RequestParam(value = "basic", defaultValue = "false") boolean basic,
-            @RequestParam("code") int code) {
-
-        UnitsOfMeasurement unit = new UnitsOfMeasurement(id, name, shortName, basic, code);
+    public String updateUser(@RequestBody UnitsOfMeasurement unit) {
         unitsOfMeasurement.save(unit);
         return "redirect:/measurement";
     }

@@ -9,25 +9,6 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function () {
-    $('.icon-menu').click(function() {
-        $('.menu').animate({
-            left: '0px'
-        }, 200);
-        $('body').animate({
-            left: '285px'
-        }, 200);
-    });
-    $('.icon-close').click(function() {
-        $('.menu').animate({
-            left: '-285px'
-        }, 200);
-        $('body').animate({
-            left: '0px'
-        }, 200);
-    });
-});
-
 function getSelectedSchedule() {
     var td = $('#schedule-list td.item-active');
     var name = td.text();
