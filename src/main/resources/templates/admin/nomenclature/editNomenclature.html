@@ -273,7 +273,7 @@
                     <div class="col-sm-3">
                         <select id="measureUnit" class="form-control">
                             <option th:each="unit : ${unitsOfMeasurement}" th:text="${unit.name}"
-                                    th:selected="${nomenclature.unitOfMeasurement == unit.name}" ></option>
+                                    th:selected="${nomenclature?.unitOfMeasurement == unit.name}" ></option>
                         </select>
                     </div>
                 </div>
