@@ -37,7 +37,7 @@
             <p class="clock-minutes mx-0 px-0"></p>
         </div>
         <div class="col offset-7 no-margin">
-            <p class="header-right">Юлия Савенко</p>
+            <p th:text="${employeeLogin}" class="header-right"></p>
             <span></span>
         </div>
     </div>
@@ -52,17 +52,16 @@
                     <div class="col-3 left-panel-header-item-1">
                         <p><i class="fa fa-align-justify" aria-hidden="true"></i></p>
                     </div>
-                    <div class="col-3 left-panel-header-item-2">
+                    <div class="left-panel-header-item-3">
                         <p id="orderTime"></p>
-                        <p></p>
                     </div>
-                    <div class="col-3 left-panel-header-item-3">
+                    <div class="left-panel-header-item-3">
                         <p><i class="fa fa-list-alt" aria-hidden="true"></i></p>
                         <p>8567</p>
                     </div>
-                    <div class="col-3 left-panel-header-item-3">
+                    <div class="left-panel-header-item-3">
                         <p><i class="fa fa-id-card" aria-hidden="true"></i></p>
-                        <p>Юлия Савенко</p>
+                        <p th:text="${employeeLogin}"></p>
                     </div>
                 </div>
                 <!--Current order table-->
@@ -454,278 +453,6 @@
         </div>
     </div>
 </div>
-<script>
 
-    var quickMenu;
-
-    var searchString = '';
-
-    var options = {
-        valueNames: ['nameProduct']
-    };
-
-    var listObj = new List('product1', options);
-
-    var option2 = {
-        valueNames: ['code', 'barcode', 'vendorcode']
-    };
-
-    var listObj2 = new List('products1', option2);
-
-    var searchAll = false;
-    var searchDarCode = false;
-    var searchCode = false;
-    var searchVendorCode = false;
-
-    date = new Date;
-    var day = date.getDay();
-    if (day == 0) {
-        GetQuickMenu(7);
-    } else {
-        GetQuickMenu(day);
-    }
-
-    function SearchProduct(value) {
-        searchString = searchString + value;
-        $("#SearchModalInput").val(searchString);
-        listObj2.search(searchString);
-    }
-
-    function SearchProductDel() {
-        searchString = '';
-        $("#SearchModalInput").val(searchString);
-        listObj2.search(searchString);
-    }
-
-    function SearchProductDelOne() {
-        searchString = searchString.slice(0, -1);
-        $("#SearchModalInput").val(searchString);
-        listObj2.search(searchString);
-    }
-
-
-    function SearchModalЕxpandShow() {
-        $("#SearchModal").modal('hide');
-        $("#SearchModalЕxpand").modal('show');
-        $.ajax({
-            type: "POST",
-            url: "/get/dish",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-            },
-            success: function (data) {
-                $("#productsItem").empty();
-                var dish = JSON.parse(data);
-                console.log(dish);
-                dish.forEach(function (value) {
-                    $("#product").append("<div class=\"col-3\"><div class=\"productItem\" data-quantity=\"1\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "p</p></div></div>");
-                });
-                listObj = new List('product1', options);
-            },
-            error: function (e) {
-            }
-        });
-    }
-
-    function SearchModalShow() {
-        $("#SearchModalЕxpand").modal('hide');
-        $("#SearchModal").modal('show');
-        $.ajax({
-            type: "POST",
-            url: "/get/dish",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-            },
-            success: function (data) {
-                $("#productsItem").empty();
-                var dish = JSON.parse(data);
-                console.log(dish);
-                dish.forEach(function (value) {
-                    $("#productsItem").append("<li class=\"product-search\" data-quantity=\"1\"><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
-                });
-                listObj2 = new List('products1', option2);
-            },
-            error: function (e) {
-            }
-        });
-        SearchAll();
-    }
-
-    $('#search-field').on('keyup', function () {
-        var searchString = $(this).val();
-        listObj.search(searchString);
-    });
-
-    function SearchModalЕxpandHide() {
-        $("#SearchModal").modal('hide');
-        $("#SearchModalЕxpand").modal('hide');
-    }
-
-    function SearchAll() {
-        searchAll = !searchAll;
-        if (searchAll) {
-            $("#SearchCode").css({"background-color": "#ffff00"});
-            $("#SearchDarCode").css({"background-color": "#ffff00"});
-            $("#SearchVendorCode").css({"background-color": "#ffff00"});
-            option2 = {
-                valueNames: ['code', 'barcode', 'vendorcode']
-            };
-            listObj2 = new List('products1', option2);
-            searchDarCode = true;
-            searchCode = true;
-            searchVendorCode = true;
-
-        } else {
-            $("#SearchCode").css({"background-color": "#fff"});
-            $("#SearchDarCode").css({"background-color": "#fff"});
-            $("#SearchVendorCode").css({"background-color": "#fff"});
-            option2 = {
-                valueNames: []
-            };
-            listObj2 = new List('products1', option2);
-            searchDarCode = false;
-            searchCode = false;
-            searchVendorCode = false;
-        }
-    }
-
-    function SearchDarCode() {
-        searchDarCode = !searchDarCode;
-        if (searchDarCode) {
-            $("#SearchCode").css({"background-color": "#fff"});
-            $("#SearchDarCode").css({"background-color": "#ffff00"});
-            $("#SearchVendorCode").css({"background-color": "#fff"});
-            option2 = {
-                valueNames: ['barcode']
-            };
-            listObj2 = new List('products1', option2);
-            searchCode = false;
-            searchVendorCode = false;
-        } else {
-            $("#SearchCode").css({"background-color": "#fff"});
-            $("#SearchDarCode").css({"background-color": "#fff"});
-            $("#SearchVendorCode").css({"background-color": "#fff"});
-            option2 = {
-                valueNames: []
-            };
-            listObj2 = new List('products1', option2);
-        }
-    }
-
-    function SearchCode() {
-        searchCode = !searchCode;
-        if (searchCode) {
-            $("#SearchCode").css({"background-color": "#ffff00"});
-            $("#SearchDarCode").css({"background-color": "#fff"});
-            $("#SearchVendorCode").css({"background-color": "#fff"});
-            option2 = {
-                valueNames: ['code']
-            };
-            listObj2 = new List('products1', option2);
-            searchDarCode = false;
-            searchVendorCode = false;
-        } else {
-            $("#SearchCode").css({"background-color": "#fff"});
-            $("#SearchDarCode").css({"background-color": "#fff"});
-            $("#SearchVendorCode").css({"background-color": "#fff"});
-            option2 = {
-                valueNames: []
-            };
-            listObj2 = new List('products1', option2);
-        }
-    }
-
-    function SearchVendorCode() {
-        searchVendorCode = !searchVendorCode;
-        if (searchVendorCode) {
-            $("#SearchCode").css({"background-color": "#fff"});
-            $("#SearchDarCode").css({"background-color": "#fff"});
-            $("#SearchVendorCode").css({"background-color": "#ffff00"});
-            option2 = {
-                valueNames: ['vendorcode']
-            };
-            listObj2 = new List('products1', option2);
-            searchDarCode = false;
-            searchCode = false;
-        } else {
-            $("#SearchCode").css({"background-color": "#fff"});
-            $("#SearchDarCode").css({"background-color": "#fff"});
-            $("#SearchVendorCode").css({"background-color": "#fff"});
-            option2 = {
-                valueNames: []
-            };
-            listObj2 = new List('products1', option2);
-        }
-    }
-
-    function GetQuickMenu(day) {
-        var index = 1;
-        $.ajax({
-            type: "GET",
-            url: "/get/quickmenu/" + day,
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-            },
-            success: function (data) {
-                console.log(data);
-                $("#head-quick-menu").empty();
-                quickMenu = data;
-                quickMenu.forEach(function (value) {
-                    $("#head-quick-menu").append("<li><a href=\"#\" onclick=\'ChangeQuickMenu(" + index + ")\' id=\"headerQuickMenu-" + index + "\">" + value.name + "</a></li>");
-                    index = index + 1;
-                });
-
-                $(".right-panel-body-1").empty();
-                $(".right-panel-body-2").empty();
-                $(".right-panel-body-3").empty();
-
-                quickMenu[0].dishQuickMenu.forEach(function (value) {
-                    console.log(value);
-                    if (value.position == 1) {
-                        $(".right-panel-body-1").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
-                    }
-                    if (value.position == 2) {
-                        $(".right-panel-body-2").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
-                    }
-                    if (value.position == 3) {
-                        $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
-                    }
-
-                });
-
-                headerQuickMenu(1);
-            },
-            error: function (e) {
-            }
-        });
-    }
-
-    function ChangeQuickMenu(numMenu) {
-        headerQuickMenu(numMenu)
-        $(".right-panel-body-1").empty();
-        $(".right-panel-body-2").empty();
-        $(".right-panel-body-3").empty();
-        quickMenu[numMenu - 1].dishQuickMenu.forEach(function (value) {
-            if (value.position == 1) {
-                $(".right-panel-body-1").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
-            }
-            if (value.position == 2) {
-                $(".right-panel-body-2").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
-            }
-            if (value.position == 3) {
-                $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
-            }
-        });
-    }
-    
-    function headerQuickMenu(num) {
-        var id = "#headerQuickMenu-" + num;
-        $("#headerQuickMenu-1").css({"background-color": "#3e4040", "color": "#fff"});
-        $("#headerQuickMenu-2").css({"background-color": "#3e4040", "color": "#fff"});
-        $("#headerQuickMenu-3").css({"background-color": "#3e4040", "color": "#fff"});
-        $(id).css({"background-color": "#dfe487", "color": "#3e4040"});
-    }
-
-</script>
 </body>
 </html>

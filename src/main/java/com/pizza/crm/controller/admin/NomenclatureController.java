@@ -21,6 +21,10 @@ public class NomenclatureController {
 
     private final UnitsOfMeasurementService unitsOfMeasurementService;
 
+    private static final String WHITE_BACKGROUND_COLOR = "#FFFFFF";
+
+    private static final String BLACK_FONT_COLOR = "#000000";
+
     @Autowired
     public NomenclatureController(NomenclatureService nomenclatureService,
                                   NomenclatureParentGroupService nomenclatureParentGroupService,
@@ -46,6 +50,18 @@ public class NomenclatureController {
                 model.addAttribute("parentGroupName",
                         nomenclatureService.getNomenclature(id).getNomenclatureParentGroupSet().iterator().next().getName());
             }
+
+            String pickBackgroundColor = nomenclatureService.getNomenclature(id).getBackgroundColor();
+            if (pickBackgroundColor == null) {
+                pickBackgroundColor = WHITE_BACKGROUND_COLOR;
+            }
+            model.addAttribute("pickBackgroundColor", pickBackgroundColor);
+
+            String pickFontColor = nomenclatureService.getNomenclature(id).getFontColor();
+            if (pickFontColor == null) {
+                pickFontColor = BLACK_FONT_COLOR;
+            }
+            model.addAttribute("pickFontColor", pickFontColor);
         }
         model.addAttribute("unitsOfMeasurement", unitsOfMeasurementService.getAll());
         model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());

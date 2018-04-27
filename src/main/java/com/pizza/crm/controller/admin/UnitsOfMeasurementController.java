@@ -13,8 +13,8 @@ public class UnitsOfMeasurementController {
     private final UnitsOfMeasurementService unitsOfMeasurement;
 
     @Autowired
-    public UnitsOfMeasurementController(UnitsOfMeasurementService unitsOfMeasurment) {
-        this.unitsOfMeasurement = unitsOfMeasurment;
+    public UnitsOfMeasurementController(UnitsOfMeasurementService unitsOfMeasurement) {
+        this.unitsOfMeasurement = unitsOfMeasurement;
     }
 
     @RequestMapping("/measurement")
