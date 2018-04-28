@@ -37,6 +37,26 @@ public class NomenclatureController {
         model.addAttribute("nomenclaturesWithoutParentGroup", nomenclatureService.getNomenclaturesWithoutParentGroup());
         return "admin/nomenclature/nomenclature";
     }
+    @GetMapping("editNomenclature/copyElement/{id}")
+    public String copyElement(@PathVariable Long id,Model model){
+        if (id != null) {
+            Nomenclature nomenclatureGetId = nomenclatureService.getNomenclature(id);
+            Nomenclature newElementNomenclature = new Nomenclature(nomenclatureGetId.getPrice(),nomenclatureGetId.getCookingTimeNorm(),nomenclatureGetId.getCookingTimePeak(),
+                    nomenclatureGetId.getBackgroundColor(),nomenclatureGetId.getFontColor(),nomenclatureGetId.getUnitOfMeasurement(),nomenclatureGetId.getNomenclatureType(),
+                    nomenclatureGetId.getAccountingCategory(),nomenclatureGetId.getCookingPlace(),nomenclatureGetId.getNomenclatureParentGroupSet(),
+                    nomenclatureGetId.getModifierPropertyList(),nomenclatureGetId.getPackagingList());
+            model.addAttribute("nomenclature", newElementNomenclature);
+            if (!newElementNomenclature.getNomenclatureParentGroupSet().isEmpty()) {
+                model.addAttribute("parentGroupName",
+                        newElementNomenclature.getNomenclatureParentGroupSet().iterator().next().getName());
+            }
+        }
+        model.addAttribute("unitsOfMeasurement", unitsOfMeasurementService.getAll());
+        model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());
+        model.addAttribute("modifierNomenclatures", nomenclatureService.getNomenclatureModifiers());
+        return "admin/nomenclature/editNomenclature";
+
+    }
 
     @GetMapping("editNomenclature/{id}")
     public String editNomenclature(@PathVariable Long id, Model model) {
