@@ -64,6 +64,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
     private final UnitsOfMeasurementService unitsOfMeasurementService;
 
+    private final ScaleOfSizeService scaleOfSizeService;
+
     @Autowired
     public DbDataGenerator(NomenclatureParentGroupService nomenclatureParentGroupService,
                            NomenclatureService nomenclatureService, UserService userService, RoleService roleService,
@@ -72,7 +74,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                            DiscountService discountService, DecreeService decreeService,
                            QuickMenuService quickMenuService, DishQuickMenuService dishQuickMenuService,
                            EmployeeService employeeService, PaymentMethodService paymentMethodService,
-                           PaymentTypeService paymentTypeService, UnitsOfMeasurementService unitsOfMeasurementService) {
+                           PaymentTypeService paymentTypeService, UnitsOfMeasurementService unitsOfMeasurementService, ScaleOfSizeService scaleOfSizeService) {
         this.nomenclatureParentGroupService = nomenclatureParentGroupService;
         this.nomenclatureService = nomenclatureService;
         this.userService = userService;
@@ -90,6 +92,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.paymentMethodService = paymentMethodService;
         this.paymentTypeService = paymentTypeService;
         this.unitsOfMeasurementService = unitsOfMeasurementService;
+        this.scaleOfSizeService = scaleOfSizeService;
     }
 
     @Override
@@ -288,6 +291,13 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         generateFakeStaff();
 
         generateDiscountsAndPaymentMethods();
+
+        //ScaleOfSize --------------------------------------------------------------------------------------------------
+        ScaleOfSizeValues values = new ScaleOfSizeValues("0,33 литра" ,"0.3",true);
+        ArrayList<ScaleOfSizeValues> list = new ArrayList<>(Arrays.asList(values));
+        //ScaleOfSize scale = new ScaleOfSize("Обьем бутылок", list);
+        ScaleOfSize scale = new ScaleOfSize("Обьем бутылок", list);
+        scaleOfSizeService.save(scale);
 
     }
 

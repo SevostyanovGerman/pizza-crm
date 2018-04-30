@@ -3,7 +3,7 @@ package com.pizza.crm.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ScaleOfSizeValues")
+@Table(name = "scale_values")
 public class ScaleOfSizeValues {
 
     @Id
@@ -11,10 +11,10 @@ public class ScaleOfSizeValues {
     private Long id;
 
     @Column
-    private int nameSize;
+    private String nameSize;
 
     @Column
-    private int kitchenSize;
+    private String kitchenSize;
 
     @Column
     private boolean defaultSize;
@@ -22,7 +22,7 @@ public class ScaleOfSizeValues {
     public ScaleOfSizeValues() {
     }
 
-    public ScaleOfSizeValues(int nameSize, int kitchenSize, boolean defaultSize) {
+    public ScaleOfSizeValues(String nameSize, String kitchenSize, boolean defaultSize) {
         this.nameSize = nameSize;
         this.kitchenSize = kitchenSize;
         this.defaultSize = defaultSize;
@@ -36,19 +36,19 @@ public class ScaleOfSizeValues {
         this.id = id;
     }
 
-    public int getNameSize() {
+    public String getNameSize() {
         return nameSize;
     }
 
-    public void setNameSize(int nameSize) {
+    public void setNameSize(String nameSize) {
         this.nameSize = nameSize;
     }
 
-    public int getKitchenSize() {
+    public String getKitchenSize() {
         return kitchenSize;
     }
 
-    public void setKitchenSize(int kitchenSize) {
+    public void setKitchenSize(String kitchenSize) {
         this.kitchenSize = kitchenSize;
     }
 
@@ -62,7 +62,7 @@ public class ScaleOfSizeValues {
 
     @Override
     public String toString() {
-        return "ScaleOfSizeValues{" +
+        return "ScaleOfSizeValuesRepository{" +
                 "id=" + id +
                 ", nameSize=" + nameSize +
                 ", kitchenSize=" + kitchenSize +

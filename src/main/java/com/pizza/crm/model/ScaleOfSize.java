@@ -2,10 +2,10 @@ package com.pizza.crm.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
-@Table(name = "ScaleOfSizeService")
+@Table(name = "scale")
 public class ScaleOfSize {
 
     @Id
@@ -13,16 +13,33 @@ public class ScaleOfSize {
     private Long id;
 
     @Column
-    private String name;
+    private String nameScale;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ScaleOfSizeValues> valuesList = new ArrayList<>();
+    private Collection <ScaleOfSizeValues> valuesList = new ArrayList<>();
 
     public ScaleOfSize() {
     }
 
-    public ScaleOfSize(String name, List<ScaleOfSizeValues> valuesList) {
-        this.name = name;
+
+    public ScaleOfSize(String nameScale, Collection<ScaleOfSizeValues> valuesList) {
+        this.nameScale = nameScale;
+        this.valuesList = valuesList;
+    }
+
+    public String getNameScale() {
+        return nameScale;
+    }
+
+    public void setNameScale(String nameScale) {
+        this.nameScale = nameScale;
+    }
+
+    public Collection<ScaleOfSizeValues> getValuesList() {
+        return valuesList;
+    }
+
+    public void setValuesList(Collection<ScaleOfSizeValues> valuesList) {
         this.valuesList = valuesList;
     }
 
@@ -35,26 +52,18 @@ public class ScaleOfSize {
     }
 
     public String getName() {
-        return name;
+        return nameScale;
     }
 
     public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<ScaleOfSizeValues> getValuesList() {
-        return valuesList;
-    }
-
-    public void setValuesList(List<ScaleOfSizeValues> valuesList) {
-        this.valuesList = valuesList;
+        this.nameScale = name;
     }
 
     @Override
     public String toString() {
-        return "ScaleOfSizeService{" +
+        return "ScaleOfSize{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", nameScale='" + nameScale + '\'' +
                 ", valuesList=" + valuesList +
                 '}';
     }

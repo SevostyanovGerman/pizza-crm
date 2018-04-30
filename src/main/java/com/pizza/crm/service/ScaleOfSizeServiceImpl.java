@@ -1,9 +1,8 @@
 package com.pizza.crm.service;
 
-import com.pizza.crm.model.UnitsOfMeasurement;
+import com.pizza.crm.model.ScaleOfSize;
 import com.pizza.crm.repository.ScaleOfSizeRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.Collection;
 import java.util.Optional;
 
@@ -17,22 +16,22 @@ public class ScaleOfSizeServiceImpl implements ScaleOfSizeService {
     }
 
     @Override
-    public Collection<UnitsOfMeasurement> getAll() {
+    public Collection<ScaleOfSize> getAll() {
         return scaleOfSizeRepository.findAll();
     }
 
     @Override
-    public Optional<UnitsOfMeasurement> findById(Long aLong) {
+    public Optional<ScaleOfSize> findById(Long aLong) {
         return Optional.empty();
     }
 
     @Override
-    public UnitsOfMeasurement save(UnitsOfMeasurement unitsOfMeasurement) {
-        return null;
+    public ScaleOfSize save(ScaleOfSize scaleOfSize) {
+        return scaleOfSizeRepository.save(scaleOfSize);
     }
 
     @Override
-    public Collection<UnitsOfMeasurement> saveAll(Collection<UnitsOfMeasurement> unitsOfMeasurements) {
+    public Collection<ScaleOfSize> saveAll(Collection<ScaleOfSize> scaleOfSizes) {
         return null;
     }
 

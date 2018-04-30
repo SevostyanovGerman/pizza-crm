@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Шкала размеров</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/scaleOfSize.css}" href="../static/css/scaleOfSize.css" rel="stylesheet" media="screen">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/scaleOfSize.js}"></script>
+    <th:block th:include="admin/fragments/menu-header :: head"></th:block>
+</head>
+
+<body>
+<th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
+
+<div class="container-fluid">
+    <button class="btn btn-success" data-toggle="modal" data-target="#schedule">Добавить</button>
+    <button class="btn btn-danger" onclick="deleteSchedule()">Удалить</button>
+    <button class="btn btn-info" onclick="refresh()">Обновить</button>
+    <input class="offset-1" type="checkbox">Показвать удаленные
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <table class="table table-hover table-responsive">
+            <thead>
+            <tr class=".info">
+                <th>Название</th>
+                <th>Название для кухни</th>
+                <th>По умолчанию</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each ="scale : ${scale}" class="parent">
+                <td th:inline="text" class="parentGroup"><i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                    [[${scale.name}]]
+                </td>
+            </tr>
+
+            <tr th:each="values : ${units}">
+                <td><span th:text="${values.nameSize}"></span></td>
+                <td><span th:text="${values.kitchenSize}"></span></td>
+                <td><input th:type="checkbox" th:checked="${values.defaultSize}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--Modal window-->
+<div id="schedule" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Добавить шкалу размеров</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="nameScale">Введите название новой шкалы размеров:</label>
+                    <input class="form-control" type="text" id="nameScale" required="required" name="nameScale">
+                </div>
+                <div class="form-group">
+                    <label for="nameSize">Введите название размера:</label>
+                    <input class="form-control" type="text" id="nameSize" required="required" name="nameSize">
+                </div>
+                <div class="form-group">
+                    <label for="kitchenSize">Введите название для кухни:</label>
+                    <input class="form-control" type="text" id="kitchenSize" required="required" name="kitchenSize">
+                </div>
+                <div class="form-group">
+                    <label for="defaultSize">Установить шкалу по умолчанию:</label>
+                    <input class="form-control" type="checkbox" id="defaultSize" required="required" name="defaultSize">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" onclick="addScale()">Сохранить</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
