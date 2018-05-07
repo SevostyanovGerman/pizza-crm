@@ -61,6 +61,7 @@ $(document).ready(function () {
     });
 });
 
+
 $(document).ready(function () {
     $('tbody').on('click', '.shown', function () {
         $('.shown').removeClass('item-active');
@@ -167,6 +168,24 @@ function saveParentGroup() {
             alert("error")
         }
     });
+}
+function copyElement() {
+    var name = $('.item-active').find('td:eq(0)').text();
+    $.ajax({
+        type: "POST",
+        url: "/nomenclature/getNomenclatureId",
+        data: {name: name},
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (data) {
+            window.location.href = "/editNomenclature/copyElement/" + data;
+        },
+        error: function () {
+            alert("error")
+        }
+    });
+
 }
 
 function editNomenclature() {
