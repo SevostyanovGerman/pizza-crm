@@ -37,18 +37,19 @@ public class NomenclatureController {
         model.addAttribute("nomenclaturesWithoutParentGroup", nomenclatureService.getNomenclaturesWithoutParentGroup());
         return "admin/nomenclature/nomenclature";
     }
+
     @GetMapping("editNomenclature/copyElement/{id}")
-    public String copyElement(@PathVariable Long id,Model model){
+    public String copyElement(@PathVariable Long id, Model model) {
         if (id != null) {
-            Nomenclature nomenclatureGetId = nomenclatureService.getNomenclature(id);
-            Nomenclature newElementNomenclature = new Nomenclature(nomenclatureGetId.getPrice(),nomenclatureGetId.getCookingTimeNorm(),nomenclatureGetId.getCookingTimePeak(),
-                    nomenclatureGetId.getBackgroundColor(),nomenclatureGetId.getFontColor(),nomenclatureGetId.getUnitOfMeasurement(),nomenclatureGetId.getNomenclatureType(),
-                    nomenclatureGetId.getAccountingCategory(),nomenclatureGetId.getCookingPlace(),nomenclatureGetId.getNomenclatureParentGroupSet(),
-                    nomenclatureGetId.getModifierPropertyList(),nomenclatureGetId.getPackagingList());
-            model.addAttribute("nomenclature", newElementNomenclature);
-            if (!newElementNomenclature.getNomenclatureParentGroupSet().isEmpty()) {
+            Nomenclature originalNomenclature = nomenclatureService.getNomenclature(id);
+            Nomenclature copyNomenclature = new Nomenclature(originalNomenclature.getPrice(), originalNomenclature.getCookingTimeNorm(), originalNomenclature.getCookingTimePeak(),
+                    originalNomenclature.getBackgroundColor(), originalNomenclature.getFontColor(), originalNomenclature.getUnitOfMeasurement(), originalNomenclature.getNomenclatureType(),
+                    originalNomenclature.getAccountingCategory(), originalNomenclature.getCookingPlace(), originalNomenclature.getNomenclatureParentGroupSet(),
+                    originalNomenclature.getModifierPropertyList(), originalNomenclature.getPackagingList());
+            model.addAttribute("nomenclature", copyNomenclature);
+            if (!copyNomenclature.getNomenclatureParentGroupSet().isEmpty()) {
                 model.addAttribute("parentGroupName",
-                        newElementNomenclature.getNomenclatureParentGroupSet().iterator().next().getName());
+                        copyNomenclature.getNomenclatureParentGroupSet().iterator().next().getName());
             }
         }
         model.addAttribute("unitsOfMeasurement", unitsOfMeasurementService.getAll());
