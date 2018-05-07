@@ -13,3 +13,9 @@ body {
 .divMain{
     margin-left: 10px;
 }
+
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+    background-color: #F5F5F4;
+}
+

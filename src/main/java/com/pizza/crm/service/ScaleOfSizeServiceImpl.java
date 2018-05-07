@@ -39,4 +39,9 @@ public class ScaleOfSizeServiceImpl implements ScaleOfSizeService {
     public void deleteById(Long aLong) {
 
     }
+
+    @Override
+    public ScaleOfSize findByNameScale(String name) {
+        return scaleOfSizeRepository.findByNameScale(name);
+    }
 }

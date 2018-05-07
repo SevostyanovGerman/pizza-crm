@@ -3,6 +3,7 @@ package com.pizza.crm.model;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "scale")
@@ -16,13 +17,16 @@ public class ScaleOfSize {
     private String nameScale;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection <ScaleOfSizeValues> valuesList = new ArrayList<>();
+    private List<ScaleOfSizeValues> valuesList = new ArrayList<>();
 
     public ScaleOfSize() {
     }
 
+    public ScaleOfSize(String nameScale) {
+        this.nameScale = nameScale;
+    }
 
-    public ScaleOfSize(String nameScale, Collection<ScaleOfSizeValues> valuesList) {
+    public ScaleOfSize(String nameScale, List <ScaleOfSizeValues> valuesList) {
         this.nameScale = nameScale;
         this.valuesList = valuesList;
     }
@@ -35,11 +39,11 @@ public class ScaleOfSize {
         this.nameScale = nameScale;
     }
 
-    public Collection<ScaleOfSizeValues> getValuesList() {
+    public List<ScaleOfSizeValues> getValuesList() {
         return valuesList;
     }
 
-    public void setValuesList(Collection<ScaleOfSizeValues> valuesList) {
+    public void setValuesList(List<ScaleOfSizeValues> valuesList) {
         this.valuesList = valuesList;
     }
 

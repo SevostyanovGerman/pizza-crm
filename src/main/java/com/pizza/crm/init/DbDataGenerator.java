@@ -293,11 +293,18 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         generateDiscountsAndPaymentMethods();
 
         //ScaleOfSize --------------------------------------------------------------------------------------------------
-        ScaleOfSizeValues values = new ScaleOfSizeValues("0,33 литра" ,"0.3",true);
-        ArrayList<ScaleOfSizeValues> list = new ArrayList<>(Arrays.asList(values));
-        //ScaleOfSize scale = new ScaleOfSize("Обьем бутылок", list);
-        ScaleOfSize scale = new ScaleOfSize("Обьем бутылок", list);
-        scaleOfSizeService.save(scale);
+        ScaleOfSizeValues valuesDrink = new ScaleOfSizeValues("0,33 литра" ,"0.3 л.",false);
+        ScaleOfSizeValues valuesPizza = new ScaleOfSizeValues("30 сантиметров" ,"30 см.",true);
+        ScaleOfSizeValues valuesWeight = new ScaleOfSizeValues("100 грамм" ,"100 гр.",true);
+        ArrayList<ScaleOfSizeValues> listDrink = new ArrayList<>(Arrays.asList(valuesDrink));
+        ArrayList<ScaleOfSizeValues> listPizza = new ArrayList<>(Arrays.asList(valuesPizza));
+        ArrayList<ScaleOfSizeValues> listWeight = new ArrayList<>(Arrays.asList(valuesWeight));
+        ScaleOfSize scaleDrink = new ScaleOfSize("Обьем бутылок", listDrink);
+        ScaleOfSize scalePizza = new ScaleOfSize("Размер пиццы", listPizza);
+        ScaleOfSize scaleWeight = new ScaleOfSize("Вес товара", listWeight);
+        scaleOfSizeService.save(scaleDrink);
+        scaleOfSizeService.save(scalePizza);
+        scaleOfSizeService.save(scaleWeight);
 
     }
 

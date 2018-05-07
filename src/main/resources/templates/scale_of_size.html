@@ -10,6 +10,9 @@
           th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
           rel="stylesheet" media="screen"/>
     <link th:href="@{/css/scaleOfSize.css}" href="../static/css/scaleOfSize.css" rel="stylesheet" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
+          rel="stylesheet" media="screen"/>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
@@ -22,8 +25,8 @@
 <th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
 
 <div class="container-fluid">
-    <button class="btn btn-success" data-toggle="modal" data-target="#schedule">Добавить</button>
-    <button class="btn btn-danger" onclick="deleteSchedule()">Удалить</button>
+    <button class="btn btn-success" data-toggle="modal" data-target="#scale">Добавить шкалу размеров</button>
+    <button class="btn btn-danger" onclick="deleteScale()">Удалить</button>
     <button class="btn btn-info" onclick="refresh()">Обновить</button>
     <input class="offset-1" type="checkbox">Показвать удаленные
 </div>
@@ -38,27 +41,24 @@
                 <th>По умолчанию</th>
             </tr>
             </thead>
-
-            <tbody>
-
-            <tr th:each ="scale : ${scale}" class="parent">
-                <td th:inline="text" class="parentGroup"><i class="fa fa-plus-square-o" aria-hidden="true"></i>
-                    [[${scale.name}]]
+            <tbody id="records_table">
+            <tr th:each ="scale : ${scale}" >
+                <td  th:inline="text" class="selectView"><i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                    [[${scale.nameScale}]]
                 </td>
-            </tr>
-
-            <tr th:each="values : ${units}">
-                <td><span th:text="${values.nameSize}"></span></td>
-                <td><span th:text="${values.kitchenSize}"></span></td>
-                <td><input th:type="checkbox" th:checked="${values.defaultSize}"></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <button  class="btn btn-default values" data-toggle="modal" data-target="#values">Добавить значение шкалы</button>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
 
-<!--Modal window-->
-<div id="schedule" class="modal fade" tabindex="-1">
+<!--Modal window ScaleOfSize-->
+<div id="scale" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -71,6 +71,28 @@
                     <label for="nameScale">Введите название новой шкалы размеров:</label>
                     <input class="form-control" type="text" id="nameScale" required="required" name="nameScale">
                 </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" onclick="addScale()">Сохранить</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal window ScaleOfSizeValues-->
+<div id="values" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Добавить шкалу размеров</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+
                 <div class="form-group">
                     <label for="nameSize">Введите название размера:</label>
                     <input class="form-control" type="text" id="nameSize" required="required" name="nameSize">
@@ -86,12 +108,13 @@
             </div>
 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success" onclick="addScale()">Сохранить</button>
+                <button type="submit" class="btn btn-success" onclick="addValues()">Сохранить</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
             </div>
 
         </div>
     </div>
 </div>
+
 </body>
 </html>
