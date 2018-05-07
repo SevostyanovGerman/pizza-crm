@@ -57,6 +57,17 @@ public class NomenclatureController {
                 model.addAttribute("parentGroupName",
                         copyNomenclature.getNomenclatureParentGroupSet().iterator().next().getName());
             }
+            String pickBackgroundColor = copyNomenclature.getBackgroundColor();
+            if (pickBackgroundColor == null) {
+                pickBackgroundColor = WHITE_BACKGROUND_COLOR;
+            }
+            model.addAttribute("pickBackgroundColor", pickBackgroundColor);
+
+            String pickFontColor = copyNomenclature.getFontColor();
+            if (pickFontColor == null) {
+                pickFontColor = BLACK_FONT_COLOR;
+            }
+            model.addAttribute("pickFontColor", pickFontColor);
         }
         model.addAttribute("unitsOfMeasurement", unitsOfMeasurementService.getAll());
         model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());
