@@ -12,40 +12,40 @@ import java.util.Optional;
 public class UnitsOfMeasurementServiceImpl implements UnitsOfMeasurementService {
 
 
-    private final UnitsOfMeasurementRepository measurmentRepository;
+    private final UnitsOfMeasurementRepository measurementRepository;
 
     @Autowired
     public UnitsOfMeasurementServiceImpl(UnitsOfMeasurementRepository measurmentRepository) {
-        this.measurmentRepository = measurmentRepository;
+        this.measurementRepository = measurmentRepository;
     }
 
     @Override
     public Collection<UnitsOfMeasurement> getAll() {
-        return measurmentRepository.findAll();
+        return measurementRepository.findAll();
     }
 
     @Override
     public Optional<UnitsOfMeasurement> findById(Long aLong) {
-        return measurmentRepository.findById(aLong);
+        return measurementRepository.findById(aLong);
     }
 
     @Override
     public UnitsOfMeasurement save(UnitsOfMeasurement unitsOfMeasurement) {
-        return measurmentRepository.save(unitsOfMeasurement);
+        return measurementRepository.save(unitsOfMeasurement);
     }
 
     @Override
     public Collection<UnitsOfMeasurement> saveAll(Collection<UnitsOfMeasurement> unitsOfMeasurements) {
-        return measurmentRepository.saveAll(unitsOfMeasurements);
+        return measurementRepository.saveAll(unitsOfMeasurements);
     }
 
     @Override
     public void deleteById(Long id) {
-        measurmentRepository.deleteById(id);
+        measurementRepository.deleteById(id);
     }
 
     @Override
     public UnitsOfMeasurement findByName(String name) {
-        return measurmentRepository.findByName(name);
+        return measurementRepository.findByName(name);
     }
 }
