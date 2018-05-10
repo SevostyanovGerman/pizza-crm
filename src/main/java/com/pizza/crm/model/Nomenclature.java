@@ -34,6 +34,8 @@ public class Nomenclature {
 
     private String unitOfMeasurement;
 
+    private Boolean removed;
+
     @Enumerated(EnumType.STRING)
     private NomenclatureType nomenclatureType;
 
@@ -203,5 +205,13 @@ public class Nomenclature {
 
     public void setPackagingList(List<Packaging> packagingList) {
         this.packagingList = packagingList;
+    }
+
+    public Boolean isRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(Boolean removed) {
+        this.removed = removed;
     }
 }

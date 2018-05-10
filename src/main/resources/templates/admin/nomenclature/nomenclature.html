@@ -38,6 +38,8 @@
     <button class="btn btn-secondary">Действия</button>
     <button class="btn btn-secondary">Вид</button>
     <button class="btn btn-secondary">Обновить</button>
+    <button class="btn btn-secondary" onclick="restorationNomenclature()">Восстановить</button>
+    <button class="btn btn-secondary" id="view">Показать/скрыть удаленные</button>
 </div>
 <div>
     <table class="table table-bordered">
@@ -77,20 +79,40 @@
             <td></td>
         </tr>
         <tr class="shown" th:each="nomenclatureWithoutParentGroup : ${nomenclaturesWithoutParentGroup}">
-            <td th:text="${nomenclatureWithoutParentGroup?.name}"></td>
-            <td></td>
-            <td></td>
-            <td th:text="${nomenclatureWithoutParentGroup?.nomenclatureType}"></td>
-            <td>Остаток</td>
-            <td>Ед. изм.</td>
-            <td th:text="${nomenclatureWithoutParentGroup?.price}">Цена р.</td>
-            <td>Себестоимость</td>
-            <td>Места продаж</td>
-            <td th:style="'color: ' + ${nomenclatureWithoutParentGroup?.fontColor} + '; background: ' + ${nomenclatureWithoutParentGroup?.backgroundColor}">
-                Цвет кнопки
-            </td>
-            <td th:text="${nomenclatureWithoutParentGroup?.cookingTimeNorm}"></td>
-            <td th:text="${nomenclatureWithoutParentGroup?.cookingTimePeak}"></td>
+            <div th:if="${nomenclatureWithoutParentGroup?.removed != true }">
+                <td th:text="${nomenclatureWithoutParentGroup?.name}"></td>
+                <td></td>
+                <td></td>
+                <td th:text="${nomenclatureWithoutParentGroup?.nomenclatureType}"></td>
+                <td>Остаток</td>
+                <td>Ед. изм.</td>
+                <td th:text="${nomenclatureWithoutParentGroup?.price}">Цена р.</td>
+                <td>Себестоимость</td>
+                <td>Места продаж</td>
+                <td th:style="'color: ' + ${nomenclatureWithoutParentGroup?.fontColor} + '; background: ' + ${nomenclatureWithoutParentGroup?.backgroundColor}">
+                    Цвет кнопки
+                </td>
+                <td th:text="${nomenclatureWithoutParentGroup?.cookingTimeNorm}"></td>
+                <td th:text="${nomenclatureWithoutParentGroup?.cookingTimePeak}"></td>
+            </div>
+        </tr>
+        <tr class="remote-elements" th:each="nomenclature : ${nomenclatures}">
+            <div th:if="${nomenclature?.removed == true }">
+                <td th:text="${nomenclature?.name}"></td>
+                <td></td>
+                <td></td>
+                <td th:text="${nomenclature?.nomenclatureType}"></td>
+                <td>Остаток</td>
+                <td>Ед. изм.</td>
+                <td th:text="${nomenclature?.price}">Цена р.</td>
+                <td>Себестоимость</td>
+                <td>Места продаж</td>
+                <td th:style="'color: ' + ${nomenclature?.fontColor} + '; background: ' + ${nomenclatureWithoutParentGroup?.backgroundColor}">
+                    Цвет кнопки
+                </td>
+                <td th:text="${nomenclature?.cookingTimeNorm}"></td>
+                <td th:text="${nomenclature?.cookingTimePeak}"></td>
+            </div>
         </tr>
         </tbody>
     </table>

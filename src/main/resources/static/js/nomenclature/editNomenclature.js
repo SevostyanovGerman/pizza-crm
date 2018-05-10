@@ -131,7 +131,8 @@ function save() {
         backgroundColor: backgroundColor,
         fontColor: fontColor,
         packagingList: packagingList,
-        unitOfMeasurement: unitOfMeasurement
+        unitOfMeasurement: unitOfMeasurement,
+        removed: false
     };
 
     $.ajax({
@@ -235,7 +236,8 @@ function saveAndExit() {
         backgroundColor: backgroundColor,
         fontColor: fontColor,
         packagingList: packagingList,
-        unitOfMeasurement: unitOfMeasurement
+        unitOfMeasurement: unitOfMeasurement,
+        removed: false
     };
 
     $.ajax({

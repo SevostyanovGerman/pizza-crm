@@ -2,6 +2,12 @@ var csrfToken = $("meta[name='_csrf']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
 $(document).ready(function () {
+    $("#view").click(function () {
+        $('.remote-elements').toggle();
+    });
+});
+
+$(document).ready(function () {
     $('.parentGroup').click(function () {
         var nameNotTrimmed = $(this).text();
         var name = $.trim(nameNotTrimmed);
@@ -28,22 +34,24 @@ $(document).ready(function () {
             },
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {
-                    var trimName = name.replace(/\s+/g, '');
-                    var tr = $('.active').closest('tr').index();
-                    $('<tr class="shown ' + trimName + '">' +
-                        '<td>' + data[i].name + '</td>' +
-                        '<td></td>' +
-                        '<td></td>' +
-                        '<td>' + data[i].nomenclatureType + '</td>' +
-                        '<td></td>' +
-                        '<td></td>' +
-                        '<td>' + data[i].price + '</td>' +
-                        '<td>' + data[i].price + '</td>' +
-                        '<td></td>' +
-                        '<td style="color: ' + data[i].fontColor + '; background: ' + data[i].backgroundColor + '">Цвет кнопки</td>' +
-                        '<td>' + data[i].cookingTimeNorm + '</td>' +
-                        '<td>' + data[i].cookingTimePeak + '</td>' +
-                        '</tr>').insertAfter($('tr:eq(' + (tr + 1) + ')'));
+                    if (data[i].removed != true) {
+                        var trimName = name.replace(/\s+/g, '');
+                        var tr = $('.active').closest('tr').index();
+                        $('<tr class="shown ' + trimName + '">' +
+                            '<td>' + data[i].name + '</td>' +
+                            '<td></td>' +
+                            '<td></td>' +
+                            '<td>' + data[i].nomenclatureType + '</td>' +
+                            '<td></td>' +
+                            '<td></td>' +
+                            '<td>' + data[i].price + '</td>' +
+                            '<td>' + data[i].price + '</td>' +
+                            '<td></td>' +
+                            '<td style="color: ' + data[i].fontColor + '; background: ' + data[i].backgroundColor + '">Цвет кнопки</td>' +
+                            '<td>' + data[i].cookingTimeNorm + '</td>' +
+                            '<td>' + data[i].cookingTimePeak + '</td>' +
+                            '</tr>').insertAfter($('tr:eq(' + (tr + 1) + ')'));
+                    }
                 }
                 $('.shown').draggable({
                     helper: 'clone'
@@ -55,6 +63,7 @@ $(document).ready(function () {
         });
     });
 });
+
 $(document).ready(function () {
     $('.shown').draggable({
         helper: 'clone'
@@ -63,8 +72,14 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('tbody').on('click', '.shown', function () {
-        $('.shown').removeClass('item-active');
+        $('.shown').removeClass('item-active', '');
         $(this).addClass('item-active');
+    });
+});
+$(document).ready(function () {
+    $('.remote-elements').on('click', function () {
+        $('.remote-elements').removeClass('remote-active', '');
+        $(this).addClass('remote-active');
     });
 });
 
@@ -169,6 +184,24 @@ function saveParentGroup() {
     });
 }
 
+function restorationNomenclature() {
+    var name = $('.remote-active').find('td:eq(0)').text();
+    $.ajax({
+        type: "POST",
+        url: "nomenclature/restoration",
+        data: {name: name},
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function () {
+            window.location.replace("/nomenclature");
+        },
+        error: function () {
+            alert("error")
+        }
+    });
+}
+
 function editNomenclature() {
     var name = $('.item-active').find('td:eq(0)').text();
     $.ajax({
@@ -199,7 +232,6 @@ function deleteNomenclature() {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function () {
-            tr.remove();
             window.location.replace("/nomenclature");
         },
         error: function () {

@@ -31,3 +31,13 @@ body {
 .item-active {
     background: #79919d;
 }
+
+.remote-elements {
+    display: none;
+    background: gainsboro;
+    text-decoration: line-through;
+}
+
+.remote-active {
+    background: #79919d;
+}
