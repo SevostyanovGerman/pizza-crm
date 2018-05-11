@@ -20,6 +20,7 @@
     <link th:href="@{/webjars/jquery-ui/jquery-ui.theme.css}" rel="stylesheet" media="screen"/>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
@@ -35,8 +36,13 @@
     <button class="btn btn-secondary" data-toggle="modal" data-target="#addParentGroup">Добавить группу</button>
     <button class="btn btn-secondary" onclick="editNomenclature()">Изменить</button>
     <button class="btn btn-secondary" onclick="deleteNomenclature()">Удалить</button>
-    <button class="btn btn-secondary">Действия</button>
-    <button class="btn btn-secondary">Вид</button>
+    <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Действия
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="#" onclick="copyElement()">Копирование</a>
+    </div>
+    <button class="btn btn-secondary" >Вид</button>
     <button class="btn btn-secondary">Обновить</button>
     <button class="btn btn-secondary" onclick="restorationNomenclature()">Восстановить</button>
     <button class="btn btn-secondary" id="view">Показать/скрыть удаленные</button>

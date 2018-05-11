@@ -44,6 +44,38 @@ public class NomenclatureController {
         return "admin/nomenclature/nomenclature";
     }
 
+    @GetMapping("editNomenclature/copyElement/{id}")
+    public String copyElement(@PathVariable Long id, Model model) {
+        if (id != null) {
+            Nomenclature originalNomenclature = nomenclatureService.getNomenclature(id);
+            Nomenclature copyNomenclature = new Nomenclature(originalNomenclature.getPrice(), originalNomenclature.getCookingTimeNorm(), originalNomenclature.getCookingTimePeak(),
+                    originalNomenclature.getBackgroundColor(), originalNomenclature.getFontColor(), originalNomenclature.getUnitOfMeasurement(), originalNomenclature.getNomenclatureType(),
+                    originalNomenclature.getAccountingCategory(), originalNomenclature.getCookingPlace(), originalNomenclature.getNomenclatureParentGroupSet(),
+                    originalNomenclature.getModifierPropertyList(), originalNomenclature.getPackagingList());
+            model.addAttribute("nomenclature", copyNomenclature);
+            if (!copyNomenclature.getNomenclatureParentGroupSet().isEmpty()) {
+                model.addAttribute("parentGroupName",
+                        copyNomenclature.getNomenclatureParentGroupSet().iterator().next().getName());
+            }
+            String pickBackgroundColor = copyNomenclature.getBackgroundColor();
+            if (pickBackgroundColor == null) {
+                pickBackgroundColor = WHITE_BACKGROUND_COLOR;
+            }
+            model.addAttribute("pickBackgroundColor", pickBackgroundColor);
+
+            String pickFontColor = copyNomenclature.getFontColor();
+            if (pickFontColor == null) {
+                pickFontColor = BLACK_FONT_COLOR;
+            }
+            model.addAttribute("pickFontColor", pickFontColor);
+        }
+        model.addAttribute("unitsOfMeasurement", unitsOfMeasurementService.getAll());
+        model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());
+        model.addAttribute("modifierNomenclatures", nomenclatureService.getNomenclatureModifiers());
+        return "admin/nomenclature/editNomenclature";
+
+    }
+
     @GetMapping("editNomenclature/{id}")
     public String editNomenclature(@PathVariable Long id, Model model) {
         if (id != null) {
