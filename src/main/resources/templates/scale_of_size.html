@@ -26,9 +26,13 @@
 
 <div class="container-fluid">
     <button class="btn btn-success" data-toggle="modal" data-target="#scale">Добавить шкалу размеров</button>
-    <button class="btn btn-danger" onclick="deleteScale()">Удалить</button>
+    <button class="btn btn-danger" onclick="deleteValues()">Удалить</button>
     <button class="btn btn-info" onclick="refresh()">Обновить</button>
-    <input class="offset-1" type="checkbox">Показвать удаленные
+
+    <br>
+    <input type="checkbox" id="viewDel" class="viewDel" onchange="viewDel(this)">
+    <label for="viewDel">Показвать удаленные</label>
+
 </div>
 
 <div class="container-fluid">
@@ -43,13 +47,18 @@
             </thead>
             <tbody id="records_table">
             <tr th:each ="scale : ${scale}" >
-                <td  th:inline="text" class="selectView"><i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                <td  th:inline="text" class="selectView"><i class="fa fa-angle-right" aria-hidden="true"></i>
                     [[${scale.nameScale}]]
                 </td>
-                <td></td>
+                <td>
+                    <!--<a class="btn btn-success btn-sm" href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                 <a class="btn btn-danger btn-sm" href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
+                </td>
                 <td></td>
                 <td>
-                    <button  class="btn btn-default values" data-toggle="modal" data-target="#values">Добавить значение шкалы</button>
+                    <button  class="btn .btn-primary btn-sm values" data-toggle="modal" data-target="#values"><span class="fa fa-plus" aria-hidden="true"></span></button>
+                    <button  class="btn .btn-primary btn-sm scale"  onclick="sendScaleToModal()"><span class="fa fa-pencil" aria-hidden="true"></span></button>
+                    <button  class="btn .btn-primary btn-sm"  onclick="deleteScale()"><span class="fa fa-trash" aria-hidden="true"></span></button>
                 </td>
             </tr>
             </tbody>
@@ -57,7 +66,7 @@
     </div>
 </div>
 
-<!--Modal window ScaleOfSize-->
+<!--Modal window add Scale -->
 <div id="scale" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -82,12 +91,12 @@
     </div>
 </div>
 
-<!--Modal window ScaleOfSizeValues-->
+<!--Modal window add Values-->
 <div id="values" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Добавить шкалу размеров</h4>
+                <h4 class="modal-title">Добавить значения шкалы размеров</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -111,6 +120,68 @@
                 <button type="submit" class="btn btn-success" onclick="addValues()">Сохранить</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
             </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--Modal window edit Values-->
+<div id="editValues" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Редактировать значения шкалы размеров</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="editNameSize">Введите название размера:</label>
+                    <input class="form-control" type="text" id="editNameSize" required="required" name="nameSize">
+                </div>
+                <div class="form-group">
+                    <label for="editKitchenSize">Введите название для кухни:</label>
+                    <input class="form-control" type="text" id="editKitchenSize" required="required" name="kitchenSize">
+                </div>
+                <div class="form-group">
+                    <label for="editDefaultSize">Установить шкалу по умолчанию:</label>
+                    <input class="form-control" type="checkbox" id="editDefaultSize" required="required" name="defaultSize">
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" onclick="editValues()">Сохранить</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!--Modal window edit Scale-->
+<div id="editScale" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Редактировать значения шкалы размеров</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="editNameScale">Введите новое название Шкалы размеров:</label>
+                    <input class="form-control" type="text" id="editNameScale" required="required" name="nameScale">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" onclick="editScale()">Сохранить</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+            </div>
+
 
         </div>
     </div>

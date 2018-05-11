@@ -22,6 +22,13 @@ public class ScaleOfSizeValues {
     public ScaleOfSizeValues() {
     }
 
+    public ScaleOfSizeValues(Long id, String nameSize, String kitchenSize, boolean defaultSize) {
+        this.id = id;
+        this.nameSize = nameSize;
+        this.kitchenSize = kitchenSize;
+        this.defaultSize = defaultSize;
+    }
+
     public ScaleOfSizeValues(String nameSize, String kitchenSize, boolean defaultSize) {
         this.nameSize = nameSize;
         this.kitchenSize = kitchenSize;

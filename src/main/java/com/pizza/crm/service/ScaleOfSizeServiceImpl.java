@@ -1,6 +1,7 @@
 package com.pizza.crm.service;
 
 import com.pizza.crm.model.ScaleOfSize;
+import com.pizza.crm.model.ScaleOfSizeValues;
 import com.pizza.crm.repository.ScaleOfSizeRepository;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
@@ -44,4 +45,11 @@ public class ScaleOfSizeServiceImpl implements ScaleOfSizeService {
     public ScaleOfSize findByNameScale(String name) {
         return scaleOfSizeRepository.findByNameScale(name);
     }
+
+    @Override
+    public void deleteByNameScale(String name) {
+        scaleOfSizeRepository.deleteByNameScale(name);
+    }
+
+
 }

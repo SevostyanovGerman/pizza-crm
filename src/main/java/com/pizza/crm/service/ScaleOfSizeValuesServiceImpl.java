@@ -47,4 +47,9 @@ public class ScaleOfSizeValuesServiceImpl implements ScaleOfSizeValuesService{
         return scaleOfSizeValuesRepository.findByNameSize(name);
     }
 
+    @Override
+    public void deleteByNameSize(String name) {
+        scaleOfSizeValuesRepository.deleteByNameSize(name);
+    }
+
 }

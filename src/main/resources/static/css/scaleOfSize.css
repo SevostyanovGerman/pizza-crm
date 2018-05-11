@@ -10,12 +10,12 @@ body {
     position: relative;
 }
 
-.divMain{
-    margin-left: 10px;
-}
-
 
 .table tbody tr:hover td, .table tbody tr:hover th {
     background-color: #F5F5F4;
 }
 
+
+.item-active {
+    background: #dfe385;
+}
