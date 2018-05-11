@@ -10,7 +10,5 @@ public interface ScaleOfSizeValuesRepository extends JpaRepository<ScaleOfSizeVa
     //название метода должно быть findByИмяПоляВМодели
     ScaleOfSizeValues findByNameSize(String name);
 
-
     void deleteByNameSize(String name);
-
 }

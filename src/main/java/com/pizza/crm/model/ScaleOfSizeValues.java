@@ -92,4 +92,5 @@ public class ScaleOfSizeValues {
                 ", defaultSize=" + defaultSize +
                 '}';
     }
+
 }

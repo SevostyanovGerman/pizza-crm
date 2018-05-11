@@ -51,5 +51,4 @@ public class ScaleOfSizeServiceImpl implements ScaleOfSizeService {
         scaleOfSizeRepository.deleteByNameScale(name);
     }
 
-
 }

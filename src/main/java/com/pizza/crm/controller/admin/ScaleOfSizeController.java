@@ -71,7 +71,6 @@ public class ScaleOfSizeController {
         return "redirect:/scale_of_size";
     }
 
-
     @PostMapping(value = "/scale_of_size/delete/scale")
     public String deleteScale(@RequestParam String nameScale){
         scaleOfSizeService.deleteByNameScale(nameScale);
@@ -105,8 +104,4 @@ public class ScaleOfSizeController {
 
         return "redirect:/scale_of_size";
     }
-
-
-
-
 }

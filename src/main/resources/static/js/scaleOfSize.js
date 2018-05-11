@@ -30,9 +30,11 @@ $(document).ready(function () {
             },
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {
+
+                    var trimName = name.replace(/\s+/g, '');
+                    var tr = $('.active').closest('tr').index();
+
                     if(data[i].removed != true) {
-                        var trimName = name.replace(/\s+/g, '');
-                        var tr = $('.active').closest('tr').index();
 
                         $('<tr id="shown" class="shown ' + trimName + '">' +
                             '<td>' + data[i].nameSize + '</td>' +
@@ -43,6 +45,17 @@ $(document).ready(function () {
                             '</tr>').insertAfter($('tr:eq(' + (tr + 1) + ')')
                         );
 
+                    }
+
+                    if(data[i].removed == true && $('input.viewDel').is(':checked'))  {
+
+                            $('<tr id="removed_el" class="shown ' + trimName + ' ">' +
+                                '<td>' + data[i].nameSize + '</td>' +
+                                '<td>' + data[i].kitchenSize + '</td>' +
+                                '<td><input type="checkbox" class="activated" ' + (data[i].defaultSize ? 'checked' : '') + '></td>' +
+                                '<td><a class="fa fa-ban"></a>' +
+                                '</tr>').insertAfter($('tr:eq(' + (tr + 1) + ')')
+                            );
                     }
                 }
             },
@@ -79,7 +92,7 @@ $(document).ready(function () {
 
 function viewDel(checkboxElem) {
     if (checkboxElem.checked) {
-        alert("viewDel");
+       // $('#removed_el').toggle;
 
     } else {
         window.location.replace("/scale_of_size");
@@ -146,20 +159,20 @@ function addValues() {
 
 // -a*- Выделение значений шкалы размеров для удаления
 
-$(document).ready(function () {
+/*$(document).ready(function () {
     $('tbody').on('click', '.shown', function () {
         $('.shown').removeClass('item-active');
         $(this).addClass('item-active');
     });
-});
+});*/
 
 // Удаление значений шкалы размеров
 function deleteValues() {
 
-  var tr = $('.item-active').closest('tr'); // -a*- использовали при использовании Выделение значений шкалы размеров для удаления
-  var nameSize = tr.find('td:eq(0)').text();
+  //var tr = $('.item-active').closest('tr'); // -a*- использовали при использовании Выделение значений шкалы размеров для удаления
+  //var nameSize = tr.find('td:eq(0)').text();
 
-    //var nameSize = $("#shown").find("td:eq(0)").text();
+    var nameSize = $("#shown").find("td:eq(0)").text();
 
 
 
@@ -171,7 +184,7 @@ function deleteValues() {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function () {
-            tr.remove(); //-a*-
+           // tr.remove(); //-a*-
             window.location.replace("/scale_of_size");
         },
         error: function () {
@@ -250,7 +263,8 @@ function editValues() {
     });
 }
 
-function sendScaleToModal() {
+
+/*function sendScaleToModal() {
     $('button.scale').on('click', function() {
         var el = $(this).closest('tr').find('td');
         var nameScaleTrim = el.eq(0).text();
@@ -259,8 +273,18 @@ function sendScaleToModal() {
         $('#editScale').modal('show'); //показываем модалку
         $("input[name=nameScale]").val(nameScale);
     });
-}
+}*/
 
+$(document).ready(function () {
+    $("#sendScaleToModal").click(function () {
+        var el = $(this).closest('tr').find('td');
+        var nameScaleTrim = el.eq(0).text();
+        var nameScale = $.trim(nameScaleTrim);
+
+        $('#editScale').modal('show'); //показываем модалку
+        $("input[name=nameScale]").val(nameScale);
+    });
+});
 function editScale() {
 
     var nameScaleNoEdit = $("input[name=nameScale]").val();

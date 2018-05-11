@@ -51,5 +51,4 @@ public class ScaleOfSizeValuesServiceImpl implements ScaleOfSizeValuesService{
     public void deleteByNameSize(String name) {
         scaleOfSizeValuesRepository.deleteByNameSize(name);
     }
-
 }
