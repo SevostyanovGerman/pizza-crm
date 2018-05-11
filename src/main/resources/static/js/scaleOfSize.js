@@ -30,17 +30,20 @@ $(document).ready(function () {
             },
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {
-                    var trimName = name.replace(/\s+/g, '');
-                    var tr = $('.active').closest('tr').index();
+                    if(data[i].removed != true) {
+                        var trimName = name.replace(/\s+/g, '');
+                        var tr = $('.active').closest('tr').index();
 
-                    $('<tr id="shown" class="shown ' + trimName + '">' +
-                        '<td>' + data[i].nameSize + '</td>' +
-                        '<td>' + data[i].kitchenSize + '</td>' +
-                        '<td><input type="checkbox" class="activated" '+(data[i].defaultSize ? 'checked' : '' )+'></td>' +
-                        '<td><a class="btn .btn-primary btn-sm editValues" href="#"><i class="fa fa-pencil" aria-hidden="true" onclick="sendValuesToModal()"></i></a>'+
-                        '<a class="btn btn-danger btn-sm deleteValues" href="#" onclick="deleteValues()"><i class="fa fa-trash" aria-hidden="true" ></i></a></td>' +
-                        '</tr>').insertAfter($('tr:eq(' + (tr + 1) + ')')
-                    );
+                        $('<tr id="shown" class="shown ' + trimName + '">' +
+                            '<td>' + data[i].nameSize + '</td>' +
+                            '<td>' + data[i].kitchenSize + '</td>' +
+                            '<td><input type="checkbox" class="activated" ' + (data[i].defaultSize ? 'checked' : '') + '></td>' +
+                            '<td><a class="btn .btn-primary btn-sm editValues" href="#"><i class="fa fa-pencil" aria-hidden="true" onclick="sendValuesToModal()"></i></a>' +
+                            '<a class="btn btn-danger btn-sm deleteValues" href="#" onclick="deleteValues()"><i class="fa fa-trash" aria-hidden="true" ></i></a></td>' +
+                            '</tr>').insertAfter($('tr:eq(' + (tr + 1) + ')')
+                        );
+
+                    }
                 }
             },
             error: function (e) {
@@ -72,6 +75,17 @@ $(document).ready(function () {
     });
 
 });
+
+
+function viewDel(checkboxElem) {
+    if (checkboxElem.checked) {
+        alert("viewDel");
+
+    } else {
+        window.location.replace("/scale_of_size");
+    }
+}
+
 
 function addScale() {
     var nameScale = $("#nameScale").val();
@@ -132,24 +146,20 @@ function addValues() {
 
 // -a*- Выделение значений шкалы размеров для удаления
 
-/*
 $(document).ready(function () {
     $('tbody').on('click', '.shown', function () {
         $('.shown').removeClass('item-active');
         $(this).addClass('item-active');
     });
 });
-*/
 
 // Удаление значений шкалы размеров
 function deleteValues() {
 
-  /*
   var tr = $('.item-active').closest('tr'); // -a*- использовали при использовании Выделение значений шкалы размеров для удаления
   var nameSize = tr.find('td:eq(0)').text();
-*/
 
-    var nameSize = $("#shown").find("td:eq(0)").text();
+    //var nameSize = $("#shown").find("td:eq(0)").text();
 
 
 
@@ -161,7 +171,7 @@ function deleteValues() {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function () {
-          //  tr.remove(); -a*-
+            tr.remove(); //-a*-
             window.location.replace("/scale_of_size");
         },
         error: function () {
@@ -286,12 +296,4 @@ function refresh() {
     window.location.replace("/scale_of_size");
 }
 
-function viewDel(checkboxElem) {
-    if (checkboxElem.checked) {
-        alert(flagViewDel);
-
-    } else {
-        window.location.replace("/scale_of_size");
-    }
-}
 

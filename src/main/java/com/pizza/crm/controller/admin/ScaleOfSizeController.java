@@ -65,7 +65,9 @@ public class ScaleOfSizeController {
     // поэтому нужно пеализовать как RestController
     @PostMapping(value = "/scale_of_size/delete/values")
     public String deleteValues(@RequestParam String nameSize){
-        scaleOfSizeValuesService.deleteByNameSize(nameSize);
+        ScaleOfSizeValues values = scaleOfSizeValuesService.findByNameSize(nameSize);
+        values.setRemoved(true);
+        scaleOfSizeValuesService.save(values);
         return "redirect:/scale_of_size";
     }
 

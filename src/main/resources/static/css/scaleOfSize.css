@@ -19,3 +19,9 @@ body {
 .item-active {
     background: #dfe385;
 }
+
+.removed_el{
+    display: none;
+    background: gainsboro;
+    text-decoration: line-through;
+}

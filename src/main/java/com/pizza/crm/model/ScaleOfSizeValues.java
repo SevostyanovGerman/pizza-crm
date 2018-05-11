@@ -19,6 +19,9 @@ public class ScaleOfSizeValues {
     @Column
     private boolean defaultSize;
 
+    @Column
+    private boolean removed;
+
     public ScaleOfSizeValues() {
     }
 
@@ -30,6 +33,12 @@ public class ScaleOfSizeValues {
     }
 
     public ScaleOfSizeValues(String nameSize, String kitchenSize, boolean defaultSize) {
+        this.nameSize = nameSize;
+        this.kitchenSize = kitchenSize;
+        this.defaultSize = defaultSize;
+    }
+
+    public ScaleOfSizeValues(String nameSize, String kitchenSize, boolean defaultSize, boolean removed) {
         this.nameSize = nameSize;
         this.kitchenSize = kitchenSize;
         this.defaultSize = defaultSize;
@@ -67,6 +76,13 @@ public class ScaleOfSizeValues {
         this.defaultSize = defaultSize;
     }
 
+    public boolean getRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(boolean removed) {
+        this.removed = removed;
+    }
     @Override
     public String toString() {
         return "ScaleOfSizeValuesRepository{" +
