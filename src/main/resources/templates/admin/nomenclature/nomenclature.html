@@ -36,16 +36,25 @@
     <button class="btn btn-secondary" data-toggle="modal" data-target="#addParentGroup">Добавить группу</button>
     <button class="btn btn-secondary" onclick="editNomenclature()">Изменить</button>
     <button class="btn btn-secondary" onclick="deleteNomenclature()">Удалить</button>
-    <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Действия
-    </button>
-    <div class="dropdown-menu">
-        <a class="dropdown-item" href="#" onclick="copyElement()">Копирование</a>
+    <div class="btn-group" >
+        <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Действия
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" onclick="copyElement()">Копирование</a>
+            <a class="dropdown-item" href="#" onclick="restorationNomenclature()">Восстановить</a>
+        </div>
     </div>
-    <button class="btn btn-secondary" >Вид</button>
+    <div class="btn-group" >
+        <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+            Вид
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" id="view">Показать/скрыть удаленные</a>
+        </div>
+    </div>
     <button class="btn btn-secondary">Обновить</button>
-    <button class="btn btn-secondary" onclick="restorationNomenclature()">Восстановить</button>
-    <button class="btn btn-secondary" id="view">Показать/скрыть удаленные</button>
+
 </div>
 <div>
     <table class="table table-bordered">

@@ -2,12 +2,6 @@ var csrfToken = $("meta[name='_csrf']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
 $(document).ready(function () {
-    $("#view").click(function () {
-        $('.remote-elements').toggle();
-    });
-});
-
-$(document).ready(function () {
     $('.parentGroup').click(function () {
         var nameNotTrimmed = $(this).text();
         var name = $.trim(nameNotTrimmed);
@@ -265,3 +259,10 @@ function showColors() {
     $('.showColors').css('background-color', backgroundColor);
     $('.showColors').css('color', fontColor);
 }
+
+$(document).ready(function () {
+    $("#view").click(function () {
+        $('.remote-elements').toggle();
+    });
+});
+
