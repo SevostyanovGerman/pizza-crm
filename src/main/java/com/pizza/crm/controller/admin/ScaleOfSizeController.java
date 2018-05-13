@@ -28,7 +28,7 @@ public class ScaleOfSizeController {
         this.scaleOfSizeValuesService = scaleOfSizeValuesService;
     }
 
-    @RequestMapping("/test2")
+    @RequestMapping("/test4")
     public String Test(Model model) {
         model.addAttribute("test", scaleOfSizeService.getAll());
         return "test";
