@@ -64,6 +64,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
     private final UnitsOfMeasurementService unitsOfMeasurementService;
 
+    private final ScaleOfSizeService scaleOfSizeService;
+
     @Autowired
     public DbDataGenerator(NomenclatureParentGroupService nomenclatureParentGroupService,
                            NomenclatureService nomenclatureService, UserService userService, RoleService roleService,
@@ -72,7 +74,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                            DiscountService discountService, DecreeService decreeService,
                            QuickMenuService quickMenuService, DishQuickMenuService dishQuickMenuService,
                            EmployeeService employeeService, PaymentMethodService paymentMethodService,
-                           PaymentTypeService paymentTypeService, UnitsOfMeasurementService unitsOfMeasurementService) {
+                           PaymentTypeService paymentTypeService, UnitsOfMeasurementService unitsOfMeasurementService, ScaleOfSizeService scaleOfSizeService) {
         this.nomenclatureParentGroupService = nomenclatureParentGroupService;
         this.nomenclatureService = nomenclatureService;
         this.userService = userService;
@@ -90,6 +92,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.paymentMethodService = paymentMethodService;
         this.paymentTypeService = paymentTypeService;
         this.unitsOfMeasurementService = unitsOfMeasurementService;
+        this.scaleOfSizeService = scaleOfSizeService;
     }
 
     @Override
@@ -114,6 +117,10 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         generateIngredient();
 
         generateUnitsOfMeasurement();
+
+        generateScaleOfSize();
+        
+       
 
     }
 
@@ -390,6 +397,21 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         NomenclatureParentGroup pizzas = new NomenclatureParentGroup("Пицца 35см");
         pizzas.setNomenclatures(new ArrayList<>(Arrays.asList(margarita, marinara)));
         nomenclatureParentGroupService.save(pizzas);
+    }
+
+    private void generateScaleOfSize(){
+		ScaleOfSizeValues valuesDrink = new ScaleOfSizeValues("0,33 литра" ,"0.3 л.",false);
+        ScaleOfSizeValues valuesPizza = new ScaleOfSizeValues("30 сантиметров" ,"30 см.",true);
+        ScaleOfSizeValues valuesWeight = new ScaleOfSizeValues("100 грамм" ,"100 гр.",true);
+        ArrayList<ScaleOfSizeValues> listDrink = new ArrayList<>(Arrays.asList(valuesDrink));
+        ArrayList<ScaleOfSizeValues> listPizza = new ArrayList<>(Arrays.asList(valuesPizza));
+        ArrayList<ScaleOfSizeValues> listWeight = new ArrayList<>(Arrays.asList(valuesWeight));
+        ScaleOfSize scaleDrink = new ScaleOfSize("Обьем бутылок", listDrink);
+        ScaleOfSize scalePizza = new ScaleOfSize("Размер пиццы", listPizza);
+        ScaleOfSize scaleWeight = new ScaleOfSize("Вес товара", listWeight);
+        scaleOfSizeService.save(scaleDrink);
+        scaleOfSizeService.save(scalePizza);
+        scaleOfSizeService.save(scaleWeight);
     }
 
     private void generateIngredient() {
