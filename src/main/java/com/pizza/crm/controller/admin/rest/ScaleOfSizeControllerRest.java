@@ -24,5 +24,6 @@ public class ScaleOfSizeControllerRest {
     public List <ScaleOfSizeValues> getScaleOfSizeValues(@RequestParam String scaleName) {
         ScaleOfSize byNameScale = scaleOfSizeService.findByNameScale(scaleName);
         return byNameScale.getValuesList();
+
     }
 }

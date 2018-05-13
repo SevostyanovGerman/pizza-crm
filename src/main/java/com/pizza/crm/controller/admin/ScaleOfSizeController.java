@@ -28,6 +28,12 @@ public class ScaleOfSizeController {
         this.scaleOfSizeValuesService = scaleOfSizeValuesService;
     }
 
+    @RequestMapping("/test")
+    public String Test(Model model) {
+        model.addAttribute("test", scaleOfSizeService.getAll());
+        return "test";
+    }
+
     @RequestMapping("/scale_of_size")
     public String getAllScale(Model model) {
         model.addAttribute("scale", scaleOfSizeService.getAll());
