@@ -20,6 +20,7 @@
     <link th:href="@{/webjars/jquery-ui/jquery-ui.theme.css}" rel="stylesheet" media="screen"/>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
@@ -35,9 +36,25 @@
     <button class="btn btn-secondary" data-toggle="modal" data-target="#addParentGroup">Добавить группу</button>
     <button class="btn btn-secondary" onclick="editNomenclature()">Изменить</button>
     <button class="btn btn-secondary" onclick="deleteNomenclature()">Удалить</button>
-    <button class="btn btn-secondary">Действия</button>
-    <button class="btn btn-secondary">Вид</button>
+    <div class="btn-group" >
+        <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Действия
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" onclick="copyElement()">Копирование</a>
+            <a class="dropdown-item" href="#" onclick="restorationNomenclature()">Восстановить</a>
+        </div>
+    </div>
+    <div class="btn-group" >
+        <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+            Вид
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" id="view">Показать/скрыть удаленные</a>
+        </div>
+    </div>
     <button class="btn btn-secondary">Обновить</button>
+
 </div>
 <div>
     <table class="table table-bordered">
@@ -77,20 +94,40 @@
             <td></td>
         </tr>
         <tr class="shown" th:each="nomenclatureWithoutParentGroup : ${nomenclaturesWithoutParentGroup}">
-            <td th:text="${nomenclatureWithoutParentGroup?.name}"></td>
-            <td></td>
-            <td></td>
-            <td th:text="${nomenclatureWithoutParentGroup?.nomenclatureType}"></td>
-            <td>Остаток</td>
-            <td>Ед. изм.</td>
-            <td th:text="${nomenclatureWithoutParentGroup?.price}">Цена р.</td>
-            <td>Себестоимость</td>
-            <td>Места продаж</td>
-            <td th:style="'color: ' + ${nomenclatureWithoutParentGroup?.fontColor} + '; background: ' + ${nomenclatureWithoutParentGroup?.backgroundColor}">
-                Цвет кнопки
-            </td>
-            <td th:text="${nomenclatureWithoutParentGroup?.cookingTimeNorm}"></td>
-            <td th:text="${nomenclatureWithoutParentGroup?.cookingTimePeak}"></td>
+            <div th:if="${nomenclatureWithoutParentGroup?.removed != true }">
+                <td th:text="${nomenclatureWithoutParentGroup?.name}"></td>
+                <td></td>
+                <td></td>
+                <td th:text="${nomenclatureWithoutParentGroup?.nomenclatureType}"></td>
+                <td>Остаток</td>
+                <td>Ед. изм.</td>
+                <td th:text="${nomenclatureWithoutParentGroup?.price}">Цена р.</td>
+                <td>Себестоимость</td>
+                <td>Места продаж</td>
+                <td th:style="'color: ' + ${nomenclatureWithoutParentGroup?.fontColor} + '; background: ' + ${nomenclatureWithoutParentGroup?.backgroundColor}">
+                    Цвет кнопки
+                </td>
+                <td th:text="${nomenclatureWithoutParentGroup?.cookingTimeNorm}"></td>
+                <td th:text="${nomenclatureWithoutParentGroup?.cookingTimePeak}"></td>
+            </div>
+        </tr>
+        <tr class="remote-elements" th:each="nomenclature : ${nomenclatures}">
+            <div th:if="${nomenclature?.removed == true }">
+                <td th:text="${nomenclature?.name}"></td>
+                <td></td>
+                <td></td>
+                <td th:text="${nomenclature?.nomenclatureType}"></td>
+                <td>Остаток</td>
+                <td>Ед. изм.</td>
+                <td th:text="${nomenclature?.price}">Цена р.</td>
+                <td>Себестоимость</td>
+                <td>Места продаж</td>
+                <td th:style="'color: ' + ${nomenclature?.fontColor} + '; background: ' + ${nomenclatureWithoutParentGroup?.backgroundColor}">
+                    Цвет кнопки
+                </td>
+                <td th:text="${nomenclature?.cookingTimeNorm}"></td>
+                <td th:text="${nomenclature?.cookingTimePeak}"></td>
+            </div>
         </tr>
         </tbody>
     </table>
@@ -224,7 +261,7 @@
                                 Цвет текста
                             </label>
                             <div class="col-sm-4">
-                                <input type="color" id="fontColor">
+                                <input type="color" id="fontColor" th:value="${pickFontColor}">
                             </div>
                         </div>
                         <div class="col-sm-4 form-group row">
@@ -232,7 +269,7 @@
                                 Цвет фона
                             </label>
                             <div class="col-sm-4">
-                                <input type="color" id="backgroundColor">
+                                <input type="color" id="backgroundColor" th:value="${pickBackgroundColor}">
                             </div>
                         </div>
                         <button class="btn btn-primary" onclick="showColors()">Color</button>
