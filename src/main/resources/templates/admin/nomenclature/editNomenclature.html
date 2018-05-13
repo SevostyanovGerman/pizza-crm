@@ -273,7 +273,7 @@
                     <div class="col-sm-3">
                         <select id="measureUnit" class="form-control">
                             <option th:each="unit : ${unitsOfMeasurement}" th:text="${unit.name}"
-                                    th:selected="${nomenclature.unitOfMeasurement == unit.name}" ></option>
+                                    th:selected="${nomenclature?.unitOfMeasurement == unit.name}" ></option>
                         </select>
                     </div>
                 </div>
@@ -406,7 +406,7 @@
                                         Цвет текста
                                     </label>
                                     <div class="col-sm-6">
-                                        <input type="color" id="fontColor">
+                                        <input type="color" id="fontColor" th:value="${pickFontColor}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -414,7 +414,7 @@
                                         Цвет фона
                                     </label>
                                     <div class="col-sm-4">
-                                        <input type="color" id="backgroundColor">
+                                        <input type="color" id="backgroundColor" th:value="${pickBackgroundColor}">
                                     </div>
                                 </div>
                             </div>

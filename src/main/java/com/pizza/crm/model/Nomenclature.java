@@ -34,6 +34,8 @@ public class Nomenclature {
 
     private String unitOfMeasurement;
 
+    private Boolean removed;
+
     @Enumerated(EnumType.STRING)
     private NomenclatureType nomenclatureType;
 
@@ -63,6 +65,25 @@ public class Nomenclature {
     public Nomenclature(String name) {
         this.name = name;
     }
+
+    public Nomenclature(Double price, LocalTime cookingTimeNorm, LocalTime cookingTimePeak, String backgroundColor,
+                        String fontColor, String unitOfMeasurement, NomenclatureType nomenclatureType, AccountingCategory accountingCategory,
+                        String cookingPlace, Set<NomenclatureParentGroup> nomenclatureParentGroupSet, List<ModifierProperty> modifierPropertyList,
+                        List<Packaging> packagingList) {
+        this.price = price;
+        this.cookingTimeNorm = cookingTimeNorm;
+        this.cookingTimePeak = cookingTimePeak;
+        this.backgroundColor = backgroundColor;
+        this.fontColor = fontColor;
+        this.unitOfMeasurement = unitOfMeasurement;
+        this.nomenclatureType = nomenclatureType;
+        this.accountingCategory = accountingCategory;
+        this.cookingPlace = cookingPlace;
+        this.nomenclatureParentGroupSet = nomenclatureParentGroupSet;
+        this.modifierPropertyList = modifierPropertyList;
+        this.packagingList = packagingList;
+    }
+
 
     public Nomenclature(Integer code, Double price, LocalTime cookingTimeNorm,
                         LocalTime cookingTimePeak, String name, NomenclatureType nomenclatureType,
@@ -203,5 +224,13 @@ public class Nomenclature {
 
     public void setPackagingList(List<Packaging> packagingList) {
         this.packagingList = packagingList;
+    }
+
+    public Boolean isRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(Boolean removed) {
+        this.removed = removed;
     }
 }
