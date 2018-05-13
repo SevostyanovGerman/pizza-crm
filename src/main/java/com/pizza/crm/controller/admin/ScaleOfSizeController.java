@@ -28,7 +28,7 @@ public class ScaleOfSizeController {
         this.scaleOfSizeValuesService = scaleOfSizeValuesService;
     }
 
-    @RequestMapping("/test")
+    @RequestMapping("/test3")
     public String Test(Model model) {
         model.addAttribute("test", scaleOfSizeService.getAll());
         return "test";
@@ -111,7 +111,4 @@ public class ScaleOfSizeController {
         return "redirect:/scale_of_size";
     }
 
-    void someEndMethod(){
-
-    }
 }
