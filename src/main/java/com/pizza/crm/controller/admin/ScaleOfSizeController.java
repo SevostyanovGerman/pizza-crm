@@ -104,4 +104,8 @@ public class ScaleOfSizeController {
 
         return "redirect:/scale_of_size";
     }
+
+    void someEndMethod(){
+
+    }
 }
