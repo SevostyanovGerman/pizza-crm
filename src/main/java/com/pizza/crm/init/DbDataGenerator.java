@@ -92,7 +92,6 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.paymentMethodService = paymentMethodService;
         this.paymentTypeService = paymentTypeService;
         this.unitsOfMeasurementService = unitsOfMeasurementService;
-        this.scaleOfSizeService = scaleOfSizeService;
     }
 
     @Override
@@ -397,6 +396,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         NomenclatureParentGroup pizzas = new NomenclatureParentGroup("Пицца 35см");
         pizzas.setNomenclatures(new ArrayList<>(Arrays.asList(margarita, marinara)));
         nomenclatureParentGroupService.save(pizzas);
+
     }
 
     private void generateScaleOfSize(){
@@ -412,6 +412,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         scaleOfSizeService.save(scaleDrink);
         scaleOfSizeService.save(scalePizza);
         scaleOfSizeService.save(scaleWeight);
+
     }
 
     private void generateIngredient() {
