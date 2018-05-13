@@ -9,8 +9,4 @@ public class PizzaCrmApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PizzaCrmApplication.class, args);
 	}
-
-	public void method(){
-
-	}
 }
