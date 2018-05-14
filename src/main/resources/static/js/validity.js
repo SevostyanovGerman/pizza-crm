@@ -9,6 +9,7 @@ $(document).ready(function () {
     });
 });
 
+//выделение строк в таблице
 function getSelectedSchedule() {
     var td = $('#schedule-list td.item-active');
     var name = td.text();
