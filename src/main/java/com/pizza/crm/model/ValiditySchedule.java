@@ -4,15 +4,12 @@ import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "schedule")
-public class Schedule {
+@Table(name = "validity_schedule")
+public class ValiditySchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "name", unique = true)
-    private String name;
 
     private LocalTime beginTime;
 
@@ -32,14 +29,12 @@ public class Schedule {
 
     private Boolean sunday;
 
-    public Schedule(String name, LocalTime beginTime, LocalTime endTime) {
-        this.name = name;
+    public ValiditySchedule(LocalTime beginTime, LocalTime endTime) {
         this.beginTime = beginTime;
         this.endTime = endTime;
     }
 
-    public Schedule(String name, LocalTime beginTime, LocalTime endTime, Boolean monday, Boolean tuesday, Boolean wednesday, Boolean thursday, Boolean friday, Boolean saturday, Boolean sunday) {
-        this.name = name;
+    public ValiditySchedule(LocalTime beginTime, LocalTime endTime, Boolean monday, Boolean tuesday, Boolean wednesday, Boolean thursday, Boolean friday, Boolean saturday, Boolean sunday) {
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.monday = monday;
@@ -51,7 +46,7 @@ public class Schedule {
         this.sunday = sunday;
     }
 
-    public Schedule() {
+    public ValiditySchedule() {
     }
 
     public Long getId() {
@@ -76,14 +71,6 @@ public class Schedule {
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Boolean getMonday() {

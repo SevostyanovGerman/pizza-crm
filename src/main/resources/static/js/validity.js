@@ -2,7 +2,7 @@ var csrfToken = $("meta[name='_csrf']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
 $(document).ready(function () {
-    $('#schedule-list td').click(function () {
+    $('td.viewName').click(function () {
         $('td').removeClass();
         $(this).addClass('item-active');
         getSelectedSchedule();
@@ -11,35 +11,39 @@ $(document).ready(function () {
 
 //выделение строк в таблице
 function getSelectedSchedule() {
-    var td = $('#schedule-list td.item-active');
+    var td = $('#Schedule-list td.item-active');
     var name = td.text();
     $('#scheduleListName').val(name);
     showSchedule(name);
+    $('#showSchedule').empty(); // добавил эту строчку здесь!!! Работает!
+
 }
 
-function showSchedule(name) {
+function showSchedule(nameValidity) {
     $.ajax({
         type: "POST",
         url: "/validity/get",
-        data: "name=" + name,
+        data: {nameValidity: nameValidity},
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function (data) {
-            $('#id').val(data.id);
-            $('#showSchedule').empty();
-            $('#showSchedule').append('<tr>' +
-                '<td><input type="time" value="' + data.beginTime + '"></td>' +
-                '<td><input type="time" value="' + data.endTime + '"></td>' +
-                '<td><input type="checkbox" class="monday"></td>' +
-                '<td><input type="checkbox" class="tuesday"></td>' +
-                '<td><input type="checkbox" class="wednesday"></td>' +
-                '<td><input type="checkbox" class="thursday"></td>' +
-                '<td><input type="checkbox" class="friday"></td>' +
-                '<td><input type="checkbox" class="saturday"></td>' +
-                '<td><input type="checkbox" class="sunday"></td>' +
-                '</tr>');
-            checkCheckbox(data);
+            console.log(data);
+            for (var i = 0; i < data.length; i++) {
+
+                $('#showSchedule').append('<tr>' +
+                    '<td><input type="time" value="' + data[i].beginTime + '"></td>' +
+                    '<td><input type="time" value="' + data[i].endTime + '"></td>' +
+                    '<td><input type="checkbox" class="monday"'    +(data[i].monday ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="tuesday"'   +(data[i].tuesday ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="wednesday"' +(data[i].wednesday ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="thursday"'  +(data[i].thursday ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="friday"'    +(data[i].friday ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="saturday"'  +(data[i].saturday ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="sunday"'    +(data[i].sunday ? 'checked' : '') + '></td>' +
+                    '</tr>');
+            }
+
         },
         error: function (e) {
             alert("error")
@@ -47,15 +51,6 @@ function showSchedule(name) {
     });
 }
 
-function checkCheckbox(data) {
-    $(".monday").prop("checked", data.monday);
-    $(".tuesday").prop("checked", data.tuesday);
-    $(".wednesday").prop("checked", data.wednesday);
-    $(".thursday").prop("checked", data.thursday);
-    $(".friday").prop("checked", data.friday);
-    $(".saturday").prop("checked", data.saturday);
-    $(".sunday").prop("checked", data.sunday);
-}
 
 function save() {
     var name = $("#scheduleListName").val();

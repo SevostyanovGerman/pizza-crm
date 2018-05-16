@@ -1,7 +1,7 @@
 package com.pizza.crm.model.discount;
 
 import com.pizza.crm.model.PaymentMethod;
-import com.pizza.crm.model.Schedule;
+import com.pizza.crm.model.ValiditySchedule;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -74,7 +74,7 @@ public class Discount {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "discount")
     @Fetch(FetchMode.SUBSELECT)
-    private List<Schedule> schedules = new ArrayList<>();
+    private List<ValiditySchedule> validitySchedules = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<DiscountCategory> discountCategories = new ArrayList<>();
@@ -86,7 +86,7 @@ public class Discount {
                     Boolean manualInput, boolean manualDishSelect, Boolean automatic, Boolean combinable, Boolean enabled, Boolean applyForAllDiscountCategories,
                     @Min(0) Integer priority, @Min(0) Integer value, String comment, DiscountApplicationMethod discountApplicationMethod,
                     DiscountMode discountMode, DiscountAssignMode discountAssignMode, DiscountCalculationMode discountCalculationMode,
-                    List<PaymentMethod> paymentMethods, List<Schedule> schedules, List<DiscountCategory> discountCategories) {
+                    List<PaymentMethod> paymentMethods, List<ValiditySchedule> validitySchedules, List<DiscountCategory> discountCategories) {
         this.name = name;
         this.nameInCheck = nameInCheck;
         this.type = type;
@@ -108,7 +108,7 @@ public class Discount {
         this.discountAssignMode = discountAssignMode;
         this.discountCalculationMode = discountCalculationMode;
         this.paymentMethods = paymentMethods;
-        this.schedules = schedules;
+        this.validitySchedules = validitySchedules;
         this.discountCategories = discountCategories;
     }
 
@@ -253,12 +253,12 @@ public class Discount {
         this.paymentMethods = paymentMethods;
     }
 
-    public List<Schedule> getSchedules() {
-        return schedules;
+    public List<ValiditySchedule> getValiditySchedules() {
+        return validitySchedules;
     }
 
-    public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
+    public void setValiditySchedules(List<ValiditySchedule> validitySchedules) {
+        this.validitySchedules = validitySchedules;
     }
 
     public List<DiscountCategory> getDiscountCategories() {

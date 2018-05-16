@@ -55,10 +55,10 @@
                     <label for="activePeriod" class="d-flex col-sm-6 col-form-label justify-content-end">Период действия приказа:</label>
                     <div class="col-sm-4">
                         <select class="form-control" name="" id="activePeriod">
-                            <option th:each="schedule : ${schedules}" th:text="${schedule.getName()}"></option>
+                            <option th:each="validitySchedule : ${validitySchedules}" th:text="${validitySchedule.getName()}"></option>
                         </select>
                     </div>
-                    <button type="button" class="form-control col-sm-1 btn btn-success"  data-toggle="modal" data-target="#schedule" >+</button>
+                    <button type="button" class="form-control col-sm-1 btn btn-success"  data-toggle="modal" data-target="#validitySchedule" >+</button>
                     <a class="btn btn-info col-sm-1" href="#" th:href="@{/validity}" role="button">...</a>
                 </div>
                 <div class="form-group row ">
@@ -139,7 +139,7 @@
     </div>
 
     <!--Modal window-->
-    <div id="schedule" class="modal fade" tabindex="-1">
+    <div id="validitySchedule" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
