@@ -125,43 +125,53 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     }
 
     private void generateDiscountsAndPaymentMethods() {
+        // PaymentType creating
         PaymentType card = new PaymentType("Банковские карты");
         PaymentType cash = new PaymentType("Наличные");
         PaymentType withoutEarnings = new PaymentType("Безналичный расчет");
         PaymentType onHouse = new PaymentType("За счет заведения");
         paymentTypeService.saveAll(Arrays.asList(card, cash, withoutEarnings, onHouse));
 
+// PaymentMethod creating
         PaymentMethod pm1 = new PaymentMethod("Visa", card);
         PaymentMethod pm2 = new PaymentMethod("MasterCard", card);
         PaymentMethod pm3 = new PaymentMethod("Наличные", cash);
         PaymentMethod pm4 = new PaymentMethod("Безналичный расчет", withoutEarnings);
-//        PaymentMethod pm5 = new PaymentMethod("За счет заведения", onHouse);
-        paymentMethodService.saveAll(Arrays.asList(pm1, pm2, pm3, pm4));
+        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        paymentMethods.add(pm1);
+        paymentMethods.add(pm2);
+        paymentMethods.add(pm3);
+        paymentMethods.add(pm4);
+        paymentMethodService.saveAll(paymentMethods);
 
         List<Category> categories = new ArrayList<>(categoryService.getAll());
 
         DiscountCategory discountCategory1 = new DiscountCategory();
         discountCategory1.setDiscountMode(DiscountMode.DISCOUNT);
-        discountCategory1.setCategory(categories.get(0));
+        discountCategory1.setName(categories.get(0).getName());
 
         DiscountCategory discountCategory2 = new DiscountCategory();
         discountCategory2.setDiscountMode(DiscountMode.EXTRA_PAY);
-        discountCategory2.setCategory(categories.get(1));
+        discountCategory2.setName(categories.get(1).getName());
 
         Discount discount = new Discount("Скидка");
         discount.setType("Скидки и надбавки");
         discount.setAutomatic(true);
         discount.setManualSelectWithOthers(true);
-        discount.getPaymentMethods().add(pm1);
+        discount.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
 //        discount.getPaymentMethods().add(pm3);
         discount.setDiscountCategories(Arrays.asList(discountCategory1, discountCategory2));
-        discount.getSchedules().add(new Schedule("Расписание скидки в обед", LocalTime.of(12, 0), LocalTime.of(13, 0)));
-        discount.getSchedules().add(new Schedule("Расписание скидки вечером", LocalTime.of(14, 0), LocalTime.of(16, 0),
-                true, false, true, false, true, false, true));
+
+        Schedule schedule1 = new Schedule("Расписание скидки в обед", LocalTime.of(12, 0), LocalTime.of(13, 0));
+        Schedule schedule2 = new Schedule("Расписание скидки вечером", LocalTime.of(14, 0), LocalTime.of(16, 0),
+                true, false, true, false, true, false, true);
+        scheduleService.save(schedule1);
+        scheduleService.save(schedule2);
+        discount.setSchedules(scheduleService.findAllSchedules());
         discountService.save(discount);
-        pm1.setDiscount(discount);
+        /*pm1.setDiscounts(new LinkedList<Discount>().add(discount));*/
 //        pm3.setDiscount(discount);
-        paymentMethodService.saveAll(Arrays.asList(pm1, pm3));
+        /*paymentMethodService.saveAll(Arrays.asList(pm1, pm3));*/
     }
 
     private void generateFakeStaff() {
