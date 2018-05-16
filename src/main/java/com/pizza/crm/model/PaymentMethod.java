@@ -32,11 +32,10 @@ public class PaymentMethod {
     private boolean enabled = true;
 
 
-    public PaymentMethod(String name, PaymentType paymentType, Discount discount, Boolean printCashBill, String nameInCashBill,
+    public PaymentMethod(String name, PaymentType paymentType, Boolean printCashBill, String nameInCashBill,
                          Boolean combinable, Boolean manualInput, String comment, Boolean enabled) {
         this.name = name;
         this.paymentType = paymentType;
-        this.discount = discount;
         this.printCashBill = printCashBill;
         this.nameInCashBill = nameInCashBill;
         this.combinable = combinable;
@@ -125,5 +124,5 @@ public class PaymentMethod {
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
-    
+
 }
