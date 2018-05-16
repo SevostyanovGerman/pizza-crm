@@ -39,7 +39,7 @@ public class ValidityController {
         return "redirect:/validity";
     }*/
 
-    @PostMapping("/schedule/save")
+    @PostMapping("/schedule/addSchedule")
     public String addSchedule(
             @RequestParam String validityName,
             @RequestParam LocalTime beginTime,
@@ -66,8 +66,8 @@ public class ValidityController {
     }*/
 
     @PostMapping("/validity/addValidity")
-    public String saveValidity (@RequestParam String name){
-        validityService.save(new Validity(name));
+    public String saveValidity (@RequestParam String nameValidity){
+        validityService.save(new Validity(nameValidity));
         return "redirect:/validity";
     }
 

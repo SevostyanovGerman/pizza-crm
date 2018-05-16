@@ -102,8 +102,35 @@ function saveAndExit() {
 
 }
 
+
+function addValidity() {
+    var nameValidity = $("#validityName").val();
+    $.ajax({
+        type: "POST",
+        url: "/validity/addValidity",
+        data: {nameValidity:nameValidity},
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (data) {
+            window.location.replace("/validity");
+        },
+        error: function (e) {
+            alert("error")
+        }
+    });
+}
+
+
+
+$(document).ready(function () {
+    $('button.addSchedule').on('click', function() {
+        tdName = $(this).closest('tr').find('td:eq(0)').text();
+    });
+});
+
 function addSchedule() {
-    var name = $("#scheduleName").val();
+    var validityName = tdName;
     var beginTime = $('#beginTime').val();
     var endTime = $('#endTime').val();
     var monday = $("#monday").prop('checked');
@@ -113,23 +140,22 @@ function addSchedule() {
     var friday = $("#friday").prop('checked');
     var saturday = $("#saturday").prop('checked');
     var sunday = $('#sunday').prop('checked');
-    var schedule = {
-        name: name,
-        beginTime: beginTime,
-        endTime: endTime,
-        monday: monday,
-        tuesday: tuesday,
-        thursday: thursday,
-        wednesday: wednesday,
-        friday: friday,
-        saturday: saturday,
-        sunday: sunday
-    };
+
     $.ajax({
         type: "POST",
-        url: "/validity/save",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(schedule),
+        url: "/schedule/addSchedule",
+        data: {
+            validityName:validityName,
+            beginTime:beginTime,
+            endTime:endTime,
+            monday:monday,
+            tuesday:tuesday,
+            thursday:thursday,
+            wednesday:wednesday,
+            friday:friday,
+            saturday:saturday,
+            sunday:sunday
+        },
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
