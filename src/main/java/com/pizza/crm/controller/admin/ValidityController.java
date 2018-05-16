@@ -30,6 +30,7 @@ public class ValidityController {
     @RequestMapping("/validity")
     public String validity(Model model) {
         model.addAttribute("validity", validityService.getAll());
+        model.addAttribute("schedule", validityScheduleService.findAllSchedules());
         return "admin/validity";
     }
 
@@ -58,15 +59,21 @@ public class ValidityController {
         return "redirect:/validity";
     }
 
-  /*  @PostMapping("/validity/delete")
-    public String delete(@RequestParam String name) {
-
-        validityScheduleService.deleteByName(name);
+    //второй контролер добавления сразу (одна модалка на все)
+    @PostMapping("/schedule/saveValidity")
+    public String saveSchedule(@RequestBody Validity validity){
+        validityService.save(validity);
         return "redirect:/validity";
-    }*/
+    }
+
+    @PostMapping("/validity/delete")
+    public String delete(@RequestParam String name) {
+        validityService.deleteByNameValidity(name);
+        return "redirect:/validity";
+    }
 
     @PostMapping("/validity/addValidity")
-    public String saveValidity (@RequestParam String nameValidity){
+    public String addValidity (@RequestParam String nameValidity){
         validityService.save(new Validity(nameValidity));
         return "redirect:/validity";
     }

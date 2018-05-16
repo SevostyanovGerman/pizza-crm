@@ -427,7 +427,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
     private void generateValidity() {
         ValiditySchedule validityScheduleLunch = new ValiditySchedule(/*"Lunch",*/ LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true, true, true, false, false);
-        ArrayList<ValiditySchedule> listValidityScheduleLunches = new ArrayList<>(Arrays.asList(validityScheduleLunch));
+        ValiditySchedule validityScheduleLunch2 = new ValiditySchedule(/*"Lunch",*/ LocalTime.of(14, 30), LocalTime.of(15, 00), false, true, true, true, true, true, false);
+        ArrayList<ValiditySchedule> listValidityScheduleLunches = new ArrayList<>(Arrays.asList(validityScheduleLunch, validityScheduleLunch2));
 
         ValiditySchedule validityScheduleDinner = new ValiditySchedule(/*"Dinner",*/ LocalTime.of(18, 00), LocalTime.of(20, 00), false, true, true, true, true, true, false);
         ArrayList<ValiditySchedule> listValidityScheduleDinner = new ArrayList<>(Arrays.asList(validityScheduleDinner));

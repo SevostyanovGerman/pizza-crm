@@ -45,4 +45,9 @@ public class ValidityServiceImpl implements ValidityService {
     public Validity findByNameValidity(String name) {
         return validityRepository.findByNameValidity(name);
     }
+
+    @Override
+    public void deleteByNameValidity(String name) {
+        validityRepository.deleteByNameValidity(name);
+    }
 }

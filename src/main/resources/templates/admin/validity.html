@@ -27,8 +27,8 @@
 <th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
 <div class="container-fluid">
     <h2>Периоды действия</h2>
-    <button class="btn btn-success" data-toggle="modal" data-target="#Validity">Добавить</button>
-    <button class="btn btn-danger" onclick="deleteSchedule()">Удалить</button>
+    <button class="btn btn-success" data-toggle="modal" data-target="#addAll">Добавить</button>
+    <button class="btn btn-danger" onclick="deleteValidity()">Удалить</button>
     <button class="btn btn-info" onclick="refresh()">Обновить</button>
     <input class="offset-1" type="checkbox">Показвать удаленные
 </div>
@@ -74,7 +74,7 @@
                     <th><label>Вс</label></th>
                 </tr>
                 </thead>
-                <tbody id="showSchedule">
+                <tbody  th:id="showSchedule" th:each="schedule : ${schedule}" th:text="${schedule.id}">
 
                 </tbody>
             </table>
@@ -87,8 +87,9 @@
     </div>
 </div>
 
-<!--Modal addValidity-->
-<div id="Validity" class="modal fade" tabindex="-1">
+
+<!-------------------------------------------------------------------------------------------------------Modal addAll-->
+<div id="addAll" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -97,17 +98,46 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="validityName">Введите название:</label>
-                    <input class="form-control" type="text" id="validityName" required="required" name="name">
+                    <label for="validityNameAll">Введите название:</label>
+                    <input class="form-control" type="text" id="validityNameAll" required="required" name="name">
                 </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th><label for="beginTime">Начало</label></th>
+                        <th><label for="endTime">Окончание</label></th>
+                        <th><label for="monday">Пн</label></th>
+                        <th><label for="tuesday">Вт</label></th>
+                        <th><label for="wednesday">Ср</label></th>
+                        <th><label for="thursday">Чт</label></th>
+                        <th><label for="friday">Пт</label></th>
+                        <th><label for="saturday">Сб</label></th>
+                        <th><label for="sunday">Вс</label></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="time" id="beginTimeAll" name="beginTime" required="required"/></td>
+                        <td><input type="time" id="endTimeAll" name="endTime" required="required"/></td>
+                        <td><input type="checkbox" id="mondayAll" name="monday"/></td>
+                        <td><input type="checkbox" id="tuesdayAll" name="tuesday"/></td>
+                        <td><input type="checkbox" id="wednesdayAll" name="wednesday"/></td>
+                        <td><input type="checkbox" id="thursdayAll" name="thursday"/></td>
+                        <td><input type="checkbox" id="fridayAll" name="friday"/></td>
+                        <td><input type="checkbox" id="saturdayAll" name="saturday"/></td>
+                        <td><input type="checkbox" id="sundayAll" name="sunday"/></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success" onclick="addValidity()">Сохранить</button>
+                <button type="submit" class="btn btn-success" onclick="addAll()">Сохранить</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
     </div>
 </div>
+
 
 <!--Modal addSchedule-->
 <div id="Schedule" class="modal fade" tabindex="-1">

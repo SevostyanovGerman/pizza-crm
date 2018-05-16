@@ -19,7 +19,7 @@ public class Validity {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ValiditySchedule> validityScheduleList = new ArrayList<>();
 
-    public Validity() {
+    public Validity(){
     }
 
     public Validity(String nameValidity) {
