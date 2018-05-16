@@ -24,10 +24,6 @@ public class PaymentMethod {
     @JsonManagedReference
     private PaymentType paymentType;
 
-    @ManyToOne
-    @JoinColumn(name = "discount")
-    private Discount discount;
-
     private boolean printCashBill;
     private String nameInCashBill;
     private boolean combinable;
