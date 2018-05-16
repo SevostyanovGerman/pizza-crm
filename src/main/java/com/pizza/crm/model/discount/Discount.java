@@ -45,7 +45,9 @@ public class Discount {
 
     private boolean enabled = true;
 
-    private boolean applyForAllDiscountCategories;
+    private boolean applyForAllDiscountCategories = true;
+
+    private boolean detailWhenPrinting;
 
     @Min(0)
     private int priority;
@@ -56,28 +58,31 @@ public class Discount {
     private String comment;
 
     @Enumerated(EnumType.STRING)
-    private DiscountApplicationMethod discountApplicationMethod = DiscountApplicationMethod.FULL_PRICE;
+    private DiscountApplicationMethod discountApplicationMethod;
 
     @Enumerated(EnumType.STRING)
     private DiscountMode discountMode = DiscountMode.DISCOUNT;
 
     @Enumerated(EnumType.STRING)
-    private DiscountAssignMode discountAssignMode = DiscountAssignMode.ALL_DISHES;
+    private DiscountAssignMode discountAssignMode;
 
     @Enumerated(EnumType.STRING)
-    private DiscountCalculationMode discountCalculationMode = DiscountCalculationMode.PERCENT;
+    private DiscountCalculationMode discountCalculationMode;
 
-    @OneToMany(mappedBy = "discount", cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    private List<PaymentMethod> paymentMethods = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "Discount_PaymentMethod",
+            joinColumns = @JoinColumn(name = "Discount"),
+            inverseJoinColumns = @JoinColumn(name = "PaymentMethod"))
+    private List<PaymentMethod> paymentMethods;
+
+    @ManyToMany
+    @JoinTable(name = "Discount_Schedule",
+            joinColumns = @JoinColumn(name = "Discount"),
+            inverseJoinColumns = @JoinColumn(name = "Schedule"))
+    private List<Schedule> schedules;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "discount")
-    @Fetch(FetchMode.SUBSELECT)
-    private List<Schedule> schedules = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<DiscountCategory> discountCategories = new ArrayList<>();
+    private List<DiscountCategory> discountCategories;
 
     public Discount() {
     }
@@ -86,7 +91,7 @@ public class Discount {
                     Boolean manualInput, boolean manualDishSelect, Boolean automatic, Boolean combinable, Boolean enabled, Boolean applyForAllDiscountCategories,
                     @Min(0) Integer priority, @Min(0) Integer value, String comment, DiscountApplicationMethod discountApplicationMethod,
                     DiscountMode discountMode, DiscountAssignMode discountAssignMode, DiscountCalculationMode discountCalculationMode,
-                    List<PaymentMethod> paymentMethods, List<Schedule> schedules, List<DiscountCategory> discountCategories) {
+                    List<PaymentMethod> paymentMethods, List<Schedule> schedules, List<DiscountCategory> discountCategories, boolean detailWhenPrinting) {
         this.name = name;
         this.nameInCheck = nameInCheck;
         this.type = type;
@@ -110,6 +115,7 @@ public class Discount {
         this.paymentMethods = paymentMethods;
         this.schedules = schedules;
         this.discountCategories = discountCategories;
+        this.detailWhenPrinting = detailWhenPrinting;
     }
 
     public Discount(@NotBlank String name) {
@@ -307,5 +313,13 @@ public class Discount {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public boolean isDetailWhenPrinting() {
+        return detailWhenPrinting;
+    }
+
+    public void setDetailWhenPrinting(boolean detailWhenPrinting) {
+        this.detailWhenPrinting = detailWhenPrinting;
     }
 }
