@@ -125,12 +125,5 @@ public class PaymentMethod {
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
-
-    public Discount getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Discount discount) {
-        this.discount = discount;
-    }
+    
 }
