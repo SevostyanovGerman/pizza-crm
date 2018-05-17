@@ -107,11 +107,6 @@ function SaveDiscount() {
     }
 
 
-
-
-
-
-
     var discount = {
         id: discountId,
         name: discountName,
@@ -224,14 +219,33 @@ function deleteSchedule(r) {
     document.getElementById("table-schedules").deleteRow(i);
 }
 
-// List paymentMethods
 
-function controlPaymentMethods(par) {
+/*// Output List paymentMethods
+/!*$(document).ready(function () {
+    outputListPaymentMethods();
+});
 
-    if ( $("#discount-minSumRestriction").is( ":checked" ) ) {
-        var discountMinSum = $("#discount-minSum").val();
-    }
-}
+function outputListPaymentMethods() {
+
+    $.ajax({
+        type: "POST",
+        url: "/admin/discount/getAllDiscounts",
+        contentType: "application/json; charset=utf-8",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (data) {
+
+            var discounts = data;
+
+            for (i = 0;  i < discounts.size; i++) {
+
+            }
+
+        },
+        error: function () {}
+    });
+}*!/*/
 
 
 

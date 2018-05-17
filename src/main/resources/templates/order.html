@@ -218,6 +218,23 @@
                                data-validation="number" data-validation-allowing="range[0;100]"
                                data-validation-error-msg="Укажите число от 0 до 100">
                     </div>
+
+                    <div class="form-group">
+                        <table class="autoDiscount-table" >
+                            <span>Автоматические скидки:</span>
+                            <tr>
+                                <th>Имя</th>
+                                <th>Значение</th>
+                            </tr>
+                            <tr class="autoDiscount-row" th:each="autoDiscount : ${autoDiscounts}">
+                                <td th:text="${autoDiscount.name}"></td>
+                                <td th:text="${autoDiscount.value}"></td>
+                            </tr>
+                        </table>
+
+
+                    </div>
+
                     <button type="submit" class="btn btn-success">Сохранить</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
                 </form>

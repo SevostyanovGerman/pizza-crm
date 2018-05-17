@@ -86,12 +86,10 @@
                     <td th:text="${discount.name}"></td>
                     <th:block th:each="pm : ${allPaymentMethods}">
                         <td>
-                            <div class="custom-control custom-checkbox mx-2">
-                                <input type="checkbox" class="custom-control-input"
+                                <input type="checkbox"
                                        th:id="${'discount-pm-checkbox-' + pm.id}"
                                        th:checked="${#lists.contains(discount.paymentMethods, pm)}">
-                                <label th:attr="for=${'discount-pm-checkbox-' + pm.id}" class="custom-control-label"></label>
-                            </div>
+
                         </td>
                     </th:block>
                 </tr>
@@ -101,27 +99,5 @@
     </div>
 </div>
 
-
-<table class="table-paymentMethods schTable">
-    <thead>
-    <tr>
-        <th>Скидка</th>
-        <th:block th:each="pm : ${allPaymentMethods}">
-            <th th:text="${pm.name}"></th>
-        </th:block>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="discount : ${allDiscounts}">
-        <td th:text="${discount.name}"></td>
-        <th:block th:each="pm : ${allPaymentMethods}">
-            <td>
-                <input onchange="controlPaymentMethods(this)" type="checkbox"
-                       th:checked="${#lists.contains(discount.paymentMethods, pm)}">
-            </td>
-        </th:block>
-    </tr>
-    </tbody>
-</table>
 </body>
 </html>

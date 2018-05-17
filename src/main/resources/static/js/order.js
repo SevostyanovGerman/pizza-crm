@@ -2,6 +2,8 @@ let csrfToken = $("meta[name='_csrf']").attr("content");
 let csrfHeader = $("meta[name='_csrf_header']").attr("content");
 let colonToggler = false;
 
+
+// Display time
 function getLocaleTimeString() {
     return new Date().toLocaleTimeString('ru-RU', {
         year: 'numeric',
@@ -31,7 +33,9 @@ function setOrderTimestamp() {
     let dateTimeParts = getLocaleTimeString().split(',');
     $('#orderTime').html(dateTimeParts[1]);
 }
+//***********************************************************
 
+// Category
 $(document).ready(function () {
     $(".category-item").click(function () {
         $("#backward").removeClass("disable");
@@ -93,11 +97,31 @@ $(document).ready(function () {
         $("#dish").css({"display": "none"});
     })
 });
+//***********************************************************
+
+// Discount
+
+$(document).ready(function () {
+    $.ajax({
+        type: "POST",
+        url: "/admin/discount/getAutoDiscountsValue",
+        contentType: "application/json; charset=utf-8",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (data) {
+            $("#discount").html(data).val(data);
+        },
+        error: function () {}
+    });
+});
+
+
 
 $(document).ready(function () {
     $('.discount-extraCharge-modal-show').click(function () {
         $("#discount-extraCharge-modal").modal('show');
-        $("#discountForm").val($("#discount").text());
+       // $("#discountForm").val($("#discount").text());
         $("#extraChargeForm").val($("#extraCharge").text());
     });
 });
@@ -107,21 +131,36 @@ $(document).ready(function () {
         form: '#discount-extraCharge-modal',
         lang : 'ru',
         onSuccess: function () {
-            let discount = parseFloat($('input[name="discountForm"]').val());
-            let extraCharge = parseFloat($('input[name="extraChargeForm"]').val());
-            if (discount > 0) {
-                extraCharge = 0;
-            } else if (extraCharge > 0) {
-                discount = 0;
-            }
-            $("#discount").html(discount).val(discount);
-            $("#extraCharge").html(extraCharge).val(extraCharge);
-            $("#discount-extraCharge-modal").modal('hide');
-            updateTotal();
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/discount/getAutoDiscountsValue",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                },
+                success: function (data) {
+                    let discount = parseFloat($('input[name="discountForm"]').val());
+                    let extraCharge = parseFloat($('input[name="extraChargeForm"]').val());
+                    discount += data;
+
+                    if (discount > 0) {
+                        extraCharge = 0;
+                    } else if (extraCharge > 0) {
+                        discount = 0;
+                    }
+                    $("#discount").html(discount).val(discount);
+                    $("#extraCharge").html(extraCharge).val(extraCharge);
+                    $("#discount-extraCharge-modal").modal('hide');
+                    updateTotal();
+                },
+                error: function () {}
+            });
             return false;
         }
     });
 });
+//***********************************************************
 
 $(document).ready(function () {
     $('.order-table').on('click', 'tr', function () {
@@ -129,6 +168,7 @@ $(document).ready(function () {
     });
 });
 
+// Quantity
 $(document).ready(function () {
     $('.add-quantity').click(function () {
         let tr = getSelectedRow();
@@ -152,7 +192,9 @@ $(document).ready(function () {
         updateTotal();
     });
 });
+//***********************************************************
 
+//Dish
 $(document).ready(function () {
     $('.remove-selected-dish').click(function () {
         let tr = getSelectedRow();
@@ -204,7 +246,9 @@ $(document).ready(function () {
         updateTotal();
     });
 });
+//***********************************************************
 
+// Product
 $(document).ready(function () {
     $('#productsItem').on('click', '.product-search', function (e) {
 
@@ -284,7 +328,7 @@ $(document).ready(function () {
         updateTotal();
     });
 });
-
+//***********************************************************
 
 function getSelectedRow() {
     let tr = $('.order-table tr.highlight');
@@ -301,6 +345,7 @@ function updateTotal() {
         rawTotal += getRowTotal($(this));
     });
     let discount = parseFloat($("#discount").val());
+
     let extraCharge = parseFloat($("#extraCharge").val());
     let total = rawTotal;
     if (!isNaN(discount) && discount > 0) {
@@ -310,6 +355,7 @@ function updateTotal() {
     }
     $('#rawTotal').html(rawTotal);
     $('#total').html(total);
+
 }
 
 function getRowTotal(row) {
@@ -325,7 +371,6 @@ function getRowTotal(row) {
 }
 
 // Quantity manual input
-
 $(document).ready(function () {
     $('.quantity-control-modal-show').click(function () {
         let tr = getSelectedRow();
@@ -388,6 +433,8 @@ $(document).ready(function () {
         $('.quantity-control-modal').modal('hide');
     });
 });
+//***********************************************************
+
 function showMoreDishes(name) {
     $.ajax({
         type: "POST",
@@ -436,8 +483,7 @@ $(document).ready(function () {
         sessionStorage.setItem('order-list', JSON.stringify(orderList));
     });
 });
-
-///////////////////////////////////
+//***********************************************************
 
 
 

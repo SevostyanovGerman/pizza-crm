@@ -155,6 +155,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         discountCategory2.setName(categories.get(1).getName());
 
         Discount discount = new Discount("Скидка");
+        discount.setValue(50);
         discount.setType("Скидки и надбавки");
         discount.setAutomatic(true);
         discount.setManualSelectWithOthers(true);
