@@ -131,4 +131,15 @@ public class DiscountController {
     public void deleteDiscount(@PathVariable Long id) {
         discountService.deleteById(id);
     }
+
+    @PostMapping("/admin/discount/methods")
+    public void listPaymentMethods(@RequestBody Discount discount){
+        Discount discount1 = discountService.findById(discount.getId()).orElseThrow(NotFoundException::new);
+        if (!discount.getEnabled()) {
+            discount1.getPaymentMethods().remove(paymentMethodService.getPaymentMethodByName(discount.getName()));
+        } else {
+            discount1.getPaymentMethods().add(paymentMethodService.getPaymentMethodByName(discount.getName()));
+        }
+        discountService.save(discount1);
+    }
 }

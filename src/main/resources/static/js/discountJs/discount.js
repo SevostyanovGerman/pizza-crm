@@ -10,21 +10,6 @@ $(document).ready(function () {
 let csrfToken = $("meta[name='_csrf']").attr("content");
 let csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
-$(document).ready(function () {
-    $('.btn-discount-delete').click(function () {
-        $.ajax({
-            type: 'DELETE',
-            url: $(this).attr('href'),
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-            },
-            success: function () {
-                location.reload();
-            }
-        });
-    });
-});
-
 function SaveDiscount() {
 
     var discountId = $("#discount-id").val();
@@ -175,6 +160,7 @@ function applicatedMinSum() {
 }
 
 function applicatedDiscountCategories() {
+
     $("#discountCategories-table").find("input,button,textarea,select").attr("disabled", "disabled");
     document.getElementById('discount-applyForAllDiscountCategories').onchange = function() {
         $("#discountCategories-table").find("input,button,textarea,select").attr("disabled", this.checked);
@@ -220,32 +206,7 @@ function deleteSchedule(r) {
 }
 
 
-/*// Output List paymentMethods
-/!*$(document).ready(function () {
-    outputListPaymentMethods();
-});
 
-function outputListPaymentMethods() {
-
-    $.ajax({
-        type: "POST",
-        url: "/admin/discount/getAllDiscounts",
-        contentType: "application/json; charset=utf-8",
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader(csrfHeader, csrfToken);
-        },
-        success: function (data) {
-
-            var discounts = data;
-
-            for (i = 0;  i < discounts.size; i++) {
-
-            }
-
-        },
-        error: function () {}
-    });
-}*!/*/
 
 
 

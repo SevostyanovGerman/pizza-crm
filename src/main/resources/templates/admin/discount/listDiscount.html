@@ -2,9 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Скидки и надбавки</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
@@ -22,7 +21,7 @@
 
     <link th:href="@{/css/discount/listDiscount.css}" href="../../../static/css/discount/listDiscount.css"
           rel="stylesheet" media="screen">
-    <script src="../../../static/js/discountJs/discount.js" th:src="@{/js/discountJs/discount.js}"></script>
+    <script src="../../../static/js/discountJs/listDiscount.js" th:src="@{/js/discountJs/listDiscount.js}"></script>
 </head>
 
 <body>
@@ -74,7 +73,7 @@
         <div class="col">
             <table class="table table-sm">
                 <thead>
-                <tr>
+                <tr class="paymentMethods-names" >
                     <th>Скидка</th>
                     <th:block th:each="pm : ${allPaymentMethods}">
                         <th th:text="${pm.name}"></th>
@@ -85,13 +84,10 @@
                 <tr th:each="discount : ${allDiscounts}">
                     <td th:text="${discount.name}"></td>
                     <th:block th:each="pm : ${allPaymentMethods}">
-                        <td>
-                                <input type="checkbox"
-                                       th:id="${'discount-pm-checkbox-' + pm.id}"
-                                       th:checked="${#lists.contains(discount.paymentMethods, pm)}">
-
-                        </td>
+                        <td><input id="paymentMethods-checkbox" class="paymentMethods-checkbox" type="checkbox"
+                           onchange="checkboxListPaymentMethods (this)"  th:checked="${#lists.contains(discount.paymentMethods, pm)}"></td>
                     </th:block>
+                    <td><input type="hidden" th:value="${discount.id}"></td>
                 </tr>
                 </tbody>
             </table>

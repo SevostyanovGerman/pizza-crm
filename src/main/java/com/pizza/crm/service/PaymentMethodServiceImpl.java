@@ -42,4 +42,9 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     public void deleteById(Long id) {
         paymentMethodRepository.deleteById(id);
     }
+
+    @Override
+    public PaymentMethod getPaymentMethodByName(String name) {
+        return paymentMethodRepository.getPaymentMethodByName(name);
+    }
 }
