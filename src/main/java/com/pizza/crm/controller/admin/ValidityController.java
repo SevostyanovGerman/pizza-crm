@@ -34,12 +34,14 @@ public class ValidityController {
         return "admin/validity";
     }
 
-    /*@PostMapping("/schedule/save")
-    public String save(@RequestBody ValiditySchedule validitySchedule) {
-        validityScheduleService.save(validitySchedule);
+    //Добавление названия расписания и одного графика
+    @PostMapping("/schedule/addAll")
+    public String addAll(@RequestBody Validity validity){
+        validityService.save(validity);
         return "redirect:/validity";
-    }*/
+    }
 
+    //Отдельное добавление графика
     @PostMapping("/schedule/addSchedule")
     public String addSchedule(
             @RequestParam String validityName,
@@ -59,23 +61,24 @@ public class ValidityController {
         return "redirect:/validity";
     }
 
-    //второй контролер добавления сразу (одна модалка на все)
-    @PostMapping("/schedule/saveValidity")
-    public String saveSchedule(@RequestBody Validity validity){
-        validityService.save(validity);
-        return "redirect:/validity";
-    }
-
     @PostMapping("/validity/delete")
     public String delete(@RequestParam String name) {
         validityService.deleteByNameValidity(name);
         return "redirect:/validity";
     }
 
-    @PostMapping("/validity/addValidity")
-    public String addValidity (@RequestParam String nameValidity){
-        validityService.save(new Validity(nameValidity));
+    @PostMapping("/schedule/delete")
+    public String delete(@RequestParam Long id) {
+        validityScheduleService.delete(id);
         return "redirect:/validity";
     }
+
+
+    @PostMapping("/validity/save")
+    public String save(@RequestBody Validity validity) {
+        validityService.save(validity);
+        return "redirect:/validity";
+    }
+
 
 }

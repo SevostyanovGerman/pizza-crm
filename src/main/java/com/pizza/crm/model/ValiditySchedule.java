@@ -1,5 +1,7 @@
 package com.pizza.crm.model;
 
+import com.pizza.crm.model.discount.Discount;
+
 import javax.persistence.*;
 import java.time.LocalTime;
 

@@ -57,7 +57,7 @@
         <div class="col-6">
             <h4>Название:</h4>
             <div class="form-group">
-                <input type="hidden" id="id"/>
+                <input type="hidden" />
                 <input class="form-control col-4" id="scheduleListName"/>
             </div>
             <table class="table table-bordered">
@@ -74,7 +74,7 @@
                     <th><label>Вс</label></th>
                 </tr>
                 </thead>
-                <tbody  th:id="showSchedule" th:each="schedule : ${schedule}" th:text="${schedule.id}">
+                <tbody id="showSchedule">
 
                 </tbody>
             </table>
@@ -104,15 +104,15 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th><label for="beginTime">Начало</label></th>
-                        <th><label for="endTime">Окончание</label></th>
-                        <th><label for="monday">Пн</label></th>
-                        <th><label for="tuesday">Вт</label></th>
-                        <th><label for="wednesday">Ср</label></th>
-                        <th><label for="thursday">Чт</label></th>
-                        <th><label for="friday">Пт</label></th>
-                        <th><label for="saturday">Сб</label></th>
-                        <th><label for="sunday">Вс</label></th>
+                        <th><label for="beginTimeAll">Начало</label></th>
+                        <th><label for="endTimeAll">Окончание</label></th>
+                        <th><label for="mondayAll">Пн</label></th>
+                        <th><label for="tuesdayAll">Вт</label></th>
+                        <th><label for="wednesdayAll">Ср</label></th>
+                        <th><label for="thursdayAll">Чт</label></th>
+                        <th><label for="fridayAll">Пт</label></th>
+                        <th><label for="saturdayAll">Сб</label></th>
+                        <th><label for="sundayAll">Вс</label></th>
                     </tr>
                     </thead>
                     <tbody>

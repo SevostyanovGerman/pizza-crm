@@ -28,10 +28,9 @@ function showSchedule(nameValidity) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function (data) {
-            console.log(data);
             for (var i = 0; i < data.length; i++) {
-
                 $('#showSchedule').append('<tr>' +
+                    '<input class="ids" type="hidden" value="' + data[i].id + '">' +
                     '<td><input type="time" value="' + data[i].beginTime + '"></td>' +
                     '<td><input type="time" value="' + data[i].endTime + '"></td>' +
                     '<td><input type="checkbox" class="monday"'    +(data[i].monday ? 'checked' : '') + '></td>' +
@@ -41,7 +40,7 @@ function showSchedule(nameValidity) {
                     '<td><input type="checkbox" class="friday"'    +(data[i].friday ? 'checked' : '') + '></td>' +
                     '<td><input type="checkbox" class="saturday"'  +(data[i].saturday ? 'checked' : '') + '></td>' +
                     '<td><input type="checkbox" class="sunday"'    +(data[i].sunday ? 'checked' : '') + '></td>' +
-                    '<td><a class="btn btn-danger btn-sm deleteSchedule" href="#" onclick="deleteSchedule()"><i class="fa fa-trash" aria-hidden="true" ></i></a></td>' +
+                    '<td><a class="btn btn-danger btn-sm deleteSchedule" href="#"><i class="fa fa-trash deleteSchedule" aria-hidden="true" ></i></a></td>' +
                     '</tr>');
             }
 
@@ -154,7 +153,7 @@ function addSchedule() {
 
 
 function addAll() {
-    var nameValidity = $('#validityNameAll').val();;
+    var nameValidity = $('#validityNameAll').val();
     var beginTime = $('#beginTimeAll').val();
     var endTime = $('#endTimeAll').val();
     var monday = $("#mondayAll").prop('checked');
@@ -182,7 +181,7 @@ function addAll() {
 
     $.ajax({
         type: "POST",
-        url: "/schedule/saveValidity",
+        url: "/schedule/addAll",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(validity),
         beforeSend: function (xhr) {
@@ -196,7 +195,6 @@ function addAll() {
         }
     });
 }
-
 
 
 function deleteValidity() {
@@ -223,20 +221,27 @@ function deleteValidity() {
 }
 
 
-function deleteSchedule(){
-    var selected = $("#idSchedule").find("td:eq(0)").text();
-    alert(selected);
 
+$(document).ready(function () {
+    $("body").on("click", ".deleteSchedule", function () {
+        var id = $(this).closest('tr').find('input[type=hidden]').val();
+        deleteSchedule(id);
+
+    });
+});
+
+
+
+function deleteSchedule(id){
     $.ajax({
         type: "POST",
-        url: "scale_of_size/delete/values",
-        data: {nameSize: nameSize},
+        url: "/schedule/delete",
+        data: {id: id},
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function () {
-            // tr.remove(); //-a*-
-            window.location.replace("/scale_of_size");
+            window.location.replace("/validity");
         },
         error: function () {
             alert("error")
