@@ -14,6 +14,8 @@ public class ModifierProperty {
 
     private Long modifierId;
 
+    private Long schemeModifiersId;
+
     private String name;
 
     private Integer minimum;
@@ -133,5 +135,13 @@ public class ModifierProperty {
 
     public void setFree(Integer free) {
         this.free = free;
+    }
+
+    public Long getSchemeModifiersId() {
+        return schemeModifiersId;
+    }
+
+    public void setSchemeModifiersId(Long schemeModifiersId) {
+        this.schemeModifiersId = schemeModifiersId;
     }
 }

@@ -233,3 +233,5 @@ function showColors() {
     $('.showColors').css('background-color', backgroundColor);
     $('.showColors').css('color', fontColor);
 }
+
+
