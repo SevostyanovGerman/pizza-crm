@@ -100,6 +100,7 @@
                 <div class="form-group">
                     <label for="validityNameAll">Введите название:</label>
                     <input class="form-control" type="text" id="validityNameAll" required="required" name="name">
+                    <button type="button" class="btn btn-success addScheduleDown" onclick="addScheduleDown()">Добавить график</button>
                 </div>
                 <table class="table">
                     <thead>
@@ -115,7 +116,7 @@
                         <th><label for="sundayAll">Вс</label></th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="addScheduleDown">
                     <tr>
                         <td><input type="time" id="beginTimeAll" name="beginTime" required="required"/></td>
                         <td><input type="time" id="endTimeAll" name="endTime" required="required"/></td>
@@ -126,7 +127,7 @@
                         <td><input type="checkbox" id="fridayAll" name="friday"/></td>
                         <td><input type="checkbox" id="saturdayAll" name="saturday"/></td>
                         <td><input type="checkbox" id="sundayAll" name="sunday"/></td>
-                    </tr>
+                        </tr>
                     </tbody>
                 </table>
             </div>

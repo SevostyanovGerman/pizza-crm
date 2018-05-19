@@ -22,8 +22,8 @@ public class ValidityServiceImpl implements ValidityService {
     }
 
     @Override
-    public Optional<Validity> findById(Long aLong) {
-        return Optional.empty();
+    public Optional<Validity> findById(Long id) {
+        return validityRepository.findById(id);
     }
 
     @Override
