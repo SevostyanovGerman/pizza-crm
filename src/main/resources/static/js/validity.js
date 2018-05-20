@@ -304,12 +304,12 @@ function addScheduleDown() {
 
 
 function addField() {
-
+    var nameValidity =  "nameValidity";
 
     var schedules = [];
 
     $('.schedule-tr').each(function () {
-        var nameValidity =  $("#validityNameAll").val();
+
         var beginTimeSchedule =    $(this).closest('tr').find('td:eq(0)').find('input[type=time]').val();
         var endTimeSchedule =      $(this).closest('tr').find('td:eq(1)').find('input[type=time]').val();
         var mondaySchedule =       $(this).closest('tr').find('td:eq(2)').find('input[type=checkbox]').prop('checked');
@@ -333,11 +333,13 @@ function addField() {
             sunday: sundaySchedule
         };
         schedules.push(scheduleSchedule);
+
+        console.log(beginTimeSchedule);
     });
 
-    console.log(schedules);
 
-    var discount = {
+
+    var validity = {
         nameValidity:nameValidity,
         schedules:schedules
 
@@ -348,7 +350,7 @@ function addField() {
         type: "POST",
         url: "/validity/save",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(discount),
+        data: JSON.stringify(validity),
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
