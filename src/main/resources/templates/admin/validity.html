@@ -105,7 +105,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th><label for="beginTimeAll">Начало</label></th>
+            <!--            <th><label for="beginTimeAll">Начало</label></th>
                         <th><label for="endTimeAll">Окончание</label></th>
                         <th><label for="mondayAll">Пн</label></th>
                         <th><label for="tuesdayAll">Вт</label></th>
@@ -113,11 +113,21 @@
                         <th><label for="thursdayAll">Чт</label></th>
                         <th><label for="fridayAll">Пт</label></th>
                         <th><label for="saturdayAll">Сб</label></th>
-                        <th><label for="sundayAll">Вс</label></th>
+                        <th><label for="sundayAll">Вс</label></th>-->
+
+                        <th><label>Начало</label></th>
+                        <th><label>Окончание</label></th>
+                        <th><label>Пн</label></th>
+                        <th><label>Вт</label></th>
+                        <th><label>Ср</label></th>
+                        <th><label>Чт</label></th>
+                        <th><label>Пт</label></th>
+                        <th><label>Сб</label></th>
+                        <th><label>Вс</label></th>
                     </tr>
                     </thead>
                     <tbody id="addScheduleDown">
-                    <tr>
+                    <!--<tr>
                         <td><input type="time" id="beginTimeAll" name="beginTime" required="required"/></td>
                         <td><input type="time" id="endTimeAll" name="endTime" required="required"/></td>
                         <td><input type="checkbox" id="mondayAll" name="monday"/></td>
@@ -127,12 +137,12 @@
                         <td><input type="checkbox" id="fridayAll" name="friday"/></td>
                         <td><input type="checkbox" id="saturdayAll" name="saturday"/></td>
                         <td><input type="checkbox" id="sundayAll" name="sunday"/></td>
-                        </tr>
+                     </tr>-->
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success" onclick="addAll()">Сохранить</button>
+                <button type="submit" class="btn btn-success" onclick="addField()">Сохранить</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
