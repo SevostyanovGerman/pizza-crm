@@ -40,7 +40,7 @@ function showSchedule(nameValidity) {
                     '<td><input type="checkbox" class="friday activated"' + (data[i].friday ? 'checked' : '') + '></td>' +
                     '<td><input type="checkbox" class="saturday activated"' + (data[i].saturday ? 'checked' : '') + '></td>' +
                     '<td><input type="checkbox" class="sunday activated"' + (data[i].sunday ? 'checked' : '') + '></td>' +
-                    '<td><a class="btn btn-danger btn-sm deleteSchedule" href="#"><i class="fa fa-trash deleteSchedule" aria-hidden="true" ></i></a></td>' +
+                    '<td><a class="btn btn-danger btn-sm deleteSchedule" href="#"><i class="fa fa-trash" aria-hidden="true" ></i></a></td>' +
                     '</tr>');
             }
 
@@ -76,58 +76,8 @@ $(document).ready(function () {
     });
 });
 
-/*
-function save() {
-    var name = $("#scheduleListName").val();
-    var id = $('#id').val();
-    var beginTime = $('#showSchedule tr').find("input[type=time]").eq(0).val();
-    var endTime = $('#showSchedule tr').find("input[type=time]").eq(1).val();
-    var monday = $(".monday").prop('checked');
-    var tuesday = $(".tuesday").prop('checked');
-    var thursday = $(".thursday").prop('checked');
-    var wednesday = $(".wednesday").prop('checked');
-    var friday = $(".friday").prop('checked');
-    var saturday = $(".saturday").prop('checked');
-    var sunday = $('.sunday').prop('checked');
-    var schedule = {
-        id: id,
-        name: name,
-        beginTime: beginTime,
-        endTime: endTime,
-        monday: monday,
-        tuesday: tuesday,
-        thursday: thursday,
-        wednesday: wednesday,
-        friday: friday,
-        saturday: saturday,
-        sunday: sunday
-    };
-    $.ajax({
-        type: "POST",
-        url: "/validity/save",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(schedule),
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader(csrfHeader, csrfToken);
-        },
-        success: function () {
-            window.location.replace("/validity");
-        },
-        error: function (e) {
-            alert("error")
-        }
-    });
-}*/
 
-function exit() {
-    window.location.replace("/newDecree");
-}
-
-function saveAndExit() {
-
-}
-
-
+// add one schedule with use button "+"
 $(document).ready(function () {
     $('button.addSchedule').on('click', function () {
         tdName = $(this).closest('tr').find('td:eq(0)').text();
@@ -174,59 +124,12 @@ function addSchedule() {
     });
 }
 
-
-//отправка значений на сервер в БД
-function addAll() {
-    var nameValidity = $('#validityNameAll').val();
-    var beginTime = $('#beginTimeAll').val();
-    var endTime = $('#endTimeAll').val();
-    var monday = $("#mondayAll").prop('checked');
-    var tuesday = $("#tuesdayAll").prop('checked');
-    var thursday = $("#thursdayAll").prop('checked');
-    var wednesday = $("#wednesdayAll").prop('checked');
-    var friday = $("#fridayAll").prop('checked');
-    var saturday = $("#saturdayAll").prop('checked');
-    var sunday = $('#sundayAll').prop('checked');
-
-    var validity = {
-        nameValidity: nameValidity,
-        validityScheduleList: [{
-            beginTime: beginTime,
-            endTime: endTime,
-            monday: monday,
-            tuesday: tuesday,
-            thursday: thursday,
-            wednesday: wednesday,
-            friday: friday,
-            saturday: saturday,
-            sunday: sunday
-        }]
-    };
-
-    $.ajax({
-        type: "POST",
-        url: "/schedule/addAll",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(validity),
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader(csrfHeader, csrfToken);
-        },
-        success: function (data) {
-            window.location.replace("/validity");
-        },
-        error: function (e) {
-            alert("error")
-        }
-    });
-}
-
-
 function deleteValidity() {
     var selected = $('.item-active').html();
     if (selected !== undefined) {
         $.ajax({
             type: "POST",
-            url: "/validity/delete",
+            url: "/validity/deleteValidity",
             data: {name: selected},
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
@@ -244,7 +147,7 @@ function deleteValidity() {
 
 }
 
-
+//deleteSchedule
 $(document).ready(function () {
     $("body").on("click", ".deleteSchedule", function () {
         var id = $(this).closest('tr').find('input[type=hidden]').val();
@@ -257,7 +160,7 @@ $(document).ready(function () {
 function deleteSchedule(id) {
     $.ajax({
         type: "POST",
-        url: "/schedule/delete",
+        url: "/schedule/deleteSchedule",
         data: {id: id},
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
@@ -266,24 +169,12 @@ function deleteSchedule(id) {
             window.location.replace("/validity");
         },
         error: function () {
-            alert("error")
+            alert("error delete")
         }
     });
 
 
 }
-
-function refresh() {
-    window.location.replace("/validity");
-}
-
-
-// сделать добавление графиков в модалку
-
-$("i").on("click", ".addScheduleDown", function () {
-    alert("Hi man!");
-    $(this).after("<p>Another paragraph!</p>");
-});
 
 
 //добавление новой таблицы в модалку
@@ -302,10 +193,9 @@ function addScheduleDown() {
     );
 }
 
-
 function addField() {
 
-    var nameValidity = $('#validityNameAll').val();
+    var nameValidity = $('#validityName').val();
     var schedules = [];
 
     $('.schedule-tr').each(function () {
@@ -361,3 +251,61 @@ function addField() {
     });
 
 }
+
+function refresh() {
+    window.location.replace("/validity");
+}
+
+
+function exit() {
+    window.location.replace("/newDecree");
+}
+
+function saveAndExit() {
+
+}
+
+
+//Код СОхранить все
+/*
+function save() {
+    var name = $("#scheduleListName").val();
+    var id = $('#id').val();
+    var beginTime = $('#showSchedule tr').find("input[type=time]").eq(0).val();
+    var endTime = $('#showSchedule tr').find("input[type=time]").eq(1).val();
+    var monday = $(".monday").prop('checked');
+    var tuesday = $(".tuesday").prop('checked');
+    var thursday = $(".thursday").prop('checked');
+    var wednesday = $(".wednesday").prop('checked');
+    var friday = $(".friday").prop('checked');
+    var saturday = $(".saturday").prop('checked');
+    var sunday = $('.sunday').prop('checked');
+    var schedule = {
+        id: id,
+        name: name,
+        beginTime: beginTime,
+        endTime: endTime,
+        monday: monday,
+        tuesday: tuesday,
+        thursday: thursday,
+        wednesday: wednesday,
+        friday: friday,
+        saturday: saturday,
+        sunday: sunday
+    };
+    $.ajax({
+        type: "POST",
+        url: "/validity/save",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(schedule),
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function () {
+            window.location.replace("/validity");
+        },
+        error: function (e) {
+            alert("error")
+        }
+    });
+}*/

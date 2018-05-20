@@ -150,40 +150,31 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="validityNameAll">Введите название:</label>
-                        <input class="form-control" type="text" id="validityNameAll" required="required" name="name">
+                        <label for="validityName">Введите название:</label>
+                        <input class="form-control" type="text" id="validityName" required="required" name="name">
+                        <button type="button" class="btn btn-success addScheduleDown" onclick="addScheduleDown()">Добавить график</button>
                     </div>
                     <table class="table">
                         <thead>
                         <tr>
-                            <th><label for="beginTimeAll">Начало</label></th>
-                            <th><label for="endTimeAll">Окончание</label></th>
-                            <th><label for="mondayAll">Пн</label></th>
-                            <th><label for="tuesdayAll">Вт</label></th>
-                            <th><label for="wednesdayAll">Ср</label></th>
-                            <th><label for="thursdayAll">Чт</label></th>
-                            <th><label for="fridayAll">Пт</label></th>
-                            <th><label for="saturdayAll">Сб</label></th>
-                            <th><label for="sundayAll">Вс</label></th>
+
+                            <th><label>Начало</label></th>
+                            <th><label>Окончание</label></th>
+                            <th><label>Пн</label></th>
+                            <th><label>Вт</label></th>
+                            <th><label>Ср</label></th>
+                            <th><label>Чт</label></th>
+                            <th><label>Пт</label></th>
+                            <th><label>Сб</label></th>
+                            <th><label>Вс</label></th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td><input type="time" id="beginTimeAll" name="beginTime" required="required"/></td>
-                            <td><input type="time" id="endTimeAll" name="endTime" required="required"/></td>
-                            <td><input type="checkbox" id="mondayAll" name="monday"/></td>
-                            <td><input type="checkbox" id="tuesdayAll" name="tuesday"/></td>
-                            <td><input type="checkbox" id="wednesdayAll" name="wednesday"/></td>
-                            <td><input type="checkbox" id="thursdayAll" name="thursday"/></td>
-                            <td><input type="checkbox" id="fridayAll" name="friday"/></td>
-                            <td><input type="checkbox" id="saturdayAll" name="saturday"/></td>
-                            <td><input type="checkbox" id="sundayAll" name="sunday"/></td>
-                        </tr>
+                        <tbody id="addScheduleDown">
                         </tbody>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" onclick="addAll()">Сохранить</button>
+                    <button type="submit" class="btn btn-success" onclick="addField()">Сохранить</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
                 </div>
             </div>

@@ -64,13 +64,13 @@ public class ValidityController {
         return "redirect:/validity";
     }
 
-    @PostMapping("/validity/delete")
+    @PostMapping("/validity/deleteValidity")
     public String delete(@RequestParam String name) {
         validityService.deleteByNameValidity(name);
         return "redirect:/validity";
     }
 
-    @PostMapping("/schedule/delete")
+    @PostMapping("/schedule/deleteSchedule")
     public String delete(@RequestParam Long id) {
         validityScheduleService.delete(id);
         return "redirect:/validity";
