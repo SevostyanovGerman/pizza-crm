@@ -33,7 +33,7 @@ public class ValidityServiceImpl implements ValidityService {
 
     @Override
     public Collection<Validity> saveAll(Collection<Validity> validities) {
-        return null;
+        return validityRepository.saveAll(validities);
     }
 
     @Override

@@ -72,7 +72,7 @@ public class Discount {
     private List<PaymentMethod> paymentMethods = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "discount")
+  //  @JoinColumn(name = "discount")
     @Fetch(FetchMode.SUBSELECT)
     private List<ValiditySchedule> validitySchedules = new ArrayList<>();
 

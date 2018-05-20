@@ -304,13 +304,12 @@ function addScheduleDown() {
 
 
 function addField() {
-    var nameValidity =  "nameValidity";
 
+    var nameValidity = $('#validityNameAll').val();
     var schedules = [];
 
     $('.schedule-tr').each(function () {
-
-        var beginTimeSchedule =    $(this).closest('tr').find('td:eq(0)').find('input[type=time]').val();
+        var beginTimeSchedule =   $(this).closest('tr').find('td:eq(0)').find('input[type=time]').val();
         var endTimeSchedule =      $(this).closest('tr').find('td:eq(1)').find('input[type=time]').val();
         var mondaySchedule =       $(this).closest('tr').find('td:eq(2)').find('input[type=checkbox]').prop('checked');
         var tuesdaySchedule =      $(this).closest('tr').find('td:eq(3)').find('input[type=checkbox]').prop('checked');
@@ -321,7 +320,6 @@ function addField() {
         var sundaySchedule =       $(this).closest('tr').find('td:eq(8)').find('input[type=checkbox]').prop('checked');
 
         var scheduleSchedule = {
-            nameValidity:nameValidity,
             beginTime: beginTimeSchedule,
             endTime: endTimeSchedule,
             monday: mondaySchedule,
@@ -332,20 +330,22 @@ function addField() {
             saturday: saturdaySchedule,
             sunday: sundaySchedule
         };
+
         schedules.push(scheduleSchedule);
 
-        console.log(beginTimeSchedule);
     });
 
+    console.log(schedules);
 
-
+    //---------------------------!!!----------------------------------
+    //всегда переменная которая отправляеться  с помощь JSON
+    //должна иметь имя поля в сущьности :)
     var validity = {
-        nameValidity:nameValidity,
-        schedules:schedules
-
+        nameValidity: nameValidity,
+        validityScheduleList: schedules
     };
 
-
+    console.log(validity);
     $.ajax({
         type: "POST",
         url: "/validity/save",
@@ -355,6 +355,7 @@ function addField() {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function () {
+            window.location.replace("/validity");
         },
         error: function () {}
     });

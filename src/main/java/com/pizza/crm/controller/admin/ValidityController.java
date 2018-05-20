@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -77,7 +79,7 @@ public class ValidityController {
 
     @PostMapping("/validity/save")
     public String save(@RequestBody Validity validity) {
-        validityService.save(validity);
+       validityService.save(validity);
         return "redirect:/validity";
     }
 

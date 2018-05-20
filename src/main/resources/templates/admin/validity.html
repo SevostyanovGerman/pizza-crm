@@ -27,7 +27,7 @@
 <th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
 <div class="container-fluid">
     <h2>Периоды действия</h2>
-    <button class="btn btn-success" data-toggle="modal" data-target="#addAll">Добавить</button>
+    <button class="btn btn-success" data-toggle="modal" data-target="#addField">Добавить</button>
     <button class="btn btn-danger" onclick="deleteValidity()">Удалить</button>
     <button class="btn btn-info" onclick="refresh()">Обновить</button>
     <input class="offset-1" type="checkbox">Показвать удаленные
@@ -89,7 +89,7 @@
 
 
 <!-------------------------------------------------------------------------------------------------------Modal addAll-->
-<div id="addAll" class="modal fade" tabindex="-1">
+<div id="addField" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
