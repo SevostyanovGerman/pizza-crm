@@ -13,6 +13,14 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+    $('tbody').on('click', '.listScheme', function () {
+        $('.listScheme').removeClass('selected');
+        $(this).addClass('selected');
+    });
+});
+
+
+$(document).ready(function () {
     $('.tbody').on('click', 'tr', function () {
         if ($(this).hasClass('active-modifier')) {
             $(this).removeClass('active-modifier');
@@ -295,4 +303,58 @@ function showColors() {
     var fontColor = $('#fontColor').val();
     $('.showColors').css('background-color', backgroundColor);
     $('.showColors').css('color', fontColor);
+}
+
+function choiceScheme() {
+    var name = $('.selected').find('td:eq(0)').text();
+    $.ajax({
+        type: "POST",
+        url: "schemeModifiers/getListModifiers",
+        data: {name: name},
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                if (data[i] == true) {
+                    $('#checkbox').prop('checked', true);
+                }
+                $(".tbody").append($([
+                    '<tr>' +
+                    '<td class="modifierName">' + data[i].name + '</td>' +
+                    '<td><input type="number" class="inputs" value=' + data[i].minimum + '></td>' +
+                    '<td><input type="number" class="inputs" value=' + data[i].byDefault + '></td>' +
+                    '<td><input type="number" class="inputs" value=' + data[i].maximum + '></td>' +
+                    '<td><input type="checkbox" class="activated" ' + (data[i].necessarily ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="activated" ' + (data[i].hideIf ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="activated" ' + (data[i].restricted ? 'checked' : '') + '></td>' +
+                    '<td><input type="number" class="inputs" value=' + data[i].free + '></td>' +
+                    '<input type="hidden" class="hideId" value=' + data[i].modifierId + '>' +
+                    '</tr>'].join("\n")));
+            }
+            $("#modifierScheme").val(name);
+
+        },
+        error: function () {
+            alert("error")
+        }
+    });
+}
+
+function removeSchemeModifiers() {
+    var name = $('.selected').find('td:eq(0)').text();
+    $.ajax({
+        type: "POST",
+        url: "schemeModifiers/delete",
+        data: {name: name},
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function () {
+
+        },
+        error: function () {
+            alert("error")
+        }
+    });
 }
