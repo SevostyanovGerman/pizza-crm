@@ -6,6 +6,7 @@ import java.util.List;
 @Entity
 @Table(name = "schemeModifiers")
 public class SchemeModifiers {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
