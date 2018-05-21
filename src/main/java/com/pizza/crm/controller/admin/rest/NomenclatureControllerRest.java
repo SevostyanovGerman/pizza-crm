@@ -52,6 +52,16 @@ public class NomenclatureControllerRest {
 
     @PostMapping("nomenclature/delete")
     public void deleteNomenclature(String name) {
-        nomenclatureService.deleteByName(name);
+        Nomenclature nomenclature = nomenclatureService.getNomenclatureByName(name);
+        nomenclature.setRemoved(true);
+        nomenclatureService.save(nomenclature);
     }
+
+    @PostMapping("nomenclature/restoration")
+    public void restoration(String name) {
+        Nomenclature nomenclature = nomenclatureService.getNomenclatureByName(name);
+        nomenclature.setRemoved(false);
+        nomenclatureService.save(nomenclature);
+    }
+
 }
