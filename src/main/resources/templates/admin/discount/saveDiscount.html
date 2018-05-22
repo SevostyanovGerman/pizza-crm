@@ -135,57 +135,15 @@
                                 <tbody>
                                 <tr class="schedule-tr" th:each="schedule : ${discount.schedules}">
                                     <td th:text="${schedule.name}"></td>
-                                    <td><input  type="time" class="col-6 form-control form-control-sm schedule-time" value="" th:value="${schedule.beginTime}" disabled></td>
-                                    <td><input type="time" class="col-6 form-control form-control-sm schedule-time" value="" th:value="${schedule.endTime}" disabled></td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox mx-4">
-                                            <input type="checkbox" class="custom-control-input" id="schedule-mon"
-                                                   th:checked="${schedule.monday}" disabled>
-                                            <label for="schedule-mon" class="custom-control-label"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox mx-4">
-                                            <input type="checkbox" class="custom-control-input" id="schedule-tue"
-                                                   th:checked="${schedule.tuesday}" disabled>
-                                            <label for="schedule-tue" class="custom-control-label"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox mx-4">
-                                            <input type="checkbox" class="custom-control-input" id="schedule-wed"
-                                                   th:checked="${schedule.wednesday}" disabled>
-                                            <label for="schedule-wed" class="custom-control-label"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox mx-4">
-                                            <input type="checkbox" class="custom-control-input" id="schedule-thu"
-                                                   th:checked="${schedule.thursday}" disabled>
-                                            <label for="schedule-thu" class="custom-control-label"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox mx-4">
-                                            <input type="checkbox" class="custom-control-input" id="schedule-fri"
-                                                   th:checked="${schedule.friday}" disabled>
-                                            <label for="schedule-fri" class="custom-control-label"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox mx-4">
-                                            <input type="checkbox" class="custom-control-input" id="schedule-sat"
-                                                   th:checked="${schedule.saturday}" disabled>
-                                            <label for="schedule-sat" class="custom-control-label"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox mx-4">
-                                            <input type="checkbox" class="custom-control-input" id="schedule-sun"
-                                                   th:checked="${schedule.sunday}" disabled>
-                                            <label for="schedule-sun" class="custom-control-label"></label>
-                                        </div>
-                                    </td>
+                                    <td><input  type="time" th:value="${schedule.beginTime}" disabled></td>
+                                    <td><input type="time" th:value="${schedule.endTime}" disabled></td>
+                                    <td><input type="checkbox" th:checked="${schedule.monday}" disabled></td>
+                                    <td><input type="checkbox" th:checked="${schedule.tuesday}" disabled></td>
+                                    <td><input type="checkbox" th:checked="${schedule.wednesday}" disabled></td>
+                                    <td><input type="checkbox" th:checked="${schedule.thursday}" disabled></td>
+                                    <td><input type="checkbox" th:checked="${schedule.friday}" disabled></td>
+                                    <td><input type="checkbox" th:checked="${schedule.saturday}" disabled></td>
+                                    <td><input type="checkbox" th:checked="${schedule.sunday}" disabled></td>
                                     <td><button type="button" class="btn btn-primary" onclick="deleteSchedule(this)">Удалить</button></td>
                                     <input id="schedule-id" type="hidden" th:value="${schedule.id}">
                                 </tr>
@@ -227,16 +185,39 @@
                             <input type="number" class="form-control" id="discount-value" th:field="${discount.value}">
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="discount-applyForAllDiscountCategories" th:field="${discount.applyForAllDiscountCategories}">
-                                <label for="discount-applyForAllDiscountCategories" class="custom-control-label">
-                                    Применять для всех категорий блюд
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+
+                    <table class="discount-detailWhenPrinting-table">
+                        <tr>
+                            <td>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="discount-applyForAllDiscountCategories" th:field="${discount.applyForAllDiscountCategories}">
+                                            <label for="discount-applyForAllDiscountCategories" class="custom-control-label">
+                                                Применять для всех категорий блюд
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="discount-detailWhenPrinting-right">
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="discount-detailWhenPrinting" th:field="${discount.detailWhenPrinting}">
+                                            <label for="discount-detailWhenPrinting" class="custom-control-label">
+                                                Детализировать при печати
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+
                     <div class="row mt-3">
                         <div class="col">
                             <table class="table table-sm" id="discountCategories-table">
@@ -306,17 +287,6 @@
                                 <input type="checkbox" class="custom-control-input" id="discount-combinable" th:field="${discount.combinable}">
                                 <label for="discount-combinable" class="custom-control-label">
                                     Можно использовать с другими скидками
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-3">
-                        <div class="col">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="discount-detailWhenPrinting" th:field="${discount.detailWhenPrinting}">
-                                <label for="discount-detailWhenPrinting" class="custom-control-label">
-                                    Детализировать при печати
                                 </label>
                             </div>
                         </div>

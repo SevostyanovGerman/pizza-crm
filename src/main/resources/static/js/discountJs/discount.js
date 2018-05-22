@@ -18,25 +18,29 @@ function SaveDiscount() {
     var discountNameInCheck = $("#discount-nameInCheck").val();
     var discountType = $("#discount-type").val();
     var discountManualSelectWithOthers = $("#discount-manualSelectWithOthers").prop('checked');
-    var discountDiscountApplicationMethod = $("#discount-discountApplicationMethod").val();
-    var discountDiscountMode = $("#discount-discountMode").val();
-    var discountDiscountCalculationMode = $("#discount-discountCalculationMode").val();
-    var discountPriority = $("#discount-priority").val();
-    var discountValue = $("#discount-value").val();
-
     var discountManualInput = $("#discount-manualInput").prop('checked');
     var discountAutomatic = $("#discount-automatic").prop('checked');
     var discountManualDishSelect = $("#discount-manualDishSelect").prop('checked');
     var discountCombinable = $("#discount-combinable").prop('checked');
-    var discountDetailWhenPrinting = $("#discount-detailWhenPrinting").prop('checked');
     var discountComment = $("#discount-comment").val();
 
+    // Save Priority
+    var discountDiscountApplicationMethod = $("#discount-discountApplicationMethod").val();
+    var discountPriority = 0;
+    if ( discountDiscountApplicationMethod === "WITH_OTHERS" ) {
+        var discountPriority = $("#discount-priority").val();
+    }
+//***********************************************************************************************************
+
+// Save discountMinSum
     var discountMinSumRestriction = $("#discount-minSumRestriction").prop('checked');
     var discountMinSum = 0;
     if ( $("#discount-minSumRestriction").is( ":checked" ) ) {
         var discountMinSum = $("#discount-minSum").val();
     }
+//***********************************************************************************************************
 
+// Save schedules
     var discountScheduleRestriction = $("#discount-scheduleRestriction").prop('checked');
     var discountDiscountAssignMode = null;
     var schedules = [];
@@ -70,27 +74,38 @@ function SaveDiscount() {
             schedules.push(scheduleSchedule);
         });
     }
+//***********************************************************************************************************
 
+// Save DiscountCategories
     var discountApplyForAllDiscountCategories = $("#discount-applyForAllDiscountCategories").prop('checked');
+    var discountDetailWhenPrinting = $("#discount-detailWhenPrinting").prop('checked');
+    var discountDiscountMode = null;
+    var discountDiscountCalculationMode = null;
+    var discountValue = 0;
     var discountCategories = [];
-    if (false==discountApplyForAllDiscountCategories) {
+    $('.discountCategories-row').each(function () {
+        var discountCategoryName = $(this).text();
+        var discountCategoryId = $(this).closest('tr').find('input[type=hidden]').val();
+        var discountCategoryDiscountMode = $(this).closest('tr').find('td:eq(1)').find('option:selected').val();
+        var discountCategoryValue = $(this).closest('tr').find('td:eq(2)').find('input[type=number]').val();
+        var discountCategory = {
+            id: discountCategoryId,
+            name: discountCategoryName,
+            discountMode: discountCategoryDiscountMode,
+            value: discountCategoryValue
+        };
+        discountCategories.push(discountCategory);
 
-        $('.discountCategories-row').each(function () {
-            var discountCategoryName = $(this).text();
-            var discountCategoryId = $(this).closest('tr').find('input[type=hidden]').val();
-            var discountCategoryDiscountMode = $(this).closest('tr').find('td:eq(1)').find('option:selected').val();
-            var discountCategoryValue = $(this).closest('tr').find('td:eq(2)').find('input[type=number]').val();
-            var discountCategory = {
-                id: discountCategoryId,
-                name: discountCategoryName,
-                discountMode: discountCategoryDiscountMode,
-                value: discountCategoryValue
-            };
-            discountCategories.push(discountCategory);
+    });
 
-        });
+    if ($("#discount-applyForAllDiscountCategories").is( ":checked" )) {
+        var discountDetailWhenPrinting = false;
+        var discountDiscountMode = $("#discount-discountMode").val();
+        var discountDiscountCalculationMode = $("#discount-discountCalculationMode").val();
+        var discountValue = $("#discount-value").val();
+        var discountCategories = [];
     }
-
+//***********************************************************************************************************
 
     var discount = {
         id: discountId,
@@ -139,12 +154,15 @@ $(document).ready(function () {
     applicatedScheduleRestriction();
     applicatedMinSum();
     applicatedDiscountCategories();
+    applicatedPriority();
 });
 
 function applicatedScheduleRestriction() {
-    document.getElementById('discount-discountAssignMode').disabled = true;
-    $("#table-schedules").find("input,button,textarea,select").attr("disabled", "disabled");
-
+    var discountScheduleRestriction = $("#discount-scheduleRestriction").prop('checked');
+    if(!(discountScheduleRestriction === true)) {
+        document.getElementById('discount-discountAssignMode').disabled = true;
+        $("#table-schedules").find("input,button,textarea,select").attr("disabled", "disabled");
+    }
     document.getElementById('discount-scheduleRestriction').onchange = function() {
         document.getElementById('discount-discountAssignMode').disabled = !this.checked;
         $("#table-schedules").find("input,button,textarea,select").attr("disabled", !this.checked);
@@ -152,8 +170,10 @@ function applicatedScheduleRestriction() {
 }
 
 function applicatedMinSum() {
-    document.getElementById('discount-minSum').disabled = true;
-
+    var discountMinSumRestriction = $("#discount-minSumRestriction").prop('checked');
+    if(!(discountMinSumRestriction === true)) {
+        document.getElementById('discount-minSum').disabled = true;
+    }
     document.getElementById('discount-minSumRestriction').onchange = function() {
         document.getElementById('discount-minSum').disabled = !this.checked;
     };
@@ -161,10 +181,43 @@ function applicatedMinSum() {
 
 function applicatedDiscountCategories() {
 
-    $("#discountCategories-table").find("input,button,textarea,select").attr("disabled", "disabled");
+    document.getElementById('discount-discountMode').disabled = true;
+    document.getElementById('discount-discountCalculationMode').disabled = true;
+    document.getElementById('discount-value').disabled = true;
+
+    var discountApplyForAllDiscountCategories = $("#discount-applyForAllDiscountCategories").prop('checked');
+    if((discountApplyForAllDiscountCategories === true)) {
+        $("#discountCategories-table").find("input,button,textarea,select").attr("disabled", true);
+        document.getElementById('discount-detailWhenPrinting').disabled = true;
+        document.getElementById('discount-discountMode').disabled = false;
+        document.getElementById('discount-discountCalculationMode').disabled = false;
+        document.getElementById('discount-value').disabled = false;
+    }
+
     document.getElementById('discount-applyForAllDiscountCategories').onchange = function() {
         $("#discountCategories-table").find("input,button,textarea,select").attr("disabled", this.checked);
+        document.getElementById('discount-discountMode').disabled = !this.checked;
+        document.getElementById('discount-discountCalculationMode').disabled = !this.checked;
+        document.getElementById('discount-value').disabled = !this.checked;
+        document.getElementById('discount-detailWhenPrinting').disabled = this.checked;
     };
+}
+
+function applicatedPriority() {
+
+    var discountDiscountApplicationMethod = $("#discount-discountApplicationMethod").val();
+    if(discountDiscountApplicationMethod === "FULL_PRICE") {
+        document.getElementById('discount-priority').disabled = true;
+    }
+    document.getElementById('discount-discountApplicationMethod').onchange = function() {
+        var discountDiscountApplicationMethod = $("#discount-discountApplicationMethod").val();
+        if (discountDiscountApplicationMethod === "WITH_OTHERS") {
+            document.getElementById('discount-priority').disabled = false;
+        } else {
+            document.getElementById('discount-priority').disabled = true;
+        }
+    };
+
 }
 
 // Add schedules in the schedules table

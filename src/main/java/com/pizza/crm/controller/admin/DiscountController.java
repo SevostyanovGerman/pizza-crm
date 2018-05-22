@@ -133,7 +133,7 @@ public class DiscountController {
     }
 
     @PostMapping("/admin/discount/methods")
-    public void listPaymentMethods(@RequestBody Discount discount){
+    public String listPaymentMethods(@RequestBody Discount discount){
         Discount discount1 = discountService.findById(discount.getId()).orElseThrow(NotFoundException::new);
         if (!discount.getEnabled()) {
             discount1.getPaymentMethods().remove(paymentMethodService.getPaymentMethodByName(discount.getName()));
@@ -141,5 +141,6 @@ public class DiscountController {
             discount1.getPaymentMethods().add(paymentMethodService.getPaymentMethodByName(discount.getName()));
         }
         discountService.save(discount1);
+        return "redirect:/admin/discount/list";
     }
 }

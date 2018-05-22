@@ -6,6 +6,10 @@ h3 {
     font-size: 4vh;
 }
 
+.discount-detailWhenPrinting-table {
+    width: 250vh;
+}
+
 .selectEnum {
     width: 40vh;
     margin-left: 4vh;
