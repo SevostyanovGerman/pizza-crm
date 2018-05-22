@@ -1,7 +1,10 @@
 package com.pizza.crm.controller.admin;
 
-import com.pizza.crm.model.Schedule;
-import com.pizza.crm.service.ScheduleService;
+import com.pizza.crm.model.Validity;
+import com.pizza.crm.model.ValiditySchedule;
+import com.pizza.crm.repository.ValidityRepository;
+import com.pizza.crm.service.ValidityScheduleService;
+import com.pizza.crm.service.ValidityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,31 +13,76 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 public class ValidityController {
 
-    private final ScheduleService scheduleService;
+    private final ValidityScheduleService validityScheduleService;
+    private final ValidityService validityService;
 
     @Autowired
-    public ValidityController(ScheduleService scheduleService) {
-        this.scheduleService = scheduleService;
+    public ValidityController(ValidityScheduleService validityScheduleService, ValidityService validityService) {
+        this.validityScheduleService = validityScheduleService;
+        this.validityService = validityService;
     }
 
     @RequestMapping("/validity")
     public String validity(Model model) {
-        model.addAttribute("schedules", scheduleService.findAllSchedules());
+        model.addAttribute("validity", validityService.getAll());
+        model.addAttribute("schedule", validityScheduleService.findAllSchedules());
         return "admin/validity";
     }
 
-    @PostMapping("/validity/save")
-    public String save(@RequestBody Schedule schedule) {
-        scheduleService.save(schedule);
+    //Добавление названия расписания и одного графика
+    @PostMapping("/schedule/addAll")
+    public String addAll(@RequestBody Validity validity){
+        validityService.save(validity);
         return "redirect:/validity";
     }
 
-    @PostMapping("/validity/delete")
-    public String delete(@RequestParam String name) {
-        scheduleService.deleteByName(name);
+    //Отдельное добавление графика
+    @PostMapping("/schedule/addSchedule")
+    public String addSchedule(
+            @RequestParam String validityName,
+            @RequestParam LocalTime beginTime,
+            @RequestParam LocalTime endTime,
+            @RequestParam Boolean monday,
+            @RequestParam Boolean tuesday,
+            @RequestParam Boolean wednesday,
+            @RequestParam Boolean thursday,
+            @RequestParam Boolean friday,
+            @RequestParam Boolean saturday,
+            @RequestParam Boolean sunday){
+        ValiditySchedule validitySchedule = new ValiditySchedule(beginTime, endTime, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+        Validity validity = validityService.findByNameValidity(validityName);
+        validity.getValidityScheduleList().add(validitySchedule);
+        validityService.save(validity);
         return "redirect:/validity";
     }
+
+    @PostMapping("/validity/deleteValidity")
+    public String delete(@RequestParam String name) {
+        validityService.deleteByNameValidity(name);
+        return "redirect:/validity";
+    }
+
+    @PostMapping("/schedule/deleteSchedule")
+    public String delete(@RequestParam Long id) {
+        validityScheduleService.delete(id);
+        return "redirect:/validity";
+    }
+
+
+    @PostMapping("/validity/save")
+    public String save(@RequestBody Validity validity) {
+       validityService.save(validity);
+        return "redirect:/validity";
+    }
+
+
+
 }

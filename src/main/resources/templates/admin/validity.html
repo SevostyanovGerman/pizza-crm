@@ -12,6 +12,9 @@
     <link th:href="@{/css/validity.css}"
           href="../static/css/validity.css"
           rel="stylesheet" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
+          rel="stylesheet" media="screen"/>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
@@ -22,34 +25,44 @@
 
 <body>
 <th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
+
+
+
 <div class="container-fluid">
     <h2>Периоды действия</h2>
-    <button class="btn btn-success" data-toggle="modal" data-target="#schedule">Добавить</button>
-    <button class="btn btn-danger" onclick="deleteSchedule()">Удалить</button>
+    <button class="btn btn-success" data-toggle="modal" data-target="#addField">Добавить</button>
+    <button class="btn btn-danger" onclick="deleteValidity()">Удалить</button>
     <button class="btn btn-info" onclick="refresh()">Обновить</button>
     <input class="offset-1" type="checkbox">Показвать удаленные
 </div>
 
+
+
 <div class="container-fluid left-table">
     <div class="row">
-        <div class=" col-6">
-            <table class="table table-bordered col-6" id="schedule-list">
+        <div class=" col-4">
+
+            <table class="table col-6" id="Schedule-list">
                 <thead>
                 <tr>
                     <th>Наименование</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="schedule : ${schedules}" class="item">
-                    <td th:text="${schedule.getName()}"></td>
+                <tr th:each="validity : ${validity}" class="item">
+                    <td class="viewName" th:text="${validity.nameValidity}"></td>
+                    <td>
+                        <button  class="btn .btn-primary btn-sm addSchedule" data-toggle="modal" data-target="#Schedule"><span class="fa fa-plus" aria-hidden="true"></span></button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
+
         <div class="col-6">
             <h4>Название:</h4>
             <div class="form-group">
-                <input type="hidden" id="id"/>
+                <input type="hidden" />
                 <input class="form-control col-4" id="scheduleListName"/>
             </div>
             <table class="table table-bordered">
@@ -79,8 +92,9 @@
     </div>
 </div>
 
-<!--Modal window-->
-<div id="schedule" class="modal fade" tabindex="-1">
+
+<!-------------------------------------------------------------------------------------------------------Modal addAll-->
+<div id="addField" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -89,9 +103,47 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="scheduleName">Введите название:</label>
-                    <input class="form-control" type="text" id="scheduleName" required="required" name="name">
+                    <label for="validityName">Введите название:</label>
+                    <input class="form-control" type="text" id="validityName" required="required" name="name">
+                    <button type="button" class="btn btn-success addScheduleDown" onclick="addScheduleDown()">Добавить график</button>
                 </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+
+                        <th><label>Начало</label></th>
+                        <th><label>Окончание</label></th>
+                        <th><label>Пн</label></th>
+                        <th><label>Вт</label></th>
+                        <th><label>Ср</label></th>
+                        <th><label>Чт</label></th>
+                        <th><label>Пт</label></th>
+                        <th><label>Сб</label></th>
+                        <th><label>Вс</label></th>
+                    </tr>
+                    </thead>
+                    <tbody id="addScheduleDown">
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" onclick="addField()">Сохранить</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Modal addSchedule-->
+<div id="Schedule" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Новое рассписание</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
                 <table class="table">
                     <thead>
                     <tr>

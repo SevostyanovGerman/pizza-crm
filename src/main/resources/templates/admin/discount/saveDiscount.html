@@ -133,6 +133,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+<<<<<<< HEAD:src/main/resources/templates/admin/discount/saveDiscount.html
                                 <tr class="schedule-tr" th:each="schedule : ${discount.schedules}">
                                     <td th:text="${schedule.name}"></td>
                                     <td><input  type="time" th:value="${schedule.beginTime}" disabled></td>
@@ -147,6 +148,61 @@
                                     <td><button type="button" class="btn btn-primary" onclick="deleteSchedule(this)">Удалить</button></td>
                                     <input id="schedule-id" type="hidden" th:value="${schedule.id}">
                                 </tr>
+=======
+                                    <tr th:each="validitySchedule : ${discount.validitySchedules}">
+                                        <td><input type="time" class="col-6 form-control form-control-sm" value="" th:value="${validitySchedule.beginTime}"></td>
+                                        <td><input type="time" class="col-6 form-control form-control-sm" value="" th:value="${validitySchedule.endTime}"></td>
+                                        <td>
+                                            <div class="custom-control custom-checkbox mx-4">
+                                                <input type="checkbox" class="custom-control-input" id="validitySchedule-mon"
+                                                       th:checked="${validitySchedule.monday}">
+                                                <label for="validitySchedule-mon" class="custom-control-label"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-checkbox mx-4">
+                                                <input type="checkbox" class="custom-control-input" id="validitySchedule-tue"
+                                                       th:checked="${validitySchedule.tuesday}">
+                                                <label for="validitySchedule-tue" class="custom-control-label"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-checkbox mx-4">
+                                                <input type="checkbox" class="custom-control-input" id="validitySchedule-wed"
+                                                       th:checked="${validitySchedule.wednesday}">
+                                                <label for="validitySchedule-wed" class="custom-control-label"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-checkbox mx-4">
+                                                <input type="checkbox" class="custom-control-input" id="validitySchedule-thu"
+                                                       th:checked="${validitySchedule.thursday}">
+                                                <label for="validitySchedule-thu" class="custom-control-label"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-checkbox mx-4">
+                                                <input type="checkbox" class="custom-control-input" id="validitySchedule-fri"
+                                                       th:checked="${validitySchedule.friday}">
+                                                <label for="validitySchedule-fri" class="custom-control-label"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-checkbox mx-4">
+                                                <input type="checkbox" class="custom-control-input" id="validitySchedule-sat"
+                                                       th:checked="${validitySchedule.saturday}">
+                                                <label for="validitySchedule-sat" class="custom-control-label"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-checkbox mx-4">
+                                                <input type="checkbox" class="custom-control-input" id="validitySchedule-sun"
+                                                       th:checked="${validitySchedule.sunday}">
+                                                <label for="validitySchedule-sun" class="custom-control-label"></label>
+                                            </div>
+                                        </td>
+                                    </tr>
+>>>>>>> 2dev:src/main/resources/templates/admin/discount/edit.html
                                 </tbody>
                             </table>
                         </div>

@@ -19,7 +19,18 @@ function getDecree() {
         success: function (data) {
             $("#table-body").empty();
             data.forEach(function (value) {
-                $("#table-body").append("<tr onclick=\"focusDecree(" + value.id + ")\" id=\"tr-" + value.id + "\"><td>" + value.startTime + "</td><td>" + value.numberDecree + "</td><td>" + value.endTime + "</td><td>Доп.информация</td><td>Торговые предприятия</td><td>" + value.enable + "</td><td>Концепция</td><td>Комментарий</td><td>Расписание</td></tr>");
+                $("#table-body").append(
+                    "<tr onclick=\"focusDecree(" + value.id + ")\" id=\"tr-" + value.id + "\">" +
+                    "<td>" + value.startTime + "</td>" +
+                    "<td>" + value.numberDecree + "</td>" +
+                    "<td>" + value.endTime + "</td>" +
+                    "<td>Доп.информация</td>" +
+                    "<td>Торговые предприятия</td>" +
+                    "<td>" + value.enable + "</td>" +
+                    "<td>Концепция</td>" +
+                    "<td>Комментарий</td>" +
+                    "<td>Расписание</td>" +
+                    "</tr>");
             });
         },
         error: function (e) {

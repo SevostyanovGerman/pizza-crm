@@ -3,6 +3,7 @@ package com.pizza.crm.controller.admin;
 import com.pizza.crm.model.Nomenclature;
 import com.pizza.crm.service.NomenclatureParentGroupService;
 import com.pizza.crm.service.NomenclatureService;
+import com.pizza.crm.service.SchemeModifiersService;
 import com.pizza.crm.service.UnitsOfMeasurementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,8 @@ public class NomenclatureController {
 
     private final UnitsOfMeasurementService unitsOfMeasurementService;
 
+    private final SchemeModifiersService schemeModifiersService;
+
     private static final String WHITE_BACKGROUND_COLOR = "#FFFFFF";
 
     private static final String BLACK_FONT_COLOR = "#000000";
@@ -28,10 +31,11 @@ public class NomenclatureController {
     @Autowired
     public NomenclatureController(NomenclatureService nomenclatureService,
                                   NomenclatureParentGroupService nomenclatureParentGroupService,
-                                  UnitsOfMeasurementService unitsOfMeasurementService) {
+                                  UnitsOfMeasurementService unitsOfMeasurementService,SchemeModifiersService schemeModifiersService) {
         this.nomenclatureService = nomenclatureService;
         this.nomenclatureParentGroupService = nomenclatureParentGroupService;
         this.unitsOfMeasurementService = unitsOfMeasurementService;
+        this.schemeModifiersService=schemeModifiersService;
     }
 
     @GetMapping("nomenclature")
@@ -72,6 +76,7 @@ public class NomenclatureController {
         model.addAttribute("unitsOfMeasurement", unitsOfMeasurementService.getAll());
         model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());
         model.addAttribute("modifierNomenclatures", nomenclatureService.getNomenclatureModifiers());
+        model.addAttribute("schemeModifiers", schemeModifiersService.findAll());
         return "admin/nomenclature/editNomenclature";
 
     }
@@ -100,6 +105,7 @@ public class NomenclatureController {
         model.addAttribute("unitsOfMeasurement", unitsOfMeasurementService.getAll());
         model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());
         model.addAttribute("modifierNomenclatures", nomenclatureService.getNomenclatureModifiers());
+        model.addAttribute("schemeModifiers", schemeModifiersService.findAll());
         return "admin/nomenclature/editNomenclature";
     }
 
@@ -108,6 +114,7 @@ public class NomenclatureController {
         model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());
         model.addAttribute("modifierNomenclatures", nomenclatureService.getNomenclatureModifiers());
         model.addAttribute("unitsOfMeasurement", unitsOfMeasurementService.getAll());
+        model.addAttribute("schemeModifiers", schemeModifiersService.findAll());
         return "admin/nomenclature/editNomenclature";
     }
 
