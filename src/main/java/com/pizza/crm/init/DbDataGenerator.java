@@ -135,7 +135,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         PaymentType onHouse = new PaymentType("За счет заведения");
         paymentTypeService.saveAll(Arrays.asList(card, cash, withoutEarnings, onHouse));
 
-// PaymentMethod creating
+        // PaymentMethod creating
         PaymentMethod pm1 = new PaymentMethod("Visa", card);
         PaymentMethod pm2 = new PaymentMethod("MasterCard", card);
         PaymentMethod pm3 = new PaymentMethod("Наличные", cash);
@@ -163,19 +163,10 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         discount.setAutomatic(true);
         discount.setManualSelectWithOthers(true);
         discount.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
-//        discount.getPaymentMethods().add(pm3);
+
         discount.setDiscountCategories(Arrays.asList(discountCategory1, discountCategory2));
 
-
-
-        discount.getValiditySchedules().add(new ValiditySchedule(/*"Расписание скидки в обед",*/ LocalTime.of(12, 0), LocalTime.of(13, 0)));
-        discount.getValiditySchedules().add(new ValiditySchedule(/*"Расписание скидки вечером",*/ LocalTime.of(14, 0), LocalTime.of(16, 0),
-                true, false, true, false, true, false, true));
-
         discountService.save(discount);
-        /*pm1.setDiscounts(new LinkedList<Discount>().add(discount));*/
-//        pm3.setDiscount(discount);
-        /*paymentMethodService.saveAll(Arrays.asList(pm1, pm3));*/
     }
 
     private void generateFakeStaff() {

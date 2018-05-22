@@ -77,9 +77,9 @@ public class Discount {
     private List<PaymentMethod> paymentMethods;
 
     @ManyToMany
-    @JoinTable(name = "Discount_Schedule",
+    @JoinTable(name = "Discount_Validity",
             joinColumns = @JoinColumn(name = "Discount"),
-            inverseJoinColumns = @JoinColumn(name = "Schedule"))
+            inverseJoinColumns = @JoinColumn(name = "Validity"))
     private List<Validity> validities;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
