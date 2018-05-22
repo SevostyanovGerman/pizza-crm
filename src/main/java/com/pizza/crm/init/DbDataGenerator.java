@@ -163,8 +163,10 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         discount.setAutomatic(true);
         discount.setManualSelectWithOthers(true);
         discount.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
-
         discount.setDiscountCategories(Arrays.asList(discountCategory1, discountCategory2));
+
+        List<Validity> validities = new ArrayList<>(validityService.getAll());
+        discount.setValidities(validities);
 
         discountService.save(discount);
     }

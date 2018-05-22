@@ -45,7 +45,7 @@ public class DiscountController {
         Discount discount = discountService.findById(id).orElseThrow(NotFoundException::new);
         model.addAttribute("discount", discount);
 
-// Enums creating
+        // Enums creating
         model.addAttribute("FIRST_DISH", DiscountAssignMode.FIRST_DISH);
         model.addAttribute("ALL_DISHES", DiscountAssignMode.ALL_DISHES);
 
@@ -59,7 +59,7 @@ public class DiscountController {
         model.addAttribute("PERCENT", DiscountCalculationMode.PERCENT);
         model.addAttribute("FIXED", DiscountCalculationMode.FIXED);
 
-// Schedules creating
+        // allValidity creating
         model.addAttribute("allValidity", validityService.getAll());
 
         // discountCategories creating
@@ -72,7 +72,6 @@ public class DiscountController {
                 discountCategories.add(discountCategory);
             }
             discount.setDiscountCategories(discountCategories);
-
         }
 
         return "/admin/discount/saveDiscount";
@@ -80,11 +79,11 @@ public class DiscountController {
 
     @GetMapping("/admin/discount/new")
     public String newDiscount(Model model) {
-// Discount creating
+        // Discount creating
         Discount discount = new Discount();
         model.addAttribute("discount", discount);
 
-// Enums creating
+        // Enums creating
         model.addAttribute("FIRST_DISH", DiscountAssignMode.FIRST_DISH);
         model.addAttribute("ALL_DISHES", DiscountAssignMode.ALL_DISHES);
 
@@ -98,10 +97,11 @@ public class DiscountController {
         model.addAttribute("PERCENT", DiscountCalculationMode.PERCENT);
         model.addAttribute("FIXED", DiscountCalculationMode.FIXED);
 
-// Schedules creating
-        model.addAttribute("allValidity", validityService.getAll());
+        // allValidity creating
+        List<Validity> allValidity = new ArrayList<>(validityService.getAll());
+        model.addAttribute("allValidity", allValidity);
 
-// discountCategories creating
+        // discountCategories creating
         List<Category> categories = new ArrayList<>(categoryService.getAll());
         List<DiscountCategory> discountCategories = new ArrayList<>();
         for (Category category:categories) {
@@ -116,8 +116,7 @@ public class DiscountController {
 
     @PostMapping("/admin/discount/save")
     public void saveDiscount(@RequestBody Discount discount){
-
-// PaymentMethods creating
+        // PaymentMethods creating
         List<PaymentMethod> paymentMethods = new ArrayList<>(paymentMethodService.getAll());
         discount.setPaymentMethods(paymentMethods);
 

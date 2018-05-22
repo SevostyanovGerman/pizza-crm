@@ -111,9 +111,9 @@
                             <table id="table-schedules" class="table table-sm">
                                 <thead>
                                 <tr><td><select class="custom-select selectEnum" id="allSchedules">
-                                    <option th:each="schedule : ${allSchedules}"
-                                            th:text="${schedule.name}"
-                                            th:value="${schedule.id}">
+                                    <option th:each="validity : ${allValidity}"
+                                            th:text="${validity.nameValidity}"
+                                            th:value="${validity.id}">
                                     </option>
                                 </select>
                                     <button type="button" class="btn btn-primary" onclick="addSchedule()">Добавить</button></td>
@@ -133,7 +133,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-<<<<<<< HEAD:src/main/resources/templates/admin/discount/saveDiscount.html
+
                                 <tr class="schedule-tr" th:each="schedule : ${discount.schedules}">
                                     <td th:text="${schedule.name}"></td>
                                     <td><input  type="time" th:value="${schedule.beginTime}" disabled></td>
@@ -148,7 +148,7 @@
                                     <td><button type="button" class="btn btn-primary" onclick="deleteSchedule(this)">Удалить</button></td>
                                     <input id="schedule-id" type="hidden" th:value="${schedule.id}">
                                 </tr>
-=======
+
                                     <tr th:each="validitySchedule : ${discount.validitySchedules}">
                                         <td><input type="time" class="col-6 form-control form-control-sm" value="" th:value="${validitySchedule.beginTime}"></td>
                                         <td><input type="time" class="col-6 form-control form-control-sm" value="" th:value="${validitySchedule.endTime}"></td>
@@ -202,7 +202,7 @@
                                             </div>
                                         </td>
                                     </tr>
->>>>>>> 2dev:src/main/resources/templates/admin/discount/edit.html
+
                                 </tbody>
                             </table>
                         </div>
