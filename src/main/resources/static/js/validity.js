@@ -7,6 +7,8 @@ $(document).ready(function () {
         $(this).addClass('item-active');
         getSelectedSchedule();
     });
+
+
 });
 
 //выделение строк в таблице
@@ -246,6 +248,7 @@ function addField() {
         },
         success: function () {
             window.location.replace("/validity");
+
         },
         error: function () {}
     });
