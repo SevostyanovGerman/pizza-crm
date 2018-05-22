@@ -46,7 +46,9 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
     private final IngredientService ingredientService;
 
-    private final ScheduleService scheduleService;
+    private final ValidityScheduleService validityScheduleService;
+
+    private final ValidityService validityService;
 
     private final DiscountService discountService;
 
@@ -70,8 +72,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     public DbDataGenerator(NomenclatureParentGroupService nomenclatureParentGroupService,
                            NomenclatureService nomenclatureService, UserService userService, RoleService roleService,
                            AddedCategoryService addedCategoryService, CategoryService categoryService,
-                           DishService dishService, IngredientService ingredientService, ScheduleService scheduleService,
-                           DiscountService discountService, DecreeService decreeService,
+                           DishService dishService, IngredientService ingredientService, ValidityScheduleService validityScheduleService,
+                           ValidityService validityService, DiscountService discountService, DecreeService decreeService,
                            QuickMenuService quickMenuService, DishQuickMenuService dishQuickMenuService,
                            EmployeeService employeeService, PaymentMethodService paymentMethodService,
                            PaymentTypeService paymentTypeService, UnitsOfMeasurementService unitsOfMeasurementService, ScaleOfSizeService scaleOfSizeService) {
@@ -83,7 +85,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.categoryService = categoryService;
         this.dishService = dishService;
         this.ingredientService = ingredientService;
-        this.scheduleService = scheduleService;
+        this.validityScheduleService = validityScheduleService;
+        this.validityService = validityService;
         this.discountService = discountService;
         this.decreeService = decreeService;
         this.quickMenuService = quickMenuService;
@@ -100,7 +103,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
         generateDishes();
 
-        generateSchedule();
+        generateValidity();
 
         generateFakeStaff();
 
@@ -162,6 +165,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         discount.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
 //        discount.getPaymentMethods().add(pm3);
         discount.setDiscountCategories(Arrays.asList(discountCategory1, discountCategory2));
+<<<<<<< HEAD
 
         Schedule schedule1 = new Schedule("Расписание скидки в обед", LocalTime.of(12, 0), LocalTime.of(13, 0));
         Schedule schedule2 = new Schedule("Расписание скидки вечером", LocalTime.of(14, 0), LocalTime.of(16, 0),
@@ -169,6 +173,11 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         scheduleService.save(schedule1);
         scheduleService.save(schedule2);
         discount.setSchedules(scheduleService.findAllSchedules());
+=======
+        discount.getValiditySchedules().add(new ValiditySchedule(/*"Расписание скидки в обед",*/ LocalTime.of(12, 0), LocalTime.of(13, 0)));
+        discount.getValiditySchedules().add(new ValiditySchedule(/*"Расписание скидки вечером",*/ LocalTime.of(14, 0), LocalTime.of(16, 0),
+                true, false, true, false, true, false, true));
+>>>>>>> 2dev
         discountService.save(discount);
         /*pm1.setDiscounts(new LinkedList<Discount>().add(discount));*/
 //        pm3.setDiscount(discount);
@@ -433,9 +442,18 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         //dishPizza.addIngredient(ingredient);
     }
 
-    private void generateSchedule() {
-        scheduleService.save(new Schedule("Lunch", LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true, true, true, false, false));
-        scheduleService.save(new Schedule("Dinner", LocalTime.of(18, 00), LocalTime.of(19, 00), false, false, false, false, false, true, true));
+    private void generateValidity() {
+        ValiditySchedule validityScheduleLunch = new ValiditySchedule(/*"Lunch",*/ LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true, true, true, false, false);
+        ValiditySchedule validityScheduleLunch2 = new ValiditySchedule(/*"Lunch",*/ LocalTime.of(14, 30), LocalTime.of(15, 00), false, true, true, true, true, true, false);
+        ArrayList<ValiditySchedule> listValidityScheduleLunches = new ArrayList<>(Arrays.asList(validityScheduleLunch, validityScheduleLunch2));
+
+        ValiditySchedule validityScheduleDinner = new ValiditySchedule(/*"Dinner",*/ LocalTime.of(18, 00), LocalTime.of(20, 00), false, true, true, true, true, true, false);
+        ArrayList<ValiditySchedule> listValidityScheduleDinner = new ArrayList<>(Arrays.asList(validityScheduleDinner));
+
+        Validity validityDinner = new Validity("Dinner", listValidityScheduleDinner);
+        Validity validityLunch = new Validity("Lunch", listValidityScheduleLunches);
+        validityService.save(validityLunch);
+        validityService.save(validityDinner);
 
     }
 
