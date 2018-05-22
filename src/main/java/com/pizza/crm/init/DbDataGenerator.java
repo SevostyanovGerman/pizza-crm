@@ -165,19 +165,13 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         discount.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
 //        discount.getPaymentMethods().add(pm3);
         discount.setDiscountCategories(Arrays.asList(discountCategory1, discountCategory2));
-<<<<<<< HEAD
 
-        Schedule schedule1 = new Schedule("Расписание скидки в обед", LocalTime.of(12, 0), LocalTime.of(13, 0));
-        Schedule schedule2 = new Schedule("Расписание скидки вечером", LocalTime.of(14, 0), LocalTime.of(16, 0),
-                true, false, true, false, true, false, true);
-        scheduleService.save(schedule1);
-        scheduleService.save(schedule2);
-        discount.setSchedules(scheduleService.findAllSchedules());
-=======
+
+
         discount.getValiditySchedules().add(new ValiditySchedule(/*"Расписание скидки в обед",*/ LocalTime.of(12, 0), LocalTime.of(13, 0)));
         discount.getValiditySchedules().add(new ValiditySchedule(/*"Расписание скидки вечером",*/ LocalTime.of(14, 0), LocalTime.of(16, 0),
                 true, false, true, false, true, false, true));
->>>>>>> 2dev
+
         discountService.save(discount);
         /*pm1.setDiscounts(new LinkedList<Discount>().add(discount));*/
 //        pm3.setDiscount(discount);

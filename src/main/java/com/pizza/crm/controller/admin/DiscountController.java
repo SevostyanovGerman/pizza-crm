@@ -3,8 +3,7 @@ package com.pizza.crm.controller.admin;
 import com.pizza.crm.exceptions.NotFoundException;
 import com.pizza.crm.model.Category;
 import com.pizza.crm.model.PaymentMethod;
-import com.pizza.crm.model.PaymentType;
-import com.pizza.crm.model.Schedule;
+import com.pizza.crm.model.Validity;
 import com.pizza.crm.model.discount.*;
 import com.pizza.crm.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,15 +21,15 @@ public class DiscountController {
 
     private final DiscountService discountService;
     private final PaymentMethodService paymentMethodService;
-    private final ScheduleService scheduleService;
+    private final ValidityService validityService;
     private final CategoryService categoryService;
 
     @Autowired
     public DiscountController(DiscountService discountService, PaymentMethodService paymentMethodService,
-                              ScheduleService scheduleService, CategoryService categoryService) {
+                              ValidityService validityService, CategoryService categoryService) {
         this.discountService = discountService;
         this.paymentMethodService = paymentMethodService;
-        this.scheduleService = scheduleService;
+        this.validityService = validityService;
         this.categoryService = categoryService;
     }
 
@@ -62,7 +60,7 @@ public class DiscountController {
         model.addAttribute("FIXED", DiscountCalculationMode.FIXED);
 
 // Schedules creating
-        model.addAttribute("allSchedules", scheduleService.findAllSchedules());
+        model.addAttribute("allValidity", validityService.getAll());
 
         // discountCategories creating
         if (discount.getDiscountCategories().isEmpty()) {
@@ -101,7 +99,7 @@ public class DiscountController {
         model.addAttribute("FIXED", DiscountCalculationMode.FIXED);
 
 // Schedules creating
-        model.addAttribute("allSchedules", scheduleService.findAllSchedules());
+        model.addAttribute("allValidity", validityService.getAll());
 
 // discountCategories creating
         List<Category> categories = new ArrayList<>(categoryService.getAll());

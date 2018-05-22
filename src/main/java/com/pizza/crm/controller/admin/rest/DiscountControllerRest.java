@@ -1,13 +1,12 @@
 package com.pizza.crm.controller.admin.rest;
 
 import com.pizza.crm.exceptions.NotFoundException;
-import com.pizza.crm.model.Schedule;
+import com.pizza.crm.model.Validity;
 import com.pizza.crm.model.discount.Discount;
 import com.pizza.crm.service.DiscountService;
-import com.pizza.crm.service.ScheduleService;
+import com.pizza.crm.service.ValidityService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
@@ -15,17 +14,17 @@ import java.util.Collection;
 @RestController
 public class DiscountControllerRest {
 
-    private final ScheduleService scheduleService;
+    private final ValidityService validityService;
     private final DiscountService discountService;
 
-    public DiscountControllerRest(ScheduleService scheduleService, DiscountService discountService) {
-        this.scheduleService = scheduleService;
+    public DiscountControllerRest(ValidityService validityService, DiscountService discountService) {
+        this.validityService = validityService;
         this.discountService = discountService;
     }
 
     @PostMapping("/admin/discount/getSchedule")
-    public Schedule getSchedule(@RequestBody Schedule schedule){
-        return scheduleService.getSchedule(schedule.getId());
+    public Validity getSchedule(@RequestBody Validity validity){
+        return validityService.findById(validity.getId()).orElseThrow(NotFoundException::new);
     }
 
     @PostMapping("/admin/discount/getAllDiscounts")
