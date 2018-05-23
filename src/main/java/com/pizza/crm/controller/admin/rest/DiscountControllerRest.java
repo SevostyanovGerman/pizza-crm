@@ -22,7 +22,7 @@ public class DiscountControllerRest {
         this.discountService = discountService;
     }
 
-    @PostMapping("/admin/discount/getSchedule")
+    @PostMapping("/admin/discount/getValidity")
     public Validity getSchedule(@RequestBody Validity validity){
         return validityService.findById(validity.getId()).orElseThrow(NotFoundException::new);
     }

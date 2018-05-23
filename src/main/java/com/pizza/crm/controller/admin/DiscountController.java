@@ -116,6 +116,13 @@ public class DiscountController {
 
     @PostMapping("/admin/discount/save")
     public void saveDiscount(@RequestBody Discount discount){
+
+        List<Validity> validities = new ArrayList<>();
+        for (Validity validity : discount.getValidities()) {
+            validities.add(validityService.findById(validity.getId()).orElseThrow(NotFoundException::new));
+        }
+        discount.setValidities(validities);
+
         // PaymentMethods creating
         List<PaymentMethod> paymentMethods = new ArrayList<>(paymentMethodService.getAll());
         discount.setPaymentMethods(paymentMethods);

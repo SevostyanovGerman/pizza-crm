@@ -24,7 +24,7 @@ function SaveDiscount() {
     var discountCombinable = $("#discount-combinable").prop('checked');
     var discountComment = $("#discount-comment").val();
 
-    // Save Priority
+// Save Priority
     var discountDiscountApplicationMethod = $("#discount-discountApplicationMethod").val();
     var discountPriority = 0;
     if ( discountDiscountApplicationMethod === "WITH_OTHERS" ) {
@@ -43,12 +43,12 @@ function SaveDiscount() {
 // Save schedules
     var discountScheduleRestriction = $("#discount-scheduleRestriction").prop('checked');
     var discountDiscountAssignMode = null;
-    var schedules = [];
+    var validities = [];
     if ( $("#discount-scheduleRestriction").is( ":checked" ) ) {
         var discountDiscountAssignMode = $("#discount-discountAssignMode").val();
         $('.schedule-tr').each(function () {
-            var scheduleName =         $(this).text();
             var idSchedule =           $(this).closest('tr').find('input[type=hidden]').val();
+            /*var scheduleName =         $(this).text();
             var beginTimeSchedule =    $(this).closest('tr').find('td:eq(1)').find('input[type=time]').val();
             var endTimeSchedule =      $(this).closest('tr').find('td:eq(2)').find('input[type=time]').val();
             var mondaySchedule =       $(this).closest('tr').find('td:eq(3)').find('input[type=checkbox]').prop('checked');
@@ -57,10 +57,10 @@ function SaveDiscount() {
             var thursdaySchedule =     $(this).closest('tr').find('td:eq(6)').find('input[type=checkbox]').prop('checked');
             var fridaySchedule =       $(this).closest('tr').find('td:eq(7)').find('input[type=checkbox]').prop('checked');
             var saturdaySchedule =     $(this).closest('tr').find('td:eq(8)').find('input[type=checkbox]').prop('checked');
-            var sundaySchedule =       $(this).closest('tr').find('td:eq(9)').find('input[type=checkbox]').prop('checked');
-            var scheduleSchedule = {
-                name: scheduleName,
-                id: idSchedule,
+            var sundaySchedule =       $(this).closest('tr').find('td:eq(9)').find('input[type=checkbox]').prop('checked');*/
+            var validity = {
+                id: idSchedule
+                /*name: scheduleName,
                 beginTime: beginTimeSchedule,
                 endTime: endTimeSchedule,
                 monday: mondaySchedule,
@@ -69,9 +69,9 @@ function SaveDiscount() {
                 thursday: thursdaySchedule,
                 friday: fridaySchedule,
                 saturday: saturdaySchedule,
-                sunday: sundaySchedule
+                sunday: sundaySchedule*/
             };
-            schedules.push(scheduleSchedule);
+            validities.push(validity);
         });
     }
 //***********************************************************************************************************
@@ -129,7 +129,7 @@ function SaveDiscount() {
         manualDishSelect: discountManualDishSelect,
         combinable: discountCombinable,
         comment: discountComment,
-        schedules: schedules,
+        validities: validities,
         detailWhenPrinting: discountDetailWhenPrinting,
         discountCategories: discountCategories
     };
@@ -221,42 +221,60 @@ function applicatedPriority() {
 }
 
 // Add schedules in the schedules table
-function addSchedule() {
-    var scheduleId = $('#allSchedules option:selected').val();
-    var schedule = {id: scheduleId};
+function addValidity() {
+    var ValidId = $('#allValidities option:selected').val();
+    var validity = {id: ValidId};
 
     $.ajax({
         type: "POST",
-        url: "/admin/discount/getSchedule",
+        url: "/admin/discount/getValidity",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(schedule),
+        data: JSON.stringify(validity),
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function (data) {
-            $('#table-schedules').append('<tr class="schedule-tr"> ' +
-                '<td>'+data.name+'</td>' +
-                '<td><input type="time" value="'+data.beginTime+'" disabled></td>' +
-                '<td><input type="time" value="'+data.endTime+'" disabled></td>' +
-                '<td><input disabled type="checkbox" class="activated" ' + (data.monday ? 'checked' : '') + '></td>' +
-                '<td><input disabled type="checkbox" class="activated" ' + (data.tuesday ? 'checked' : '') + '></td>' +
-                '<td><input disabled type="checkbox" class="activated" ' + (data.wednesday ? 'checked' : '') + '></td>' +
-                '<td><input disabled type="checkbox" class="activated" ' + (data.thursday ? 'checked' : '') + '></td>' +
-                '<td><input disabled type="checkbox" class="activated" ' + (data.friday ? 'checked' : '') + '></td>' +
-                '<td><input disabled type="checkbox" class="activated" ' + (data.saturday ? 'checked' : '') + '></td>' +
-                '<td><input disabled type="checkbox" class="activated" ' + (data.sunday ? 'checked' : '') + '></td>' +
-                '<td><button type="button" class="btn btn-primary" onclick="deleteSchedule(this)">Удалить</button></td>' +
+
+            $('#validity-tbody2').append(
+                '<tr class="schedule-tr">' +
+                '<td>'+data.nameValidity+'</td>' +
                 '<input type="hidden" value="'+data.id+'">' +
-                '</tr>');
+                '</tr>'
+                );
+            for (var i = 0; i < data.validityScheduleList.length; i++) {
+                $('#validity-tbody2').append(
+                    '<tr>' +
+                    '<td></td>' +
+                    '<td><input type="time" value="'+data.validityScheduleList[i].beginTime+'" disabled></td>' +
+                    '<td><input type="time" value="'+data.validityScheduleList[i].endTime+'" disabled></td>' +
+                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].monday ? 'checked' : '') + '></td>' +
+                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].tuesday ? 'checked' : '') + '></td>' +
+                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].wednesday ? 'checked' : '') + '></td>' +
+                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].thursday ? 'checked' : '') + '></td>' +
+                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].friday ? 'checked' : '') + '></td>' +
+                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].saturday ? 'checked' : '') + '></td>' +
+                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].sunday ? 'checked' : '') + '></td>' +
+                    '</tr>'
+                );
+            }
         },
         error: function () {}
     });
 }
+
 // Delete schedules in the schedules table
-function deleteSchedule(r) {
-    var i = r.parentNode.parentNode.rowIndex;
-    document.getElementById("table-schedules").deleteRow(i);
-}
+$(document).ready(function(){
+    $('#clear-list').click(function () {
+        $('#validity-tbody2').each(function () {
+            $(this).closest('table').find('tbody').empty();
+            }
+        );
+    });
+});
+
+
+
+
 
 
 
