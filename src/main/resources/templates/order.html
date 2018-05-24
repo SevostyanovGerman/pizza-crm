@@ -37,7 +37,7 @@
             <p class="clock-minutes mx-0 px-0"></p>
         </div>
         <div class="col offset-7 no-margin">
-            <p class="header-right">Юлия Савенко</p>
+            <p th:text="${employeeLogin}" class="header-right"></p>
             <span></span>
         </div>
     </div>
@@ -52,17 +52,16 @@
                     <div class="col-3 left-panel-header-item-1">
                         <p><i class="fa fa-align-justify" aria-hidden="true"></i></p>
                     </div>
-                    <div class="col-3 left-panel-header-item-2">
+                    <div class="left-panel-header-item-3">
                         <p id="orderTime"></p>
-                        <p></p>
                     </div>
-                    <div class="col-3 left-panel-header-item-3">
+                    <div class="left-panel-header-item-3">
                         <p><i class="fa fa-list-alt" aria-hidden="true"></i></p>
                         <p>8567</p>
                     </div>
-                    <div class="col-3 left-panel-header-item-3">
+                    <div class="left-panel-header-item-3">
                         <p><i class="fa fa-id-card" aria-hidden="true"></i></p>
-                        <p>Юлия Савенко</p>
+                        <p th:text="${employeeLogin}"></p>
                     </div>
                 </div>
                 <!--Current order table-->
@@ -137,14 +136,27 @@
         <!-- middle-panel -->
         <div class="col-4 no-margin right-panel">
             <div class="right-panel-header">
-                <ul>
-                    <li><a href="#">I</a></li>
-                    <li><a href="#">II</a></li>
-                    <li><a href="#">III</a></li>
+                <ul id="head-quick-menu">
+                    <li><a href="#" onclick="headerQuickMenu(1)" id="headerQuickMenu-1">I</a></li>
+                    <li><a href="#" onclick="headerQuickMenu(2)" id="headerQuickMenu-2">II</a></li>
+                    <li><a href="#" onclick="headerQuickMenu(3)" id="headerQuickMenu-3">III</a></li>
                 </ul>
             </div>
             <div class="right-panel-body">
-                <a class="middle-panel-yellow" href="#">С собой</a>
+                <div class="right-panel-body-1">
+                    <a class="middle-panel-yellow" href="#">С собой</a>
+                    <a class="middle-panel-yellow" href="#">С собой</a>
+                    <a class="middle-panel-yellow" href="#">С собой</a>
+                </div>
+                <div class="right-panel-body-2">
+                    <a class="middle-panel-yellow" href="#">С собой</a>
+                    <!--<a class="middle-panel-yellow" href="#">С собой</a>-->
+                </div>
+                <div class="right-panel-body-3">
+                    <!--<a class="middle-panel-yellow" href="#">С собой</a>-->
+                    <!--<a class="middle-panel-yellow" href="#">С собой</a>-->
+                    <a class="middle-panel-yellow" href="#">С собой</a>
+                </div>
             </div>
         </div>
         <!-- right-panel -->
@@ -159,7 +171,7 @@
                     </a>
                 </div>
                 <div class="footer-item footer-item-1">
-                    <a href="#">
+                    <a href="/todayOrders">
                         <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
                         <p>Закрытые заказы</p>
                     </a>
@@ -344,8 +356,6 @@
         <div class="modal-content">
             <div class="modal-body">
                 <p>РАСШИРЕННЫЙ ПОИСК ТОВАРА</p>
-                <!--<button type="button" class="btn btn-success" onclick="SaveChange()">Сохранить</button>-->
-                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>-->
                 <div class="container" id="product1">
                     <div class="row product list" id="product">
                     </div>
@@ -383,7 +393,7 @@
                         <div class="col-4" style="padding-right: 0px;">
                             <div class="products" id="products1">
                                 <ul class="productsItem list" id="productsItem">
-                                    <li>
+                                    <li class="product-search" data-quantity="1">
                                         <p class="name">Ролл</p>
                                         <p class="price">100р</p>
                                         <p class="code">Koд: 1000</p>
@@ -443,204 +453,6 @@
         </div>
     </div>
 </div>
-<script>
 
-    var searchString = '';
-    var options = {
-        valueNames: ['nameProduct']
-    };
-    var listObj = new List('product1', options);
-
-
-    var option2 = {
-        valueNames: ['code', 'barcode', 'vendorcode']
-    };
-
-    var listObj2 = new List('products1', option2);
-    // function SearchModalShow() {
-    //     $("#SearchModalЕxpand").modal('hide');
-    //     $("#SearchModal").modal('show');
-    // }
-
-    var searchAll = false;
-    var searchDarCode = false;
-    var searchCode = false;
-    var searchVendorCode = false;
-
-
-    function SearchProduct(value) {
-        searchString = searchString + value;
-        $("#SearchModalInput").val(searchString);
-        listObj2.search(searchString);
-    }
-
-    function SearchProductDel() {
-        searchString = '';
-        $("#SearchModalInput").val(searchString);
-        listObj2.search(searchString);
-    }
-
-    function SearchProductDelOne() {
-        searchString = searchString.slice(0, -1);
-        $("#SearchModalInput").val(searchString);
-        listObj2.search(searchString);
-    }
-
-
-    function SearchModalЕxpandShow() {
-        $("#SearchModal").modal('hide');
-        $("#SearchModalЕxpand").modal('show');
-        $.ajax({
-            type: "POST",
-            url: "/get/dish",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-            },
-            success: function (data) {
-                $("#productsItem").empty();
-                var dish = JSON.parse(data);
-                dish.forEach(function (value) {
-                    $("#product").append("<div class=\"col-3\"><div class=\"productItem\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "p</p></div></div>")
-                });
-                listObj = new List('product1', options);
-            },
-            error: function (e) {
-            }
-        });
-
-    }
-
-    function SearchModalShow() {
-        $("#SearchModalЕxpand").modal('hide');
-        $("#SearchModal").modal('show');
-        $.ajax({
-            type: "POST",
-            url: "/get/dish",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-            },
-            success: function (data) {
-                $("#productsItem").empty();
-                var dish = JSON.parse(data);
-                dish.forEach(function (value) {
-                    $("#productsItem").append("<li><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
-                });
-                listObj2 = new List('products1', option2);
-            },
-            error: function (e) {
-            }
-        });
-        SearchAll();
-    }
-
-    $('#search-field').on('keyup', function () {
-        var searchString = $(this).val();
-        listObj.search(searchString);
-    });
-
-    function SearchModalЕxpandHide() {
-        $("#SearchModal").modal('hide');
-        $("#SearchModalЕxpand").modal('hide');
-    }
-
-    function SearchAll() {
-        searchAll = !searchAll;
-        if (searchAll) {
-            $("#SearchCode").css({"background-color": "#ffff00"});
-            $("#SearchDarCode").css({"background-color": "#ffff00"});
-            $("#SearchVendorCode").css({"background-color": "#ffff00"});
-            option2 = {
-                valueNames: ['code', 'barcode', 'vendorcode']
-            };
-            listObj2 = new List('products1', option2);
-            searchDarCode = true;
-            searchCode = true;
-            searchVendorCode = true;
-
-        } else {
-            $("#SearchCode").css({"background-color": "#fff"});
-            $("#SearchDarCode").css({"background-color": "#fff"});
-            $("#SearchVendorCode").css({"background-color": "#fff"});
-            option2 = {
-                valueNames: []
-            };
-            listObj2 = new List('products1', option2);
-            searchDarCode = false;
-            searchCode = false;
-            searchVendorCode = false;
-        }
-    }
-
-
-    function SearchDarCode() {
-        searchDarCode = !searchDarCode;
-        if (searchDarCode) {
-            $("#SearchCode").css({"background-color": "#fff"});
-            $("#SearchDarCode").css({"background-color": "#ffff00"});
-            $("#SearchVendorCode").css({"background-color": "#fff"});
-            option2 = {
-                valueNames: ['barcode']
-            };
-            listObj2 = new List('products1', option2);
-            searchCode = false;
-            searchVendorCode = false;
-        } else {
-            $("#SearchCode").css({"background-color": "#fff"});
-            $("#SearchDarCode").css({"background-color": "#fff"});
-            $("#SearchVendorCode").css({"background-color": "#fff"});
-            option2 = {
-                valueNames: []
-            };
-            listObj2 = new List('products1', option2);
-        }
-    }
-
-    function SearchCode() {
-        searchCode = !searchCode;
-        if (searchCode) {
-            $("#SearchCode").css({"background-color": "#ffff00"});
-            $("#SearchDarCode").css({"background-color": "#fff"});
-            $("#SearchVendorCode").css({"background-color": "#fff"});
-            option2 = {
-                valueNames: ['code']
-            };
-            listObj2 = new List('products1', option2);
-            searchDarCode = false;
-            searchVendorCode = false;
-        } else {
-            $("#SearchCode").css({"background-color": "#fff"});
-            $("#SearchDarCode").css({"background-color": "#fff"});
-            $("#SearchVendorCode").css({"background-color": "#fff"});
-            option2 = {
-                valueNames: []
-            };
-            listObj2 = new List('products1', option2);
-        }
-    }
-
-    function SearchVendorCode() {
-        searchVendorCode = !searchVendorCode;
-        if (searchVendorCode) {
-            $("#SearchCode").css({"background-color": "#fff"});
-            $("#SearchDarCode").css({"background-color": "#fff"});
-            $("#SearchVendorCode").css({"background-color": "#ffff00"});
-            option2 = {
-                valueNames: ['vendorcode']
-            };
-            listObj2 = new List('products1', option2);
-            searchDarCode = false;
-            searchCode = false;
-        } else {
-            $("#SearchCode").css({"background-color": "#fff"});
-            $("#SearchDarCode").css({"background-color": "#fff"});
-            $("#SearchVendorCode").css({"background-color": "#fff"});
-            option2 = {
-                valueNames: []
-            };
-            listObj2 = new List('products1', option2);
-        }
-    }
-
-</script>
 </body>
 </html>

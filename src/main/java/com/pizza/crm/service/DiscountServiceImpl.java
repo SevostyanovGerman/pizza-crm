@@ -1,0 +1,45 @@
+package com.pizza.crm.service;
+
+import com.pizza.crm.model.discount.Discount;
+import com.pizza.crm.repository.DiscountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.Optional;
+
+@Service
+public class DiscountServiceImpl implements DiscountService {
+
+    private final DiscountRepository discountRepository;
+
+    @Autowired
+    public DiscountServiceImpl(DiscountRepository discountRepository) {
+        this.discountRepository = discountRepository;
+    }
+
+    @Override
+    public Collection<Discount> getAll() {
+        return discountRepository.findAll();
+    }
+
+    @Override
+    public Optional<Discount> findById(Long id) {
+        return discountRepository.findById(id);
+    }
+
+    @Override
+    public Discount save(Discount discount) {
+        return discountRepository.save(discount);
+    }
+
+    @Override
+    public Collection<Discount> saveAll(Collection<Discount> discounts) {
+        return discountRepository.saveAll(discounts);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        discountRepository.deleteById(id);
+    }
+}

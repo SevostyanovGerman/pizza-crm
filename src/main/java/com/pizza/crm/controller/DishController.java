@@ -15,11 +15,11 @@ import java.util.Optional;
 @RequestMapping("/admin/dish")
 public class DishController {
 
-    private DishService dishService;
+    private final DishService dishService;
 
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
-    private IngredientService ingredientService;
+    private final IngredientService ingredientService;
 
     @Autowired
     public DishController(DishService dishService, CategoryService categoryService, IngredientService ingredientService) {
@@ -36,7 +36,7 @@ public class DishController {
 
     @GetMapping("/{id}")
     public String dishDetails(@PathVariable Long id, Model model) {
-        Optional<Dish> dishOptional  = dishService.findById(id);
+        Optional<Dish> dishOptional = dishService.findById(id);
         if (dishOptional.isPresent()) {
             model.addAttribute("dish", dishOptional.get());
             model.addAttribute("allDishCategories", dishService.getAvailableCategories(dishOptional.get()));
@@ -48,7 +48,7 @@ public class DishController {
 
     @PostMapping("/update")
     public String updateDish(@RequestBody Dish dish) {
-            dishService.save(dish);
+        dishService.save(dish);
         return "redirect:/admin/dish";
     }
 

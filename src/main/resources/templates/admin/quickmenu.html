@@ -1,10 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Быстрое меню</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/quickmenu.css}" href="../static/css/quickmenu.css" rel="stylesheet" media="screen">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.77/jquery.form-validator.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script th:src="@{js/quickmenu.js}"></script>
+    <th:block th:include="admin/fragments/menu-header :: head"></th:block>
 </head>
 <body>
-$END$
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-12" style="padding: 0;">
+            <div class="head">
+                <div class="row">
+                    <div class="col-1" style="color: #ffffff">
+                        <th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
+                    </div>
+                    <div class="col-11">
+                        <h3>Быстрое меню</h3>
+                        <button type="button" class="btn btn-success" onclick="Save()">Сохранить</button>
+                    </div>
+                </div>
+                <!--<h3>Быстрое меню</h3>-->
+                <!--<button type="button" class="btn btn-success" onclick="Save()">Сохранить</button>-->
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-2 left-panel">
+            <p></p>
+        </div>
+        <div class="col-4 middle-panel">
+            <div class="row middle-panel-head">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6 middle-panel-head-l">
+                            <p>Отделение:</p>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <select class="form-control" id="exampleSelect">
+                                    <option>Общий</option>
+                                    <option>Зал</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 offset-6">
+                            <button type="button" class="btn btn-info">Удалить текущее меню</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-info">Очистить текущую закладку</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-info">Очистить выбранную позицию</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row middle-panel-menu-head">
+                <div class="col-4">
+                    <div class="head-item head-item-menu-1">
+                        <p id="head-item-1" onclick="ClickToHeadMenu(1)">Салаты/супы</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="head-item head-item-menu-2">
+                        <p id="head-item-2" onclick="ClickToHeadMenu(2)">Напитки</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="head-item head-item-menu-3">
+                        <p id="head-item-3" onclick="ClickToHeadMenu(3)">Выпечка</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row middle-panel-menu-body">
+                <div class="col-4">
+                    <ul class="connectedSortable" id="menu-item-1">
+                    </ul>
+                </div>
+                <div class="col-4">
+                    <ul class="connectedSortable" id="menu-item-2">
+                    </ul>
+                </div>
+                <div class="col-4">
+                    <ul class="connectedSortable" id="menu-item-3">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 right-panel">
+            <div class="row right-panel-head">
+                <div class="col-6 right-panel-head-l">
+                    <div class="form-group">
+                        <select class="form-control" id="exampleSelect1">
+                            <option value="1" selected="selected">Понедельник</option>
+                            <option value="2">Вторник</option>
+                            <option value="3">Среда</option>
+                            <option value="4">Четверг</option>
+                            <option value="5">Пятница</option>
+                            <option value="6">Суббота</option>
+                            <option value="7">Воскресенье</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <button type="button" class="btn btn-primary">Копировать меню</button>
+                    <button type="button" class="btn btn-primary" onclick="ShowChangeNameHeadMenu()">Переименовать
+                        выбр.закладку
+                    </button>
+                    <button type="button" class="btn btn-primary">Изменить цвет выбранного блюда</button>
+                    <button type="button" class="btn btn-primary">Excel</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input">
+                            Показать только продукты, включенные в меню
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row right-panel-search">
+                <div class="col-7">
+                    <div class="form-group">
+                        <input type="text" id="SearchInput" class="form-control" placeholder="Поиск">
+                    </div>
+                </div>
+                <div class="col-5">
+                    <button type="button" class="btn btn-danger" onclick="clearInputSearch()">Очистить</button>
+                </div>
+            </div>
+            <div class="row right-panel-product">
+                <div class="col-12">
+                    <div id="prouctList">
+                        <ul id="sortablePoduct" class="connectedSortable list">
+                            <li class="ui-state-default product-item" th:each="product : ${products}">
+                                <p class="name" th:text="${product.name}">Маргарита</p>
+                                <p class="category" th:text="${product.categories}">Пицца</p>
+                                <p class="code" th:text="${product.code}">Код - 123</p>
+                                <p сlass="id" style="display: none" th:text="${product.id}"></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade bd-example-modal-sm" id="ChangeNameHeadMenu" tabindex="-1" role="dialog"
+     aria-labelledby="discount-extraCharge-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Переименовать выбранную закладку</p>
+                <!--<form action="">-->
+                <div class="form-group">
+                    <input class="form-control" type="text" name="nameHeadMenu" id="nameHeadMenu">
+                </div>
+                <button type="submit" class="btn btn-success" onclick="ChangeNameHeadMenu()">Сохранить</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <!--</form>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Добавить номенклатуру</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/nomenclature/nomenclature.css}"
+          href="../static/css/nomenclature/nomenclature.css"
+          rel="stylesheet" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/webjars/jquery-ui/jquery-ui.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/webjars/jquery-ui/jquery-ui.structure.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/webjars/jquery-ui/jquery-ui.theme.css}" rel="stylesheet" media="screen"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            th:src="@{/webjars/jquery-ui/jquery-ui.js}"></script>
+    <script th:src="@{js/nomenclature/nomenclature.js}"></script>
+    <th:block th:include="admin/fragments/menu-header :: head"></th:block>
+</head>
+<body>
+<th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
+<h3>Номеклатура</h3>
+<div class="">
+    <a class="btn btn-secondary" href="/editNomenclature">Добавить</a>
+    <button class="btn btn-secondary" data-toggle="modal" data-target="#addParentGroup">Добавить группу</button>
+    <button class="btn btn-secondary" onclick="editNomenclature()">Изменить</button>
+    <button class="btn btn-secondary" onclick="deleteNomenclature()">Удалить</button>
+    <div class="btn-group" >
+        <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Действия
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" onclick="copyElement()">Копирование</a>
+            <a class="dropdown-item" href="#" onclick="restorationNomenclature()">Восстановить</a>
+        </div>
+    </div>
+    <div class="btn-group" >
+        <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+            Вид
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" id="view">Показать/скрыть удаленные</a>
+        </div>
+    </div>
+    <button class="btn btn-secondary">Обновить</button>
+
+</div>
+<div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Артикул</th>
+            <th>Код</th>
+            <th>Тип</th>
+            <th>Остаток</th>
+            <th>Ед. изм.</th>
+            <th>Цена р.</th>
+            <th>Себестоимость</th>
+            <th>Места продаж</th>
+            <th>Цвет кнопки</th>
+            <th>Время приг. норма</th>
+            <th>Время приг. пик</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="nomenclatureParentGroup : ${nomenclatureParentGroups}" class="parent">
+            <td th:inline="text" class="parentGroup"><i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                [[${nomenclatureParentGroup.name}]]
+            </td>
+            <td></td>
+            <td></td>
+            <td th:text="Группа"></td>
+            <td>Остаток</td>
+            <td>Ед. изм.</td>
+            <td>Цена р.</td>
+            <td>Себестоимость</td>
+            <td>Места продаж</td>
+            <td th:style="'color: ' + ${nomenclatureParentGroup.fontColor} + '; background: ' + ${nomenclatureParentGroup.backgroundColor}">
+                Цвет кнопки
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="shown" th:each="nomenclatureWithoutParentGroup : ${nomenclaturesWithoutParentGroup}">
+            <div th:if="${nomenclatureWithoutParentGroup?.removed != true }">
+                <td th:text="${nomenclatureWithoutParentGroup?.name}"></td>
+                <td></td>
+                <td></td>
+                <td th:text="${nomenclatureWithoutParentGroup?.nomenclatureType}"></td>
+                <td>Остаток</td>
+                <td>Ед. изм.</td>
+                <td th:text="${nomenclatureWithoutParentGroup?.price}">Цена р.</td>
+                <td>Себестоимость</td>
+                <td>Места продаж</td>
+                <td th:style="'color: ' + ${nomenclatureWithoutParentGroup?.fontColor} + '; background: ' + ${nomenclatureWithoutParentGroup?.backgroundColor}">
+                    Цвет кнопки
+                </td>
+                <td th:text="${nomenclatureWithoutParentGroup?.cookingTimeNorm}"></td>
+                <td th:text="${nomenclatureWithoutParentGroup?.cookingTimePeak}"></td>
+            </div>
+        </tr>
+        <tr class="remote-elements" th:each="nomenclature : ${nomenclatures}">
+            <div th:if="${nomenclature?.removed == true }">
+                <td th:text="${nomenclature?.name}"></td>
+                <td></td>
+                <td></td>
+                <td th:text="${nomenclature?.nomenclatureType}"></td>
+                <td>Остаток</td>
+                <td>Ед. изм.</td>
+                <td th:text="${nomenclature?.price}">Цена р.</td>
+                <td>Себестоимость</td>
+                <td>Места продаж</td>
+                <td th:style="'color: ' + ${nomenclature?.fontColor} + '; background: ' + ${nomenclatureWithoutParentGroup?.backgroundColor}">
+                    Цвет кнопки
+                </td>
+                <td th:text="${nomenclature?.cookingTimeNorm}"></td>
+                <td th:text="${nomenclature?.cookingTimePeak}"></td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addParentGroup" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="main-tab" data-toggle="tab" href="#main"
+                           role="tab" aria-controls="main" aria-selected="true">
+                            Общее
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="extracharge-tab" data-toggle="tab" href="#extracharge"
+                           role="tab" aria-controls="unitOfMeasure" aria-selected="false">
+                            Наценка
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#stockLevels"
+                           role="tab" aria-controls="unitOfMeasure" aria-selected="false">
+                            Уровни запасов
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#buttonColor"
+                           role="tab" aria-controls="unitOfMeasure" aria-selected="false">
+                            Цвет кнопки
+                        </a>
+                    </li>
+                </ul>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="main-tab">
+                        <div class="container-fluid">
+                            <div class="form-group row">
+                                <label for="vendorCode" class="col-sm-6 col-form-label">Номенклатурный код
+                                    (Артикул):</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" id="vendorCode">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-6 col-form-label">Название номенклатурной
+                                    группы:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-6 col-form-label">Родительская номенклатурная группа:</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control">
+                                        <option>Группа самого высокого уровня</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-6 col-form-label">Категория продукта:</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-6 col-form-label">Бухгалтерская категория:</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control">
+                                        <option>Товар</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-6 col-form-label">Классификатор вида продукции:</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-6 col-form-label">Код быстрого набора в
+                                    iikoFront:</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" id="code">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-6 col-form-label">Налоговая категория по умолчанию:</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control">
+                                        <option>(Не задана)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="extracharge" role="tabpanel" aria-labelledby="extracharge-tab">
+                        <div class="row">
+                            <div class="col-sm-8 form-group row">
+                                <label for="extrachargeValue" class="col-sm-8 col-form-label">
+                                    Наценка по умолчанию (%)
+                                </label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="extrachargeValue">
+                                </div>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input">
+                                <label class="form-check-label">Фиксированная цена</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="stockLevels" role="tabpanel" aria-labelledby="stockLevels-tab">
+                        333
+                    </div>
+                    <div class="tab-pane fade" id="buttonColor" role="tabpanel" aria-labelledby="buttonColor-tab">
+                        <h3>Настройка оформления кнопки</h3>
+                        <div class="col-sm-4 form-group row">
+                            <label for="fontColor" class="col-sm-8 col-form-label">
+                                Цвет текста
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="color" id="fontColor" th:value="${pickFontColor}">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group row">
+                            <label for="backgroundColor" class="col-sm-8 col-form-label">
+                                Цвет фона
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="color" id="backgroundColor" th:value="${pickBackgroundColor}">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="showColors()">Color</button>
+                        <div class="container showColors">
+                            <p>Текст</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" onclick="saveParentGroup()">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

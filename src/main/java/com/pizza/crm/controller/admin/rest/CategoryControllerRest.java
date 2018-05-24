@@ -14,7 +14,7 @@ import java.util.Set;
 @RestController
 public class CategoryControllerRest {
 
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @Autowired
     public CategoryControllerRest(CategoryService categoryService) {

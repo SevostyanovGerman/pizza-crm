@@ -90,7 +90,6 @@ section {
 
 section .header {
     background-color: #000;
-    height: 2.6vh;
     position: relative;
 }
 
@@ -170,15 +169,16 @@ section .left-panel-header-item-2 p {
 }
 
 section .left-panel-header-item-3 {
-    white-space: nowrap;
+    margin-right: 2vh;
 }
 
 section .left-panel-header-item-3 p {
-    white-space: nowrap;
-    padding: 0 0.3rem;
-    display: inline-block;
+    display:inline-block;
     line-height: 2.6vh;
-    text-align: left;
+    text-align: center;
+    font-size: 1.9vh;
+    font-weight: 400;
+    padding-top: 0.5vh;
 }
 
 section .left-panel-body {
@@ -255,13 +255,13 @@ section .left-panel .table-td-1 p {
     width: 100%;
     text-align: center;
     line-height: 3vh;
-    font-size: 1.3rem;
+    font-size: 2.5vh;
     text-transform: uppercase;
 }
 
 section .left-panel .table-td-1 span {
     line-height: 3vh;
-    font-size: 1.7rem;
+    font-size: 3vh;
     font-weight: 350;
 }
 
@@ -393,7 +393,7 @@ section .right-panel-header ul li {
     text-align: center;
     display: inline-block;
     width: 32%;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
 }
 
 section .right-panel-header ul li a {
@@ -405,28 +405,46 @@ section .right-panel-header ul li a {
 
 section .right-panel-header ul li a:hover {
     background-color: #dfe487;
-    color: #3e4040;
     text-decoration: none;
 }
 
 section .right-panel-body {
     height: 72vh;
     background-color: #3e4040;
+    display: inline-block;
+    width: 100%;
 }
 
 section .right-panel-body a {
     font-weight: 350;
     position: relative;
     text-decoration: none;
-    font-size: 1.8rem;
+    font-size: 1rem;
     text-align: center;
     display: inline-block;
-    width: 32%;
+    width: 100%;
     height: 9vh;
     line-height: 9vh;
     margin-left: -4px;
     left: 4px;
     border: 2px solid #3e4040;
+}
+
+section .right-panel-body-1 {
+    height: 72vh;
+    display: inline-block;
+    width: 32%;
+    vertical-align: top;
+}
+section .right-panel-body-2 {
+    display: inline-block;
+    width: 32%;
+    vertical-align: top;
+}
+section .right-panel-body-3 {
+    display: inline-block;
+    width: 32%;
+    vertical-align: top;
 }
 
 section .row {
@@ -633,8 +651,8 @@ a .disable {
     background-color: #ffffff;
     color: #3e4040;
     border-top: 1px solid #3e4040;
-    //border: 1px solid #3e4040;
-    //margin-right: 4px;
+//border: 1px solid #3e4040;
+//margin-right: 4px;
     margin-left: -2px;
     text-align: center;
     cursor: pointer;
@@ -661,7 +679,7 @@ a .disable {
 }
 
 /*#SearchModal p {*/
-    /*margin-bottom: 1rem;*/
+/*margin-bottom: 1rem;*/
 /*}*/
 
 .searchButtom a {
@@ -701,6 +719,11 @@ a .disable {
     font-weight: bold;
 }
 
+div#products1.products {
+    display: inline-block;
+    height: 20rem;
+    overflow-y: auto;
+}
 
 .quantity-control-modal .modal-body {
     background-color: #3E4040;

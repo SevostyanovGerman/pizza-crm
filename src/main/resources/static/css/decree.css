@@ -1,0 +1,155 @@
+body {
+    font-size: 2vh;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-weight: 300;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+a,
+input,
+button,
+textarea,
+table {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+a:focus,
+input:focus,
+button:focus,
+textarea:focus,
+table:focus {
+    outline: none;
+}
+
+a::-webkit-input-placeholder,
+input::-webkit-input-placeholder,
+button::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder,
+table::-webkit-input-placeholder {
+    color: #d0d0d0;
+}
+
+a::-moz-placeholder,
+input::-moz-placeholder,
+button::-moz-placeholder,
+textarea::-moz-placeholder,
+table::-moz-placeholder {
+    color: #d0d0d0;
+}
+
+a:-moz-placeholder,
+input:-moz-placeholder,
+button:-moz-placeholder,
+textarea:-moz-placeholder,
+table:-moz-placeholder {
+    color: #d0d0d0;
+}
+
+a:-ms-input-placeholder,
+input:-ms-input-placeholder,
+button:-ms-input-placeholder,
+textarea:-ms-input-placeholder,
+table:-ms-input-placeholder {
+    color: #d0d0d0;
+}
+
+.btn {
+    font-size: 1.7vh;
+    min-height: 38px;
+}
+
+.col-6 {
+    padding-right: 7px;
+    padding-left: 7px;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.no-margin {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.head {
+    background-color: #3e4040;
+    height: 5.5vh;
+}
+
+.head h3 {
+    margin-left: 1rem;
+    line-height: 5vh;
+    font-size: 2.5vh;
+    color: #fff;
+    font-weight: 100;
+    display: inline-block;
+}
+
+.head button {
+    display: inline-block;
+    text-align: center;
+    position: absolute;
+    right: 2rem;
+    min-height: 1vh;
+    margin-top: 0.3rem;
+    width: 10rem;
+}
+
+.left-panel p {
+    margin-top: 1vh;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 0.5rem;
+}
+
+.right-panel {
+    background-color: #d5d0d6;
+    height: 94.5vh;
+}
+
+.head-right-panel-1 {
+    margin-top: 1rem;
+}
+
+.head-right-panel-2 {
+    margin-top: 1.2rem;
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+}
+
+
+.head-right-panel-1 button {
+    margin: 0rem 0.1rem;
+    width: 7rem;
+}
+
+.head-right-panel-2 button {
+    margin: 0rem 0.1rem;
+    width: 14rem;
+}
+
+.head-right-panel-r {
+    text-align: right;
+}
+
+table {
+    font-size: 0.8rem;
+}
+
+
+
+
+
+
