@@ -15,8 +15,7 @@ import java.util.logging.Logger;
 public class FailureLoginHandler implements AuthenticationFailureHandler {
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-    private static final Logger log = Logger
-            .getLogger("FailureLoginHandler");
+    private static final Logger log = Logger.getLogger("FailureLoginHandler");
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest,

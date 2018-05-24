@@ -6,6 +6,7 @@ import com.pizza.crm.service.security.handler.SuccessLoginHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,21 +19,27 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private AuthenticationProvider authenticationProvider;
+    private SuccessLoginHandler successLoginHandler;
+    private FailureLoginHandler failureLoginHandler;
 
     @Autowired
-    private SuccessLoginHandler successLoginHandler;
-    @Autowired
-    private FailureLoginHandler failureLoginHandler;
+    public SecurityConfig(@Lazy AuthenticationProvider authenticationProvider,
+                          SuccessLoginHandler successLoginHandler,
+                          FailureLoginHandler failureLoginHandler) {
+        this.authenticationProvider = authenticationProvider;
+        this.successLoginHandler = successLoginHandler;
+        this.failureLoginHandler = failureLoginHandler;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/webjars/**", "/css/**", "/img/**", "/js/**").permitAll()
-                .antMatchers("/admin/**").access("hasRole('ADMIN')")
-                .antMatchers("/**").authenticated()
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/**").hasAuthority("USER")
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
@@ -62,5 +69,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new PincodePasswordEncoder();
     }
-
 }

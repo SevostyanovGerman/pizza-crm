@@ -18,8 +18,7 @@ import java.util.logging.Logger;
 @Service
 public class SuccessLoginHandler implements AuthenticationSuccessHandler {
 
-    private static final Logger log = Logger
-            .getLogger("SecurityHandler");
+    private static final Logger log = Logger.getLogger("SecurityHandler");
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -33,13 +32,13 @@ public class SuccessLoginHandler implements AuthenticationSuccessHandler {
 
     private String determineTargetUrl(Authentication authentication) throws IllegalStateException {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        for (GrantedAuthority g : authorities) {
-            log.info("authoritiy: " + g.getAuthority());
-            if (g.getAuthority().contains("ADMIN")) {
+        for (GrantedAuthority grantedAuthority : authorities) {
+            log.info("authority: " + grantedAuthority.getAuthority());
+            if (grantedAuthority.getAuthority().contains("ADMIN")) {
                 log.info("Redirecting to /admin/staff/employee");
                 return "/admin/staff/employee";
             }
-            if (g.getAuthority().contains("USER")) {
+            if (grantedAuthority.getAuthority().contains("USER")) {
                 log.info("Redirecting to /order");
                 return "/order";
             }
