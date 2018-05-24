@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,5 +42,10 @@ public class DiscountServiceImpl implements DiscountService {
     @Override
     public void deleteById(Long id) {
         discountRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Discount> getEnabledDiscounts() {
+        return discountRepository.getEnabledDiscounts();
     }
 }

@@ -2,6 +2,8 @@ let csrfToken = $("meta[name='_csrf']").attr("content");
 let csrfHeader = $("meta[name='_csrf_header']").attr("content");
 let colonToggler = false;
 
+var allDiscounts;
+
 
 // Display time
 function getLocaleTimeString() {
@@ -100,23 +102,65 @@ $(document).ready(function () {
 //***********************************************************
 
 // Discount
-
+// getAllDiscountsForOrder
 $(document).ready(function () {
     $.ajax({
         type: "POST",
-        url: "/admin/discount/getAutoDiscountsValue",
+        url: "/admin/discount/getAllDiscountsForOrder",
         contentType: "application/json; charset=utf-8",
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function (data) {
-            $("#discount").html(data).val(data);
+            allDiscounts = data;
+            for (var i = 0; i < data.length; i++) {
+
+                if (data[i].automatic) {
+                    $('.discount-select-tbody').append(
+                        '<tr class="select-discount" aria-disabled="true">' +
+                        '<td>'+data[i].name+'</td>' +
+                        '<td>'+data[i].value+'</td>' +
+                        '<input type="hidden" value="'+data[i].automatic+'">' +
+                        '</tr>')
+                    $('.discount-select-tbody').find(".select-discount").eq(i).css("background", "#dee284");
+                } else {
+                    $('.discount-select-tbody').append(
+                        '<tr class="select-discount" onclick="changeColor(this)">' +
+                        '<td>'+data[i].name+'</td>' +
+                        '<td>'+data[i].value+'</td>' +
+                        '<input type="hidden" value="'+data[i].automatic+'">' +
+                        '</tr>')
+                }
+
+            }
         },
         error: function () {}
     });
 });
 
+// Change color onclick
+function changeColor(td) {
+        if($(td).css('background') === "rgb(222, 226, 132) none repeat scroll 0% 0% / auto padding-box border-box") {
+            $(td).css("background", "#FFFFFF");
+        } else{
+            $(td).css("background", "#dee284");
+        }
+    }
 
+//Discounts application
+function applicateDiscounts() {
+
+    var sumDiscouts = 0;
+
+    $(".select-discount").each(function () {
+         if ($(this).css('background') === "rgb(222, 226, 132) none repeat scroll 0% 0% / auto padding-box border-box") {
+            var valueDiscount = parseFloat($(this).closest('tr').find('td').eq(1).text());
+            sumDiscouts += valueDiscount;
+        }
+    });
+    $("#discount").html(sumDiscouts).val(sumDiscouts);
+    updateTotal();
+}
 
 $(document).ready(function () {
     $('.discount-extraCharge-modal-show').click(function () {
@@ -222,6 +266,8 @@ $(document).ready(function () {
                 "<td>" + $(this).data('itemName') + "</td>",
                 "<td>" + $(this).data('price') + "</td>",
             ].join("/n")));
+            applicateDiscounts();
+            updateTotal();
             return;
         } else {
             var go = true;
@@ -484,8 +530,6 @@ $(document).ready(function () {
     });
 });
 //***********************************************************
-
-
 
 
 var quickMenu;

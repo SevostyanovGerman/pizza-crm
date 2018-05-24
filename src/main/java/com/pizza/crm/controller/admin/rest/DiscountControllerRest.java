@@ -42,4 +42,9 @@ public class DiscountControllerRest {
         }
         return autoDiscountsValue;
     }
+
+    @PostMapping("/admin/discount/getAllDiscountsForOrder")
+    public Collection<Discount> getAllDiscountsForOrder(){
+        return discountService.getEnabledDiscounts();
+    }
 }

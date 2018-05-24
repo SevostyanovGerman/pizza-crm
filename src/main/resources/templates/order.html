@@ -14,9 +14,10 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
           rel="stylesheet" media="screen"/>
-    <link th:href="@{/css/style.css}"
-          href="../static/css/style.css"
+    <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" media="screen">
+    <link th:href="@{/css/discountModalOrder.css}" href="../static/css/discountModalOrder.css"
           rel="stylesheet" media="screen">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -72,7 +73,7 @@
                     <table>
                         <tr>
                             <td rowspan="2" class="table-td-1">
-                                <a href="#" class="discount-extraCharge-modal-show">
+                                <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg">
                                     <p>скидка:</p>
                                     <span id="discount">0</span><span> %</span>
                                     <p>надбавка:</p>
@@ -197,8 +198,10 @@
         </div>
     </div>
 </section>
+
+
 <!-- Modal -->
-<div class="modal fade bd-example-modal-sm" id="discount-extraCharge-modal" tabindex="-1" role="dialog"
+<!--<div class="modal fade bd-example-modal-sm" id="discount-extraCharge-modal" tabindex="-1" role="dialog"
      aria-labelledby="discount-extraCharge-modal-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
@@ -231,8 +234,6 @@
                                 <td th:text="${autoDiscount.value}"></td>
                             </tr>
                         </table>
-
-
                     </div>
 
                     <button type="submit" class="btn btn-success">Сохранить</button>
@@ -241,7 +242,40 @@
             </div>
         </div>
     </div>
+</div>-->
+
+<!-- Discounts modal -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <table class="discount-select-table">
+                <thead>
+                <tr>
+                    <th>Скидки</th>
+                </tr>
+                </thead>
+                <tbody class="discount-select-tbody">
+
+                </tbody>
+            </table>
+            <table class="discount-footer-table">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="discount-footer-button" data-dismiss="modal">Отмена</td>
+                    <td class="discount-footer-button" onclick="applicateDiscounts()" data-dismiss="modal">ОК</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
+
+
+
+
+
+
 <!-- Quantity control modal -->
 <div class="modal fade quantity-control-modal" tabindex="-1" role="dialog"
      aria-labelledby="quantity-control-modal-label" aria-hidden="true">
