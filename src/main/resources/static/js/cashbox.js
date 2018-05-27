@@ -1,5 +1,6 @@
 let paymentMethods = [];
 let totalCash = 0;
+var orderList = JSON.parse(sessionStorage.getItem('order-list'));
 
 $(document).ready(function () {
     $('.btn-dialer').click(function () {
@@ -57,7 +58,6 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    let orderList = JSON.parse(sessionStorage.getItem('order-list'));
     if (orderList === undefined) {
         return;
     }
@@ -129,9 +129,28 @@ $(document).ready(function () {
         } else {
             $('#change').text('0.00');
         }
-
+        httpReq();
     });
 });
+
+function httpReq() {
+    var request = new XMLHttpRequest();
+    request.open("post", "/cashbox", true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.send(orderList);
+}
+function getXmlHttp() {
+    var xmlHttp = null;
+    if (window.XMLHttpRequest) {
+        xmlHttp = new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject) {
+        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    return xmlHttp;
+}
+
+
 
 $(document).ready(function () {
     $('.btn-back').click(function () {
