@@ -145,7 +145,7 @@ $(document).ready(function () {
             let currentTr = $(this).closest('tr');
             let currentPayment = parseFloat(currentTr.find('td:last').text());
             paymentMethods.splice(currentTr.find('td').eq(1).text(), 1);
-            totalCash -= currentPayment;
+            totalCash = 0;
             $('.deposit').text(totalCash);
             $(this).closest('tr').remove();
             let currentChange = parseFloat($('#change').text());
