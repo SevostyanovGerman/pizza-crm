@@ -4,6 +4,12 @@ var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 function exit() {
     window.location.replace("/nomenclature");
 }
+$(document).ready(function () {
+    $('tbody').on('click', '.shown', function () {
+        $('.shown').removeClass('nameScale', '');
+        $(this).addClass('nameScale');
+    });
+});
 
 $(document).ready(function () {
     $('tbody').on('click', '.modifier', function () {
@@ -32,6 +38,13 @@ function deleteModifierRow() {
     })
 }
 
+function saveScaleOfSize() {
+    $('.nameScale').each(function () {
+        var name = $(this).closest('tr').find('td:eq(0)').text();
+        $("#nameScale").val(name);
+    })
+}
+
 function saveModifiers() {
     $('.selected').each(function () {
         var name = $(this).closest('tr').find('td:eq(0)').text();
@@ -54,6 +67,7 @@ function saveModifiers() {
 function saveAndExit() {
     var name = $('#name').val();
     var id = $('#id').val();
+    var nameScaleOfSize =$('#nameScale').val();
 
     var modifierPropertyList = [];
     $('.modifierName').each(function () {
@@ -82,9 +96,10 @@ function saveAndExit() {
         modifierPropertyList.push(modifierProperty);
     });
     var schemeModifiers = {
-        name: name,
+        name: name + " "+ nameScaleOfSize,
         id: id,
-        modifierPropertyList: modifierPropertyList
+        modifierPropertyList: modifierPropertyList,
+        nameScaleOfSize: nameScaleOfSize
     }
 
     $.ajax({
@@ -103,3 +118,47 @@ function saveAndExit() {
         }
     });
 }
+
+$(document).ready(function () {
+    $('.selectView').click(function () {
+        var nameNotTrimmed = $(this).text();
+        var name = $.trim(nameNotTrimmed);
+        if ($(this).closest('tr').hasClass('opened')) {
+            var trimName = name.replace(/\s+/g, '');
+            $('.' + trimName + '').closest('tr').each(function () {
+                $(this).remove();
+            });
+            $(this).closest('tr').find('i').removeClass('fal fa-angle-down').addClass('fal fa-angle-right');
+            $(this).closest('tr').removeClass('opened');
+            return;
+        }
+        $('tr .active').removeClass('active');
+        $(this).closest('tr').addClass('active').siblings().removeClass('active');
+        $(this).closest('tr').addClass('opened');
+        $(this).closest('tr').find('i').removeClass('fal fa-angle-down').addClass('fal fa-angle-down');
+
+
+        $.ajax({
+            type: "POST",
+            url: "/scale_of_size/getValues",
+            data: {scaleName: name},
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var trimName = name.replace(/\s+/g, '');
+                    var tr = $('.active').closest('tr').index();
+                    $('<tr class="shown ' + trimName + '">' +
+                        '<td>' + data[i].nameSize + '</td>' +
+                        '</tr>').insertAfter($('.modalTbodySize tr:eq(' + (tr) + ')')
+                    );
+                }
+
+            },
+            error: function () {
+                alert("error")
+            }
+        });
+    });
+});
