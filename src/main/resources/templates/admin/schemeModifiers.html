@@ -36,9 +36,9 @@
                 <label class="col-sm-3 col-form-label">Шкала размеров:</label>
                 <div class="col-sm-6">
                     <div class="input-group">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" id="nameScale">
                         <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">...</button>
+                        <button class="btn btn-default" type="button"  data-toggle="modal" data-target="#scaleOfSize">...</button>
                     </span>
                     </div>
                 </div>
@@ -88,13 +88,13 @@
         <button class="btn btn-secondary" onclick="saveAndExit()">Сохранить и закрыть</button>
     </div>
 
-    <!--Modal-->
+    <!--Scale_of_Size-->
     <!--Modifiers-->
-    <div class="modal fade" id="addModifier" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="scaleOfSize" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>Добавьте модификатор</h3>
+                    <h3>Шкала размеров</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -106,20 +106,56 @@
                             <th>Название</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr th:each="modifierNomenclature : ${modifierNomenclatures}" class="modifier">
-                            <td th:text="${modifierNomenclature.name}"></td>
-                            <input type="hidden" th:value="${modifierNomenclature.id}">
+                        <tbody class="modalTbodySize">
+                        <tr th:each ="scale : ${scale}" >
+                            <td th:inline="text" class="selectView"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                [[${scale.nameScale}]]
+                            </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary" onclick="saveModifiers()" data-dismiss="modal">
+                    <button type="button" class="btn btn-primary" onclick="saveScaleOfSize()" data-dismiss="modal">
                         Сохранить
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal-->
+<!--Modifiers-->
+<div class="modal fade" id="addModifier" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Добавьте модификатор</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Название</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="modifierNomenclature : ${modifierNomenclatures}" class="modifier">
+                        <td th:text="${modifierNomenclature.name}"></td>
+                        <input type="hidden" th:value="${modifierNomenclature.id}">
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" onclick="saveModifiers()" data-dismiss="modal">
+                    Сохранить
+                </button>
             </div>
         </div>
     </div>
