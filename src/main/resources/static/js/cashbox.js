@@ -96,13 +96,13 @@ $(document).ready(function () {
         if (paymentMethods.length === 0) {
             return;
         }
-        let cash = parseFloat($('.input-cash').val());
+        let cash = parseFloat($('.input-cash').val()).toFixed(2);
         $('.payment-method-table tr:last').find('td:last').text(cash);
         $('.deposit').text(cash);
         totalCash += cash;
         let total = parseFloat($('#total').text());
         if (totalCash > total) {
-            $('#change').text(totalCash - total);
+            $('#change').text((totalCash - total).toFixed(2));
         } else {
             $('#change').text('0,00');
         }
