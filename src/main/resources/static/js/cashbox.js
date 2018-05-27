@@ -19,7 +19,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $('.input-cash').on('change', function ()  {
+    $('.input-cash').on('input', function ()  {
         var cash = Number($(this).val());
         if (isFloat(cash)){
             return cash.toFixed(2);
@@ -149,11 +149,7 @@ $(document).ready(function () {
             $('.deposit').text(totalCash);
             $(this).closest('tr').remove();
             let currentChange = parseFloat($('#change').text());
-            if (currentChange > currentPayment) {
-                $('#change').text(currentChange - currentPayment);
-            } else {
-                $('#change').text('0.00');
-            }
+            $('#change').text('0.00');
         }
     });
 });
