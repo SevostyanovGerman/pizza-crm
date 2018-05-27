@@ -4,6 +4,9 @@ let totalCash = 0;
 $(document).ready(function () {
     $('.btn-dialer').click(function () {
         let cash = $('.input-cash');
+        if (isFloat(Number(cash.val()))){
+            cash.val().toFixed(2);
+        }
         if (cash.val() === '0.00') {
             if ($(this).val() === '0') {
                 return;
@@ -14,6 +17,21 @@ $(document).ready(function () {
         }
     });
 });
+
+$(document).ready(function () {
+    $('.input-cash').on('change', function ()  {
+        var cash = Number($(this).val());
+        if (isFloat(cash)){
+            return cash.toFixed(2);
+        }
+        return cash;
+    });
+});
+
+function isFloat(n){
+    let value = 10*n
+    return Number(value) === value && value % 1 !== 0;
+}
 
 $(document).ready(function () {
     $('.btn-dialer-plus').click(function () {
@@ -96,15 +114,20 @@ $(document).ready(function () {
         if (paymentMethods.length === 0) {
             return;
         }
-        let cash = parseFloat($('.input-cash').val()).toFixed(2);
+        let cash = parseFloat($('.input-cash').val());
         $('.payment-method-table tr:last').find('td:last').text(cash);
         $('.deposit').text(cash);
         totalCash += cash;
         let total = parseFloat($('#total').text());
         if (totalCash > total) {
-            $('#change').text((totalCash - total).toFixed(2));
+            let change = totalCash - total;
+            if(isFloat(change)) {
+                $('#change').text(change.toFixed(2));
+            } else {
+                $('#change').text(change);
+            }
         } else {
-            $('#change').text('0,00');
+            $('#change').text('0.00');
         }
 
     });
@@ -129,7 +152,7 @@ $(document).ready(function () {
             if (currentChange > currentPayment) {
                 $('#change').text(currentChange - currentPayment);
             } else {
-                $('#change').text('0,00');
+                $('#change').text('0.00');
             }
         }
     });
