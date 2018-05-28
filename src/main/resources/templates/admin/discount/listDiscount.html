@@ -22,9 +22,10 @@
     <link th:href="@{/css/discount/listDiscount.css}" href="../../../static/css/discount/listDiscount.css"
           rel="stylesheet" media="screen">
     <script src="../../../static/js/discountJs/listDiscount.js" th:src="@{/js/discountJs/listDiscount.js}"></script>
+    <th:block th:include="admin/fragments/menu-header :: head"></th:block>
 </head>
-
 <body>
+<th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
 
 <div class="container-fluid">
     <div class="row">
