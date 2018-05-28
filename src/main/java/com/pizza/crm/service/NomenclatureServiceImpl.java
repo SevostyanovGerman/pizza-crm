@@ -5,6 +5,7 @@ import com.pizza.crm.repository.NomenclatureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -47,10 +48,16 @@ public class NomenclatureServiceImpl implements NomenclatureService {
         return nomenclatureRepository.findAll();
     }
 
-    @Override
+    /*@Override
     public List<Nomenclature> getNomenclatureModifiers() {
-        return nomenclatureRepository.getNomenclaturesModifiers();
+        return nomenclatureRepository.getNomenclatureModifiers();
+    }*/
+
+    @Override
+    public HashSet<Nomenclature> getNomenclatureModifiers() {
+        return nomenclatureRepository.getNomenclatureModifiers();
     }
+
 
     @Override
     public List<Nomenclature> getNomenclaturesWithoutParentGroup() {

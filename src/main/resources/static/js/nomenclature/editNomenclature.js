@@ -2,16 +2,63 @@ var csrfToken = $("meta[name='_csrf']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
 
+//-------------------------------------------------Выделяем модификаторы или группу модификаторов в модалке Модификаторы
 $(document).ready(function () {
-    $('tbody').on('click', '.modifier', function () {
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
+    $("body").on("click", ".groupModifier", function () {
+        if($(this).is(":checked")){
+            //$(".shown").removeClass('selected');
+            $(".shown").remove();
+           // $(this).closest('tr').addClass('opened');
+
+            $(".modifier").closest('tr').removeClass('opened');
+           $(".modifier").find('i').removeClass('fal fa-angle-down').addClass('fal fa-angle-right');
+
+
+            if($("tr").hasClass('opened')){
+                $("td.selectView.active").addClass('selected');
+            } else {
+                $("td.selectView").removeClass('selected');
+            }
+
         } else {
+            $("td.selectView").removeClass('selected');
+        }
+
+    });
+});
+$(document).ready(function () {
+
+    $('tbody').on('click', '.shown', function () {
+      if ($("#groupModifier").is(":checked") == false){
+
+         if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+            } else {
             $(this).addClass('selected');
+            }
+      } else {
+            $(".shown").removeClass('selected');
+      }
+
+    });
+});
+
+
+$(document).ready(function () {
+    $('tbody').on('click', '.selectView', function () {
+        if ($("#groupModifier").is(":checked")){
+
+            if($(this).closest('tr').hasClass('opened')){
+                $(this).addClass('selected');
+            } else {
+                $(this).removeClass('selected');
+            }
         }
     });
 });
 
+
+//-------------------------------------------------------------------------Выделяем строку в модалке Схема модификаторов
 $(document).ready(function () {
     $('tbody').on('click', '.listScheme', function () {
         $('.listScheme').removeClass('selected');
@@ -19,10 +66,10 @@ $(document).ready(function () {
     });
 });
 
-
+//--------------------------------------------------------------------------------Выделяем строку в таблице Модификаторы
 $(document).ready(function () {
     $('.tbody').on('click', 'tr', function () {
-        if ($(this).hasClass('active-modifier')) {
+            if ($(this).hasClass('active-modifier')) {
             $(this).removeClass('active-modifier');
         } else {
             $(this).addClass('active-modifier');
@@ -30,6 +77,7 @@ $(document).ready(function () {
     });
 });
 
+//---------------------------------------------------------------------- Удаляем выделенну строку в таблице Модификаторы
 function deleteModifierRow() {
     $('tr.active-modifier').each(function () {
         var tr = $(this);
@@ -37,10 +85,76 @@ function deleteModifierRow() {
     })
 }
 
-function saveModifiers() {
-    $('.selected').each(function () {
-        var name = $(this).closest('tr').find('td:eq(0)').text();
-        var id = $(this).closest('tr').find('input[type=hidden]').val();
+//--------------------------------------------------------------Добавляем в модалке модификаторы к группам модификаторов
+
+$(document).ready(function () {
+
+    $('.selectView').click(function () {
+        var nameNotTrimmed = $(this).text();
+        var name = $.trim(nameNotTrimmed);
+
+        if ($(this).closest('tr').hasClass('opened')) {
+
+            var trimName = name.replace(/\s+/g, '');
+            $('.' + trimName + '').closest('tr').each(function () {
+                $(this).remove();
+            });
+            $(this).closest('tr').find('i').removeClass('fal fa-angle-down').addClass('fal fa-angle-right');
+            $(this).closest('tr').removeClass('opened');
+            return;
+        }
+
+        $('tr .active').removeClass('active');
+        $(this).addClass('active').siblings().removeClass('active'); //.siblings() поиск соседних элементов для выбраных элементов
+        //$(this).addClass('active').siblings().removeClass('active'); //.siblings() поиск соседних элементов для выбраных элементов
+        $(this).closest('tr').addClass('opened');
+        $(this).closest('tr').find('i').removeClass('fal fa-angle-right').addClass('fal fa-angle-down');
+
+        $.ajax({
+            type: "POST",
+            url: "getModifiers",
+            data: {name: name},
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var trimName = name.replace(/\s+/g, '');
+                    var tr = $('.active').closest('tr').index();
+                        $('<tr id="shown" class="shown ' + trimName + '">' +
+                            '<td>' + data[i].name + '</td>' +
+                            '</tr>').insertAfter($('.modifierDownTr tr:eq(' + (tr) + ')')
+                        );
+                }
+            },
+            error: function (e) {
+                //alert("Ошибка в значении Шкалы размеров")
+                console.log("Ошибка в значении Шкалы размеров");
+            }
+        });
+    });
+
+});
+
+function addFilterModifiers() {
+    if ($(".groupModifier").is(":checked")){
+        addGroupModifiers();
+    }
+    else {
+        addModifiers();
+    }
+}
+//----------------------------------------------------------------------------------------добавляем модификаторы группой
+
+function addGroupModifiers(){
+
+    var id = $(".modifier.opened").closest('tr').find('input[type=hidden]').val();
+
+    $("table tbody").find('tr.shown').each(function () {
+        var tds = $(this).find('td'),
+            name = tds.eq(0).text();
+            console.log(name);
+
         $(".tbody").append($([
             '<tr>' +
             '<td class="modifierName">' + name + '</td>' +
@@ -52,8 +166,32 @@ function saveModifiers() {
             '<td><input type="checkbox"></td>' +
             '<td><input type="number" class="inputs"></td>' +
             '<input type="hidden" class="hideId" value=' + id + '>' +
-            '</tr>'].join("\n")));
-    })
+            '</tr>'].join("\n"))
+        );
+
+    });
+}
+
+//--------------------------------------------------------------------------------добавляем модификаторы по отдельности
+function addModifiers() {
+    $('.selected').each(function () {
+        var name = $(this).closest('tr').find('td:eq(0)').text();
+        var id = $(".modifier.opened").closest('tr').find('input[type=hidden]').val();
+        alert(id);
+        $(".tbody").append($([
+            '<tr>' +
+            '<td class="modifierName">' + name + '</td>' +
+            '<td><input type="number" class="inputs"></td>' +
+            '<td><input type="number" class="inputs"></td>' +
+            '<td><input type="number" class="inputs"></td>' +
+            '<td><input type="checkbox"></td>' +
+            '<td><input type="checkbox"></td>' +
+            '<td><input type="checkbox"></td>' +
+            '<td><input type="number" class="inputs"></td>' +
+            '<input type="hidden" class="hideId" value=' + id + '>' +
+            '</tr>'].join("\n"))
+        );
+    });
 }
 
 function save() {
@@ -89,6 +227,7 @@ function save() {
         var hideIf = $(this).closest('tr').find('td:eq(5)').find('input[type=checkbox]').prop('checked');
         var restricted = $(this).closest('tr').find('td:eq(6)').find('input[type=checkbox]').prop('checked');
         var free = $(this).closest('tr').find('td:eq(7)').find('input[type=number]').val();
+
         var modifierProperty = {
             nomenclatureId: id,
             modifierId: modifierId,
@@ -156,7 +295,7 @@ function save() {
             // window.location.replace("/discountandextracharge");
         },
         error: function () {
-            alert("error")
+            alert("error save")
         }
     });
 }
@@ -260,7 +399,7 @@ function saveAndExit() {
             window.location.replace("/nomenclature");
         },
         error: function () {
-            alert("error")
+            alert("error saveAndExit")
         }
     });
 }
