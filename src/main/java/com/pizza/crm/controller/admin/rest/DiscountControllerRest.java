@@ -32,19 +32,4 @@ public class DiscountControllerRest {
         return discountService.getAll();
     }
 
-    @PostMapping("/admin/discount/getAutoDiscountsValue")
-    public Integer getAutoDiscountsValue(){
-        Integer autoDiscountsValue = 0;
-        for (Discount discount: discountService.getAll()) {
-            if (discount.getAutomatic()) {
-                autoDiscountsValue += discount.getValue();
-            }
-        }
-        return autoDiscountsValue;
-    }
-
-    @PostMapping("/admin/discount/getAllDiscountsForOrder")
-    public Collection<Discount> getAllDiscountsForOrder(){
-        return discountService.getEnabledDiscounts();
-    }
 }

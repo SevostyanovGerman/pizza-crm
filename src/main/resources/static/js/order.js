@@ -2,7 +2,7 @@ let csrfToken = $("meta[name='_csrf']").attr("content");
 let csrfHeader = $("meta[name='_csrf_header']").attr("content");
 let colonToggler = false;
 
-var allDiscounts;
+
 
 
 // Display time
@@ -148,62 +148,21 @@ function changeColor(td) {
     }
 
 //Discounts application
+var discountsAndExtraCharges = [];
 function applicateDiscounts() {
-
-    var sumDiscouts = 0;
-
+    discountsAndExtraCharges = [];
     $(".select-discount").each(function () {
          if ($(this).css('background') === "rgb(222, 226, 132) none repeat scroll 0% 0% / auto padding-box border-box") {
-            var valueDiscount = parseFloat($(this).closest('tr').find('td').eq(1).text());
-            sumDiscouts += valueDiscount;
+
+             var name = $(this).closest('tr').find('td').eq(0).text();
+             var discountAndExtraCharge = {name: name};
+             discountsAndExtraCharges.push(discountAndExtraCharge);
         }
     });
-    $("#discount").html(sumDiscouts).val(sumDiscouts);
+
     updateTotal();
 }
 
-$(document).ready(function () {
-    $('.discount-extraCharge-modal-show').click(function () {
-        $("#discount-extraCharge-modal").modal('show');
-       // $("#discountForm").val($("#discount").text());
-        $("#extraChargeForm").val($("#extraCharge").text());
-    });
-});
-
-$(document).ready(function () {
-    $.validate( {
-        form: '#discount-extraCharge-modal',
-        lang : 'ru',
-        onSuccess: function () {
-
-            $.ajax({
-                type: "POST",
-                url: "/admin/discount/getAutoDiscountsValue",
-                contentType: "application/json; charset=utf-8",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(csrfHeader, csrfToken);
-                },
-                success: function (data) {
-                    let discount = parseFloat($('input[name="discountForm"]').val());
-                    let extraCharge = parseFloat($('input[name="extraChargeForm"]').val());
-                    discount += data;
-
-                    if (discount > 0) {
-                        extraCharge = 0;
-                    } else if (extraCharge > 0) {
-                        discount = 0;
-                    }
-                    $("#discount").html(discount).val(discount);
-                    $("#extraCharge").html(extraCharge).val(extraCharge);
-                    $("#discount-extraCharge-modal").modal('hide');
-                    updateTotal();
-                },
-                error: function () {}
-            });
-            return false;
-        }
-    });
-});
 //***********************************************************
 
 $(document).ready(function () {
@@ -387,24 +346,45 @@ function getSelectedRow() {
 
 function updateTotal() {
     let rawTotal = 0;
+    let total = 0;
+
+    var dishes = [];
+
     $('.order-table tr').each(function () {
-        rawTotal += getRowTotal($(this));
+        let amount = parseInt($(this).find('td:eq(0)').text());
+        if (isNaN(amount)) {
+            amount = 0;
+        }
+        let name = $(this).find('td:eq(1)').text();
+
+        var dish = {amount: amount, name: name};
+        dishes.push(dish);
     });
-    let discount = parseFloat($("#discount").val());
 
-    let extraCharge = parseFloat($("#extraCharge").val());
-    let total = rawTotal;
-    if (!isNaN(discount) && discount > 0) {
-        total = rawTotal - rawTotal * discount / 100;
-    } else if (!isNaN(extraCharge) && extraCharge > 0) {
-        total = rawTotal + rawTotal * extraCharge / 100;
-    }
-    $('#rawTotal').html(rawTotal);
-    $('#total').html(total);
+    var order = {
+        dishes: dishes,
+        discounts: discountsAndExtraCharges
+    };
 
+    $.ajax({
+        type: "POST",
+        url: "/admin/discount/getRowTotal",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(order),
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (data) {
+            $('#rawTotal').html(data[0]);
+            $('#total').html(data[1]);
+            $("#discount").html(data[2]);
+            $("#extraCharge").html(data[3]);
+        },
+        error: function () {}
+    });
 }
 
-function getRowTotal(row) {
+/*function getRowTotal(row) {
     let quantity = parseFloat(row.find('td:eq(0)').text());
     if (isNaN(quantity)) {
         quantity = 0;
@@ -412,9 +392,7 @@ function getRowTotal(row) {
     let price = parseFloat(row.find('td:eq(2)').text());
     if (isNaN(price)) {
         price = 0;
-    }
-    return quantity * price;
-}
+    }*/
 
 // Quantity manual input
 $(document).ready(function () {

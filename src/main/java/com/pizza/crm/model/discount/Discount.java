@@ -23,7 +23,7 @@ public class Discount {
     private String type;
 
     @Min(0)
-    private int minSum;
+    private Double minSum;
 
     private boolean minSumRestriction;
 
@@ -83,7 +83,7 @@ public class Discount {
     public Discount() {
     }
 
-    public Discount(@NotBlank String name, String nameInCheck, String type, @Min(0) Integer minSum, boolean minSumRestriction, boolean ScheduleRestriction, Boolean manualSelectWithOthers,
+    public Discount(@NotBlank String name, String nameInCheck, String type, @Min(0) Double minSum, boolean minSumRestriction, boolean ScheduleRestriction, Boolean manualSelectWithOthers,
                     Boolean manualInput, boolean manualDishSelect, Boolean automatic, Boolean combinable, Boolean enabled, Boolean applyForAllDiscountCategories,
                     @Min(0) Integer priority, @Min(0) Integer value, String comment, DiscountApplicationMethod discountApplicationMethod,
                     DiscountMode discountMode, DiscountAssignMode discountAssignMode, DiscountCalculationMode discountCalculationMode,
@@ -151,11 +151,11 @@ public class Discount {
         this.type = type;
     }
 
-    public Integer getMinSum() {
+    public Double getMinSum() {
         return minSum;
     }
 
-    public void setMinSum(Integer minSum) {
+    public void setMinSum(Double minSum) {
         this.minSum = minSum;
     }
 

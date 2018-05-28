@@ -11,4 +11,5 @@ public interface DiscountRepository extends JpaRepository<Discount, Long> {
     @Query("SELECT d FROM Discount d WHERE d.enabled = true")
     List<Discount> getEnabledDiscounts();
 
+    Discount findByName(String name);
 }

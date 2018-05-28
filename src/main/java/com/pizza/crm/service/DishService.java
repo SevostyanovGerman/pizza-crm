@@ -12,4 +12,6 @@ public interface DishService extends CrudService<Dish, Long> {
 
     Collection<Ingredient> getAvailableIngredients(Dish dish);
 
+    Dish getDishByName(String name);
+
 }

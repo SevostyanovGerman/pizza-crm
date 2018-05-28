@@ -1,9 +1,12 @@
 package com.pizza.crm.model;
 
+import com.pizza.crm.model.discount.Discount;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "ClientOrder")
@@ -33,7 +36,23 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Cooking> cooking = new ArrayList<>();
 
-    private String paymentMethod;
+    @ManyToMany
+    @JoinTable(name = "ClientOrder_PaymentMethod",
+            joinColumns = @JoinColumn(name = "ClientOrder"),
+            inverseJoinColumns = @JoinColumn(name = "PaymentMethod"))
+    private List<PaymentMethod> paymentMethods;
+
+    @ManyToMany
+    @JoinTable(name = "ClientOrder_Discount",
+            joinColumns = @JoinColumn(name = "ClientOrder"),
+            inverseJoinColumns = @JoinColumn(name = "Discount"))
+    private List<Discount> discounts;
+
+    @ManyToMany
+    @JoinTable(name = "ClientOrder_Dish",
+            joinColumns = @JoinColumn(name = "ClientOrder"),
+            inverseJoinColumns = @JoinColumn(name = "Dish"))
+    private List<Dish> dishes;
 
     private String deliveryAddress;
 
@@ -87,14 +106,6 @@ public class Order {
 
     public void setClient(Client client) {
         this.client = client;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
     }
 
     public String getDeliveryAddress() {
@@ -151,5 +162,29 @@ public class Order {
 
     public void setCooking(Collection<Cooking> cooking) {
         this.cooking = cooking;
+    }
+
+    public List<PaymentMethod> getPaymentMethods() {
+        return paymentMethods;
+    }
+
+    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+        this.paymentMethods = paymentMethods;
+    }
+
+    public List<Discount> getDiscounts() {
+        return discounts;
+    }
+
+    public void setDiscounts(List<Discount> discounts) {
+        this.discounts = discounts;
+    }
+
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
     }
 }
