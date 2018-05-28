@@ -120,6 +120,7 @@ $(document).ready(function () {
                         '<tr class="select-discount" aria-disabled="true">' +
                         '<td>'+data[i].name+'</td>' +
                         '<td>'+data[i].value+'</td>' +
+                        '<td> % </td>' +
                         '<input type="hidden" value="'+data[i].automatic+'">' +
                         '</tr>')
                     $('.discount-select-tbody').find(".select-discount").eq(i).css("background", "#dee284");
@@ -128,6 +129,7 @@ $(document).ready(function () {
                         '<tr class="select-discount" onclick="changeColor(this)">' +
                         '<td>'+data[i].name+'</td>' +
                         '<td>'+data[i].value+'</td>' +
+                        '<td> % </td>' +
                         '<input type="hidden" value="'+data[i].automatic+'">' +
                         '</tr>')
                 }

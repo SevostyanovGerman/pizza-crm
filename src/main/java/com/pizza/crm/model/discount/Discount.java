@@ -37,7 +37,7 @@ public class Discount {
 
     private boolean automatic;
 
-    private boolean combinable;
+    private boolean combinable = true;
 
     private boolean enabled = true;
 

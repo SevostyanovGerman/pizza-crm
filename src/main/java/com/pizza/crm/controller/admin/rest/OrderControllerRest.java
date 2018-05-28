@@ -120,8 +120,8 @@ public class OrderControllerRest {
 
         // Minimum sum discount
         for (int i = 0; i < order.getDiscounts().size(); i++) {
-            if (!(order.getDiscounts().get(i).isMinSumRestriction()) &&
-                    order.getDiscounts().get(i).getMinSum() >= rawTotal) {
+            if (order.getDiscounts().get(i).isMinSumRestriction() &&
+                    order.getDiscounts().get(i).getMinSum()-1 >= rawTotal) { // сравнить double
                 order.getDiscounts().remove(order.getDiscounts().get(i));
             }
         }
