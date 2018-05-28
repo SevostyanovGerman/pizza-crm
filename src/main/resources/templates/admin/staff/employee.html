@@ -17,8 +17,10 @@
             th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script src="../static/js/employee.js"
             th:src="@{/js/employee.js}"></script>
+    <th:block th:include="admin/fragments/menu-header :: head"></th:block>
 </head>
 <body>
+<th:block th:include="/admin/fragments/menu-body :: menu"></th:block>
 <div class="container-fluid">
     <div class="row">
         <div class="col">
