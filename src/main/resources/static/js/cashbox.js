@@ -1,5 +1,6 @@
 let paymentMethods = [];
 let totalCash = 0;
+let paid = false;
 
 $(document).ready(function () {
     $('.btn-dialer').click(function () {
@@ -97,14 +98,18 @@ $(document).ready(function () {
             return;
         }
         let cash = parseFloat($('.input-cash').val());
-        $('.payment-method-table tr:last').find('td:last').text(cash);
-        $('.deposit').text(cash);
-        totalCash += cash;
         let total = parseFloat($('#total').text());
-        if (totalCash > total) {
-            $('#change').text(totalCash - total);
-        } else {
-            $('#change').text('0,00');
+        if (cash >= total & !paid) {
+            paid = true;
+            $('.payment-method-table tr:last').find('td:last').text(cash);
+            $('.deposit').text(cash);
+            totalCash += cash;
+            let total = parseFloat($('#total').text());
+            if (totalCash > total) {
+                $('#change').text(totalCash - total);
+            } else {
+                $('#change').text('0,00');
+            }
         }
 
     });
