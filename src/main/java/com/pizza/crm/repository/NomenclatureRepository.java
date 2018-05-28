@@ -17,8 +17,8 @@ public interface NomenclatureRepository extends JpaRepository<Nomenclature, Long
 
     void deleteByName(String name);
 
-/*@Query("SELECT n FROM Nomenclature n WHERE n.nomenclatureType = com.pizza.crm.model.NomenclatureType.MODIFIER")
-    List<Nomenclature> getNomenclatureModifiers();*/
+    @Query("SELECT n FROM Nomenclature n WHERE n.nomenclatureType = com.pizza.crm.model.NomenclatureType.DISH")
+    HashSet<Nomenclature> getModifierNomenclatureDish();
 
     @Query("SELECT m FROM NomenclatureParentGroup m INNER JOIN m.nomenclatures r WHERE r.nomenclatureType = 'MODIFIER'")
     HashSet<Nomenclature> getNomenclatureModifiers();

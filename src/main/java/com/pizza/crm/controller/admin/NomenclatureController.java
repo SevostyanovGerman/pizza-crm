@@ -110,6 +110,7 @@ public class NomenclatureController {
     public String createNomenclature(Model model) {
         model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());
         model.addAttribute("modifierNomenclatures", nomenclatureService.getNomenclatureModifiers());
+        model.addAttribute("modifierNomenclatureDish", nomenclatureService.getModifierNomenclatureDish());
         model.addAttribute("unitsOfMeasurement", unitsOfMeasurementService.getAll());
         model.addAttribute("schemeModifiers", schemeModifiersService.findAll());
         return "admin/nomenclature/editNomenclature";

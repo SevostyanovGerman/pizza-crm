@@ -1,6 +1,35 @@
 var csrfToken = $("meta[name='_csrf']").attr("content");
 var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
+//-------------------------------------------------------------------------Добавляем условие для чекбокса Показать блюда
+$(document).ready(function () {
+    $("body").on("click", ".showDishes", function () {
+        if($(this).is(":checked")){
+            $(".modifierDish").show();
+
+        } else {
+            $(".modifierDish").hide();
+        }
+    });
+});
+
+//----------------------------------------------------------------------------------------------Выделение (select) блюда
+$(document).ready(function () {
+    $('tbody').on('click', '.modifierDish', function () {
+         if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+         } else {
+             $(this).addClass('selected');
+
+             //добавлены классы modifier.opened т.к поиск id везде идет по этим классам
+             //как в меттодах addModifiers() (строка 208) и addGroupModifiers() (строка 181)
+             $(this).addClass('modifier');
+             $(this).addClass('opened');
+
+         }
+    });
+});
+
 
 //-------------------------------------------------Выделяем модификаторы или группу модификаторов в модалке Модификаторы
 $(document).ready(function () {
@@ -85,6 +114,7 @@ function deleteModifierRow() {
     })
 }
 
+
 //--------------------------------------------------------------Добавляем в модалке модификаторы к группам модификаторов
 
 $(document).ready(function () {
@@ -153,7 +183,6 @@ function addGroupModifiers(){
     $("table tbody").find('tr.shown').each(function () {
         var tds = $(this).find('td'),
             name = tds.eq(0).text();
-            console.log(name);
 
         $(".tbody").append($([
             '<tr>' +
@@ -177,7 +206,6 @@ function addModifiers() {
     $('.selected').each(function () {
         var name = $(this).closest('tr').find('td:eq(0)').text();
         var id = $(".modifier.opened").closest('tr').find('input[type=hidden]').val();
-        alert(id);
         $(".tbody").append($([
             '<tr>' +
             '<td class="modifierName">' + name + '</td>' +

@@ -48,16 +48,15 @@ public class NomenclatureServiceImpl implements NomenclatureService {
         return nomenclatureRepository.findAll();
     }
 
-    /*@Override
-    public List<Nomenclature> getNomenclatureModifiers() {
-        return nomenclatureRepository.getNomenclatureModifiers();
-    }*/
+    @Override
+    public HashSet<Nomenclature> getModifierNomenclatureDish() {
+        return nomenclatureRepository.getModifierNomenclatureDish();
+    }
 
     @Override
     public HashSet<Nomenclature> getNomenclatureModifiers() {
         return nomenclatureRepository.getNomenclatureModifiers();
     }
-
 
     @Override
     public List<Nomenclature> getNomenclaturesWithoutParentGroup() {

@@ -791,7 +791,7 @@
                     </div>
 
                     <div class="custom-control custom-checkbox mx-2">
-                        <input type="checkbox" class="custom-control-input" id="showDishes">
+                        <input type="checkbox" class="custom-control-input showDishes" id="showDishes">
                         <label class="custom-control-label" for="showDishes">Показать блюда</label>
                     </div>
 
@@ -803,13 +803,18 @@
                         </thead>
                         <tbody class="modifierDownTr">
                         <tr th:each="modifierNomenclature : ${modifierNomenclatures}" class="modifier">
-                            <td  th:inline="text" class="selectView"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                            <td th:inline="text" class="selectView"><i class="fa fa-angle-right" aria-hidden="true"></i>
                                 [[${modifierNomenclature.name}]]
                             </td>
-                           <!-- <td th:text="${modifierNomenclature.name}"><i class="fa fa-angle-right" aria-hidden="true"></i></td>-->
                             <input type="hidden" th:value="${modifierNomenclature.id}">
                         </tr>
-                        </tbody>
+
+                       <tr style="display: none" th:each="dish : ${modifierNomenclatureDish}" class="modifierDish" id="modifierDish">
+                           <td th:text="${dish.name}"></td>
+                           <input type="hidden" th:value="${dish.id}">
+                       </tr>
+
+                         </tbody>
                     </table>
                 </div>
 
