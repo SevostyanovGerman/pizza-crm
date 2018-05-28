@@ -5,6 +5,11 @@ let paid = false;
 $(document).ready(function () {
     $('.btn-dialer').click(function () {
         let cash = $('.input-cash');
+		if (isFloat(Number(cash.val()))){
+            cash.val().toFixed(2);
+        }
+
+
 
 
 
@@ -92,9 +97,9 @@ $(document).ready(function () {
                 "<tr>",
                 "<td id='remove-payment-method'>" +
                 "<span class='fa-stack fa-lg' style='cursor: pointer'>" +
-                "<i class='fa fa-circle-o fa-stack-2x'/>" +
-                "<i class='fa fa-times fa-stack-1x'/>
-		</span>" +
+                "<i class='fa fa-circle-o fa-stack-2x'></i>" +
+                "<i class='fa fa-times fa-stack-1x'></i></span>" +
+
                 "</td>",
                 "<td class='text-left'>" + currentPaymentMethod + "</td>",
                 "<td class='text-right'>0</td>",
@@ -132,7 +137,7 @@ $(document).ready(function () {
 					$('#change').text(change);
 				}
             } else {
-                $('#change').text('0,00');
+                $('#change').text('0.00');
             }
 
 
@@ -154,7 +159,7 @@ $(document).ready(function () {
             let currentPayment = parseFloat(currentTr.find('td:last').text());
             paymentMethods.splice(currentTr.find('td').eq(1).text(), 1);
             totalCash = 0;
-
+            paid = false;
             $('.deposit').text(totalCash);
             $(this).closest('tr').remove();
             let currentChange = parseFloat($('#change').text());
