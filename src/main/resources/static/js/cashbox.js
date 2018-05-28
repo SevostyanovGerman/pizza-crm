@@ -1,13 +1,18 @@
 let paymentMethods = [];
 let totalCash = 0;
-
+let paid = false;
 
 $(document).ready(function () {
     $('.btn-dialer').click(function () {
         let cash = $('.input-cash');
-        if (isFloat(Number(cash.val()))){
+		if (isFloat(Number(cash.val()))){
             cash.val().toFixed(2);
         }
+
+
+
+
+
         if (cash.val() === '0.00') {
             if ($(this).val() === '0') {
                 return;
@@ -94,6 +99,7 @@ $(document).ready(function () {
                 "<span class='fa-stack fa-lg' style='cursor: pointer'>" +
                 "<i class='fa fa-circle-o fa-stack-2x'></i>" +
                 "<i class='fa fa-times fa-stack-1x'></i></span>" +
+
                 "</td>",
                 "<td class='text-left'>" + currentPaymentMethod + "</td>",
                 "<td class='text-right'>0</td>",
@@ -116,22 +122,25 @@ $(document).ready(function () {
             return;
         }
         let cash = parseFloat($('.input-cash').val());
-
-
-
-        $('.payment-method-table tr:last').find('td:last').text(cash);
-        $('.deposit').text(cash);
-        totalCash += cash;
         let total = parseFloat($('#total').text());
-        if (totalCash > total) {
-            let change = totalCash - total;
-            if(isFloat(change)) {
-                $('#change').text(change.toFixed(2));
+        if (cash >= total & !paid) {
+            paid = true;
+            $('.payment-method-table tr:last').find('td:last').text(cash);
+            $('.deposit').text(cash);
+            totalCash += cash;
+            let total = parseFloat($('#total').text());
+            if (totalCash > total) {
+				let change = totalCash - total;
+				if(isFloat(change)) {
+					$('#change').text(change.toFixed(2));
+				} else {
+					$('#change').text(change);
+				}
             } else {
-                $('#change').text(change);
+                $('#change').text('0.00');
             }
-        } else {
-            $('#change').text('0.00');
+
+
         }
 
     });
@@ -149,16 +158,12 @@ $(document).ready(function () {
             let currentTr = $(this).closest('tr');
             let currentPayment = parseFloat(currentTr.find('td:last').text());
             paymentMethods.splice(currentTr.find('td').eq(1).text(), 1);
-
             totalCash = 0;
+            paid = false;
             $('.deposit').text(totalCash);
             $(this).closest('tr').remove();
             let currentChange = parseFloat($('#change').text());
-
-
-
             $('#change').text('0.00');
-
         }
     });
 });
