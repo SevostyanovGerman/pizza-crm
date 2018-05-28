@@ -1,9 +1,13 @@
 let paymentMethods = [];
 let totalCash = 0;
+let paid = false;
 
 $(document).ready(function () {
     $('.btn-dialer').click(function () {
         let cash = $('.input-cash');
+		if (isFloat(Number(cash.val()))){
+            cash.val().toFixed(2);
+        }
         if (cash.val() === '0.00') {
             if ($(this).val() === '0') {
                 return;
@@ -14,6 +18,21 @@ $(document).ready(function () {
         }
     });
 });
+
+$(document).ready(function () {
+    $('.input-cash').on('input', function ()  {
+        var cash = Number($(this).val());
+        if (isFloat(cash)){
+            return cash.toFixed(2);
+        }
+        return cash;
+    });
+});
+
+function isFloat(n){
+    let value = 10*n
+    return Number(value) === value && value % 1 !== 0;
+}
 
 $(document).ready(function () {
     $('.btn-dialer-plus').click(function () {
@@ -75,6 +94,7 @@ $(document).ready(function () {
                 "<span class='fa-stack fa-lg' style='cursor: pointer'>" +
                 "<i class='fa fa-circle-o fa-stack-2x'></i>" +
                 "<i class='fa fa-times fa-stack-1x'></i></span>" +
+
                 "</td>",
                 "<td class='text-left'>" + currentPaymentMethod + "</td>",
                 "<td class='text-right'>0</td>",
@@ -97,14 +117,23 @@ $(document).ready(function () {
             return;
         }
         let cash = parseFloat($('.input-cash').val());
-        $('.payment-method-table tr:last').find('td:last').text(cash);
-        $('.deposit').text(cash);
-        totalCash += cash;
         let total = parseFloat($('#total').text());
-        if (totalCash > total) {
-            $('#change').text(totalCash - total);
-        } else {
-            $('#change').text('0,00');
+        if (cash >= total & !paid) {
+            paid = true;
+            $('.payment-method-table tr:last').find('td:last').text(cash);
+            $('.deposit').text(cash);
+            totalCash += cash;
+            let total = parseFloat($('#total').text());
+            if (totalCash > total) {
+				let change = totalCash - total;
+				if(isFloat(change)) {
+					$('#change').text(change.toFixed(2));
+				} else {
+					$('#change').text(change);
+				}
+            } else {
+                $('#change').text('0.00');
+            }
         }
 
     });
@@ -122,15 +151,12 @@ $(document).ready(function () {
             let currentTr = $(this).closest('tr');
             let currentPayment = parseFloat(currentTr.find('td:last').text());
             paymentMethods.splice(currentTr.find('td').eq(1).text(), 1);
-            totalCash -= currentPayment;
+            totalCash = 0;
+            paid = false;
             $('.deposit').text(totalCash);
             $(this).closest('tr').remove();
             let currentChange = parseFloat($('#change').text());
-            if (currentChange > currentPayment) {
-                $('#change').text(currentChange - currentPayment);
-            } else {
-                $('#change').text('0,00');
-            }
+            $('#change').text('0.00');
         }
     });
 });

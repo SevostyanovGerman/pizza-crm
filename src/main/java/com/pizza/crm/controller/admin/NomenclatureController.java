@@ -43,8 +43,6 @@ public class NomenclatureController {
         model.addAttribute("nomenclatures", nomenclatureService.findAllNomenclatures());
         model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());
         model.addAttribute("nomenclaturesWithoutParentGroup", nomenclatureService.getNomenclaturesWithoutParentGroup());
-        model.addAttribute("pickFontColor", BLACK_FONT_COLOR);
-        model.addAttribute("pickBackgroundColor", WHITE_BACKGROUND_COLOR);
         return "admin/nomenclature/nomenclature";
     }
 
@@ -115,6 +113,8 @@ public class NomenclatureController {
         model.addAttribute("modifierNomenclatures", nomenclatureService.getNomenclatureModifiers());
         model.addAttribute("unitsOfMeasurement", unitsOfMeasurementService.getAll());
         model.addAttribute("schemeModifiers", schemeModifiersService.findAll());
+        model.addAttribute("pickFontColor", BLACK_FONT_COLOR);
+        model.addAttribute("pickBackgroundColor", WHITE_BACKGROUND_COLOR);
         return "admin/nomenclature/editNomenclature";
     }
 

@@ -13,6 +13,8 @@ public class SchemeModifiers {
 
     private String name;
 
+    private String nameScaleOfSize;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "schemeModifiersId")
     private List<ModifierProperty> modifierPropertyList;
@@ -42,5 +44,13 @@ public class SchemeModifiers {
 
     public void setModifierPropertyList(List<ModifierProperty> modifierPropertyList) {
         this.modifierPropertyList = modifierPropertyList;
+    }
+
+    public String getNameScaleOfSize() {
+        return nameScaleOfSize;
+    }
+
+    public void setNameScaleOfSize(String nameScaleofSize) {
+        this.nameScaleOfSize = nameScaleofSize;
     }
 }
