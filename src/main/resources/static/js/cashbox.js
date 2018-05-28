@@ -8,11 +8,6 @@ $(document).ready(function () {
 		if (isFloat(Number(cash.val()))){
             cash.val().toFixed(2);
         }
-
-
-
-
-
         if (cash.val() === '0.00') {
             if ($(this).val() === '0') {
                 return;
@@ -139,8 +134,6 @@ $(document).ready(function () {
             } else {
                 $('#change').text('0.00');
             }
-
-
         }
 
     });
