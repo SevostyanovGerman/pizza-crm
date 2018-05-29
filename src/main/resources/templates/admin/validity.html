@@ -51,6 +51,7 @@
                 <tbody>
                 <tr th:each="validity : ${validity}" class="item">
                     <td class="viewName" th:text="${validity.nameValidity}"></td>
+                    <input id="idValidity" type="hidden" th:value="${validity.id}">
                     <td>
                         <button  class="btn .btn-primary btn-sm addSchedule" data-toggle="modal" data-target="#Schedule">
                             <span class="fa fa-plus" aria-hidden="true"></span></button>
@@ -63,7 +64,6 @@
         <div class="col-6">
             <h4>Название:</h4>
             <div class="form-group">
-                <input type="hidden" />
                 <input class="form-control col-4" id="scheduleListName"/>
             </div>
             <table class="table table-bordered">
