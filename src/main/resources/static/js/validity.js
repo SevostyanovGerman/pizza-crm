@@ -31,7 +31,7 @@ function showSchedule(nameValidity) {
         },
         success: function (data) {
             for (var i = 0; i < data.length; i++) {
-                $('#showSchedule').append('<tr>' +
+                $('#showSchedule').append('<tr class="tableSchedule">' +
                     '<input class="ids" type="hidden" value="' + data[i].id + '">' +
                     '<td><input type="time" value="' + data[i].beginTime + '"></td>' +
                     '<td><input type="time" value="' + data[i].endTime + '"></td>' +
@@ -54,7 +54,7 @@ function showSchedule(nameValidity) {
 }
 
 //send checkbox in Server
-$(document).ready(function () {
+/*$(document).ready(function () {
     $("body").on("click", ".activated", function () {
         var id = $(this).closest('tr').find('input[type=hidden]').val();
         var activatedChecked = $(this).prop('checked').find('td:eq(2)').text();
@@ -76,7 +76,7 @@ $(document).ready(function () {
             }
         });
     });
-});
+});*/
 
 
 // add one schedule with use button "+"
@@ -201,7 +201,7 @@ function addField() {
     var schedules = [];
 
     $('.schedule-tr').each(function () {
-        var beginTimeSchedule =   $(this).closest('tr').find('td:eq(0)').find('input[type=time]').val();
+        var beginTimeSchedule =    $(this).closest('tr').find('td:eq(0)').find('input[type=time]').val();
         var endTimeSchedule =      $(this).closest('tr').find('td:eq(1)').find('input[type=time]').val();
         var mondaySchedule =       $(this).closest('tr').find('td:eq(2)').find('input[type=checkbox]').prop('checked');
         var tuesdaySchedule =      $(this).closest('tr').find('td:eq(3)').find('input[type=checkbox]').prop('checked');
@@ -227,9 +227,7 @@ function addField() {
 
     });
 
-    console.log(schedules);
-
-    //---------------------------!!!----------------------------------
+     //---------------------------!!!----------------------------------
     //всегда переменная которая отправляеться  с помощь JSON
     //должна иметь имя поля в сущьности :)
     var validity = {
@@ -237,10 +235,10 @@ function addField() {
         validityScheduleList: schedules
     };
 
-    console.log(validity);
+
     $.ajax({
         type: "POST",
-        url: "/validity/save",
+        url: "/validity/addField",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(validity),
         beforeSend: function (xhr) {
@@ -269,38 +267,53 @@ function saveAndExit() {
 }
 
 
-//Код СОхранить все
-/*
+//Код Сохранить все
 function save() {
-    var name = $("#scheduleListName").val();
-    var id = $('#id').val();
-    var beginTime = $('#showSchedule tr').find("input[type=time]").eq(0).val();
-    var endTime = $('#showSchedule tr').find("input[type=time]").eq(1).val();
-    var monday = $(".monday").prop('checked');
-    var tuesday = $(".tuesday").prop('checked');
-    var thursday = $(".thursday").prop('checked');
-    var wednesday = $(".wednesday").prop('checked');
-    var friday = $(".friday").prop('checked');
-    var saturday = $(".saturday").prop('checked');
-    var sunday = $('.sunday').prop('checked');
-    var schedule = {
-        id: id,
-        name: name,
-        beginTime: beginTime,
-        endTime: endTime,
-        monday: monday,
-        tuesday: tuesday,
-        thursday: thursday,
-        wednesday: wednesday,
-        friday: friday,
-        saturday: saturday,
-        sunday: sunday
+
+    var nameValidity = $("#scheduleListName").val();
+    var schedules = [];
+
+    $('.tableSchedule').each(function () {
+
+        var id = $(this).closest('tr').find('input[type=hidden]').val();
+        var beginTime = $('#showSchedule tr').find("input[type=time]").eq(0).val();
+        var endTime = $('#showSchedule tr').find("input[type=time]").eq(1).val();
+        var monday = $(".monday").prop('checked');
+        var tuesday = $(".tuesday").prop('checked');
+        var thursday = $(".thursday").prop('checked');
+        var wednesday = $(".wednesday").prop('checked');
+        var friday = $(".friday").prop('checked');
+        var saturday = $(".saturday").prop('checked');
+        var sunday = $('.sunday').prop('checked');
+
+        var scheduleSchedule = {
+            id: id,
+            name: name,
+            beginTime: beginTime,
+            endTime: endTime,
+            monday: monday,
+            tuesday: tuesday,
+            thursday: thursday,
+            wednesday: wednesday,
+            friday: friday,
+            saturday: saturday,
+            sunday: sunday
+        };
+
+        schedules.push(scheduleSchedule);
+    });
+
+    var validity = {
+        nameValidity: nameValidity,
+        validityScheduleList: schedules
     };
+
+
     $.ajax({
         type: "POST",
         url: "/validity/save",
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(schedule),
+        data: JSON.stringify(validity),
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
@@ -311,4 +324,4 @@ function save() {
             alert("error")
         }
     });
-}*/
+}
