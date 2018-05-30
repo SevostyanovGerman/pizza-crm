@@ -2,6 +2,14 @@ let paymentMethods = [];
 let totalCash = 0;
 let paid = false;
 
+let csrfToken = $("meta[name='_csrf']").attr("content");
+let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+// getAllPaymentTypesForCashbox
+/*$(document).ready(function () {
+
+});*/
+
 $(document).ready(function () {
     $('.btn-dialer').click(function () {
         let cash = $('.input-cash');
@@ -78,30 +86,55 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $('.payment-method-item').click(function () {
-        $('.payment-method-item').each(function () {
-            $(this).removeClass('highlight');
-        });
-        $(this).addClass('highlight');
-        let currentPaymentMethod = $(this).find('p').text();
-        let index = paymentMethods.indexOf(currentPaymentMethod);
-        if (index === -1) {
-            paymentMethods.push(currentPaymentMethod);
-            console.log(index);
-            $('.payment-method-table').append($([
-                "<tr>",
-                "<td id='remove-payment-method'>" +
-                "<span class='fa-stack fa-lg' style='cursor: pointer'>" +
-                "<i class='fa fa-circle-o fa-stack-2x'></i>" +
-                "<i class='fa fa-times fa-stack-1x'></i></span>" +
+    $.ajax({
+        type: "POST",
+        url: "/getAllPaymentTypesForCashbox",
+        contentType: "application/json; charset=utf-8",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                $('#payment-types').append(
+                    '<div class="col-3 payment-method-item">' +
+                    '<p class="font-weight-bold text-uppercase pt-3">' + data[i].name + '</p></div>');
+            }
+            $('#payment-types').append(
+                '<div class="col text-right"> ' +
+                '<a href="#" class="mr-4"><i class="fa fa-bars" aria-hidden="true"></i></a> ' +
+                '<a href="/logout" th:href="@{/logout}"><i class="fa fa-lock" aria-hidden="true"></i></a> ' +
+                '</div>');
 
-                "</td>",
-                "<td class='text-left'>" + currentPaymentMethod + "</td>",
-                "<td class='text-right'>0</td>",
-                "</td>"
-            ].join("/n")));
-        }
+            $('.payment-method-item').click(function () {
+                $('.payment-method-item').each(function () {
+                    $(this).removeClass('highlight');
+                });
+                $(this).addClass('highlight');
+                let currentPaymentMethod = $(this).find('p').text();
+                let index = paymentMethods.indexOf(currentPaymentMethod);
+                if (index === -1) {
+                    paymentMethods.push(currentPaymentMethod);
+                    console.log(index);
+                    $('.payment-method-table').append($([
+                        "<tr>",
+                        "<td id='remove-payment-method'>" +
+                        "<span class='fa-stack fa-lg' style='cursor: pointer'>" +
+                        "<i class='fa fa-circle-o fa-stack-2x'></i>" +
+                        "<i class='fa fa-times fa-stack-1x'></i></span>" +
+
+                        "</td>",
+                        "<td class='text-left'>" + currentPaymentMethod + "</td>",
+                        "<td class='text-right'>0</td>",
+                        "</td>"
+                    ].join("/n")));
+                }
+            });
+
+        },
+        error: function () {}
     });
+
+
 });
 
 $(document).ready(function () {
@@ -160,3 +193,4 @@ $(document).ready(function () {
         }
     });
 });
+

@@ -386,16 +386,6 @@ function updateTotal() {
     });
 }
 
-/*function getRowTotal(row) {
-    let quantity = parseFloat(row.find('td:eq(0)').text());
-    if (isNaN(quantity)) {
-        quantity = 0;
-    }
-    let price = parseFloat(row.find('td:eq(2)').text());
-    if (isNaN(price)) {
-        price = 0;
-    }*/
-
 // Quantity manual input
 $(document).ready(function () {
     $('.quantity-control-modal-show').click(function () {

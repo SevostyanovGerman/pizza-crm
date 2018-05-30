@@ -1,11 +1,14 @@
 package com.pizza.crm.controller;
 
 import com.pizza.crm.model.Employee;
+import com.pizza.crm.model.Order;
 import com.pizza.crm.model.discount.Discount;
 import com.pizza.crm.model.security.User;
 import com.pizza.crm.service.AddedCategoryService;
 import com.pizza.crm.service.DiscountService;
 import com.pizza.crm.service.EmployeeService;
+import com.pizza.crm.service.OrderService;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,14 +24,14 @@ public class OrderController {
 
     private final AddedCategoryService categoryService;
     private final EmployeeService employeeService;
-    private final DiscountService discountService;
+    private final OrderService orderService;
 
     @Autowired
     public OrderController(AddedCategoryService categoryService, EmployeeService employeeService,
-                           DiscountService discountService) {
+                           OrderService orderService) {
         this.categoryService = categoryService;
         this.employeeService = employeeService;
-        this.discountService = discountService;
+        this.orderService = orderService;
     }
 
     @RequestMapping("/order")
@@ -40,15 +43,10 @@ public class OrderController {
         model.addAttribute("employeeLogin", employeeLogin);
         model.addAttribute("categories", categoryService.findAllCategories());
 
-// autoDiscounts
-        List<Discount> autoDiscounts = new ArrayList<>();
-        for (Discount discount: discountService.getAll()) {
-            if (discount.getAutomatic()) {
-                autoDiscounts.add(discount);
-            }
-        }
-        model.addAttribute("autoDiscounts", autoDiscounts);
+        Order order = new Order();
+        orderService.save(order);
+        model.addAttribute("newOrder", order);
+
         return "order";
     }
-
 }

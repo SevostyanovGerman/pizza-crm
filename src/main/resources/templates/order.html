@@ -58,7 +58,7 @@
                     </div>
                     <div class="left-panel-header-item-3">
                         <p><i class="fa fa-list-alt" aria-hidden="true"></i></p>
-                        <p>8567</p>
+                        <p th:text="${newOrder.id}"></p>
                     </div>
                     <div class="left-panel-header-item-3">
                         <p><i class="fa fa-id-card" aria-hidden="true"></i></p>
@@ -198,51 +198,6 @@
         </div>
     </div>
 </section>
-
-
-<!-- Modal -->
-<!--<div class="modal fade bd-example-modal-sm" id="discount-extraCharge-modal" tabindex="-1" role="dialog"
-     aria-labelledby="discount-extraCharge-modal-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p>Установите скидку/наценку</p>
-                <form action="#">
-                    <div class="form-group">
-                        <span>Скидка:</span>
-                        <input class="form-control" type="text" name="discountForm" id="discountForm" placeholder="0"
-                               data-validation="number" data-validation-allowing="range[0;100]"
-                               data-validation-error-msg="Укажите число от 0 до 100">
-                    </div>
-                    <div class="form-group">
-                        <span>Наценка:</span>
-                        <input class="form-control" type="text" name="extraChargeForm" id="extraChargeForm"
-                               placeholder="0"
-                               data-validation="number" data-validation-allowing="range[0;100]"
-                               data-validation-error-msg="Укажите число от 0 до 100">
-                    </div>
-
-                    <div class="form-group">
-                        <table class="autoDiscount-table" >
-                            <span>Автоматические скидки:</span>
-                            <tr>
-                                <th>Имя</th>
-                                <th>Значение</th>
-                            </tr>
-                            <tr class="autoDiscount-row" th:each="autoDiscount : ${autoDiscounts}">
-                                <td th:text="${autoDiscount.name}"></td>
-                                <td th:text="${autoDiscount.value}"></td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <button type="submit" class="btn btn-success">Сохранить</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>-->
 
 <!-- Discounts modal -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
