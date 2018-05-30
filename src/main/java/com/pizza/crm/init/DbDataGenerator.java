@@ -328,6 +328,12 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         Nomenclature ham = new Nomenclature(15082, 50.00, null,
                 null, "Ветчина", MODIFIER,
                 PRODUCT, "Kitchen");
+        Nomenclature tomat = new Nomenclature(15323, 05.00, null,
+                null, "Помидор", MODIFIER,
+                PRODUCT, "Kitchen");
+        Nomenclature salami = new Nomenclature(16382, 20.00, null,
+                null, "Салями", MODIFIER,
+                PRODUCT, "Kitchen");
         Nomenclature mushrooms = new Nomenclature(15083, 50.00, null,
                 null, "Грибы", MODIFIER,
                 PRODUCT, "Kitchen");
@@ -337,14 +343,21 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         Nomenclature kolbaski = new Nomenclature(15085, 50.00, null,
                 null, "Колбаски", MODIFIER,
                 PRODUCT, "Kitchen");
+        nomenclatureService.save(tomat);
+        nomenclatureService.save(salami);
         nomenclatureService.save(pineapple);
         nomenclatureService.save(ham);
         nomenclatureService.save(mushrooms);
         nomenclatureService.save(beackon);
         nomenclatureService.save(kolbaski);
+
         NomenclatureParentGroup topings = new NomenclatureParentGroup("Топпинги");
         topings.setNomenclatures(new ArrayList<>(Arrays.asList(pineapple, ham)));
         nomenclatureParentGroupService.save(topings);
+
+        NomenclatureParentGroup omelet = new NomenclatureParentGroup("Омлет");
+        omelet.setNomenclatures(new ArrayList<>(Arrays.asList(tomat, salami)));
+        nomenclatureParentGroupService.save(omelet);
 
         Nomenclature margarita = new Nomenclature(15002, 370.00, LocalTime.of(0, 5, 15),
                 LocalTime.of(0, 6, 30), "Маргарита", DISH,
