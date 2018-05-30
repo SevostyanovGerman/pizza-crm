@@ -171,6 +171,27 @@ function addScheduleDown() {
     );
 }
 
+//удаление строк из модалки
+
+$(document).ready(function () {
+    $('#addScheduleDown').on('click', 'tr', function () {
+        if ($(this).hasClass('active-modifier')) {
+            $(this).removeClass('active-modifier');
+        } else {
+            $(this).addClass('active-modifier');
+        }
+    });
+});
+
+
+function delScheduleDown() {
+    $('tr.active-modifier').each(function () {
+        var tr = $(this);
+        tr.remove();
+    })
+}
+
+
 function addField() {
 
     var nameValidity = $('#validityName').val();
