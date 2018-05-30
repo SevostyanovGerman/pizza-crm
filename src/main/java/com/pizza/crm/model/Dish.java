@@ -27,6 +27,8 @@ public class Dish {
 
     private String vendorCode;
 
+    private Long amount;
+
     @ManyToMany
     @JoinTable(name = "Dish_Ingredient",
             joinColumns = @JoinColumn(name = "dish"),
@@ -204,5 +206,13 @@ public class Dish {
                 ", categories=" + categories +
                 ", dishQuickMenu=" + dishQuickMenu +
                 '}';
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
     }
 }

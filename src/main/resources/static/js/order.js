@@ -2,6 +2,10 @@ let csrfToken = $("meta[name='_csrf']").attr("content");
 let csrfHeader = $("meta[name='_csrf_header']").attr("content");
 let colonToggler = false;
 
+
+
+
+// Display time
 function getLocaleTimeString() {
     return new Date().toLocaleTimeString('ru-RU', {
         year: 'numeric',
@@ -31,7 +35,9 @@ function setOrderTimestamp() {
     let dateTimeParts = getLocaleTimeString().split(',');
     $('#orderTime').html(dateTimeParts[1]);
 }
+//***********************************************************
 
+// Category
 $(document).ready(function () {
     $(".category-item").click(function () {
         $("#backward").removeClass("disable");
@@ -93,35 +99,73 @@ $(document).ready(function () {
         $("#dish").css({"display": "none"});
     })
 });
+//***********************************************************
 
+// Discount
+// getAllDiscountsForOrder
 $(document).ready(function () {
-    $('.discount-extraCharge-modal-show').click(function () {
-        $("#discount-extraCharge-modal").modal('show');
-        $("#discountForm").val($("#discount").text());
-        $("#extraChargeForm").val($("#extraCharge").text());
+    $.ajax({
+        type: "POST",
+        url: "/admin/discount/getAllDiscountsForOrder",
+        contentType: "application/json; charset=utf-8",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (data) {
+            allDiscounts = data;
+            for (var i = 0; i < data.length; i++) {
+
+                if (data[i].automatic) {
+                    $('.discount-select-tbody').append(
+                        '<tr class="select-discount" aria-disabled="true">' +
+                        '<td>'+data[i].name+'</td>' +
+                        '<td>'+data[i].value+'</td>' +
+                        '<td> % </td>' +
+                        '<input type="hidden" value="'+data[i].automatic+'">' +
+                        '</tr>')
+                    $('.discount-select-tbody').find(".select-discount").eq(i).css("background", "#dee284");
+                } else {
+                    $('.discount-select-tbody').append(
+                        '<tr class="select-discount" onclick="changeColor(this)">' +
+                        '<td>'+data[i].name+'</td>' +
+                        '<td>'+data[i].value+'</td>' +
+                        '<td> % </td>' +
+                        '<input type="hidden" value="'+data[i].automatic+'">' +
+                        '</tr>')
+                }
+
+            }
+        },
+        error: function () {}
     });
 });
 
-$(document).ready(function () {
-    $.validate( {
-        form: '#discount-extraCharge-modal',
-        lang : 'ru',
-        onSuccess: function () {
-            let discount = parseFloat($('input[name="discountForm"]').val());
-            let extraCharge = parseFloat($('input[name="extraChargeForm"]').val());
-            if (discount > 0) {
-                extraCharge = 0;
-            } else if (extraCharge > 0) {
-                discount = 0;
-            }
-            $("#discount").html(discount).val(discount);
-            $("#extraCharge").html(extraCharge).val(extraCharge);
-            $("#discount-extraCharge-modal").modal('hide');
-            updateTotal();
-            return false;
+// Change color onclick
+function changeColor(td) {
+        if($(td).css('background') === "rgb(222, 226, 132) none repeat scroll 0% 0% / auto padding-box border-box") {
+            $(td).css("background", "#FFFFFF");
+        } else{
+            $(td).css("background", "#dee284");
+        }
+    }
+
+//Discounts application
+var discountsAndExtraCharges = [];
+function applicateDiscounts() {
+    discountsAndExtraCharges = [];
+    $(".select-discount").each(function () {
+         if ($(this).css('background') === "rgb(222, 226, 132) none repeat scroll 0% 0% / auto padding-box border-box") {
+
+             var name = $(this).closest('tr').find('td').eq(0).text();
+             var discountAndExtraCharge = {name: name};
+             discountsAndExtraCharges.push(discountAndExtraCharge);
         }
     });
-});
+
+    updateTotal();
+}
+
+//***********************************************************
 
 $(document).ready(function () {
     $('.order-table').on('click', 'tr', function () {
@@ -129,6 +173,7 @@ $(document).ready(function () {
     });
 });
 
+// Quantity
 $(document).ready(function () {
     $('.add-quantity').click(function () {
         let tr = getSelectedRow();
@@ -152,7 +197,9 @@ $(document).ready(function () {
         updateTotal();
     });
 });
+//***********************************************************
 
+//Dish
 $(document).ready(function () {
     $('.remove-selected-dish').click(function () {
         let tr = getSelectedRow();
@@ -180,6 +227,8 @@ $(document).ready(function () {
                 "<td>" + $(this).data('itemName') + "</td>",
                 "<td>" + $(this).data('price') + "</td>",
             ].join("/n")));
+            applicateDiscounts();
+            updateTotal();
             return;
         } else {
             var go = true;
@@ -204,7 +253,9 @@ $(document).ready(function () {
         updateTotal();
     });
 });
+//***********************************************************
 
+// Product
 $(document).ready(function () {
     $('#productsItem').on('click', '.product-search', function (e) {
 
@@ -284,7 +335,7 @@ $(document).ready(function () {
         updateTotal();
     });
 });
-
+//***********************************************************
 
 function getSelectedRow() {
     let tr = $('.order-table tr.highlight');
@@ -297,22 +348,45 @@ function getSelectedRow() {
 
 function updateTotal() {
     let rawTotal = 0;
+    let total = 0;
+
+    var dishes = [];
+
     $('.order-table tr').each(function () {
-        rawTotal += getRowTotal($(this));
+        let amount = parseInt($(this).find('td:eq(0)').text());
+        if (isNaN(amount)) {
+            amount = 0;
+        }
+        let name = $(this).find('td:eq(1)').text();
+
+        var dish = {amount: amount, name: name};
+        dishes.push(dish);
     });
-    let discount = parseFloat($("#discount").val());
-    let extraCharge = parseFloat($("#extraCharge").val());
-    let total = rawTotal;
-    if (!isNaN(discount) && discount > 0) {
-        total = rawTotal - rawTotal * discount / 100;
-    } else if (!isNaN(extraCharge) && extraCharge > 0) {
-        total = rawTotal + rawTotal * extraCharge / 100;
-    }
-    $('#rawTotal').html(rawTotal);
-    $('#total').html(total);
+
+    var order = {
+        dishes: dishes,
+        discounts: discountsAndExtraCharges
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/admin/discount/getRowTotal",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(order),
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (data) {
+            $('#rawTotal').html(data[0]);
+            $('#total').html(data[1]);
+            $("#discount").html(data[2]);
+            $("#extraCharge").html(data[3]);
+        },
+        error: function () {}
+    });
 }
 
-function getRowTotal(row) {
+/*function getRowTotal(row) {
     let quantity = parseFloat(row.find('td:eq(0)').text());
     if (isNaN(quantity)) {
         quantity = 0;
@@ -320,12 +394,9 @@ function getRowTotal(row) {
     let price = parseFloat(row.find('td:eq(2)').text());
     if (isNaN(price)) {
         price = 0;
-    }
-    return quantity * price;
-}
+    }*/
 
 // Quantity manual input
-
 $(document).ready(function () {
     $('.quantity-control-modal-show').click(function () {
         let tr = getSelectedRow();
@@ -388,6 +459,8 @@ $(document).ready(function () {
         $('.quantity-control-modal').modal('hide');
     });
 });
+//***********************************************************
+
 function showMoreDishes(name) {
     $.ajax({
         type: "POST",
@@ -436,10 +509,7 @@ $(document).ready(function () {
         sessionStorage.setItem('order-list', JSON.stringify(orderList));
     });
 });
-
-///////////////////////////////////
-
-
+//***********************************************************
 
 
 var quickMenu;

@@ -1,7 +1,5 @@
 package com.pizza.crm.model;
 
-import com.pizza.crm.model.discount.Discount;
-
 import javax.persistence.*;
 import java.time.LocalTime;
 
@@ -36,7 +34,8 @@ public class ValiditySchedule {
         this.endTime = endTime;
     }
 
-    public ValiditySchedule(LocalTime beginTime, LocalTime endTime, Boolean monday, Boolean tuesday, Boolean wednesday, Boolean thursday, Boolean friday, Boolean saturday, Boolean sunday) {
+    public ValiditySchedule(LocalTime beginTime, LocalTime endTime, Boolean monday, Boolean tuesday,
+                            Boolean wednesday, Boolean thursday, Boolean friday, Boolean saturday, Boolean sunday) {
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.monday = monday;

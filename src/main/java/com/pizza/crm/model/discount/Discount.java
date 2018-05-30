@@ -1,14 +1,10 @@
 package com.pizza.crm.model.discount;
 
 import com.pizza.crm.model.PaymentMethod;
-import com.pizza.crm.model.ValiditySchedule;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
+import com.pizza.crm.model.Validity;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,7 +23,7 @@ public class Discount {
     private String type;
 
     @Min(0)
-    private int minSum;
+    private Double minSum;
 
     private boolean minSumRestriction;
 
@@ -41,11 +37,13 @@ public class Discount {
 
     private boolean automatic;
 
-    private boolean combinable;
+    private boolean combinable = true;
 
     private boolean enabled = true;
 
-    private boolean applyForAllDiscountCategories;
+    private boolean applyForAllDiscountCategories = true;
+
+    private boolean detailWhenPrinting;
 
     @Min(0)
     private int priority;
@@ -56,37 +54,40 @@ public class Discount {
     private String comment;
 
     @Enumerated(EnumType.STRING)
-    private DiscountApplicationMethod discountApplicationMethod = DiscountApplicationMethod.FULL_PRICE;
+    private DiscountApplicationMethod discountApplicationMethod;
 
     @Enumerated(EnumType.STRING)
     private DiscountMode discountMode = DiscountMode.DISCOUNT;
 
     @Enumerated(EnumType.STRING)
-    private DiscountAssignMode discountAssignMode = DiscountAssignMode.ALL_DISHES;
+    private DiscountAssignMode discountAssignMode;
 
     @Enumerated(EnumType.STRING)
-    private DiscountCalculationMode discountCalculationMode = DiscountCalculationMode.PERCENT;
+    private DiscountCalculationMode discountCalculationMode;
 
-    @OneToMany(mappedBy = "discount", cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
-    @Fetch(FetchMode.SUBSELECT)
-    private List<PaymentMethod> paymentMethods = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "Discount_PaymentMethod",
+            joinColumns = @JoinColumn(name = "Discount"),
+            inverseJoinColumns = @JoinColumn(name = "PaymentMethod"))
+    private List<PaymentMethod> paymentMethods;
+
+    @ManyToMany
+    @JoinTable(name = "Discount_Validity",
+            joinColumns = @JoinColumn(name = "Discount"),
+            inverseJoinColumns = @JoinColumn(name = "Validity"))
+    private List<Validity> validities;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-  //  @JoinColumn(name = "discount")
-    @Fetch(FetchMode.SUBSELECT)
-    private List<ValiditySchedule> validitySchedules = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<DiscountCategory> discountCategories = new ArrayList<>();
+    private List<DiscountCategory> discountCategories;
 
     public Discount() {
     }
 
-    public Discount(@NotBlank String name, String nameInCheck, String type, @Min(0) Integer minSum, boolean minSumRestriction, boolean ScheduleRestriction, Boolean manualSelectWithOthers,
+    public Discount(@NotBlank String name, String nameInCheck, String type, @Min(0) Double minSum, boolean minSumRestriction, boolean ScheduleRestriction, Boolean manualSelectWithOthers,
                     Boolean manualInput, boolean manualDishSelect, Boolean automatic, Boolean combinable, Boolean enabled, Boolean applyForAllDiscountCategories,
                     @Min(0) Integer priority, @Min(0) Integer value, String comment, DiscountApplicationMethod discountApplicationMethod,
                     DiscountMode discountMode, DiscountAssignMode discountAssignMode, DiscountCalculationMode discountCalculationMode,
-                    List<PaymentMethod> paymentMethods, List<ValiditySchedule> validitySchedules, List<DiscountCategory> discountCategories) {
+                    List<PaymentMethod> paymentMethods, List<Validity> validities, List<DiscountCategory> discountCategories,boolean detailWhenPrinting) {
         this.name = name;
         this.nameInCheck = nameInCheck;
         this.type = type;
@@ -108,8 +109,9 @@ public class Discount {
         this.discountAssignMode = discountAssignMode;
         this.discountCalculationMode = discountCalculationMode;
         this.paymentMethods = paymentMethods;
-        this.validitySchedules = validitySchedules;
+        this.validities = validities;
         this.discountCategories = discountCategories;
+        this.detailWhenPrinting = detailWhenPrinting;
     }
 
     public Discount(@NotBlank String name) {
@@ -149,11 +151,11 @@ public class Discount {
         this.type = type;
     }
 
-    public Integer getMinSum() {
+    public Double getMinSum() {
         return minSum;
     }
 
-    public void setMinSum(Integer minSum) {
+    public void setMinSum(Double minSum) {
         this.minSum = minSum;
     }
 
@@ -253,12 +255,12 @@ public class Discount {
         this.paymentMethods = paymentMethods;
     }
 
-    public List<ValiditySchedule> getValiditySchedules() {
-        return validitySchedules;
+    public List<Validity> getValidities() {
+        return validities;
     }
 
-    public void setValiditySchedules(List<ValiditySchedule> validitySchedules) {
-        this.validitySchedules = validitySchedules;
+    public void setValidities(List<Validity> validities) {
+        this.validities = validities;
     }
 
     public List<DiscountCategory> getDiscountCategories() {
@@ -307,5 +309,13 @@ public class Discount {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public boolean isDetailWhenPrinting() {
+        return detailWhenPrinting;
+    }
+
+    public void setDetailWhenPrinting(boolean detailWhenPrinting) {
+        this.detailWhenPrinting = detailWhenPrinting;
     }
 }

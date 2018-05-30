@@ -2,9 +2,7 @@ package com.pizza.crm.init;
 
 import com.github.javafaker.Faker;
 import com.pizza.crm.model.*;
-import com.pizza.crm.model.discount.Discount;
-import com.pizza.crm.model.discount.DiscountCategory;
-import com.pizza.crm.model.discount.DiscountMode;
+import com.pizza.crm.model.discount.*;
 import com.pizza.crm.model.security.Role;
 import com.pizza.crm.model.security.User;
 import com.pizza.crm.service.*;
@@ -125,46 +123,6 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         
        
 
-    }
-
-    private void generateDiscountsAndPaymentMethods() {
-        PaymentType card = new PaymentType("Банковские карты");
-        PaymentType cash = new PaymentType("Наличные");
-        PaymentType withoutEarnings = new PaymentType("Безналичный расчет");
-        PaymentType onHouse = new PaymentType("За счет заведения");
-        paymentTypeService.saveAll(Arrays.asList(card, cash, withoutEarnings, onHouse));
-
-        PaymentMethod pm1 = new PaymentMethod("Visa", card);
-        PaymentMethod pm2 = new PaymentMethod("MasterCard", card);
-        PaymentMethod pm3 = new PaymentMethod("Наличные", cash);
-        PaymentMethod pm4 = new PaymentMethod("Безналичный расчет", withoutEarnings);
-//        PaymentMethod pm5 = new PaymentMethod("За счет заведения", onHouse);
-        paymentMethodService.saveAll(Arrays.asList(pm1, pm2, pm3, pm4));
-
-        List<Category> categories = new ArrayList<>(categoryService.getAll());
-
-        DiscountCategory discountCategory1 = new DiscountCategory();
-        discountCategory1.setDiscountMode(DiscountMode.DISCOUNT);
-        discountCategory1.setCategory(categories.get(0));
-
-        DiscountCategory discountCategory2 = new DiscountCategory();
-        discountCategory2.setDiscountMode(DiscountMode.EXTRA_PAY);
-        discountCategory2.setCategory(categories.get(1));
-
-        Discount discount = new Discount("Скидка");
-        discount.setType("Скидки и надбавки");
-        discount.setAutomatic(true);
-        discount.setManualSelectWithOthers(true);
-        discount.getPaymentMethods().add(pm1);
-//        discount.getPaymentMethods().add(pm3);
-        discount.setDiscountCategories(Arrays.asList(discountCategory1, discountCategory2));
-        discount.getValiditySchedules().add(new ValiditySchedule(/*"Расписание скидки в обед",*/ LocalTime.of(12, 0), LocalTime.of(13, 0)));
-        discount.getValiditySchedules().add(new ValiditySchedule(/*"Расписание скидки вечером",*/ LocalTime.of(14, 0), LocalTime.of(16, 0),
-                true, false, true, false, true, false, true));
-        discountService.save(discount);
-        pm1.setDiscount(discount);
-//        pm3.setDiscount(discount);
-        paymentMethodService.saveAll(Arrays.asList(pm1, pm3));
     }
 
     private void generateFakeStaff() {
@@ -451,6 +409,191 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         validityService.save(validityLunch);
         validityService.save(validityDinner);
 
+        ValiditySchedule tuesdaySchedule = new ValiditySchedule(LocalTime.of(1, 00),
+                LocalTime.of(23, 00), false, true, false, false,
+                false, false, false);
+
+        ArrayList<ValiditySchedule> listtuesdaySchedule =
+                new ArrayList<>(Arrays.asList(tuesdaySchedule));
+
+        Validity validitytuesday = new Validity("Вторник, с 1-00 до 23-00", listtuesdaySchedule);
+        validityService.save(validitytuesday);
+
+    }
+
+    private void generateDiscountsAndPaymentMethods() {
+        // PaymentType creating
+        PaymentType card = new PaymentType("Банковские карты");
+        PaymentType cash = new PaymentType("Наличные");
+        PaymentType withoutEarnings = new PaymentType("Безналичный расчет");
+        PaymentType onHouse = new PaymentType("За счет заведения");
+        paymentTypeService.saveAll(Arrays.asList(card, cash, withoutEarnings, onHouse));
+
+        // PaymentMethod creating
+        PaymentMethod pm1 = new PaymentMethod("Visa", card);
+        PaymentMethod pm2 = new PaymentMethod("MasterCard", card);
+        PaymentMethod pm3 = new PaymentMethod("Наличные", cash);
+        PaymentMethod pm4 = new PaymentMethod("Безналичный расчет", withoutEarnings);
+        List<PaymentMethod> paymentMethods = new ArrayList<>();
+        paymentMethods.add(pm1);
+        paymentMethods.add(pm2);
+        paymentMethods.add(pm3);
+        paymentMethods.add(pm4);
+        paymentMethodService.saveAll(paymentMethods);
+
+        Discount discount = new Discount("Автоматическая скидка на все позиции");
+        discount.setEnabled(true);
+        discount.setValue(5);
+        discount.setType("Скидки и надбавки");
+        discount.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
+        discount.setMinSum(0d);
+        discount.setMinSumRestriction(false);
+        discount.setScheduleRestriction(false);
+        discount.setManualSelectWithOthers(false);
+        discount.setManualInput(false);
+        discount.setManualDishSelect(false);
+        discount.setAutomatic(true);
+        discount.setCombinable(true);
+        discount.setApplyForAllDiscountCategories(true);
+        discount.setDetailWhenPrinting(false);
+        discount.setPriority(0);
+        discount.setComment("");
+        discount.setDiscountApplicationMethod(DiscountApplicationMethod.FULL_PRICE);
+        discount.setDiscountMode(DiscountMode.DISCOUNT);
+        discount.setDiscountAssignMode(DiscountAssignMode.FIRST_DISH);
+        discount.setDiscountCalculationMode(DiscountCalculationMode.PERCENT);
+        discount.setValidities(null);
+        discount.setDiscountCategories(null);
+        discountService.save(discount);
+
+        Discount extraCharge = new Discount("Надбавка");
+        extraCharge.setEnabled(true);
+        extraCharge.setValue(10);
+        extraCharge.setType("Скидки и надбавки");
+        extraCharge.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
+        extraCharge.setMinSum(0d);
+        extraCharge.setMinSumRestriction(false);
+        extraCharge.setScheduleRestriction(false);
+        extraCharge.setManualSelectWithOthers(false);
+        extraCharge.setManualInput(false);
+        extraCharge.setManualDishSelect(false);
+        extraCharge.setAutomatic(false);
+        extraCharge.setCombinable(true);
+        extraCharge.setApplyForAllDiscountCategories(true);
+        extraCharge.setDetailWhenPrinting(false);
+        extraCharge.setPriority(0);
+        extraCharge.setComment("");
+        extraCharge.setDiscountApplicationMethod(DiscountApplicationMethod.FULL_PRICE);
+        extraCharge.setDiscountMode(DiscountMode.EXTRA_PAY);
+        extraCharge.setDiscountAssignMode(DiscountAssignMode.FIRST_DISH);
+        extraCharge.setDiscountCalculationMode(DiscountCalculationMode.PERCENT);
+        extraCharge.setValidities(null);
+        extraCharge.setDiscountCategories(null);
+        discountService.save(extraCharge);
+
+        Discount defaultDiscount = new Discount("Скидка 15%");
+        defaultDiscount.setEnabled(true);
+        defaultDiscount.setValue(15);
+        defaultDiscount.setType("Скидки и надбавки");
+        defaultDiscount.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
+        defaultDiscount.setMinSum(0d);
+        defaultDiscount.setMinSumRestriction(false);
+        defaultDiscount.setScheduleRestriction(false);
+        defaultDiscount.setManualSelectWithOthers(false);
+        defaultDiscount.setManualInput(false);
+        defaultDiscount.setManualDishSelect(false);
+        defaultDiscount.setAutomatic(false);
+        defaultDiscount.setCombinable(true);
+        defaultDiscount.setApplyForAllDiscountCategories(true);
+        defaultDiscount.setDetailWhenPrinting(false);
+        defaultDiscount.setPriority(0);
+        defaultDiscount.setComment("");
+        defaultDiscount.setDiscountApplicationMethod(DiscountApplicationMethod.FULL_PRICE);
+        defaultDiscount.setDiscountMode(DiscountMode.DISCOUNT);
+        defaultDiscount.setDiscountAssignMode(DiscountAssignMode.FIRST_DISH);
+        defaultDiscount.setDiscountCalculationMode(DiscountCalculationMode.PERCENT);
+        defaultDiscount.setValidities(null);
+        defaultDiscount.setDiscountCategories(null);
+        discountService.save(defaultDiscount);
+
+        Discount minSumDiscount =
+                new Discount("Применяется от 2000 рублей с учетом других скидок (Не к полной сумме)");
+        minSumDiscount.setEnabled(true);
+        minSumDiscount.setValue(30);
+        minSumDiscount.setType("Скидки и надбавки");
+        minSumDiscount.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
+        minSumDiscount.setMinSum(2000d);
+        minSumDiscount.setMinSumRestriction(true);
+        minSumDiscount.setScheduleRestriction(false);
+        minSumDiscount.setManualSelectWithOthers(false);
+        minSumDiscount.setManualInput(false);
+        minSumDiscount.setManualDishSelect(false);
+        minSumDiscount.setAutomatic(false);
+        minSumDiscount.setCombinable(true);
+        minSumDiscount.setApplyForAllDiscountCategories(true);
+        minSumDiscount.setDetailWhenPrinting(false);
+        minSumDiscount.setPriority(0);
+        minSumDiscount.setComment("");
+        minSumDiscount.setDiscountApplicationMethod(DiscountApplicationMethod.WITH_OTHERS);
+        minSumDiscount.setDiscountMode(DiscountMode.DISCOUNT);
+        minSumDiscount.setDiscountAssignMode(DiscountAssignMode.FIRST_DISH);
+        minSumDiscount.setDiscountCalculationMode(DiscountCalculationMode.PERCENT);
+        minSumDiscount.setValidities(null);
+        minSumDiscount.setDiscountCategories(null);
+        discountService.save(minSumDiscount);
+
+        Discount singleton = new Discount("Применяется при отсутствии других скидок");
+        singleton.setEnabled(true);
+        singleton.setValue(20);
+        singleton.setType("Скидки и надбавки");
+        singleton.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
+        singleton.setMinSum(0d);
+        singleton.setMinSumRestriction(false);
+        singleton.setScheduleRestriction(false);
+        singleton.setManualSelectWithOthers(false);
+        singleton.setManualInput(false);
+        singleton.setManualDishSelect(false);
+        singleton.setAutomatic(false);
+        singleton.setCombinable(false);
+        singleton.setApplyForAllDiscountCategories(true);
+        singleton.setDetailWhenPrinting(false);
+        singleton.setPriority(0);
+        singleton.setComment("");
+        singleton.setDiscountApplicationMethod(DiscountApplicationMethod.FULL_PRICE);
+        singleton.setDiscountMode(DiscountMode.DISCOUNT);
+        singleton.setDiscountAssignMode(DiscountAssignMode.FIRST_DISH);
+        singleton.setDiscountCalculationMode(DiscountCalculationMode.PERCENT);
+        singleton.setValidities(null);
+        singleton.setDiscountCategories(null);
+        discountService.save(singleton);
+
+        Discount tuesdayDiscount = new Discount("Скидка по вторникам, с 1-00 до 23-00");
+        tuesdayDiscount.setEnabled(true);
+        tuesdayDiscount.setValue(20);
+        tuesdayDiscount.setType("Скидки и надбавки");
+        tuesdayDiscount.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
+        tuesdayDiscount.setMinSum(0d);
+        tuesdayDiscount.setMinSumRestriction(false);
+        tuesdayDiscount.setScheduleRestriction(true);
+        tuesdayDiscount.setManualSelectWithOthers(false);
+        tuesdayDiscount.setManualInput(false);
+        tuesdayDiscount.setManualDishSelect(false);
+        tuesdayDiscount.setAutomatic(false);
+        tuesdayDiscount.setCombinable(true);
+        tuesdayDiscount.setApplyForAllDiscountCategories(true);
+        tuesdayDiscount.setDetailWhenPrinting(false);
+        tuesdayDiscount.setPriority(0);
+        tuesdayDiscount.setComment("");
+        tuesdayDiscount.setDiscountApplicationMethod(DiscountApplicationMethod.FULL_PRICE);
+        tuesdayDiscount.setDiscountMode(DiscountMode.DISCOUNT);
+        tuesdayDiscount.setDiscountAssignMode(DiscountAssignMode.FIRST_DISH);
+        tuesdayDiscount.setDiscountCalculationMode(DiscountCalculationMode.PERCENT);
+        List<Validity> validitiesForDiscount = new ArrayList<>();
+        validitiesForDiscount.add(validityService.findByNameValidity("Вторник, с 1-00 до 23-00"));
+
+        tuesdayDiscount.setValidities(validitiesForDiscount);
+        tuesdayDiscount.setDiscountCategories(null);
+        discountService.save(tuesdayDiscount);
     }
 
     private void generateUnitsOfMeasurement() {

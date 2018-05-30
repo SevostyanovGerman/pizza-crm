@@ -90,7 +90,8 @@ section {
 
 section .header {
     background-color: #000;
-    position: relative;
+    height: 3vh;
+    position: fixed;
 }
 
 section .header p {
@@ -770,4 +771,12 @@ div#products1.products {
 
 .fa-angle-down {
     font-size: 9vh;
+}
+
+/*autoDiscount*/
+.autoDiscount-table {
+    font-size: 2vh;
+    color: white;
+    text-align: center;
+    background-color: #676767;
 }

@@ -12,22 +12,15 @@ public class DiscountCategory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "discount")
-    private Discount discount;
-
-    @ManyToOne
-    @JoinColumn(name = "category")
-    private Category category;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     private DiscountMode discountMode;
 
     private int value;
 
-    public DiscountCategory(Discount discount, Category category, DiscountMode discountMode, int value) {
-        this.discount = discount;
-        this.category = category;
+    public DiscountCategory(Discount discount, String name, DiscountMode discountMode, int value) {
+        this.name = name;
         this.discountMode = discountMode;
         this.value = value;
     }
@@ -43,20 +36,12 @@ public class DiscountCategory {
         this.id = id;
     }
 
-    public Discount getDiscount() {
-        return discount;
+    public String getName() {
+        return name;
     }
 
-    public void setDiscount(Discount discount) {
-        this.discount = discount;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public DiscountMode getDiscountMode() {

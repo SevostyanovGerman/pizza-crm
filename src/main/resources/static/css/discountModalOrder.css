@@ -1,0 +1,45 @@
+.modal-content {
+    width: 100vh;
+    color: white;
+    font-size: 2.5vh;
+    text-align: center;
+}
+.select-discount {
+    background-color: white;
+    color: black;
+    height: 10vh;
+
+}
+.discount-select-table {
+    width: 50vh;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.discount-select-table tr {
+    border: 1vh solid #3c3e3e;
+}
+
+.discount-select-table th {
+    height: 10vh;
+}
+
+.discount-footer-table {
+    width: 40vh;
+    margin-left:auto;
+    margin-top: 2vh;
+}
+
+.discount-footer-button {
+    height: 10vh;
+    width: 30vh;
+}
+.discount-footer-button:hover {
+    color: black;
+    background: white;
+    cursor: pointer;
+}
+
+.selectDiscountColor {
+    background: #dee284;
+}
