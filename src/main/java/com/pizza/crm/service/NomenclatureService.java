@@ -2,6 +2,7 @@ package com.pizza.crm.service;
 
 import com.pizza.crm.model.Nomenclature;
 
+import java.util.HashSet;
 import java.util.List;
 
 public interface NomenclatureService {
@@ -18,7 +19,9 @@ public interface NomenclatureService {
 
     List<Nomenclature> findAllNomenclatures();
 
-    List<Nomenclature> getNomenclatureModifiers();
+    HashSet<Nomenclature> getModifierNomenclatureDish();
+
+    HashSet<Nomenclature> getNomenclatureModifiers();
 
     List<Nomenclature> getNomenclaturesWithoutParentGroup();
 }

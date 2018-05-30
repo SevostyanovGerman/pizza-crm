@@ -31,8 +31,8 @@ body {
     margin-top: 3rem;
 }
 
-.selected {
-    background: #aeaeae;
+.selected{
+    background: #dddddd;
 }
 
 .active-modifier {
