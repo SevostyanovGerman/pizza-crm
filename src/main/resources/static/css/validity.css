@@ -1,5 +1,5 @@
 .item-active {
-    background: #dfe385;
+    background: #DEDEE3;
 }
 
 .fixed-bottom {
@@ -17,4 +17,8 @@ body {
     margin: 0;
     overflow: hidden;
     position: relative;
+}
+
+.active-modifier {
+    background: #DEDEE3;
 }

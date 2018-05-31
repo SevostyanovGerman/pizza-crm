@@ -32,13 +32,13 @@ public class EmployeeController {
     @GetMapping("/admin/staff/employee")
     public String getAllEmployees(Model model) {
         model.addAttribute("allEmployees", employeeService.getAll());
-        return "/admin/staff/employee";
+        return "admin/staff/employee";
     }
 
     @GetMapping("/admin/staff/employee/new")
     public String newEmployee(Model model) {
         model.addAttribute("employee", new Employee("Новый сотрудник", "password", "1234"));
-        return "/admin/staff/employeeCard";
+        return "admin/staff/employeeCard";
     }
 
     @GetMapping("/admin/staff/employee/{id}")
@@ -47,13 +47,13 @@ public class EmployeeController {
         model.addAttribute("employee", employee);
         model.addAttribute("allPositions", positionService.getAll());
         model.addAttribute("allDepartments", departmentService.getAll());
-        return "/admin/staff/employeeCard";
+        return "admin/staff/employeeCard";
     }
 
     @PostMapping("/admin/staff/employee")
     public String saveEmployee(@Valid Employee employee, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "/admin/staff/employeeCard";
+            return "admin/staff/employeeCard";
         }
         employeeService.save(employee);
         return "redirect:/admin/staff/employee";
