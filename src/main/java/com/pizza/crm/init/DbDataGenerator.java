@@ -413,8 +413,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                 LocalTime.of(23, 00), false, true, false, false,
                 false, false, false);
 
-        ArrayList<ValiditySchedule> listtuesdaySchedule =
-                new ArrayList<>(Arrays.asList(tuesdaySchedule));
+        List<ValiditySchedule> listtuesdaySchedule = new ArrayList<>(Arrays.asList(tuesdaySchedule));
 
         Validity validitytuesday = new Validity("Вторник, с 1-00 до 23-00", listtuesdaySchedule);
         validityService.save(validitytuesday);
