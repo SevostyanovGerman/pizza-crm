@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class NomenclatureServiceImpl implements NomenclatureService {
@@ -49,12 +50,12 @@ public class NomenclatureServiceImpl implements NomenclatureService {
     }
 
     @Override
-    public HashSet<Nomenclature> getModifierNomenclatureDish() {
+    public Set<Nomenclature> getModifierNomenclatureDish() {
         return nomenclatureRepository.getModifierNomenclatureDish();
     }
 
     @Override
-    public HashSet<Nomenclature> getNomenclatureModifiers() {
+    public Set<Nomenclature> getNomenclatureModifiers() {
         return nomenclatureRepository.getNomenclatureModifiers();
     }
 
