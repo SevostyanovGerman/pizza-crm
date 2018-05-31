@@ -377,9 +377,9 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 		ScaleOfSizeValues valuesDrink = new ScaleOfSizeValues("0,33 литра" ,"0.3 л.",false);
         ScaleOfSizeValues valuesPizza = new ScaleOfSizeValues("30 сантиметров" ,"30 см.",true);
         ScaleOfSizeValues valuesWeight = new ScaleOfSizeValues("100 грамм" ,"100 гр.",true);
-        ArrayList<ScaleOfSizeValues> listDrink = new ArrayList<>(Arrays.asList(valuesDrink));
-        ArrayList<ScaleOfSizeValues> listPizza = new ArrayList<>(Arrays.asList(valuesPizza));
-        ArrayList<ScaleOfSizeValues> listWeight = new ArrayList<>(Arrays.asList(valuesWeight));
+        List<ScaleOfSizeValues> listDrink = new ArrayList<>(Arrays.asList(valuesDrink));
+        List<ScaleOfSizeValues> listPizza = new ArrayList<>(Arrays.asList(valuesPizza));
+        List<ScaleOfSizeValues> listWeight = new ArrayList<>(Arrays.asList(valuesWeight));
         ScaleOfSize scaleDrink = new ScaleOfSize("Обьем бутылок", listDrink);
         ScaleOfSize scalePizza = new ScaleOfSize("Размер пиццы", listPizza);
         ScaleOfSize scaleWeight = new ScaleOfSize("Вес товара", listWeight);
@@ -399,10 +399,10 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     private void generateValidity() {
         ValiditySchedule validityScheduleLunch = new ValiditySchedule(/*"Lunch",*/ LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true, true, true, false, false);
         ValiditySchedule validityScheduleLunch2 = new ValiditySchedule(/*"Lunch",*/ LocalTime.of(14, 30), LocalTime.of(15, 00), false, true, true, true, true, true, false);
-        ArrayList<ValiditySchedule> listValidityScheduleLunches = new ArrayList<>(Arrays.asList(validityScheduleLunch, validityScheduleLunch2));
+        List<ValiditySchedule> listValidityScheduleLunches = new ArrayList<>(Arrays.asList(validityScheduleLunch, validityScheduleLunch2));
 
         ValiditySchedule validityScheduleDinner = new ValiditySchedule(/*"Dinner",*/ LocalTime.of(18, 00), LocalTime.of(20, 00), false, true, true, true, true, true, false);
-        ArrayList<ValiditySchedule> listValidityScheduleDinner = new ArrayList<>(Arrays.asList(validityScheduleDinner));
+        List<ValiditySchedule> listValidityScheduleDinner = new ArrayList<>(Arrays.asList(validityScheduleDinner));
 
         Validity validityDinner = new Validity("Dinner", listValidityScheduleDinner);
         Validity validityLunch = new Validity("Lunch", listValidityScheduleLunches);
@@ -413,8 +413,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                 LocalTime.of(23, 00), false, true, false, false,
                 false, false, false);
 
-        ArrayList<ValiditySchedule> listtuesdaySchedule =
-                new ArrayList<>(Arrays.asList(tuesdaySchedule));
+        List<ValiditySchedule> listtuesdaySchedule = new ArrayList<>(Arrays.asList(tuesdaySchedule));
 
         Validity validitytuesday = new Validity("Вторник, с 1-00 до 23-00", listtuesdaySchedule);
         validityService.save(validitytuesday);
