@@ -500,29 +500,21 @@ $(document).ready(function () {
     });
 });
 //***********************************************************
-
-
+var arrDiscount = [];
 var quickMenu;
-
 var searchString = '';
-
 var options = {
     valueNames: ['nameProduct']
 };
-
 var listObj = new List('product1', options);
-
 var option2 = {
     valueNames: ['code', 'barcode', 'vendorcode']
 };
-
 var listObj2 = new List('products1', option2);
-
 var searchAll = false;
 var searchDarCode = false;
 var searchCode = false;
 var searchVendorCode = false;
-
 date = new Date;
 var day = date.getDay();
 if (day == 0) {
@@ -530,26 +522,21 @@ if (day == 0) {
 } else {
     GetQuickMenu(day);
 }
-
 function SearchProduct(value) {
     searchString = searchString + value;
     $("#SearchModalInput").val(searchString);
     listObj2.search(searchString);
 }
-
 function SearchProductDel() {
     searchString = '';
     $("#SearchModalInput").val(searchString);
     listObj2.search(searchString);
 }
-
 function SearchProductDelOne() {
     searchString = searchString.slice(0, -1);
     $("#SearchModalInput").val(searchString);
     listObj2.search(searchString);
 }
-
-
 function SearchModalЕxpandShow() {
     $("#SearchModal").modal('hide');
     $("#SearchModalЕxpand").modal('show');
@@ -561,7 +548,7 @@ function SearchModalЕxpandShow() {
         },
         success: function (data) {
             $("#productsItem").empty();
-            var dish = JSON.parse(data);
+            var dish = data;
             console.log(dish);
             dish.forEach(function (value) {
                 $("#product").append("<div class=\"col-3\"><div class=\"productItem\" data-quantity=\"1\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "p</p></div></div>");
@@ -572,7 +559,6 @@ function SearchModalЕxpandShow() {
         }
     });
 }
-
 function SearchModalShow() {
     $("#SearchModalЕxpand").modal('hide');
     $("#SearchModal").modal('show');
@@ -584,7 +570,7 @@ function SearchModalShow() {
         },
         success: function (data) {
             $("#productsItem").empty();
-            var dish = JSON.parse(data);
+            var dish = data;
             console.log(dish);
             dish.forEach(function (value) {
                 $("#productsItem").append("<li class=\"product-search\" data-quantity=\"1\"><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
@@ -596,17 +582,14 @@ function SearchModalShow() {
     });
     SearchAll();
 }
-
 $('#search-field').on('keyup', function () {
     var searchString = $(this).val();
     listObj.search(searchString);
 });
-
 function SearchModalЕxpandHide() {
     $("#SearchModal").modal('hide');
     $("#SearchModalЕxpand").modal('hide');
 }
-
 function SearchAll() {
     searchAll = !searchAll;
     if (searchAll) {
@@ -620,7 +603,6 @@ function SearchAll() {
         searchDarCode = true;
         searchCode = true;
         searchVendorCode = true;
-
     } else {
         $("#SearchCode").css({"background-color": "#fff"});
         $("#SearchDarCode").css({"background-color": "#fff"});
@@ -634,7 +616,6 @@ function SearchAll() {
         searchVendorCode = false;
     }
 }
-
 function SearchDarCode() {
     searchDarCode = !searchDarCode;
     if (searchDarCode) {
@@ -657,7 +638,6 @@ function SearchDarCode() {
         listObj2 = new List('products1', option2);
     }
 }
-
 function SearchCode() {
     searchCode = !searchCode;
     if (searchCode) {
@@ -680,7 +660,6 @@ function SearchCode() {
         listObj2 = new List('products1', option2);
     }
 }
-
 function SearchVendorCode() {
     searchVendorCode = !searchVendorCode;
     if (searchVendorCode) {
@@ -703,7 +682,6 @@ function SearchVendorCode() {
         listObj2 = new List('products1', option2);
     }
 }
-
 function GetQuickMenu(day) {
     var index = 1;
     $.ajax({
@@ -720,11 +698,9 @@ function GetQuickMenu(day) {
                 $("#head-quick-menu").append("<li><a href=\"#\" onclick=\'ChangeQuickMenu(" + index + ")\' id=\"headerQuickMenu-" + index + "\">" + value.name + "</a></li>");
                 index = index + 1;
             });
-
             $(".right-panel-body-1").empty();
             $(".right-panel-body-2").empty();
             $(".right-panel-body-3").empty();
-
             quickMenu[0].dishQuickMenu.forEach(function (value) {
                 console.log(value);
                 if (value.position == 1) {
@@ -736,16 +712,13 @@ function GetQuickMenu(day) {
                 if (value.position == 3) {
                     $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
                 }
-
             });
-
             headerQuickMenu(1);
         },
         error: function (e) {
         }
     });
 }
-
 function ChangeQuickMenu(numMenu) {
     headerQuickMenu(numMenu)
     $(".right-panel-body-1").empty();
@@ -763,7 +736,6 @@ function ChangeQuickMenu(numMenu) {
         }
     });
 }
-
 function headerQuickMenu(num) {
     var id = "#headerQuickMenu-" + num;
     $("#headerQuickMenu-1").css({"background-color": "#3e4040", "color": "#fff"});
@@ -771,4 +743,99 @@ function headerQuickMenu(num) {
     $("#headerQuickMenu-3").css({"background-color": "#3e4040", "color": "#fff"});
     $(id).css({"background-color": "#dfe487", "color": "#3e4040"});
 }
+function discountModalShow() {
+    var price = $("#rawTotal").text();
+    $("#discount-extraCharge-modal").modal('show');
+    console.log(price);
+    $("#rawTotalModal").text(price);
+    $("#rawTotalDiscountModal").text(price);
+    $.ajax({
+        type: "GET",
+        url: "/get/discount/" + price,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (data) {
+            console.log(data);
+            $("#discount-extraCharge-modal-item").empty();
+            var discountList = data;
+            discountList.forEach(function (value) {
+                var classDis = "disableDiscount";
+                if(arrDiscount.indexOf(value.id) != -1) {
+                    classDis = "enableDiscount";
+                    AddDiscountActive(value.value, value.discountCalculationMode);
+                }
+                var price = $("#rawTotal").text();
+                var newPrise = CountDiscount(value.value, value.discountCalculationMode, value.id);
+                console.log(value);
+                $("#discount-extraCharge-modal-item").append(
+                    "<div class=\"col-4\" style=\"padding-left: 5px; padding-right: 5px; cursor: pointer;\" onclick=\"AddDiscount(" + value.value + ", \'" + value.discountCalculationMode + "\'" + "," + value.id + ")\">\n" +
+                    "<div class=\"DiscountItem " + classDis + " discount_id_" + value.id + "\">\n" +
+                    "<p class=\"NameDiscount\">" + value.name + "</p>\n" +
+                    "<p class=\"TypeDiscount\">" + value.type + "</p>\n" +
+                    "<p class=\"ValueDiscount\">" + value.value + " %" + "</p>\n" +
+                    "<p class=\"ValueDiscountCount\">" + "- " + newPrise + " p" + "</p>\n" +
+                    "</div>\n" +
+                    "</div>");
+            });
+        },
+        error: function (e) {
+        }
+    });
+}
+var globalDiscount = 0;
+function AddDiscount(discount, type, idDis) {
+    var id = ".discount_id_" + idDis;
+    var price = $("#rawTotal").text();
+    var newPrise;
+    if($(id).attr("class").indexOf("disableDiscount") + 1) {
+        arrDiscount.push(idDis);
+        $(id).removeClass("disableDiscount");
+        $(id).addClass("enableDiscount");
+        if (type == "PERCENT") {
+            newPrise = price * (100 - discount) / 100;
+        } else {
+            newPrise = price - discount;
+        }
+        $("#rawTotalDiscountModal").text(newPrise);
+        globalDiscount = discount;
+    } else {
+        globalDiscount = 0;
+        arrDiscount.pop(idDis);
+        $(id).removeClass("enableDiscount");
+        $(id).addClass("disableDiscount");
+        $("#rawTotalDiscountModal").text(price);
+    }
+}
+function AddDiscountActive(discount, type) {
+    var price = $("#rawTotal").text();
+    if (type == "PERCENT") {
+        newPrise = price * (100 - discount) / 100;
+    } else {
+        newPrise = price - discount;
+    }
+    $("#rawTotalDiscountModal").text(newPrise);
+}
+function CountDiscount(discount, type, idDis) {
+    var price = $("#rawTotal").text();
+    var newPrise;
+    if (type == "PERCENT") {
+        newPrise = price * (discount) / 100;
+    } else {
+        newPrise = discount;
+    }
+    return newPrise;
+}
 
+function CloseModal() {
+    $("#discount-extraCharge-modal").modal('hide');
+    globalDiscount = 0;
+    $("#discount").text(globalDiscount);
+    $("#total").text($("#rawTotal").text());
+}
+
+function SaveModal() {
+    $("#discount-extraCharge-modal").modal('hide');
+    $("#total").text($("#rawTotalDiscountModal").text());
+    $("#discount").text(globalDiscount);
+}
