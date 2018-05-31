@@ -37,7 +37,7 @@ public class DiscountController {
     public String getAllDiscounts(Model model) {
         model.addAttribute("allDiscounts", discountService.getAll());
         model.addAttribute("allPaymentMethods", paymentMethodService.getAll());
-        return "/admin/discount/listDiscount";
+        return "admin/discount/listDiscount";
     }
 
     @GetMapping("/admin/discount/edit/{id}")
@@ -74,7 +74,7 @@ public class DiscountController {
             discount.setDiscountCategories(discountCategories);
         }
 
-        return "/admin/discount/saveDiscount";
+        return "admin/discount/saveDiscount";
     }
 
     @GetMapping("/admin/discount/new")
@@ -111,7 +111,7 @@ public class DiscountController {
         }
         discount.setDiscountCategories(discountCategories);
 
-        return "/admin/discount/saveDiscount";
+        return "admin/discount/saveDiscount";
     }
 
     @PostMapping("/admin/discount/save")
