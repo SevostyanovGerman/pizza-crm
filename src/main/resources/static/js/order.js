@@ -45,7 +45,7 @@ $(document).ready(function () {
         var buttonName = $(this).text();
         $.ajax({
             type: "POST",
-            url: "/get/categoriesdish",
+            url: "/nomenclature/getNomenclatureParentGroup",
             data: "name=" + $(this).text(),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);

@@ -142,7 +142,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "getModifiers",
+            url: "/nomenclature/getModifiers",
             data: {name: name},
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
