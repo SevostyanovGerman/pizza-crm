@@ -127,9 +127,9 @@
             </div>
             <div class="middle-panel-body">
                 <div id="category">
-                    <a class="middle-panel-white category-item" th:each="category : ${categories}"
-                       th:text="${category.name}" th:styleappend="'background-color: ' + ${category.color}"
-                       th:id="${category.name}" href="#"></a>
+                    <a class="middle-panel-white category-item" th:each="nomenclatureParentGroup : ${nomenclatureParentGroups}"
+                       th:text="${nomenclatureParentGroup.name}"
+                       th:id="${nomenclatureParentGroup.name}" href="#"></a>
                 </div>
                 <div id="dish"></div>
             </div>
