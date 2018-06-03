@@ -48,7 +48,7 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "Discount"))
     private List<Discount> discounts;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "ClientOrder_Dish",
             joinColumns = @JoinColumn(name = "ClientOrder"),
             inverseJoinColumns = @JoinColumn(name = "Dish"))
