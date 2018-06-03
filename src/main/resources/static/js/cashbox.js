@@ -1,6 +1,8 @@
 let paymentMethods = [];
 let totalCash = 0;
 let paid = false;
+let orderJson;
+let order;
 
 let csrfToken = $("meta[name='_csrf']").attr("content");
 let csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -66,8 +68,8 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    let orderJson = $('.order').attr('value');
-    let order = JSON.parse(orderJson);
+            orderJson = $('.order').attr('value');
+            order = JSON.parse(orderJson);
             order.dishes.forEach(function (elem) {
                 $('.order-table').append($([
                     "<tr>",
@@ -144,11 +146,14 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('.do-pay').click(function () {
-        if (paymentMethods.length === 0) {
+        if (paymentMethods.length === 0 || paid === true) {
             return;
         }
         let cash = parseFloat($('.input-cash').val());
         let total = parseFloat($('#total').text());
+        if (cash === 0) {
+            return;
+        }
         if (cash >= total & !paid) {
             paid = true;
             $('.payment-method-table tr:last').find('td:last').text(cash);
@@ -165,8 +170,19 @@ $(document).ready(function () {
             } else {
                 $('#change').text('0.00');
             }
+                /*Отправка пост запроса с параметрами оплаты
+                 Передаются параметры: id заказа, totalCash, total
+                */
+                let id = order.id;
+                var xhr = new XMLHttpRequest();
+                var body = 'id=' + encodeURIComponent(id) +
+                              '&total=' + encodeURIComponent(total) +
+                              '&totalCash=' + encodeURIComponent(totalCash);
+                xhr.open("POST", '/cashbox', true);
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.send(body);
         }
-
     });
 });
 
