@@ -1,7 +1,8 @@
-package com.pizza.crm.service;
+package com.pizza.crm.service.implementation;
 
 import com.pizza.crm.model.Validity;
 import com.pizza.crm.repository.ValidityRepository;
+import com.pizza.crm.service.ValidityService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -37,8 +38,8 @@ public class ValidityServiceImpl implements ValidityService {
     }
 
     @Override
-    public void deleteById(Long aLong) {
-
+    public void deleteById(Long id) {
+        validityRepository.deleteById(id);
     }
 
     @Override

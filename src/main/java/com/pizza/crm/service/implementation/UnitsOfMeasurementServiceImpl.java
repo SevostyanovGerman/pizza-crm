@@ -1,7 +1,8 @@
-package com.pizza.crm.service;
+package com.pizza.crm.service.implementation;
 
 import com.pizza.crm.model.UnitsOfMeasurement;
 import com.pizza.crm.repository.UnitsOfMeasurementRepository;
+import com.pizza.crm.service.UnitsOfMeasurementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -454,7 +454,7 @@ $(document).ready(function () {
 function showMoreDishes(name) {
     $.ajax({
         type: "POST",
-        url: "/get/categoriesdish",
+        url: "/nomenclature/getNomenclatureParentGroup",
         data: "name=" + name,
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);

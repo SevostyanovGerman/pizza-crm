@@ -1,7 +1,8 @@
-package com.pizza.crm.service;
+package com.pizza.crm.service.implementation;
 
 import com.pizza.crm.model.PaymentType;
 import com.pizza.crm.repository.PaymentTypeRepository;
+import com.pizza.crm.service.PaymentTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

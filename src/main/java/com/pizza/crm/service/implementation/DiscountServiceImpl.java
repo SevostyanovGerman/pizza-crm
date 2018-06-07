@@ -1,7 +1,8 @@
-package com.pizza.crm.service;
+package com.pizza.crm.service.implementation;
 
 import com.pizza.crm.model.discount.Discount;
 import com.pizza.crm.repository.DiscountRepository;
+import com.pizza.crm.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

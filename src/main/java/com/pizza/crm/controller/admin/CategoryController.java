@@ -28,7 +28,8 @@ public class CategoryController {
     private final DishService dishService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService, AddedCategoryService addedCategoryService, DishService dishService) {
+    public CategoryController(CategoryService categoryService, AddedCategoryService addedCategoryService,
+                              DishService dishService) {
         this.categoryService = categoryService;
         this.addedCategoryService = addedCategoryService;
         this.dishService = dishService;
@@ -56,7 +57,8 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/categories/update", method = RequestMethod.POST)
-    public String updateCategories(@ModelAttribute("category") @Validated Category category, BindingResult bindingResult) {
+    public String updateCategories(@ModelAttribute("category") @Validated Category category,
+                                   BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             categoryService.updateCategoriesName(category);
         }

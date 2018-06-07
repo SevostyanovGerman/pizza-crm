@@ -16,7 +16,9 @@ public class SchemeModifiersController {
     private final ScaleOfSizeService scaleOfSizeService;
 
     @Autowired
-    public SchemeModifiersController(NomenclatureService nomenclatureService, SchemeModifiersService schemeModifiersService, ScaleOfSizeService scaleOfSizeService) {
+    public SchemeModifiersController(NomenclatureService nomenclatureService,
+                                     SchemeModifiersService schemeModifiersService,
+                                     ScaleOfSizeService scaleOfSizeService) {
         this.scaleOfSizeService = scaleOfSizeService;
         this.nomenclatureService = nomenclatureService;
         this.schemeModifiersService = schemeModifiersService;

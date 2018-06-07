@@ -31,7 +31,9 @@ public class QuickMenuControllerRest {
     }
 
     @RequestMapping(value = "/update/quickmenu/{day}")
-    public ResponseEntity<?> updateQuickMenu(@RequestBody @Validated Collection<QuickMenu> quickMenu, @PathVariable("day") @Validated int day, BindingResult bindingResult) throws JsonProcessingException {
+    public ResponseEntity<?> updateQuickMenu(@RequestBody @Validated Collection<QuickMenu> quickMenu,
+                                             @PathVariable("day") @Validated int day,
+                                             BindingResult bindingResult) throws JsonProcessingException {
         if (!bindingResult.hasErrors()) {
             quickMenuService.updateQuickMenu(day, quickMenu);
         }

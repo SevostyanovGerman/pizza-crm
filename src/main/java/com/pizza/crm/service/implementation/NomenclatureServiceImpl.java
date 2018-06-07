@@ -1,7 +1,8 @@
-package com.pizza.crm.service;
+package com.pizza.crm.service.implementation;
 
 import com.pizza.crm.model.Nomenclature;
 import com.pizza.crm.repository.NomenclatureRepository;
+import com.pizza.crm.service.NomenclatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

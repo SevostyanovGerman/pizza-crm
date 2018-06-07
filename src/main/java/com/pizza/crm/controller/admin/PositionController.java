@@ -26,7 +26,8 @@ public class PositionController {
     }
 
     @GetMapping("/admin/staff/position/{id}")
-    public @ResponseBody Position getPosition(@PathVariable Long id) {
+    public @ResponseBody
+    Position getPosition(@PathVariable Long id) {
         return positionService.findById(id).orElseThrow(NotFoundException::new);
     }
 

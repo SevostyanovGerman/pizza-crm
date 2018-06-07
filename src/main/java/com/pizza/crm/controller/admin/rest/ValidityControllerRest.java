@@ -15,19 +15,12 @@ import java.util.List;
 @RestController
 public class ValidityControllerRest {
 
-    private final ValidityScheduleService validityScheduleService;
     private final ValidityService validityService;
 
     @Autowired
-    public ValidityControllerRest(ValidityScheduleService validityScheduleService, ValidityService validityService) {
-        this.validityScheduleService = validityScheduleService;
+    public ValidityControllerRest(ValidityService validityService) {
         this.validityService = validityService;
     }
-
-    /*@RequestMapping(value = "/validity/get", method = RequestMethod.POST)
-    public ValiditySchedule getSchedule(String name) {
-        return validityScheduleService.getScheduleByName(name);
-    }*/
 
     @RequestMapping(value = "/validity/get", method = RequestMethod.POST)
     public List<ValiditySchedule> getSchedule(@RequestParam String nameValidity) {

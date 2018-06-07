@@ -1,9 +1,10 @@
-package com.pizza.crm.service;
+package com.pizza.crm.service.implementation;
 
 import com.pizza.crm.model.DishQuickMenu;
 import com.pizza.crm.model.QuickMenu;
 import com.pizza.crm.repository.DishQuickMenuRepository;
 import com.pizza.crm.repository.QuickMenuRepository;
+import com.pizza.crm.service.QuickMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

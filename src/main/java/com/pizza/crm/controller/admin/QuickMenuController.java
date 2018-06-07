@@ -10,13 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class QuickMenuController {
 
-    private final QuickMenuService quickMenuService;
-
     private final DishService dishService;
 
     @Autowired
-    public QuickMenuController(QuickMenuService quickMenuService, DishService dishService) {
-        this.quickMenuService = quickMenuService;
+    public QuickMenuController(DishService dishService) {
         this.dishService = dishService;
     }
 

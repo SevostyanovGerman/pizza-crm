@@ -1,7 +1,8 @@
-package com.pizza.crm.service;
+package com.pizza.crm.service.implementation;
 
 import com.pizza.crm.model.SchemeModifiers;
 import com.pizza.crm.repository.SchemeModifiersRepository;
+import com.pizza.crm.service.SchemeModifiersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

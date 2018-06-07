@@ -1,7 +1,8 @@
-package com.pizza.crm.service;
+package com.pizza.crm.service.implementation;
 
 import com.pizza.crm.model.NomenclatureParentGroup;
 import com.pizza.crm.repository.NomenclatureParentGroupRepository;
+import com.pizza.crm.service.NomenclatureParentGroupService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
