@@ -1,4 +1,4 @@
-package com.pizza.crm.service.implementation;
+package com.pizza.crm.service.impl;
 
 import com.pizza.crm.model.discount.Discount;
 import com.pizza.crm.repository.DiscountRepository;

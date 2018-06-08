@@ -1,7 +1,6 @@
-package com.pizza.crm.service.implementation;
+package com.pizza.crm.service.impl;
 
 import com.pizza.crm.model.ScaleOfSize;
-import com.pizza.crm.model.ScaleOfSizeValues;
 import com.pizza.crm.repository.ScaleOfSizeRepository;
 import com.pizza.crm.service.ScaleOfSizeService;
 import org.springframework.stereotype.Service;

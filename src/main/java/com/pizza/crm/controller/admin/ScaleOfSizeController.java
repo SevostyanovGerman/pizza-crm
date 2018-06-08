@@ -26,7 +26,7 @@ public class ScaleOfSizeController {
     @RequestMapping("/scale_of_size")
     public String getAllScale(Model model) {
         model.addAttribute("scale", scaleOfSizeService.getAll());
-        return "scale_of_size";
+        return "admin/scale_of_size";
     }
 
     @PostMapping("/scale_of_size/addScale")

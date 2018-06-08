@@ -1,4 +1,4 @@
-package com.pizza.crm.service.implementation;
+package com.pizza.crm.service.impl;
 
 import com.pizza.crm.model.Validity;
 import com.pizza.crm.repository.ValidityRepository;

@@ -97,8 +97,8 @@ public class CategoryController {
     }
 
     @PostMapping(value = "/update/categoriesdish/{id}")
-    public @ResponseBody
-    ResponseEntity<?> updateCategories1(@RequestBody @Validated Set<Dish> dish,
+    @ResponseBody
+    public ResponseEntity<?> updateCategories1(@RequestBody @Validated Set<Dish> dish,
                                         @PathVariable("id") @Validated Long id,
                                         BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
