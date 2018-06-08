@@ -3,8 +3,6 @@ let csrfHeader = $("meta[name='_csrf_header']").attr("content");
 let colonToggler = false;
 
 
-
-
 // Display time
 function getLocaleTimeString() {
     return new Date().toLocaleTimeString('ru-RU', {
@@ -363,7 +361,10 @@ function updateTotal() {
         dishes.push(dish);
     });
 
+    var id = $("#new-order-id").text();
+
     var order = {
+        id: id,
         dishes: dishes,
         discounts: discountsAndExtraCharges
     };
@@ -548,7 +549,6 @@ function SearchProductDelOne() {
     $("#SearchModalInput").val(searchString);
     listObj2.search(searchString);
 }
-
 
 function SearchModalЕxpandShow() {
     $("#SearchModal").modal('hide');

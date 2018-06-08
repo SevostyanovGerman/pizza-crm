@@ -1,7 +1,9 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "validity_schedule")
@@ -28,6 +30,13 @@ public class ValiditySchedule {
     private Boolean saturday;
 
     private Boolean sunday;
+
+    @ElementCollection(targetClass = DayOfWeek.class)
+    @CollectionTable(name = "validity_schedule_DayOfWeek",
+            joinColumns = @JoinColumn(name = "validity_schedule_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "DayOfWeek_id")
+    private List<DayOfWeek> dayOfWeekList;
 
     public ValiditySchedule(LocalTime beginTime, LocalTime endTime) {
         this.beginTime = beginTime;
@@ -128,5 +137,13 @@ public class ValiditySchedule {
 
     public void setSunday(Boolean sunday) {
         this.sunday = sunday;
+    }
+
+    public List<DayOfWeek> getDayOfWeekList() {
+        return dayOfWeekList;
+    }
+
+    public void setDayOfWeekList(List<DayOfWeek> dayOfWeekList) {
+        this.dayOfWeekList = dayOfWeekList;
     }
 }

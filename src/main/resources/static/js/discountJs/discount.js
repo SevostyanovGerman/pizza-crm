@@ -47,29 +47,9 @@ function SaveDiscount() {
     if ( $("#discount-scheduleRestriction").is( ":checked" ) ) {
         var discountDiscountAssignMode = $("#discount-discountAssignMode").val();
         $('.schedule-tr').each(function () {
-            var idSchedule =           $(this).closest('tr').find('input[type=hidden]').val();
-            /*var scheduleName =         $(this).text();
-            var beginTimeSchedule =    $(this).closest('tr').find('td:eq(1)').find('input[type=time]').val();
-            var endTimeSchedule =      $(this).closest('tr').find('td:eq(2)').find('input[type=time]').val();
-            var mondaySchedule =       $(this).closest('tr').find('td:eq(3)').find('input[type=checkbox]').prop('checked');
-            var tuesdaySchedule =      $(this).closest('tr').find('td:eq(4)').find('input[type=checkbox]').prop('checked');
-            var wednesdaySchedule =    $(this).closest('tr').find('td:eq(5)').find('input[type=checkbox]').prop('checked');
-            var thursdaySchedule =     $(this).closest('tr').find('td:eq(6)').find('input[type=checkbox]').prop('checked');
-            var fridaySchedule =       $(this).closest('tr').find('td:eq(7)').find('input[type=checkbox]').prop('checked');
-            var saturdaySchedule =     $(this).closest('tr').find('td:eq(8)').find('input[type=checkbox]').prop('checked');
-            var sundaySchedule =       $(this).closest('tr').find('td:eq(9)').find('input[type=checkbox]').prop('checked');*/
+            var idSchedule = $(this).closest('tr').find('input[type=hidden]').val();
             var validity = {
                 id: idSchedule
-                /*name: scheduleName,
-                beginTime: beginTimeSchedule,
-                endTime: endTimeSchedule,
-                monday: mondaySchedule,
-                tuesday: tuesdaySchedule,
-                wednesday: wednesdaySchedule,
-                thursday: thursdaySchedule,
-                friday: fridaySchedule,
-                saturday: saturdaySchedule,
-                sunday: sundaySchedule*/
             };
             validities.push(validity);
         });
@@ -142,8 +122,7 @@ function SaveDiscount() {
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
-        success: function () {
-        },
+        success: function () {},
         error: function () {}
     });
     location.href = "/admin/discount/list";

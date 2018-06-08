@@ -53,4 +53,9 @@ public class DiscountServiceImpl implements DiscountService {
     public Discount findByName(String name) {
         return discountRepository.findByName(name);
     }
+
+    @Override
+    public List<Discount> getDiscountsForOrder(List<Discount> discounts) {
+        return discountRepository.getDiscountsForOrder(discounts);
+    }
 }

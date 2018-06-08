@@ -7,4 +7,5 @@ import java.util.List;
 public interface DiscountService extends CrudService<Discount, Long> {
     List<Discount> getEnabledDiscounts();
     Discount findByName(String name);
+    List<Discount> getDiscountsForOrder(List<Discount> discounts);
 }
