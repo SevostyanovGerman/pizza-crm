@@ -12,7 +12,8 @@ public class Address {
     private String street;
     private String apartmentNumber;
 
-    public Address(String addressRepresentation, String postCode, String region, String city, String street, String apartmentNumber) {
+    public Address(String addressRepresentation, String postCode, String region, String city,
+                   String street, String apartmentNumber) {
         this.addressRepresentation = addressRepresentation;
         this.postCode = postCode;
         this.region = region;

@@ -1,7 +1,8 @@
-package com.pizza.crm.service;
+package com.pizza.crm.service.impl;
 
 import com.pizza.crm.model.Employee;
 import com.pizza.crm.repository.EmployeeRepository;
+import com.pizza.crm.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

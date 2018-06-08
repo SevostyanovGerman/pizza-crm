@@ -1,7 +1,8 @@
-package com.pizza.crm.service;
+package com.pizza.crm.service.impl;
 
 import com.pizza.crm.model.AddedCategory;
 import com.pizza.crm.repository.AddedCategoryRepository;
+import com.pizza.crm.service.AddedCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

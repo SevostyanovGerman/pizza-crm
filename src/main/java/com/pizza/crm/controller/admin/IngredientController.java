@@ -1,4 +1,4 @@
-package com.pizza.crm.controller;
+package com.pizza.crm.controller.admin;
 
 import com.pizza.crm.model.Ingredient;
 import com.pizza.crm.service.IngredientService;

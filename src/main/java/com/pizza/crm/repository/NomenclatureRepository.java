@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 public interface NomenclatureRepository extends JpaRepository<Nomenclature, Long> {
@@ -18,10 +19,10 @@ public interface NomenclatureRepository extends JpaRepository<Nomenclature, Long
     void deleteByName(String name);
 
     @Query("SELECT n FROM Nomenclature n WHERE n.nomenclatureType = com.pizza.crm.model.NomenclatureType.DISH")
-    HashSet<Nomenclature> getModifierNomenclatureDish();
+    Set<Nomenclature> getModifierNomenclatureDish();
 
     @Query("SELECT m FROM NomenclatureParentGroup m INNER JOIN m.nomenclatures r WHERE r.nomenclatureType = 'MODIFIER'")
-    HashSet<Nomenclature> getNomenclatureModifiers();
+    Set<Nomenclature> getNomenclatureModifiers();
 
     @Query("SELECT n FROM Nomenclature n WHERE n.nomenclatureParentGroupSet is empty")
     List<Nomenclature> getNomenclaturesWithoutParentGroup();

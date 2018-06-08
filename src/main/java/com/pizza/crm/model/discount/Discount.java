@@ -83,11 +83,15 @@ public class Discount {
     public Discount() {
     }
 
-    public Discount(@NotBlank String name, String nameInCheck, String type, @Min(0) Double minSum, boolean minSumRestriction, boolean ScheduleRestriction, Boolean manualSelectWithOthers,
-                    Boolean manualInput, boolean manualDishSelect, Boolean automatic, Boolean combinable, Boolean enabled, Boolean applyForAllDiscountCategories,
-                    @Min(0) Integer priority, @Min(0) Integer value, String comment, DiscountApplicationMethod discountApplicationMethod,
-                    DiscountMode discountMode, DiscountAssignMode discountAssignMode, DiscountCalculationMode discountCalculationMode,
-                    List<PaymentMethod> paymentMethods, List<Validity> validities, List<DiscountCategory> discountCategories,boolean detailWhenPrinting) {
+    public Discount(@NotBlank String name, String nameInCheck, String type, @Min(0) Double minSum,
+                    boolean minSumRestriction, boolean ScheduleRestriction, Boolean manualSelectWithOthers,
+                    Boolean manualInput, boolean manualDishSelect, Boolean automatic, Boolean combinable,
+                    Boolean enabled, Boolean applyForAllDiscountCategories, @Min(0) Integer priority,
+                    @Min(0) Integer value, String comment, DiscountApplicationMethod discountApplicationMethod,
+                    DiscountMode discountMode, DiscountAssignMode discountAssignMode,
+                    DiscountCalculationMode discountCalculationMode,
+                    List<PaymentMethod> paymentMethods, List<Validity> validities, List<DiscountCategory> discountCategories,
+                    boolean detailWhenPrinting) {
         this.name = name;
         this.nameInCheck = nameInCheck;
         this.type = type;

@@ -1,7 +1,8 @@
-package com.pizza.crm.service;
+package com.pizza.crm.service.impl;
 
 import com.pizza.crm.model.Ingredient;
 import com.pizza.crm.repository.IngredientRepository;
+import com.pizza.crm.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

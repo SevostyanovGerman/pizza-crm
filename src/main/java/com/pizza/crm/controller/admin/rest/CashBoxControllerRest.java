@@ -1,4 +1,4 @@
-package com.pizza.crm.controller;
+package com.pizza.crm.controller.admin.rest;
 
 import com.pizza.crm.model.PaymentType;
 import com.pizza.crm.service.PaymentTypeService;
@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 
-/**
- * Created by User on 30.05.2018.
- */
 @RestController
 public class CashBoxControllerRest {
 
@@ -22,7 +19,7 @@ public class CashBoxControllerRest {
     }
 
     @PostMapping("/getAllPaymentTypesForCashbox")
-    public Collection<PaymentType> getAllPaymentTypesForCashbox(){
+    public Collection<PaymentType> getAllPaymentTypesForCashbox() {
         return paymentTypeService.getAll();
     }
 }
