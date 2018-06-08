@@ -35,18 +35,8 @@ public class ValidityScheduleServiceImpl implements ValidityScheduleService {
         return validityScheduleRepository.findById(id).orElseThrow(() -> new NotFoundException(""));
     }
 
-   /* @Override
-    public ValiditySchedule getScheduleByName(String name) {
-        return validityScheduleRepository.getScheduleByName(name);
-    }
-*/
     @Override
     public List<ValiditySchedule> findAllSchedules() {
         return validityScheduleRepository.findAll();
     }
-
-//    @Override
-//    public void deleteByName(String name) {
-//        validityScheduleRepository.deleteByName(name);
-//    }
 }

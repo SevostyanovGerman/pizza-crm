@@ -76,13 +76,11 @@ public class ValidityController {
         return "redirect:/validity";
     }
 
-
     @PostMapping("/validity/addField")
     public String addField(@RequestBody Validity validity) {
        validityService.save(validity);
         return "redirect:/validity";
     }
-
 
     @PostMapping("/validity/save")
     public String save(@RequestBody Validity validity) {
