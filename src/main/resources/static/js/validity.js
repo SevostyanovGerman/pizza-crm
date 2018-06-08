@@ -36,13 +36,13 @@ function showSchedule(nameValidity) {
                     '<input id="id" class="ids" type="hidden" value="' + data[i].id + '">' +
                     '<td><input type="time" value="' + data[i].beginTime + '"></td>' +
                     '<td><input type="time" value="' + data[i].endTime + '"></td>' +
-                    '<td><input type="checkbox" class="monday activated"' + (data[i].monday ? 'checked' : '') + '></td>' +
-                    '<td><input type="checkbox" class="tuesday activated"' + (data[i].tuesday ? 'checked' : '') + '></td>' +
-                    '<td><input type="checkbox" class="wednesday activated"' + (data[i].wednesday ? 'checked' : '') + '></td>' +
-                    '<td><input type="checkbox" class="thursday activated"' + (data[i].thursday ? 'checked' : '') + '></td>' +
-                    '<td><input type="checkbox" class="friday activated"' + (data[i].friday ? 'checked' : '') + '></td>' +
-                    '<td><input type="checkbox" class="saturday activated"' + (data[i].saturday ? 'checked' : '') + '></td>' +
-                    '<td><input type="checkbox" class="sunday activated"' + (data[i].sunday ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="monday activated"' + ((data[i].dayOfWeekList.indexOf( 'MONDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="tuesday activated"' + ((data[i].dayOfWeekList.indexOf( 'TUESDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="wednesday activated"' + ((data[i].dayOfWeekList.indexOf( 'WEDNESDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="thursday activated"' + ((data[i].dayOfWeekList.indexOf( 'THURSDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="friday activated"' + ((data[i].dayOfWeekList.indexOf( 'FRIDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="saturday activated"' + ((data[i].dayOfWeekList.indexOf( 'SATURDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="sunday activated"' + ((data[i].dayOfWeekList.indexOf( 'SUNDAY' )) != (-1) ? 'checked' : '') + '></td>' +
                     '<td><a class="btn btn-danger btn-sm deleteSchedule" href="#"><i class="fa fa-trash" aria-hidden="true" ></i></a></td>' +
                     '</tr>');
             }

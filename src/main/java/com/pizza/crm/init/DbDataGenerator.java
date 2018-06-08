@@ -400,11 +400,31 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     }
 
     private void generateValidity() {
-        ValiditySchedule validityScheduleLunch = new ValiditySchedule(/*"Lunch",*/ LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true, true, true, false, false);
-        ValiditySchedule validityScheduleLunch2 = new ValiditySchedule(/*"Lunch",*/ LocalTime.of(14, 30), LocalTime.of(15, 00), false, true, true, true, true, true, false);
+        ValiditySchedule validityScheduleLunch = new ValiditySchedule(/*"Lunch",*/ LocalTime.of(12, 00), LocalTime.of(13, 00));
+        ValiditySchedule validityScheduleLunch2 = new ValiditySchedule(/*"Lunch",*/ LocalTime.of(14, 30), LocalTime.of(15, 00));
+
+        List<DayOfWeek> dayOfWeeksLunch = new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY,
+                                                                        DayOfWeek.TUESDAY,
+                                                                        DayOfWeek.WEDNESDAY,
+                                                                        DayOfWeek.THURSDAY,
+                                                                        DayOfWeek.FRIDAY));
+        validityScheduleLunch.setDayOfWeekList(dayOfWeeksLunch);
+        List<DayOfWeek> dayOfWeeksLunch2 = new ArrayList<>(Arrays.asList(DayOfWeek.TUESDAY,
+                                                                        DayOfWeek.WEDNESDAY,
+                                                                        DayOfWeek.THURSDAY,
+                                                                        DayOfWeek.FRIDAY,
+                                                                        DayOfWeek.SATURDAY));
+        validityScheduleLunch2.setDayOfWeekList(dayOfWeeksLunch2);
+
         List<ValiditySchedule> listValidityScheduleLunches = new ArrayList<>(Arrays.asList(validityScheduleLunch, validityScheduleLunch2));
 
-        ValiditySchedule validityScheduleDinner = new ValiditySchedule(/*"Dinner",*/ LocalTime.of(18, 00), LocalTime.of(20, 00), false, true, true, true, true, true, false);
+        ValiditySchedule validityScheduleDinner = new ValiditySchedule(/*"Dinner",*/ LocalTime.of(18, 00), LocalTime.of(20, 00));
+        List<DayOfWeek> dayOfWeeksDinner = new ArrayList<>(Arrays.asList(DayOfWeek.TUESDAY,
+                                                                        DayOfWeek.WEDNESDAY,
+                                                                        DayOfWeek.THURSDAY,
+                                                                        DayOfWeek.FRIDAY,
+                                                                        DayOfWeek.SATURDAY));
+        validityScheduleDinner.setDayOfWeekList(dayOfWeeksDinner);
         List<ValiditySchedule> listValidityScheduleDinner = new ArrayList<>(Arrays.asList(validityScheduleDinner));
 
         Validity validityDinner = new Validity("Dinner", listValidityScheduleDinner);
