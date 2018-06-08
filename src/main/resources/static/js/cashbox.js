@@ -4,6 +4,7 @@ let paid = false;
 let orderJson;
 let order;
 let currentPaymentMethod
+let paymentMethodCash;
 
 let csrfToken = $("meta[name='_csrf']").attr("content");
 let csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -113,6 +114,7 @@ $(document).ready(function () {
                 $(this).addClass('highlight');
                 currentPaymentMethod = $(this).find('p').text();
                 selectedPaymentMethod = currentPaymentMethod;
+                paymentMethodCash = 0;
                 let index = paymentMethods.indexOf(currentPaymentMethod);
                 if (index === -1) {
                     paymentMethods.push(currentPaymentMethod);
@@ -153,10 +155,11 @@ $(document).ready(function () {
         }
         let cash = parseFloat($('.input-cash').val());
         let total = parseFloat($('#total').text());
+        paymentMethodCash += cash;
         if (cash === 0) {
             return;
         }
-            $('.payment-method-table tr:last').find('td:last').text(cash);
+            $('.payment-method-table tr:last').find('td:last').text(paymentMethodCash);
             $('.deposit').text(cash);
             totalCash += cash;
             if (totalCash > total) {
