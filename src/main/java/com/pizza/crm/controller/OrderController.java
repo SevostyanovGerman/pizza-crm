@@ -24,9 +24,9 @@ public class OrderController {
     private final NomenclatureParentGroupService nomenclatureParentGroupService;
 
     @Autowired
-    public OrderController(EmployeeService employeeService,OrderService orderService,
+    public OrderController(EmployeeService employeeService, OrderService orderService,
                            NomenclatureParentGroupService nomenclatureParentGroupService) {
-        this.nomenclatureParentGroupService=nomenclatureParentGroupService;
+        this.nomenclatureParentGroupService = nomenclatureParentGroupService;
         this.employeeService = employeeService;
         this.orderService = orderService;
     }
@@ -37,7 +37,7 @@ public class OrderController {
         Employee employee = employeeService.findByPincode(user.getPincode()).orElseGet(Employee::new);
         String employeeLogin = employee.getLogin();
 
-        model.addAttribute("nomenclatureParentGroups",nomenclatureParentGroupService.findAlNomenclatureParentGroups());
+        model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());
         model.addAttribute("employeeLogin", employeeLogin);
 
         Order order = new Order();

@@ -65,11 +65,10 @@ public class NomenclatureControllerRest {
     }
 
     @PostMapping("nomenclature/getModifiers")
-    public List <Nomenclature> getModifiers(@RequestParam String name) {
+    public List<Nomenclature> getModifiers(@RequestParam String name) {
         NomenclatureParentGroup nomenclatureParentGroup = nomenclatureParentGroupService.getNomenclatureParentGroupByName(name);
         return nomenclatureParentGroup.getNomenclatures();
     }
-
 
 
 }

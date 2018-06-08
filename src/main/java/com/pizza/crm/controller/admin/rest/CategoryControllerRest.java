@@ -22,17 +22,12 @@ public class CategoryControllerRest {
     }
 
     @RequestMapping(value = "/update/categoriesdish/{id}")
-    public ResponseEntity<?> updateCategories1(@RequestBody @Validated Set<Dish> dish, @PathVariable("id") @Validated long id, BindingResult bindingResult) {
+    public ResponseEntity<?> updateCategories1(@RequestBody @Validated Set<Dish> dish,
+                                               @PathVariable("id") @Validated long id,
+                                               BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             categoryService.updateCategoriesDish(id, dish);
         }
         return ResponseEntity.ok("");
     }
-
-    @RequestMapping(value = "/get/categoriesdish")
-    public ResponseEntity<?> getDishToCategories(@RequestParam("name") @Validated String name) {
-        Category category = categoryService.getCategoryByName(name);
-        return ResponseEntity.ok(category.getDishes());
-    }
-
 }
