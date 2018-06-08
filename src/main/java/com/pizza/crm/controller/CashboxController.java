@@ -2,8 +2,11 @@ package com.pizza.crm.controller;
 
 import com.google.gson.Gson;
 import com.pizza.crm.model.Dish;
+import com.pizza.crm.model.Invoice;
 import com.pizza.crm.model.Order;
+import com.pizza.crm.model.PaymentType;
 import com.pizza.crm.service.OrderService;
+import com.pizza.crm.service.PaymentTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -22,9 +26,12 @@ public class CashboxController {
 
     private static final Logger log = Logger.getLogger("CashboxController");
     private OrderService orderService;
+    private PaymentTypeService paymentTypeService;
 
-    @Autowired
-    public CashboxController(OrderService orderService) {
+
+
+    public CashboxController(OrderService orderService, PaymentTypeService paymentTypeService) {
+        this.paymentTypeService = paymentTypeService;
         this.orderService = orderService;
     }
 
@@ -60,9 +67,19 @@ public class CashboxController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void getPayedOrder(@RequestParam("id") Long orderId) {
-        System.out.println(orderId);
+    public void getPayedOrder(
+            @RequestParam("id") Long orderId,
+            @RequestParam("total") Double total,
+            @RequestParam("cash") Double cash,
+            @RequestParam("totalCash") Double totalCash,
+            @RequestParam("change") Double change,
+            @RequestParam("currentPaymentMethod") String currentPaymentMethod) {
+        System.out.println("orderId: " + orderId);
+        System.out.println("total: " + total);
+        System.out.println("cash: " + cash);
+        System.out.println("totalCash: " + totalCash);
+        System.out.println("change: " + change);
+        System.out.println("currentPaymentMethod: " + currentPaymentMethod);
+        PaymentType paymentType = paymentTypeService.findByName(currentPaymentMethod).get();
     }
-
-
 }

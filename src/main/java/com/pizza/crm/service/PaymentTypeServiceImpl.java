@@ -27,6 +27,10 @@ public class PaymentTypeServiceImpl implements PaymentTypeService {
     public Optional<PaymentType> findById(Long id) {
         return paymentTypeRepository.findById(id);
     }
+    @Override
+    public Optional<PaymentType> findByName(String name) {
+        return paymentTypeRepository.findByName(name);
+    }
 
     @Override
     public PaymentType save(PaymentType paymentType) {

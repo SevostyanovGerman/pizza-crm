@@ -3,6 +3,7 @@ let totalCash = 0;
 let paid = false;
 let orderJson;
 let order;
+let currentPaymentMethod
 
 let csrfToken = $("meta[name='_csrf']").attr("content");
 let csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -110,7 +111,8 @@ $(document).ready(function () {
                     $(this).removeClass('highlight');
                 });
                 $(this).addClass('highlight');
-                let currentPaymentMethod = $(this).find('p').text();
+                currentPaymentMethod = $(this).find('p').text();
+                selectedPaymentMethod = currentPaymentMethod;
                 let index = paymentMethods.indexOf(currentPaymentMethod);
                 if (index === -1) {
                     paymentMethods.push(currentPaymentMethod);
@@ -154,12 +156,9 @@ $(document).ready(function () {
         if (cash === 0) {
             return;
         }
-        if (cash >= total & !paid) {
-            paid = true;
             $('.payment-method-table tr:last').find('td:last').text(cash);
             $('.deposit').text(cash);
             totalCash += cash;
-            let total = parseFloat($('#total').text());
             if (totalCash > total) {
 				let change = totalCash - total;
 				if(isFloat(change)) {
@@ -177,12 +176,15 @@ $(document).ready(function () {
                 var xhr = new XMLHttpRequest();
                 var body = 'id=' + encodeURIComponent(id) +
                               '&total=' + encodeURIComponent(total) +
-                              '&totalCash=' + encodeURIComponent(totalCash);
+                              '&cash=' + encodeURIComponent(cash) +
+                              '&totalCash=' + encodeURIComponent(totalCash) +
+                              '&change=' + encodeURIComponent(parseFloat($('#change').text())) +
+                              '&currentPaymentMethod=' + encodeURIComponent(currentPaymentMethod);
                 xhr.open("POST", '/cashbox', true);
                 xhr.setRequestHeader(csrfHeader, csrfToken);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.send(body);
-        }
+
     });
 });
 
