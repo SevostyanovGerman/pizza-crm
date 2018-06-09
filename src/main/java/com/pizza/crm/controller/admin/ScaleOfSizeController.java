@@ -67,7 +67,7 @@ public class ScaleOfSizeController {
     }
 
     @PostMapping(value = "/scale_of_size/delete/scale")
-    public String deleteScale(@RequestParam String nameScale){
+    public String deleteScale(@RequestParam String nameScale) {
         scaleOfSizeService.deleteByNameScale(nameScale);
         return "redirect:/scale_of_size";
     }
@@ -77,7 +77,7 @@ public class ScaleOfSizeController {
             @RequestParam String nameSizeNoEdit,
             @RequestParam String nameSize,
             @RequestParam String kitchenSize,
-            @RequestParam Boolean defaultSize){
+            @RequestParam Boolean defaultSize) {
 
         ScaleOfSizeValues values = scaleOfSizeValuesService.findByNameSize(nameSizeNoEdit);
         values.setNameSize(nameSize);
@@ -91,7 +91,7 @@ public class ScaleOfSizeController {
     @PostMapping(value = "/scale_of_size/edit/scale")
     public String editScale(
             @RequestParam String nameScaleNoEdit,
-            @RequestParam String nameScale){
+            @RequestParam String nameScale) {
 
         ScaleOfSize scale = scaleOfSizeService.findByNameScale(nameScaleNoEdit);
         scale.setName(nameScale);
