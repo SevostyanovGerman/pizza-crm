@@ -9,11 +9,5 @@ import java.util.List;
 @Transactional
 public interface ValidityScheduleRepository extends CrudRepository<ValiditySchedule, Long> {
 
-    // ValiditySchedule getScheduleByName(String name);
-
     List<ValiditySchedule> findAll();
-
-
-    // void deleteByName(String name);
-
 }

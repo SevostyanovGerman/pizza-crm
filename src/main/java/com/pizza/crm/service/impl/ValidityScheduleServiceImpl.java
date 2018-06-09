@@ -1,9 +1,8 @@
-package com.pizza.crm.service.impl;
+package com.pizza.crm.service;
 
 import com.pizza.crm.exceptions.NotFoundException;
 import com.pizza.crm.model.ValiditySchedule;
 import com.pizza.crm.repository.ValidityScheduleRepository;
-import com.pizza.crm.service.ValidityScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +25,9 @@ public class ValidityScheduleServiceImpl implements ValidityScheduleService {
 
     @Override
     public void delete(Long id) {
-        validityScheduleRepository.deleteById(id);
+        if (validityScheduleRepository.existsById(id)) {
+            validityScheduleRepository.deleteById(id);
+        }
     }
 
     @Override

@@ -12,9 +12,5 @@ public interface ValidityScheduleService {
 
     ValiditySchedule getSchedule(Long id);
 
-    //  ValiditySchedule getScheduleByName(String name);
-
     List<ValiditySchedule> findAllSchedules();
-
-    // void deleteByName(String name);
 }
