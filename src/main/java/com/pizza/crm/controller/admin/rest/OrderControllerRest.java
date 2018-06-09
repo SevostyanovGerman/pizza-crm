@@ -66,9 +66,16 @@ public class OrderControllerRest {
         }
         total = rawTotal;
 
+        List<String> nameDiscounts = new ArrayList<>();
+        for (Discount d : order.getDiscounts()) {
+            nameDiscounts.add(d.getName());
+        }
+
+        order.setDiscounts(discountService.getDiscountsForOrder(nameDiscounts));
+
         final Double rawTotalStream = rawTotal;
         discountStream = order.getDiscounts().stream()
-                .map(discount -> discount = discountService.findByName(discount.getName()))
+//                .map(discount -> discount = discountService.findByName(discount.getName()))
                 .distinct()
                 .filter(discount -> discount.getValidities().stream()
                         .noneMatch(validity -> validity.getValidityScheduleList().stream()

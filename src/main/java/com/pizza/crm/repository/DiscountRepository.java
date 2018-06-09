@@ -14,6 +14,6 @@ public interface DiscountRepository extends JpaRepository<Discount, Long> {
 
     Discount findByName(String name);
 
-    @Query("SELECT d FROM Discount d WHERE d.name = :discounts")
-    List<Discount> getDiscountsForOrder(@Param("discounts") List<Discount> discounts);
+    @Query("SELECT d FROM Discount d WHERE d.name IN :discounts")
+    List<Discount> getDiscountsForOrder(@Param("discounts") List<String> discounts);
 }
