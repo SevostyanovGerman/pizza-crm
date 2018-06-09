@@ -190,7 +190,7 @@ $(document).ready(function () {
         let tr = getSelectedRow();
         let quantity = parseFloat(tr.find('td:eq(0)').text());
         if (--quantity <= 0) {
-            tr.remove();
+           // tr.remove();
             updateTotal();
             return;
         }
