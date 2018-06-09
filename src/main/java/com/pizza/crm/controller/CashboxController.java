@@ -1,23 +1,19 @@
 package com.pizza.crm.controller;
 
 import com.google.gson.Gson;
-import com.pizza.crm.model.Dish;
-import com.pizza.crm.model.Invoice;
-import com.pizza.crm.model.Order;
-import com.pizza.crm.model.PaymentType;
+import com.pizza.crm.model.*;
+import com.pizza.crm.service.InvoiceService;
 import com.pizza.crm.service.OrderService;
+import com.pizza.crm.service.PaymentService;
 import com.pizza.crm.service.PaymentTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Controller
@@ -27,12 +23,18 @@ public class CashboxController {
     private static final Logger log = Logger.getLogger("CashboxController");
     private OrderService orderService;
     private PaymentTypeService paymentTypeService;
+    private PaymentService paymentService;
+    private InvoiceService invoiceService;
+    private Map<Long, Payment> allPayments;
+    private List<Payment> orderPayment;
 
-
-
-    public CashboxController(OrderService orderService, PaymentTypeService paymentTypeService) {
-        this.paymentTypeService = paymentTypeService;
+    public CashboxController(OrderService orderService, PaymentTypeService paymentTypeService, PaymentService paymentService, InvoiceService invoiceService) {
         this.orderService = orderService;
+        this.paymentTypeService = paymentTypeService;
+        this.paymentService = paymentService;
+        this.invoiceService = invoiceService;
+        allPayments = new HashMap<>();
+        orderPayment = new ArrayList<>();
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -41,7 +43,6 @@ public class CashboxController {
         Order order = optionalOrder.orElse(null);*/
         Order order = new Order();
         order.setId(137L);
-
         Dish pizza = new Dish();
         pizza.setAmount(2L);
         pizza.setName("pizza");
@@ -73,13 +74,33 @@ public class CashboxController {
             @RequestParam("cash") Double cash,
             @RequestParam("totalCash") Double totalCash,
             @RequestParam("change") Double change,
-            @RequestParam("currentPaymentMethod") String currentPaymentMethod) {
+            @RequestParam("currentPaymentMethod") String currentPaymentMethod,
+            @RequestParam("paid") Boolean paid) {
         System.out.println("orderId: " + orderId);
         System.out.println("total: " + total);
         System.out.println("cash: " + cash);
         System.out.println("totalCash: " + totalCash);
         System.out.println("change: " + change);
         System.out.println("currentPaymentMethod: " + currentPaymentMethod);
+        System.out.println("paid: " + paid);
+
+        Payment payment = new Payment();
         PaymentType paymentType = paymentTypeService.findByName(currentPaymentMethod).get();
+        payment.setCash(cash);
+        payment.setPaymentType(paymentType);
+        orderPayment.add(payment);
+
+        if (paid) {
+            Invoice invoiceWithPayment = new Invoice();
+            invoiceWithPayment.setDateCreate(LocalDateTime.now());
+            invoiceWithPayment.setOrderId(orderId);
+            for (Payment pmt : orderPayment) {
+                pmt.setInvoice(invoiceWithPayment);
+            }
+            invoiceWithPayment.setPayments(orderPayment);
+            invoiceService.save(invoiceWithPayment);
+        }
+        System.out.println("Invoice id = " + invoiceService.getInvoiceByOrderId(orderId).orElse(null));
+        System.out.println(orderPayment.size());
     }
 }

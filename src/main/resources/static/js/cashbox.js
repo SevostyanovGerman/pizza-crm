@@ -162,6 +162,11 @@ $(document).ready(function () {
             $('.payment-method-table tr:last').find('td:last').text(paymentMethodCash);
             $('.deposit').text(cash);
             totalCash += cash;
+
+            if (totalCash > total || totalCash === total) {
+                paid = true;
+            }
+
             if (totalCash > total) {
 				let change = totalCash - total;
 				if(isFloat(change)) {
@@ -172,6 +177,7 @@ $(document).ready(function () {
             } else {
                 $('#change').text('0.00');
             }
+
                 /*Отправка пост запроса с параметрами оплаты
                  Передаются параметры: id заказа, totalCash, total
                 */
@@ -182,12 +188,12 @@ $(document).ready(function () {
                               '&cash=' + encodeURIComponent(cash) +
                               '&totalCash=' + encodeURIComponent(totalCash) +
                               '&change=' + encodeURIComponent(parseFloat($('#change').text())) +
-                              '&currentPaymentMethod=' + encodeURIComponent(currentPaymentMethod);
+                              '&currentPaymentMethod=' + encodeURIComponent(currentPaymentMethod) +
+                              '&paid=' + encodeURIComponent(paid);
                 xhr.open("POST", '/cashbox', true);
                 xhr.setRequestHeader(csrfHeader, csrfToken);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.send(body);
-
     });
 });
 

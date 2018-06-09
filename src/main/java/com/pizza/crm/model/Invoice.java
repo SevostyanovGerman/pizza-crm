@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "Invoice")
@@ -12,6 +13,9 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "orderId")
+    private Long orderId;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Provider> provider = new ArrayList<>();
@@ -26,8 +30,8 @@ public class Invoice {
 
     private LocalDateTime dateCreate;
 
-    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<InvoiceTab> invoiceTab = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "invoice")
+    private List<Payment> payments = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -35,6 +39,14 @@ public class Invoice {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public Stock getStock() {
@@ -61,12 +73,12 @@ public class Invoice {
         this.dateCreate = dateCreate;
     }
 
-    public Collection<InvoiceTab> getInvoiceTab() {
-        return invoiceTab;
+    public List<Payment> getPayments() {
+        return payments;
     }
 
-    public void setInvoiceTab(Collection<InvoiceTab> invoiceTab) {
-        this.invoiceTab = invoiceTab;
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 
     public Collection<Provider> getProvider() {

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,6 +22,9 @@ public class PaymentType {
     @OneToMany(mappedBy = "paymentType", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private Set<PaymentMethod> paymentMethod = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "paymentType")
+    private List<Payment> payments;
 
     public PaymentType(String name) {
         this.name = name;
@@ -51,6 +55,14 @@ public class PaymentType {
 
     public void setPaymentMethod(Set<PaymentMethod> paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 
     @Override
