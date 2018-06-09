@@ -41,6 +41,16 @@ public class CashboxController {
     public String cahsbox(/*@RequestParam("id") Long orderId,*/ ModelMap mapModel) {
         /*Optional<Order> optionalOrder = orderService.findById(orderId);
         Order order = optionalOrder.orElse(null);*/
+
+        Order order = getOrder();
+        Gson gson = new Gson();
+        mapModel.addAttribute("order", gson.toJson(order));
+        log.info("returning admin.html");
+        return "/cashbox";
+    }
+
+    // TODO: 09.06.2018 Удалить создание тестового ордера после того, как будет сделана передача id
+    private Order getOrder() {
         Order order = new Order();
         order.setId(137L);
         Dish pizza = new Dish();
@@ -61,10 +71,7 @@ public class CashboxController {
         order.setCostDiscount(100.0d);
         order.setDiscount(10.0d);
         order.setCostNotDiscount(110.0d);
-        Gson gson = new Gson();
-        mapModel.addAttribute("order", gson.toJson(order));
-        log.info("returning admin.html");
-        return "/cashbox";
+        return order;
     }
 
     @RequestMapping(method = RequestMethod.POST)
