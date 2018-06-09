@@ -8,6 +8,7 @@ import com.pizza.crm.model.discount.DiscountApplicationMethod;
 import com.pizza.crm.model.discount.DiscountMode;
 import com.pizza.crm.service.DiscountService;
 import com.pizza.crm.service.DishService;
+import com.pizza.crm.service.NomenclatureService;
 import org.springframework.cglib.core.Local;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,8 +29,10 @@ public class OrderControllerRest {
 
     private final DishService dishService;
     private final DiscountService discountService;
+    private final NomenclatureService nomenclatureService;
 
-    public OrderControllerRest(DishService dishService, DiscountService discountService) {
+    public OrderControllerRest(NomenclatureService nomenclatureService,DishService dishService, DiscountService discountService) {
+        this.nomenclatureService=nomenclatureService;
         this.dishService = dishService;
         this.discountService = discountService;
     }
@@ -50,7 +53,8 @@ public class OrderControllerRest {
         //rowTotal cost calculation
         for (int i = 0; i < order.getDishes().size(); i++) {
             rawTotal += order.getDishes().get(i).getAmount() *
-                    dishService.getDishByName(order.getDishes().get(i).getName()).getPrice();
+                    nomenclatureService.getNomenclatureByName(order.getDishes().get(i).getName()).getPrice();
+                    
         }
         total = rawTotal;
 
