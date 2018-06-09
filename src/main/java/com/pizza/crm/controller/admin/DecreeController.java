@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class DecreeController {
 
-    private final ValidityScheduleService validityScheduleService;
     private final ValidityService validityService;
 
     @Autowired
-    public DecreeController(ValidityScheduleService validityScheduleService, ValidityService validityService) {
-        this.validityScheduleService = validityScheduleService;
+    public DecreeController(ValidityService validityService) {
         this.validityService = validityService;
     }
 
@@ -26,8 +24,7 @@ public class DecreeController {
     }
 
     @RequestMapping("/getDecree")
-    public String getDecree(/*Model model*/) {
-    //    model.addAttribute("schedules", validityScheduleService.findAllSchedules());
+    public String getDecree() {
         return "admin/decree";
     }
 

@@ -31,14 +31,14 @@ public class OrderControllerRest {
     private final DiscountService discountService;
     private final NomenclatureService nomenclatureService;
 
-    public OrderControllerRest(NomenclatureService nomenclatureService,DishService dishService, DiscountService discountService) {
-        this.nomenclatureService=nomenclatureService;
+    public OrderControllerRest(NomenclatureService nomenclatureService, DishService dishService, DiscountService discountService) {
+        this.nomenclatureService = nomenclatureService;
         this.dishService = dishService;
         this.discountService = discountService;
     }
 
     @PostMapping("/admin/discount/getRowTotal")
-    public List<Double> getRowTotal(@RequestBody Order order){
+    public List<Double> getRowTotal(@RequestBody Order order) {
 
         Double rawTotal = 0d;
         Double total = 0d;
@@ -49,12 +49,11 @@ public class OrderControllerRest {
         DayOfWeek dayOfWeekNow = LocalDate.now().getDayOfWeek();
 
 
-
         //rowTotal cost calculation
         for (int i = 0; i < order.getDishes().size(); i++) {
             rawTotal += order.getDishes().get(i).getAmount() *
                     nomenclatureService.getNomenclatureByName(order.getDishes().get(i).getName()).getPrice();
-                    
+
         }
         total = rawTotal;
 
@@ -69,9 +68,9 @@ public class OrderControllerRest {
                 // Checking discount data
                 if (discount.isScheduleRestriction()) {
                     int i = 0;
-                    for (Validity validity: discount.getValidities()) {
-                        for (ValiditySchedule validitySchedule: validity.getValidityScheduleList()) {
-                            if (localTimeNow.isAfter(validitySchedule.getBeginTime())&&
+                    for (Validity validity : discount.getValidities()) {
+                        for (ValiditySchedule validitySchedule : validity.getValidityScheduleList()) {
+                            if (localTimeNow.isAfter(validitySchedule.getBeginTime()) &&
                                     localTimeNow.isBefore(validitySchedule.getEndTime())) {
 
                                 //Checking the days of the week
@@ -106,7 +105,9 @@ public class OrderControllerRest {
 
                             }
                         }
-                        if (i > 0) {break;}
+                        if (i > 0) {
+                            break;
+                        }
                     }
                 } else {
                     order.getDiscounts().add(discount);
@@ -125,40 +126,40 @@ public class OrderControllerRest {
         // Minimum sum discount
         for (int i = 0; i < order.getDiscounts().size(); i++) {
             if (order.getDiscounts().get(i).isMinSumRestriction() &&
-                    order.getDiscounts().get(i).getMinSum()-1 >= rawTotal) { // сравнить double
+                    order.getDiscounts().get(i).getMinSum() - 1 >= rawTotal) { // сравнить double
                 order.getDiscounts().remove(order.getDiscounts().get(i));
             }
         }
 
 
         //Order cost calculation with discounts
-            if (order.getDiscounts() != null) {
-                for (Discount discount: order.getDiscounts()) {
+        if (order.getDiscounts() != null) {
+            for (Discount discount : order.getDiscounts()) {
 
 
-                    if (discount.getDiscountApplicationMethod() == DiscountApplicationMethod.FULL_PRICE) {
-                        if (discount.getDiscountMode() == DiscountMode.DISCOUNT) {
-                            total = total - (rawTotal * discount.getValue()) / 100;
-                            discountSum += discount.getValue();
-                        } else if (discount.getDiscountMode() == DiscountMode.EXTRA_PAY) {
-                            total = total + (rawTotal * discount.getValue()) / 100;
-                            extraChargeSum += discount.getValue();
-                        }
-                    } else if (discount.getDiscountApplicationMethod() == DiscountApplicationMethod.WITH_OTHERS) {
-                        if (discount.getDiscountMode() == DiscountMode.DISCOUNT) {
-                            total = total - (total * discount.getValue()) / 100;
-                            discountSum += discount.getValue();
-                        } else if (discount.getDiscountMode() == DiscountMode.EXTRA_PAY) {
-                            total = total + (total * discount.getValue()) / 100;
-                            extraChargeSum += discount.getValue();
-                        }
+                if (discount.getDiscountApplicationMethod() == DiscountApplicationMethod.FULL_PRICE) {
+                    if (discount.getDiscountMode() == DiscountMode.DISCOUNT) {
+                        total = total - (rawTotal * discount.getValue()) / 100;
+                        discountSum += discount.getValue();
+                    } else if (discount.getDiscountMode() == DiscountMode.EXTRA_PAY) {
+                        total = total + (rawTotal * discount.getValue()) / 100;
+                        extraChargeSum += discount.getValue();
                     }
-
+                } else if (discount.getDiscountApplicationMethod() == DiscountApplicationMethod.WITH_OTHERS) {
+                    if (discount.getDiscountMode() == DiscountMode.DISCOUNT) {
+                        total = total - (total * discount.getValue()) / 100;
+                        discountSum += discount.getValue();
+                    } else if (discount.getDiscountMode() == DiscountMode.EXTRA_PAY) {
+                        total = total + (total * discount.getValue()) / 100;
+                        extraChargeSum += discount.getValue();
+                    }
                 }
 
             }
 
-        
+        }
+
+
         rawTotalAndTotal.add(rawTotal);
         rawTotalAndTotal.add(total);
         rawTotalAndTotal.add(discountSum);
@@ -168,7 +169,7 @@ public class OrderControllerRest {
     }
 
     @PostMapping("/admin/discount/getAllDiscountsForOrder")
-    public Collection<Discount> getAllDiscountsForOrder(){
+    public Collection<Discount> getAllDiscountsForOrder() {
         return discountService.getEnabledDiscounts();
     }
 }

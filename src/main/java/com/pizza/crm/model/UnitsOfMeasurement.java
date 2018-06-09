@@ -22,6 +22,7 @@ public class UnitsOfMeasurement {
     @Column
     private Integer code;
 
+
     public UnitsOfMeasurement() {
     }
 

@@ -9,5 +9,6 @@ import javax.transaction.Transactional;
 public interface ValidityRepository extends JpaRepository<Validity, Long> {
 
     Validity findByNameValidity(String name);
+
     void deleteByNameValidity(String name);
 }

@@ -1,9 +1,10 @@
-package com.pizza.crm.service;
+package com.pizza.crm.service.impl;
 
 import com.pizza.crm.model.ScaleOfSize;
-import com.pizza.crm.model.ScaleOfSizeValues;
 import com.pizza.crm.repository.ScaleOfSizeRepository;
+import com.pizza.crm.service.ScaleOfSizeService;
 import org.springframework.stereotype.Service;
+
 import java.util.Collection;
 import java.util.Optional;
 
@@ -37,8 +38,8 @@ public class ScaleOfSizeServiceImpl implements ScaleOfSizeService {
     }
 
     @Override
-    public void deleteById(Long aLong) {
-
+    public void deleteById(Long id) {
+        scaleOfSizeRepository.deleteById(id);
     }
 
     @Override

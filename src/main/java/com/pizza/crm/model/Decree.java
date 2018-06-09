@@ -34,7 +34,8 @@ public class Decree {
 
     }
 
-    public Decree(String numberDecree, LocalDateTime startTime, LocalDateTime endTime, String comment, String nameForIikoFront, Boolean enable) {
+    public Decree(String numberDecree, LocalDateTime startTime, LocalDateTime endTime, String comment,
+                  String nameForIikoFront, Boolean enable) {
         this.numberDecree = numberDecree;
         this.startTime = startTime;
         this.endTime = endTime;

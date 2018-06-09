@@ -28,11 +28,12 @@ public class NomenclatureController {
     @Autowired
     public NomenclatureController(NomenclatureService nomenclatureService,
                                   NomenclatureParentGroupService nomenclatureParentGroupService,
-                                  UnitsOfMeasurementService unitsOfMeasurementService,SchemeModifiersService schemeModifiersService) {
+                                  UnitsOfMeasurementService unitsOfMeasurementService,
+                                  SchemeModifiersService schemeModifiersService) {
         this.nomenclatureService = nomenclatureService;
         this.nomenclatureParentGroupService = nomenclatureParentGroupService;
         this.unitsOfMeasurementService = unitsOfMeasurementService;
-        this.schemeModifiersService=schemeModifiersService;
+        this.schemeModifiersService = schemeModifiersService;
     }
 
     @GetMapping("nomenclature")
@@ -47,10 +48,13 @@ public class NomenclatureController {
     public String copyElement(@PathVariable Long id, Model model) {
         if (id != null) {
             Nomenclature originalNomenclature = nomenclatureService.getNomenclature(id);
-            Nomenclature copyNomenclature = new Nomenclature(originalNomenclature.getPrice(), originalNomenclature.getCookingTimeNorm(), originalNomenclature.getCookingTimePeak(),
-                    originalNomenclature.getBackgroundColor(), originalNomenclature.getFontColor(), originalNomenclature.getUnitOfMeasurement(), originalNomenclature.getNomenclatureType(),
-                    originalNomenclature.getAccountingCategory(), originalNomenclature.getCookingPlace(), originalNomenclature.getNomenclatureParentGroupSet(),
-                    originalNomenclature.getModifierPropertyList(), originalNomenclature.getPackagingList());
+            Nomenclature copyNomenclature = new Nomenclature(originalNomenclature.getPrice(),
+                    originalNomenclature.getCookingTimeNorm(), originalNomenclature.getCookingTimePeak(),
+                    originalNomenclature.getBackgroundColor(), originalNomenclature.getFontColor(),
+                    originalNomenclature.getUnitOfMeasurement(), originalNomenclature.getNomenclatureType(),
+                    originalNomenclature.getAccountingCategory(), originalNomenclature.getCookingPlace(),
+                    originalNomenclature.getNomenclatureParentGroupSet(), originalNomenclature.getModifierPropertyList(),
+                    originalNomenclature.getPackagingList());
             model.addAttribute("nomenclature", copyNomenclature);
             if (!copyNomenclature.getNomenclatureParentGroupSet().isEmpty()) {
                 model.addAttribute("parentGroupName",
@@ -81,8 +85,8 @@ public class NomenclatureController {
         if (id != null) {
             model.addAttribute("nomenclature", nomenclatureService.getNomenclature(id));
             if (!nomenclatureService.getNomenclature(id).getNomenclatureParentGroupSet().isEmpty()) {
-                model.addAttribute("parentGroupName",
-                        nomenclatureService.getNomenclature(id).getNomenclatureParentGroupSet().iterator().next().getName());
+                model.addAttribute("parentGroupName", nomenclatureService.getNomenclature(id)
+                        .getNomenclatureParentGroupSet().iterator().next().getName());
             }
 
             String pickBackgroundColor = nomenclatureService.getNomenclature(id).getBackgroundColor();

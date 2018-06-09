@@ -67,9 +67,10 @@ public class Nomenclature {
     }
 
     public Nomenclature(Double price, LocalTime cookingTimeNorm, LocalTime cookingTimePeak, String backgroundColor,
-                        String fontColor, String unitOfMeasurement, NomenclatureType nomenclatureType, AccountingCategory accountingCategory,
-                        String cookingPlace, Set<NomenclatureParentGroup> nomenclatureParentGroupSet, List<ModifierProperty> modifierPropertyList,
-                        List<Packaging> packagingList) {
+                        String fontColor, String unitOfMeasurement, NomenclatureType nomenclatureType,
+                        AccountingCategory accountingCategory,
+                        String cookingPlace, Set<NomenclatureParentGroup> nomenclatureParentGroupSet,
+                        List<ModifierProperty> modifierPropertyList, List<Packaging> packagingList) {
         this.price = price;
         this.cookingTimeNorm = cookingTimeNorm;
         this.cookingTimePeak = cookingTimePeak;

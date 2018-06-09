@@ -39,15 +39,15 @@ public class Employee {
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "Employee_Position",
-        joinColumns = @JoinColumn(name = "employee"),
-        inverseJoinColumns = @JoinColumn(name = "position"))
+            joinColumns = @JoinColumn(name = "employee"),
+            inverseJoinColumns = @JoinColumn(name = "position"))
     @JsonBackReference
     private Set<Position> positions = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "Employee_Department",
-        joinColumns = @JoinColumn(name = "employee"),
-        inverseJoinColumns = @JoinColumn(name = "department"))
+            joinColumns = @JoinColumn(name = "employee"),
+            inverseJoinColumns = @JoinColumn(name = "department"))
     @JsonBackReference
     private Set<Department> departments = new HashSet<>();
 

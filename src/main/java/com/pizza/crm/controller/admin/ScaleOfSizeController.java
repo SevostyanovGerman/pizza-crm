@@ -8,13 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 public class ScaleOfSizeController {
@@ -31,7 +26,7 @@ public class ScaleOfSizeController {
     @RequestMapping("/scale_of_size")
     public String getAllScale(Model model) {
         model.addAttribute("scale", scaleOfSizeService.getAll());
-        return "scale_of_size";
+        return "admin/scale_of_size";
     }
 
     @PostMapping("/scale_of_size/addScale")
@@ -64,7 +59,7 @@ public class ScaleOfSizeController {
     //возрашаем String т.к при void выдвает ошибку thymeleaf
     // поэтому нужно пеализовать как RestController
     @PostMapping(value = "/scale_of_size/delete/values")
-    public String deleteValues(@RequestParam String nameSize){
+    public String deleteValues(@RequestParam String nameSize) {
         ScaleOfSizeValues values = scaleOfSizeValuesService.findByNameSize(nameSize);
         values.setRemoved(true);
         scaleOfSizeValuesService.save(values);
@@ -72,17 +67,17 @@ public class ScaleOfSizeController {
     }
 
     @PostMapping(value = "/scale_of_size/delete/scale")
-    public String deleteScale(@RequestParam String nameScale){
+    public String deleteScale(@RequestParam String nameScale) {
         scaleOfSizeService.deleteByNameScale(nameScale);
         return "redirect:/scale_of_size";
     }
 
-      @PostMapping(value = "/scale_of_size/edit/values") //переделать!!!
+    @PostMapping(value = "/scale_of_size/edit/values")
     public String editValues(
             @RequestParam String nameSizeNoEdit,
             @RequestParam String nameSize,
             @RequestParam String kitchenSize,
-            @RequestParam Boolean defaultSize){
+            @RequestParam Boolean defaultSize) {
 
         ScaleOfSizeValues values = scaleOfSizeValuesService.findByNameSize(nameSizeNoEdit);
         values.setNameSize(nameSize);
@@ -96,7 +91,7 @@ public class ScaleOfSizeController {
     @PostMapping(value = "/scale_of_size/edit/scale")
     public String editScale(
             @RequestParam String nameScaleNoEdit,
-            @RequestParam String nameScale){
+            @RequestParam String nameScale) {
 
         ScaleOfSize scale = scaleOfSizeService.findByNameScale(nameScaleNoEdit);
         scale.setName(nameScale);
@@ -104,4 +99,5 @@ public class ScaleOfSizeController {
 
         return "redirect:/scale_of_size";
     }
+
 }

@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 @Transactional
 public interface ScaleOfSizeRepository extends JpaRepository<ScaleOfSize, Long> {
 
-    //название метода должно быть findByИмяПоляВМодели
     ScaleOfSize findByNameScale(String name);
+
     void deleteByNameScale(String name);
 }

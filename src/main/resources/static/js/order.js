@@ -189,16 +189,13 @@ $(document).ready(function () {
     $('.subtract-quantity').click(function () {
         let tr = getSelectedRow();
         let quantity = parseFloat(tr.find('td:eq(0)').text());
-
         if (--quantity <= 0) {
-            //tr.remove();
+            tr.remove();
             updateTotal();
             return;
         }
-
         tr.find('td:eq(0)').text(quantity);
         updateTotal();
-
     });
 });
 //***********************************************************
@@ -461,7 +458,7 @@ $(document).ready(function () {
 function showMoreDishes(name) {
     $.ajax({
         type: "POST",
-        url: "/get/categoriesdish",
+        url: "/nomenclature/getNomenclatureParentGroup",
         data: "name=" + name,
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);

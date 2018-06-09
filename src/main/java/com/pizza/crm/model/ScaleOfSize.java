@@ -27,13 +27,13 @@ public class ScaleOfSize {
     }
 
 
-    public ScaleOfSize( Long id, String nameScale, List <ScaleOfSizeValues> valuesList) {
+    public ScaleOfSize(Long id, String nameScale, List<ScaleOfSizeValues> valuesList) {
         this.id = id;
         this.nameScale = nameScale;
         this.valuesList = valuesList;
     }
 
-    public ScaleOfSize(String nameScale, List <ScaleOfSizeValues> valuesList) {
+    public ScaleOfSize(String nameScale, List<ScaleOfSizeValues> valuesList) {
         this.nameScale = nameScale;
         this.valuesList = valuesList;
     }

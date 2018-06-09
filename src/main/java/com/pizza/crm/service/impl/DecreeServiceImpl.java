@@ -1,7 +1,8 @@
-package com.pizza.crm.service;
+package com.pizza.crm.service.impl;
 
 import com.pizza.crm.model.Decree;
 import com.pizza.crm.repository.DecreeRepository;
+import com.pizza.crm.service.DecreeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
