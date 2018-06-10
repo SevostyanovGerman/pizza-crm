@@ -2,10 +2,11 @@ package com.pizza.crm.controller;
 
 import com.google.gson.Gson;
 import com.pizza.crm.model.*;
-import com.pizza.crm.service.InvoiceService;
-import com.pizza.crm.service.OrderService;
+import com.pizza.crm.service.BasicService;
 import com.pizza.crm.service.PaymentService;
 import com.pizza.crm.service.PaymentTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,18 +22,20 @@ import java.util.logging.Logger;
 public class CashboxController {
 
     private static final Logger log = Logger.getLogger("CashboxController");
-    private OrderService orderService;
+    @Autowired
+    @Qualifier("orderServiceImpl")
+    private BasicService<Order> orderService;
+    @Autowired
+    @Qualifier("invoiceServiceImpl")
+    private BasicService<Invoice> invoiceService;
     private PaymentTypeService paymentTypeService;
     private PaymentService paymentService;
-    private InvoiceService invoiceService;
     private Map<Long, Payment> allPayments;
     private List<Payment> orderPayment;
 
-    public CashboxController(OrderService orderService, PaymentTypeService paymentTypeService, PaymentService paymentService, InvoiceService invoiceService) {
-        this.orderService = orderService;
+    public CashboxController( PaymentTypeService paymentTypeService, PaymentService paymentService) {
         this.paymentTypeService = paymentTypeService;
         this.paymentService = paymentService;
-        this.invoiceService = invoiceService;
         allPayments = new HashMap<>();
         orderPayment = new ArrayList<>();
     }
@@ -107,7 +110,7 @@ public class CashboxController {
             invoiceWithPayment.setPayments(orderPayment);
             invoiceService.save(invoiceWithPayment);
         }
-        System.out.println("Invoice id = " + invoiceService.getInvoiceByOrderId(orderId).orElse(null));
+        System.out.println("Invoice id = " + invoiceService.getBy(orderId).orElse(null));
         System.out.println(orderPayment.size());
     }
 }

@@ -486,7 +486,7 @@ function showMoreDishes(name) {
 // Order-cashbox
 $(document).ready(function () {
     $('.open-cashbox').click(function () {
-        let orderItems = [];
+        /*let orderItems = [];
         $('.order-table tr').each(function () {
             orderItems.push({
                 quantity: $(this).find('td:eq(0)').text(),
@@ -501,7 +501,19 @@ $(document).ready(function () {
             discount: $('#discount').text(),
             extraCharge: $('#extraCharge').text()
         };
-        sessionStorage.setItem('order-list', JSON.stringify(orderList));
+        sessionStorage.setItem('order-list', JSON.stringify(orderList));*/
+        var xhr = new XMLHttpRequest();
+        var body = 'orderId=' + encodeURIComponent(id) +
+            '&total=' + encodeURIComponent(total) +
+            '&cash=' + encodeURIComponent(cash) +
+            '&totalCash=' + encodeURIComponent(totalCash) +
+            '&change=' + encodeURIComponent(parseFloat($('#change').text())) +
+            '&currentPaymentMethod=' + encodeURIComponent(currentPaymentMethod) +
+            '&paid=' + encodeURIComponent(paid);
+        xhr.open("GET", '/cashbox', true);
+        xhr.setRequestHeader(csrfHeader, csrfToken);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(body);
     });
 });
 //***********************************************************

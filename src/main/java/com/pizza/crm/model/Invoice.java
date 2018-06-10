@@ -8,11 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Invoice")
-public class Invoice {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Invoice extends AbstractEntity {
 
     @Column(name = "orderId")
     private Long orderId;

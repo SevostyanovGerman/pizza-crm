@@ -10,11 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "ClientOrder")
-public class Order {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Order extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "salesPoint")

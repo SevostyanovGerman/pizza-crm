@@ -2,17 +2,18 @@ package com.pizza.crm.service.impl;
 
 import com.pizza.crm.model.Order;
 import com.pizza.crm.repository.OrderRepository;
-import com.pizza.crm.service.OrderService;
+import com.pizza.crm.service.BasicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements BasicService<Order> {
 
-    private final OrderRepository orderRepository;
+    private final OrderRepository<Order> orderRepository;
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository) {
@@ -21,7 +22,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public Collection<Order> getAll() {
+    public List<Order> getAll() {
         return orderRepository.findAll();
     }
 
@@ -31,17 +32,21 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order save(Order order) {
-        return orderRepository.save(order);
+    public void save(Order order) {
+        orderRepository.save(order);
     }
-
     @Override
-    public Collection<Order> saveAll(Collection<Order> orders) {
+    public List<Order> saveAll(Collection<Order> orders) {
         return orderRepository.saveAll(orders);
     }
 
     @Override
     public void deleteById(Long aLong) {
         orderRepository.deleteById(aLong);
+    }
+
+    @Override
+    public Optional<Order> getBy(Object param) {
+        return Optional.empty();
     }
 }
