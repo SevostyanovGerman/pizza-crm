@@ -157,14 +157,6 @@ function addValues() {
     });
 }
 
-// -a*- Выделение значений шкалы размеров для удаления
-
-/*$(document).ready(function () {
-    $('tbody').on('click', '.shown', function () {
-        $('.shown').removeClass('item-active');
-        $(this).addClass('item-active');
-    });
-});*/
 
 // Удаление значений шкалы размеров
 function deleteValues() {
@@ -262,18 +254,6 @@ function editValues() {
         }
     });
 }
-
-
-/*function sendScaleToModal() {
-    $('button.scale').on('click', function() {
-        var el = $(this).closest('tr').find('td');
-        var nameScaleTrim = el.eq(0).text();
-        var nameScale = $.trim(nameScaleTrim);
-
-        $('#editScale').modal('show'); //показываем модалку
-        $("input[name=nameScale]").val(nameScale);
-    });
-}*/
 
 $(document).ready(function () {
     $("#sendScaleToModal").click(function () {

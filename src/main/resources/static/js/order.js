@@ -33,6 +33,7 @@ function setOrderTimestamp() {
     let dateTimeParts = getLocaleTimeString().split(',');
     $('#orderTime').html(dateTimeParts[1]);
 }
+
 //***********************************************************
 
 // Category
@@ -43,15 +44,15 @@ $(document).ready(function () {
         var buttonName = $(this).text();
         $.ajax({
             type: "POST",
-            url: "/get/categoriesdish",
+            url: "/nomenclature/getNomenclatureParentGroup",
             data: "name=" + $(this).text(),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
             success: function (data) {
                 $("#dish").empty().css({"display": "block"});
-                if (data.length > 23){
-                    for (var i = 0; i<23; i++) {
+                if (data.length > 23) {
+                    for (var i = 0; i < 23; i++) {
                         $("#dish").append($([
                             "<a href='#' class='order-item middle-panel-white'",
                             "data-item-name='" + data[i].name + "'",
@@ -64,8 +65,8 @@ $(document).ready(function () {
                         ].join("\n")));
                     }
                     $("#dish").append($([
-                        '<a href="#" class="middle-panel-white" onclick="showMoreDishes(\''+buttonName+'\')">' +
-                        '<p><i class=\'fa fa-angle-down\' aria-hidden=\'true\'></i></p>'+
+                        '<a href="#" class="middle-panel-white" onclick="showMoreDishes(\'' + buttonName + '\')">' +
+                        '<p><i class=\'fa fa-angle-down\' aria-hidden=\'true\'></i></p>' +
                         '</a>'
                     ].join("\n")));
 
@@ -116,47 +117,49 @@ $(document).ready(function () {
                 if (data[i].automatic) {
                     $('.discount-select-tbody').append(
                         '<tr class="select-discount" aria-disabled="true">' +
-                        '<td>'+data[i].name+'</td>' +
-                        '<td>'+data[i].value+'</td>' +
+                        '<td>' + data[i].name + '</td>' +
+                        '<td>' + data[i].value + '</td>' +
                         '<td> % </td>' +
-                        '<input type="hidden" value="'+data[i].automatic+'">' +
+                        '<input type="hidden" value="' + data[i].automatic + '">' +
                         '</tr>')
                     $('.discount-select-tbody').find(".select-discount").eq(i).css("background", "#dee284");
                 } else {
                     $('.discount-select-tbody').append(
                         '<tr class="select-discount" onclick="changeColor(this)">' +
-                        '<td>'+data[i].name+'</td>' +
-                        '<td>'+data[i].value+'</td>' +
+                        '<td>' + data[i].name + '</td>' +
+                        '<td>' + data[i].value + '</td>' +
                         '<td> % </td>' +
-                        '<input type="hidden" value="'+data[i].automatic+'">' +
+                        '<input type="hidden" value="' + data[i].automatic + '">' +
                         '</tr>')
                 }
 
             }
         },
-        error: function () {}
+        error: function () {
+        }
     });
 });
 
 // Change color onclick
 function changeColor(td) {
-        if($(td).css('background') === "rgb(222, 226, 132) none repeat scroll 0% 0% / auto padding-box border-box") {
-            $(td).css("background", "#FFFFFF");
-        } else{
-            $(td).css("background", "#dee284");
-        }
+    if ($(td).css('background') === "rgb(222, 226, 132) none repeat scroll 0% 0% / auto padding-box border-box") {
+        $(td).css("background", "#FFFFFF");
+    } else {
+        $(td).css("background", "#dee284");
     }
+}
 
 //Discounts application
 var discountsAndExtraCharges = [];
+
 function applicateDiscounts() {
     discountsAndExtraCharges = [];
     $(".select-discount").each(function () {
-         if ($(this).css('background') === "rgb(222, 226, 132) none repeat scroll 0% 0% / auto padding-box border-box") {
+        if ($(this).css('background') === "rgb(222, 226, 132) none repeat scroll 0% 0% / auto padding-box border-box") {
 
-             var name = $(this).closest('tr').find('td').eq(0).text();
-             var discountAndExtraCharge = {name: name};
-             discountsAndExtraCharges.push(discountAndExtraCharge);
+            var name = $(this).closest('tr').find('td').eq(0).text();
+            var discountAndExtraCharge = {name: name};
+            discountsAndExtraCharges.push(discountAndExtraCharge);
         }
     });
 
@@ -187,7 +190,7 @@ $(document).ready(function () {
         let tr = getSelectedRow();
         let quantity = parseFloat(tr.find('td:eq(0)').text());
         if (--quantity <= 0) {
-            tr.remove();
+           // tr.remove();
             updateTotal();
             return;
         }
@@ -212,12 +215,12 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#dish').on('click', '.order-item', function (e) {
-    	e.preventDefault();
+        e.preventDefault();
         var quantity = $(this).data('quantity');
         var itemName = $(this).data('itemName');
         var price = $(this).data('price');
         var tableRow = $('.order-table tr').length;
-        if (tableRow == 0){
+        if (tableRow == 0) {
             setOrderTimestamp();
             $('.order-table').append($([
                 "<tr>",
@@ -231,14 +234,14 @@ $(document).ready(function () {
         } else {
             var go = true;
             $('.order-table tr').each(function (i) {
-                if (itemName == $(this).find('td:eq(1)').text()){
+                if (itemName == $(this).find('td:eq(1)').text()) {
                     var quantity2 = $(this).find('td:eq(0)').text();
                     quantity2++;
-                    go = false ;
+                    go = false;
                     $(this).find('td:eq(0)').text(quantity2);
                 }
             });
-            if (go){
+            if (go) {
                 $('.order-table').append($([
                     "<tr>",
                     "<td>" + quantity + "</td>",
@@ -261,7 +264,7 @@ $(document).ready(function () {
         var itemName = $(this).children()[0].innerHTML;
         var price = $(this).children()[1].innerHTML.slice(0, -1);
         var tableRow = $('.order-table tr').length;
-        if (tableRow == 0){
+        if (tableRow == 0) {
             setOrderTimestamp();
             $('.order-table').append($([
                 "<tr>",
@@ -273,14 +276,14 @@ $(document).ready(function () {
         } else {
             var go = true;
             $('.order-table tr').each(function (i) {
-                if (itemName == $(this).find('td:eq(1)').text()){
+                if (itemName == $(this).find('td:eq(1)').text()) {
                     var quantity2 = $(this).find('td:eq(0)').text();
                     quantity2++;
-                    go = false ;
+                    go = false;
                     $(this).find('td:eq(0)').text(quantity2);
                 }
             });
-            if (go){
+            if (go) {
                 $('.order-table').append($([
                     "<tr>",
                     "<td>" + quantity + "</td>",
@@ -301,7 +304,7 @@ $(document).ready(function () {
         var itemName = $(this).children()[0].innerHTML;
         var price = $(this).children()[1].innerHTML.slice(0, -1);
         var tableRow = $('.order-table tr').length;
-        if (tableRow == 0){
+        if (tableRow == 0) {
             setOrderTimestamp();
             $('.order-table').append($([
                 "<tr>",
@@ -313,14 +316,14 @@ $(document).ready(function () {
         } else {
             var go = true;
             $('.order-table tr').each(function (i) {
-                if (itemName == $(this).find('td:eq(1)').text()){
+                if (itemName == $(this).find('td:eq(1)').text()) {
                     var quantity2 = $(this).find('td:eq(0)').text();
                     quantity2++;
-                    go = false ;
+                    go = false;
                     $(this).find('td:eq(0)').text(quantity2);
                 }
             });
-            if (go){
+            if (go) {
                 $('.order-table').append($([
                     "<tr>",
                     "<td>" + quantity + "</td>",
@@ -333,6 +336,7 @@ $(document).ready(function () {
         updateTotal();
     });
 });
+
 //***********************************************************
 
 function getSelectedRow() {
@@ -380,7 +384,8 @@ function updateTotal() {
             $('#rawTotal').html(data[0]);
             $('#total').html(data[1]);
         },
-        error: function () {}
+        error: function () {
+        }
     });
 }
 
@@ -447,35 +452,37 @@ $(document).ready(function () {
         $('.quantity-control-modal').modal('hide');
     });
 });
+
 //***********************************************************
 
 function showMoreDishes(name) {
     $.ajax({
         type: "POST",
-        url: "/get/categoriesdish",
+        url: "/nomenclature/getNomenclatureParentGroup",
         data: "name=" + name,
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function (data) {
             $("#dish").empty().css({"display": "block"});
-                for (var i = 23; i<data.length; i++) {
-                    $("#dish").append($([
-                        "<a href='#' class='order-item middle-panel-white'",
-                        "data-item-name='" + data[i].name + "'",
-                        "data-quantity='1'",
-                        "data-price=" + data[i].price,
-                        ">",
-                        "<p>" + data[i].name + "</p>",
-                        "<p>" + data[i].price + "</p>",
-                        "</a>"
-                    ].join("\n")));
-                }
+            for (var i = 23; i < data.length; i++) {
+                $("#dish").append($([
+                    "<a href='#' class='order-item middle-panel-white'",
+                    "data-item-name='" + data[i].name + "'",
+                    "data-quantity='1'",
+                    "data-price=" + data[i].price,
+                    ">",
+                    "<p>" + data[i].name + "</p>",
+                    "<p>" + data[i].price + "</p>",
+                    "</a>"
+                ].join("\n")));
+            }
         },
         error: function (e) {
         }
     });
 }
+
 // Order-cashbox
 $(document).ready(function () {
     $('.open-cashbox').click(function () {
@@ -499,28 +506,21 @@ $(document).ready(function () {
 });
 //***********************************************************
 
-
+var arrDiscount = [];
 var quickMenu;
-
 var searchString = '';
-
 var options = {
     valueNames: ['nameProduct']
 };
-
 var listObj = new List('product1', options);
-
 var option2 = {
     valueNames: ['code', 'barcode', 'vendorcode']
 };
-
 var listObj2 = new List('products1', option2);
-
 var searchAll = false;
 var searchDarCode = false;
 var searchCode = false;
 var searchVendorCode = false;
-
 date = new Date;
 var day = date.getDay();
 if (day == 0) {
@@ -528,6 +528,7 @@ if (day == 0) {
 } else {
     GetQuickMenu(day);
 }
+
 
 function SearchProduct(value) {
     searchString = searchString + value;
@@ -550,6 +551,7 @@ function SearchProductDelOne() {
 function SearchModalЕxpandShow() {
     $("#SearchModal").modal('hide');
     $("#SearchModalЕxpand").modal('show');
+
     $.ajax({
         type: "POST",
         url: "/get/dish",
@@ -557,22 +559,30 @@ function SearchModalЕxpandShow() {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function (data) {
-            $("#productsItem").empty();
-            var dish = JSON.parse(data);
+
+            var dish = data;
             console.log(dish);
-            dish.forEach(function (value) {
-                $("#product").append("<div class=\"col-3\"><div class=\"productItem\" data-quantity=\"1\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "p</p></div></div>");
-            });
+            if($("#SearchModalЕxpand").hasClass("flagSearch")){
+                dish.forEach(function (value) {
+                    $("#product").append("<div class=\"col-3\"><div class=\"productItem\" data-quantity=\"1\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "p</p></div></div>");
+                });
+            }
+
+            $("#SearchModalЕxpand").removeClass("flagSearch");
+
             listObj = new List('product1', options);
+
         },
         error: function (e) {
         }
     });
 }
 
+
 function SearchModalShow() {
     $("#SearchModalЕxpand").modal('hide');
     $("#SearchModal").modal('show');
+
     $.ajax({
         type: "POST",
         url: "/get/dish",
@@ -580,13 +590,13 @@ function SearchModalShow() {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function (data) {
-            $("#productsItem").empty();
-            var dish = JSON.parse(data);
+            var dish = data;
             console.log(dish);
-            dish.forEach(function (value) {
-                $("#productsItem").append("<li class=\"product-search\" data-quantity=\"1\"><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
-            });
-            listObj2 = new List('products1', option2);
+                dish.forEach(function (value) {
+                    $("#productsItem").append("<li class=\"product-search\" data-quantity=\"1\"><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
+                });
+           listObj2 = new List('products1', option2);
+
         },
         error: function (e) {
         }
@@ -594,9 +604,11 @@ function SearchModalShow() {
     SearchAll();
 }
 
-$('#search-field').on('keyup', function () {
-    var searchString = $(this).val();
-    listObj.search(searchString);
+$(document).ready(function () {
+    $('#search-field').on('keyup', function () {
+        var searchString = $(this).val();
+        listObj.search(searchString);
+    });
 });
 
 function SearchModalЕxpandHide() {
@@ -617,7 +629,6 @@ function SearchAll() {
         searchDarCode = true;
         searchCode = true;
         searchVendorCode = true;
-
     } else {
         $("#SearchCode").css({"background-color": "#fff"});
         $("#SearchDarCode").css({"background-color": "#fff"});
@@ -717,11 +728,9 @@ function GetQuickMenu(day) {
                 $("#head-quick-menu").append("<li><a href=\"#\" onclick=\'ChangeQuickMenu(" + index + ")\' id=\"headerQuickMenu-" + index + "\">" + value.name + "</a></li>");
                 index = index + 1;
             });
-
             $(".right-panel-body-1").empty();
             $(".right-panel-body-2").empty();
             $(".right-panel-body-3").empty();
-
             quickMenu[0].dishQuickMenu.forEach(function (value) {
                 console.log(value);
                 if (value.position == 1) {
@@ -733,9 +742,7 @@ function GetQuickMenu(day) {
                 if (value.position == 3) {
                     $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
                 }
-
             });
-
             headerQuickMenu(1);
         },
         error: function (e) {
@@ -769,3 +776,103 @@ function headerQuickMenu(num) {
     $(id).css({"background-color": "#dfe487", "color": "#3e4040"});
 }
 
+function discountModalShow() {
+    var price = $("#rawTotal").text();
+    $("#discount-extraCharge-modal").modal('show');
+    console.log(price);
+    $("#rawTotalModal").text(price);
+    $("#rawTotalDiscountModal").text(price);
+    $.ajax({
+        type: "GET",
+        url: "/get/discount/" + price,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        },
+        success: function (data) {
+            console.log(data);
+            $("#discount-extraCharge-modal-item").empty();
+            var discountList = data;
+            discountList.forEach(function (value) {
+                var classDis = "disableDiscount";
+                if (arrDiscount.indexOf(value.id) != -1) {
+                    classDis = "enableDiscount";
+                    AddDiscountActive(value.value, value.discountCalculationMode);
+                }
+                var price = $("#rawTotal").text();
+                var newPrise = CountDiscount(value.value, value.discountCalculationMode, value.id);
+                console.log(value);
+                $("#discount-extraCharge-modal-item").append(
+                    "<div class=\"col-4\" style=\"padding-left: 5px; padding-right: 5px; cursor: pointer;\" onclick=\"AddDiscount(" + value.value + ", \'" + value.discountCalculationMode + "\'" + "," + value.id + ")\">\n" +
+                    "<div class=\"DiscountItem " + classDis + " discount_id_" + value.id + "\">\n" +
+                    "<p class=\"NameDiscount\">" + value.name + "</p>\n" +
+                    "<p class=\"TypeDiscount\">" + value.type + "</p>\n" +
+                    "<p class=\"ValueDiscount\">" + value.value + " %" + "</p>\n" +
+                    "<p class=\"ValueDiscountCount\">" + "- " + newPrise + " p" + "</p>\n" +
+                    "</div>\n" +
+                    "</div>");
+            });
+        },
+        error: function (e) {
+        }
+    });
+}
+
+var globalDiscount = 0;
+
+function AddDiscount(discount, type, idDis) {
+    var id = ".discount_id_" + idDis;
+    var price = $("#rawTotal").text();
+    var newPrise;
+    if ($(id).attr("class").indexOf("disableDiscount") + 1) {
+        arrDiscount.push(idDis);
+        $(id).removeClass("disableDiscount");
+        $(id).addClass("enableDiscount");
+        if (type == "PERCENT") {
+            newPrise = price * (100 - discount) / 100;
+        } else {
+            newPrise = price - discount;
+        }
+        $("#rawTotalDiscountModal").text(newPrise);
+        globalDiscount = discount;
+    } else {
+        globalDiscount = 0;
+        arrDiscount.pop(idDis);
+        $(id).removeClass("enableDiscount");
+        $(id).addClass("disableDiscount");
+        $("#rawTotalDiscountModal").text(price);
+    }
+}
+
+function AddDiscountActive(discount, type) {
+    var price = $("#rawTotal").text();
+    if (type == "PERCENT") {
+        newPrise = price * (100 - discount) / 100;
+    } else {
+        newPrise = price - discount;
+    }
+    $("#rawTotalDiscountModal").text(newPrise);
+}
+
+function CountDiscount(discount, type, idDis) {
+    var price = $("#rawTotal").text();
+    var newPrise;
+    if (type == "PERCENT") {
+        newPrise = price * (discount) / 100;
+    } else {
+        newPrise = discount;
+    }
+    return newPrise;
+}
+
+function CloseModal() {
+    $("#discount-extraCharge-modal").modal('hide');
+    globalDiscount = 0;
+    $("#discount").text(globalDiscount);
+    $("#total").text($("#rawTotal").text());
+}
+
+function SaveModal() {
+    $("#discount-extraCharge-modal").modal('hide');
+    $("#total").text($("#rawTotalDiscountModal").text());
+    $("#discount").text(globalDiscount);
+}

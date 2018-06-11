@@ -22,7 +22,7 @@ public class UnitsOfMeasurementController {
         model.addAttribute("allMeasurement", unitsOfMeasurement.getAll());
         model.addAttribute("AddUnit", new UnitsOfMeasurement());
         model.addAttribute("UpdateUnit", new UnitsOfMeasurement());
-        return "UnitsOfMeasurement";
+        return "admin/UnitsOfMeasurement";
     }
 
     @RequestMapping(value = "/measurement/add")

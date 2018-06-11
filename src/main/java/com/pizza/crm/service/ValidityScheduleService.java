@@ -12,9 +12,9 @@ public interface ValidityScheduleService {
 
     ValiditySchedule getSchedule(Long id);
 
-  //  ValiditySchedule getScheduleByName(String name);
+    //  ValiditySchedule getScheduleByName(String name);
 
     List<ValiditySchedule> findAllSchedules();
 
-   // void deleteByName(String name);
+    // void deleteByName(String name);
 }

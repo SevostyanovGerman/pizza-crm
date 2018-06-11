@@ -23,12 +23,12 @@ public class DiscountControllerRest {
     }
 
     @PostMapping("/admin/discount/getValidity")
-    public Validity getSchedule(@RequestBody Validity validity){
+    public Validity getSchedule(@RequestBody Validity validity) {
         return validityService.findById(validity.getId()).orElseThrow(NotFoundException::new);
     }
 
     @PostMapping("/admin/discount/getAllDiscounts")
-    public Collection<Discount> getAllDiscounts(){
+    public Collection<Discount> getAllDiscounts() {
         return discountService.getAll();
     }
 
