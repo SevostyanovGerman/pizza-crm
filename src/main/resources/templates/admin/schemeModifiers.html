@@ -137,23 +137,32 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="custom-control custom-checkbox mx-2">
+                    <input type="checkbox" class="custom-control-input groupModifier" id="groupModifier">
+                    <label class="custom-control-label" for="groupModifier">Добавить групповой модификатор</label>
+
+                </div>
+
                 <table class="table table-bordered">
                     <thead>
                     <tr>
                         <th>Название</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="modifierDownTr">
                     <tr th:each="modifierNomenclature : ${modifierNomenclatures}" class="modifier">
-                        <td th:text="${modifierNomenclature.name}"></td>
+                        <td th:inline="text" class="parentGroup"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                            [[${modifierNomenclature.name}]]
+                        </td>
                         <input type="hidden" th:value="${modifierNomenclature.id}">
                     </tr>
+
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary" onclick="saveModifiers()" data-dismiss="modal">
+                <button type="button" class="btn btn-primary" onclick="saveFilterModifiers()" data-dismiss="modal">
                     Сохранить
                 </button>
             </div>
