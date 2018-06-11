@@ -7,6 +7,7 @@ import com.pizza.crm.model.discount.DiscountApplicationMethod;
 import com.pizza.crm.model.discount.DiscountMode;
 import com.pizza.crm.service.DiscountService;
 import com.pizza.crm.service.DishService;
+import com.pizza.crm.service.NomenclatureService;
 import com.pizza.crm.service.OrderService;
 import org.springframework.cglib.core.Local;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.xml.crypto.Data;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -33,8 +33,11 @@ public class OrderControllerRest {
     private final DishService dishService;
     private final DiscountService discountService;
     private final OrderService orderService;
+    private final NomenclatureService nomenclatureService;
 
-    public OrderControllerRest(DishService dishService, DiscountService discountService, OrderService orderService) {
+    public OrderControllerRest(DishService dishService, DiscountService discountService, OrderService orderService,
+                                    NomenclatureService nomenclatureService) {
+        this.nomenclatureService = nomenclatureService;
         this.dishService = dishService;
         this.discountService = discountService;
         this.orderService = orderService;
@@ -49,16 +52,10 @@ public class OrderControllerRest {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         //rowTotal cost calculation
-        List<Dish> dishes = new ArrayList<>();
-        for (Dish d: order.getDishes()) {
-            Dish dish = dishService.getDishByName(d.getName());
-            dish.setAmount(d.getAmount());
-            dishes.add(dish);
-        }
-        order.setDishes(dishes);
+        for (int i = 0; i < order.getDishes().size(); i++) {
+            rawTotal += order.getDishes().get(i).getAmount() *
+                    nomenclatureService.getNomenclatureByName(order.getDishes().get(i).getName()).getPrice();
 
-        for (Dish dish : order.getDishes()) {
-            rawTotal += dish.getAmount() * dish.getPrice();
         }
         total = rawTotal;
 
