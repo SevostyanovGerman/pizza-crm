@@ -365,8 +365,7 @@ function updateTotal() {
 
     var order = {
         id: id,
-        dishes: dishes,
-        discounts: discountsAndExtraCharges
+        dishes: dishes
     };
 
     $.ajax({
@@ -380,8 +379,6 @@ function updateTotal() {
         success: function (data) {
             $('#rawTotal').html(data[0]);
             $('#total').html(data[1]);
-            $("#discount").html(data[2]);
-            $("#extraCharge").html(data[3]);
         },
         error: function () {}
     });
