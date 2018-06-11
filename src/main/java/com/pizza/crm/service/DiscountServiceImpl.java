@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import java.time.DayOfWeek;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +57,7 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
-    public List<Discount> getDiscountsForOrder(List<String> discounts) {
-        return discountRepository.getDiscountsForOrder(discounts);
+    public List<Discount> getDiscountsForOrder(List<String> strings, DayOfWeek dayOfWeek) {
+        return discountRepository.getDiscountsForOrder(strings, dayOfWeek);
     }
 }

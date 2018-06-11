@@ -33,8 +33,7 @@ public class OrderControllerRest {
     private final DiscountService discountService;
     private final OrderService orderService;
 
-    public OrderControllerRest(DishService dishService, DiscountService discountService,
-                               OrderService orderService) {
+    public OrderControllerRest(DishService dishService, DiscountService discountService, OrderService orderService) {
         this.dishService = dishService;
         this.discountService = discountService;
         this.orderService = orderService;
@@ -66,39 +65,43 @@ public class OrderControllerRest {
         }
         total = rawTotal;
 
-//        List<String> nameDiscounts = new ArrayList<>();
-//        for (Discount d : order.getDiscounts()) {
-//            nameDiscounts.add(d.getName());
-//        }
-//
-//        order.setDiscounts(discountService.getDiscountsForOrder(nameDiscounts));
+        List<String> nameDiscounts = new ArrayList<>();
+        for (Discount d : order.getDiscounts()) {
+            nameDiscounts.add(d.getName());
+        }
+        List<Discount> list = new ArrayList<>();
+        list = discountService.getDiscountsForOrder(nameDiscounts, dayOfWeekNow);
+        order.setDiscounts(list);
 
-        final Double rawTotalStream = rawTotal;
-        discountStream = order.getDiscounts().stream()
-                .map(discount -> discount = discountService.findByName(discount.getName()))
-                .distinct()
-                .filter(discount -> discount.getValidities().stream()
-                        .noneMatch(validity -> validity.getValidityScheduleList().stream()
-                                .noneMatch(validitySchedule ->
-                                        (validitySchedule.getDayOfWeekList().contains(dayOfWeekNow))
-                                )
-                        )
-                )
-                .filter(discount -> discount.getValidities().stream()
-                        .noneMatch(validity -> validity.getValidityScheduleList().stream()
-                                .noneMatch(validitySchedule ->
-                                                (localTimeNow.isAfter(validitySchedule.getBeginTime())&&
-                                                 localTimeNow.isBefore(validitySchedule.getEndTime()))
-                                )
-                        )
-                )
-                .filter(discount -> !(discount.isMinSumRestriction() &&
-                        discount.getMinSum().compareTo(rawTotalStream) > 0)
-                )
-                .filter(discount -> !(!(discount.getCombinable()) && order.getDiscounts().size() > 1)
-                )
-                .collect(Collectors.toList());
-        order.setDiscounts(discountStream);
+//            final Double rawTotalStream = rawTotal;
+//            discountStream = order.getDiscounts().stream()
+//                .map(discount -> discount = discountService.findByName(discount.getName()))
+//                .distinct()
+//                .filter(discount -> discount.getValidities().stream()
+//                        .noneMatch(validity -> validity.getValidityScheduleList().stream()
+//                                .noneMatch(validitySchedule ->
+//                                        (validitySchedule.getDayOfWeekList().contains(dayOfWeekNow))
+//                                )
+//                        )
+//                )
+//                    .filter(discount -> discount.getValidities().stream()
+//                            .noneMatch(validity -> validity.getValidityScheduleList().stream()
+//                                    .noneMatch(validitySchedule ->
+//                                            (localTimeNow.isAfter(validitySchedule.getBeginTime())&&
+//                                                    localTimeNow.isBefore(validitySchedule.getEndTime()))
+//                                    )
+//                            )
+//                    )
+//                    .filter(discount -> !(discount.isMinSumRestriction() &&
+//                            discount.getMinSum().compareTo(rawTotalStream) > 0)
+//                    )
+//                    .filter(discount -> !(!(discount.getCombinable()) && order.getDiscounts().size() > 1)
+//                    )
+//                    .collect(Collectors.toList());
+//            order.setDiscounts(discountStream);
+
+
+
 
         //Order cost calculation with discounts
             if (order.getDiscounts() != null) {

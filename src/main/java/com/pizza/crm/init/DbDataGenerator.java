@@ -436,7 +436,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         ValiditySchedule tuesdaySchedule = new ValiditySchedule(LocalTime.of(0, 0),
                                                                 LocalTime.of(23, 0));
         //Days of week creation
-        List<DayOfWeek> dayOfWeeks = new ArrayList<>(Arrays.asList(DayOfWeek.TUESDAY));
+        List<DayOfWeek> dayOfWeeks = new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY));
         tuesdaySchedule.setDayOfWeekList(dayOfWeeks);
         List<ValiditySchedule> listtuesdaySchedule = new ArrayList<>(Arrays.asList(tuesdaySchedule));
 
