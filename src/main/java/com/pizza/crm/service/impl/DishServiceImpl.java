@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -71,6 +72,11 @@ public class DishServiceImpl implements DishService {
     @Override
     public Dish getDishByName(String name) {
         return dishRepository.getDishByName(name);
+    }
+
+    @Override
+    public List<Dish> getDishesByName(List<String> dishNames) {
+        return dishRepository.getDishesByName(dishNames);
     }
 
 }

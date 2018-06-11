@@ -52,16 +52,20 @@ public class OrderControllerRest {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         //rowTotal cost calculation
-        for (int i = 0; i < order.getDishes().size(); i++) {
-            rawTotal += order.getDishes().get(i).getAmount() *
-                    nomenclatureService.getNomenclatureByName(order.getDishes().get(i).getName()).getPrice();
+        List<String> dishNames = new ArrayList<>();
+        for (Dish dish: order.getDishes()) {
+            dishNames.add(dish.getName());
+        }
 
+        for (Dish dish: order.getDishes()) {
+            rawTotal += dish.getAmount() * nomenclatureService.getNomenclatureByName(dish.getName()).getPrice();
         }
         total = rawTotal;
 
         order.setPrice(rawTotal);
         order.setDiscountedPrice(total);
         order.setCreationDate(localDateTime);
+        order.setDishes(dishService.getDishesByName(dishNames));
         orderService.save(order);
 
         rawTotalAndTotal.add(order.getPrice());
