@@ -208,16 +208,19 @@ function addField() {
         var saturdaySchedule =     $(this).closest('tr').find('td:eq(7)').find('input[type=checkbox]').prop('checked');
         var sundaySchedule =       $(this).closest('tr').find('td:eq(8)').find('input[type=checkbox]').prop('checked');
 
+        var dayOfWeekList = [];
+        if (mondaySchedule == true) {dayOfWeekList.push("MONDAY");}
+        if (tuesdaySchedule == true) {dayOfWeekList.push("TUESDAY");}
+        if (thursdaySchedule == true) {dayOfWeekList.push("THURSDAY");}
+        if (wednesdaySchedule == true) {dayOfWeekList.push("WEDNESDAY");}
+        if (fridaySchedule == true) {dayOfWeekList.push("FRIDAY");}
+        if (saturdaySchedule == true) {dayOfWeekList.push("SATURDAY");}
+        if (sundaySchedule == true) {dayOfWeekList.push("SUNDAY");}
+
         var scheduleSchedule = {
             beginTime: beginTimeSchedule,
             endTime: endTimeSchedule,
-            monday: mondaySchedule,
-            tuesday: tuesdaySchedule,
-            wednesday: wednesdaySchedule,
-            thursday: thursdaySchedule,
-            friday: fridaySchedule,
-            saturday: saturdaySchedule,
-            sunday: sundaySchedule
+            dayOfWeekList: dayOfWeekList
         };
 
         schedules.push(scheduleSchedule);
@@ -283,18 +286,21 @@ function save() {
         var saturday = $(".saturday").prop('checked');
         var sunday = $('.sunday').prop('checked');
 
+        var dayOfWeekList = [];
+        if (monday == true) {dayOfWeekList.push("MONDAY");}
+        if (tuesday == true) {dayOfWeekList.push("TUESDAY");}
+        if (thursday == true) {dayOfWeekList.push("THURSDAY");}
+        if (wednesday == true) {dayOfWeekList.push("WEDNESDAY");}
+        if (friday == true) {dayOfWeekList.push("FRIDAY");}
+        if (saturday == true) {dayOfWeekList.push("SATURDAY");}
+        if (sunday == true) {dayOfWeekList.push("SUNDAY");}
+
         var scheduleSchedule = {
          //   id: id,
             name: name,
             beginTime: beginTime,
             endTime: endTime,
-            monday: monday,
-            tuesday: tuesday,
-            thursday: thursday,
-            wednesday: wednesday,
-            friday: friday,
-            saturday: saturday,
-            sunday: sunday
+            dayOfWeekList: dayOfWeekList
         };
 
         schedules.push(scheduleSchedule);
@@ -324,9 +330,6 @@ function save() {
     });
 }
 
-
-
-
 //Код Сохранить все и Выйти
 function saveAndExit() {
     var id = $(".item-active").closest('tr').find('input[type=hidden]').val();
@@ -346,18 +349,21 @@ function saveAndExit() {
         var saturday = $(".saturday").prop('checked');
         var sunday = $('.sunday').prop('checked');
 
+        var dayOfWeekList = [];
+        if (monday == true) {dayOfWeekList.push("MONDAY");}
+        if (tuesday == true) {dayOfWeekList.push("TUESDAY");}
+        if (thursday == true) {dayOfWeekList.push("THURSDAY");}
+        if (wednesday == true) {dayOfWeekList.push("WEDNESDAY");}
+        if (friday == true) {dayOfWeekList.push("FRIDAY");}
+        if (saturday == true) {dayOfWeekList.push("SATURDAY");}
+        if (sunday == true) {dayOfWeekList.push("SUNDAY");}
+
         var scheduleSchedule = {
             //   id: id,
             name: name,
             beginTime: beginTime,
             endTime: endTime,
-            monday: monday,
-            tuesday: tuesday,
-            thursday: thursday,
-            wednesday: wednesday,
-            friday: friday,
-            saturday: saturday,
-            sunday: sunday
+            dayOfWeekList: dayOfWeekList
         };
 
         schedules.push(scheduleSchedule);

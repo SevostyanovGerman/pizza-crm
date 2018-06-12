@@ -17,20 +17,6 @@ public class ValiditySchedule {
 
     private LocalTime endTime;
 
-    private Boolean monday;
-
-    private Boolean tuesday;
-
-    private Boolean wednesday;
-
-    private Boolean thursday;
-
-    private Boolean friday;
-
-    private Boolean saturday;
-
-    private Boolean sunday;
-
     @ElementCollection(targetClass = DayOfWeek.class)
     @CollectionTable(name = "validity_schedule_DayOfWeek",
             joinColumns = @JoinColumn(name = "validity_schedule_id"))
@@ -41,19 +27,6 @@ public class ValiditySchedule {
     public ValiditySchedule(LocalTime beginTime, LocalTime endTime) {
         this.beginTime = beginTime;
         this.endTime = endTime;
-    }
-
-    public ValiditySchedule(LocalTime beginTime, LocalTime endTime, Boolean monday, Boolean tuesday,
-                            Boolean wednesday, Boolean thursday, Boolean friday, Boolean saturday, Boolean sunday) {
-        this.beginTime = beginTime;
-        this.endTime = endTime;
-        this.monday = monday;
-        this.tuesday = tuesday;
-        this.wednesday = wednesday;
-        this.thursday = thursday;
-        this.friday = friday;
-        this.saturday = saturday;
-        this.sunday = sunday;
     }
 
     public ValiditySchedule() {
@@ -81,62 +54,6 @@ public class ValiditySchedule {
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
-    }
-
-    public Boolean getMonday() {
-        return monday;
-    }
-
-    public void setMonday(Boolean monday) {
-        this.monday = monday;
-    }
-
-    public Boolean getTuesday() {
-        return tuesday;
-    }
-
-    public void setTuesday(Boolean tuesday) {
-        this.tuesday = tuesday;
-    }
-
-    public Boolean getWednesday() {
-        return wednesday;
-    }
-
-    public void setWednesday(Boolean wednesday) {
-        this.wednesday = wednesday;
-    }
-
-    public Boolean getThursday() {
-        return thursday;
-    }
-
-    public void setThursday(Boolean thursday) {
-        this.thursday = thursday;
-    }
-
-    public Boolean getFriday() {
-        return friday;
-    }
-
-    public void setFriday(Boolean friday) {
-        this.friday = friday;
-    }
-
-    public Boolean getSaturday() {
-        return saturday;
-    }
-
-    public void setSaturday(Boolean saturday) {
-        this.saturday = saturday;
-    }
-
-    public Boolean getSunday() {
-        return sunday;
-    }
-
-    public void setSunday(Boolean sunday) {
-        this.sunday = sunday;
     }
 
     public List<DayOfWeek> getDayOfWeekList() {
