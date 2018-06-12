@@ -43,7 +43,7 @@ public class OrderControllerRest {
         this.orderService = orderService;
     }
 
-    @PostMapping("/admin/discount/getRowTotal")
+    @PostMapping("/discount/getRowTotal")
     public List<Double> getRowTotal(@RequestBody Order order){
 
         Double rawTotal = 0d;
@@ -74,7 +74,7 @@ public class OrderControllerRest {
         return rawTotalAndTotal;
     }
 
-    @PostMapping("/admin/discount/getAllDiscountsForOrder")
+    @PostMapping("/discount/getAllDiscountsForOrder")
     public Collection<Discount> getAllDiscountsForOrder(){
         return discountService.getEnabledDiscounts();
     }
