@@ -105,7 +105,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     $.ajax({
         type: "POST",
-        url: "/admin/discount/getAllDiscountsForOrder",
+        url: "/discount/getAllDiscountsForOrder",
         contentType: "application/json; charset=utf-8",
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
@@ -374,7 +374,7 @@ function updateTotal() {
 
     $.ajax({
         type: "POST",
-        url: "/admin/discount/getRowTotal",
+        url: "/discount/getRowTotal",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(order),
         beforeSend: function (xhr) {
