@@ -63,7 +63,9 @@ $(document).ready(function () {
 });
 
 function addSchedule() {
-    var validityName = tdName;
+
+
+    var nameValidity = tdName;
     var beginTime = $('#beginTime').val();
     var endTime = $('#endTime').val();
     var monday = $("#monday").prop('checked');
@@ -74,26 +76,35 @@ function addSchedule() {
     var saturday = $("#saturday").prop('checked');
     var sunday = $('#sunday').prop('checked');
 
+        var dayOfWeekList = [];
+        if (monday == true) {dayOfWeekList.push("MONDAY");}
+        if (tuesday == true) {dayOfWeekList.push("TUESDAY");}
+        if (thursday == true) {dayOfWeekList.push("THURSDAY");}
+        if (wednesday == true) {dayOfWeekList.push("WEDNESDAY");}
+        if (friday == true) {dayOfWeekList.push("FRIDAY");}
+        if (saturday == true) {dayOfWeekList.push("SATURDAY");}
+        if (sunday == true) {dayOfWeekList.push("SUNDAY");}
+
+        var schedules = [];
+        var scheduleSchedule = {
+            beginTime: beginTime,
+            endTime: endTime,
+            dayOfWeekList: dayOfWeekList
+        };
+        schedules.push(scheduleSchedule);
+
+    var validity = {nameValidity:nameValidity,
+        validityScheduleList: schedules};
+
     $.ajax({
         type: "POST",
         url: "/schedule/addSchedule",
-        data: {
-
-            validityName: validityName,
-            beginTime: beginTime,
-            endTime: endTime,
-            monday: monday,
-            tuesday: tuesday,
-            thursday: thursday,
-            wednesday: wednesday,
-            friday: friday,
-            saturday: saturday,
-            sunday: sunday
-        },
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(validity),
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
-        success: function (data) {
+        success: function () {
             window.location.replace("/validity");
         },
         error: function (e) {

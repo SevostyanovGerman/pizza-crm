@@ -46,13 +46,10 @@ public class ValidityController {
 
     //Отдельное добавление графика
     @PostMapping("/schedule/addSchedule")
-    public String addSchedule(@RequestParam String validityName,
-                              @RequestParam LocalTime beginTime,
-                              @RequestParam LocalTime endTime) {
-        ValiditySchedule validitySchedule = new ValiditySchedule(beginTime, endTime);
-        Validity validity = validityService.findByNameValidity(validityName);
-        validity.getValidityScheduleList().add(validitySchedule);
-        validityService.save(validity);
+    public String addSchedule(@RequestBody Validity validity) {
+        Validity validityGet = validityService.findByNameValidity(validity.getNameValidity());
+        validityGet.getValidityScheduleList().add(validity.getValidityScheduleList().get(0));
+        validityService.save(validityGet);
         return "redirect:/validity";
     }
 
