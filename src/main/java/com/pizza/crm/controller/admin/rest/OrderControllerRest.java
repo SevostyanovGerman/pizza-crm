@@ -50,14 +50,11 @@ public class OrderControllerRest {
         Double total = 0d;
         List<Double> rawTotalAndTotal = new ArrayList<>();
         LocalDateTime localDateTime = LocalDateTime.now();
+        List<String> dishNames = new ArrayList<>();
 
         //rowTotal cost calculation
-        List<String> dishNames = new ArrayList<>();
         for (Dish dish: order.getDishes()) {
             dishNames.add(dish.getName());
-        }
-
-        for (Dish dish: order.getDishes()) {
             rawTotal += dish.getAmount() * nomenclatureService.getNomenclatureByName(dish.getName()).getPrice();
         }
         total = rawTotal;
