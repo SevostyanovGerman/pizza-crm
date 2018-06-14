@@ -140,11 +140,11 @@ function applicatedScheduleRestriction() {
     var discountScheduleRestriction = $("#discount-scheduleRestriction").prop('checked');
     if(!(discountScheduleRestriction === true)) {
         document.getElementById('discount-discountAssignMode').disabled = true;
-        $("#table-schedules").find("input,button,textarea,select").attr("disabled", "disabled");
+        $("#table-schedules").find("button,select").attr("disabled", "disabled");
     }
     document.getElementById('discount-scheduleRestriction').onchange = function() {
         document.getElementById('discount-discountAssignMode').disabled = !this.checked;
-        $("#table-schedules").find("input,button,textarea,select").attr("disabled", !this.checked);
+        $("#table-schedules").find("button,select").attr("disabled", !this.checked);
     };
 }
 
@@ -226,13 +226,13 @@ function addValidity() {
                     '<td></td>' +
                     '<td><input type="time" value="'+data.validityScheduleList[i].beginTime+'" disabled></td>' +
                     '<td><input type="time" value="'+data.validityScheduleList[i].endTime+'" disabled></td>' +
-                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].monday ? 'checked' : '') + '></td>' +
-                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].tuesday ? 'checked' : '') + '></td>' +
-                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].wednesday ? 'checked' : '') + '></td>' +
-                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].thursday ? 'checked' : '') + '></td>' +
-                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].friday ? 'checked' : '') + '></td>' +
-                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].saturday ? 'checked' : '') + '></td>' +
-                    '<td><input disabled type="checkbox" class="activated" ' + (data.validityScheduleList[i].sunday ? 'checked' : '') + '></td>' +
+                    '<td><input disabled type="checkbox" class="monday activated"' + ((data.validityScheduleList[i].dayOfWeekList.indexOf( 'MONDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input disabled type="checkbox" class="tuesday activated"' + ((data.validityScheduleList[i].dayOfWeekList.indexOf( 'TUESDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input disabled type="checkbox" class="wednesday activated"' + ((data.validityScheduleList[i].dayOfWeekList.indexOf( 'WEDNESDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input disabled type="checkbox" class="thursday activated"' + ((data.validityScheduleList[i].dayOfWeekList.indexOf( 'THURSDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input disabled type="checkbox" class="friday activated"' + ((data.validityScheduleList[i].dayOfWeekList.indexOf( 'FRIDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input disabled type="checkbox" class="saturday activated"' + ((data.validityScheduleList[i].dayOfWeekList.indexOf( 'SATURDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input disabled type="checkbox" class="sunday activated"' + ((data.validityScheduleList[i].dayOfWeekList.indexOf( 'SUNDAY' )) != (-1) ? 'checked' : '') + '></td>' +
                     '</tr>'
                 );
             }
@@ -240,6 +240,52 @@ function addValidity() {
         error: function () {}
     });
 }
+
+$(document).ready(function () {
+
+        var name = $('#discount-name').val();
+        var discount = {name: name};
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/discount/getValidityForDiscount",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(discount),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (data) {
+
+                for (var j = 0; j < data.length; j++) {
+
+                    $('#validity-tbody2').append(
+                        '<tr class="schedule-tr">' +
+                        '<td>'+data[j].nameValidity+'</td>' +
+                        '<input type="hidden" value="'+data[j].id+'">' +
+                        '</tr>'
+                    );
+
+                    for (var i = 0; i < data[j].validityScheduleList.length; i++) {
+                        $('#validity-tbody2').append(
+                            '<tr>' +
+                            '<td></td>' +
+                            '<td><input type="time" value="'+data[j].validityScheduleList[i].beginTime+'" disabled></td>' +
+                            '<td><input type="time" value="'+data[j].validityScheduleList[i].endTime+'" disabled></td>' +
+                            '<td><input disabled type="checkbox" class="monday activated"' + ((data[j].validityScheduleList[i].dayOfWeekList.indexOf( 'MONDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                            '<td><input disabled type="checkbox" class="tuesday activated"' + ((data[j].validityScheduleList[i].dayOfWeekList.indexOf( 'TUESDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                            '<td><input disabled type="checkbox" class="wednesday activated"' + ((data[j].validityScheduleList[i].dayOfWeekList.indexOf( 'WEDNESDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                            '<td><input disabled type="checkbox" class="thursday activated"' + ((data[j].validityScheduleList[i].dayOfWeekList.indexOf( 'THURSDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                            '<td><input disabled type="checkbox" class="friday activated"' + ((data[j].validityScheduleList[i].dayOfWeekList.indexOf( 'FRIDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                            '<td><input disabled type="checkbox" class="saturday activated"' + ((data[j].validityScheduleList[i].dayOfWeekList.indexOf( 'SATURDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                            '<td><input disabled type="checkbox" class="sunday activated"' + ((data[j].validityScheduleList[i].dayOfWeekList.indexOf( 'SUNDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                            '</tr>'
+                        );
+                    }
+                }
+            },
+            error: function () {}
+        });
+});
 
 // Delete schedules in the schedules table
 $(document).ready(function(){
@@ -250,13 +296,3 @@ $(document).ready(function(){
         );
     });
 });
-
-
-
-
-
-
-
-
-
-

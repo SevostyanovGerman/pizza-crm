@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 public class DiscountControllerRest {
@@ -25,6 +26,12 @@ public class DiscountControllerRest {
     @PostMapping("/admin/discount/getValidity")
     public Validity getSchedule(@RequestBody Validity validity) {
         return validityService.findById(validity.getId()).orElseThrow(NotFoundException::new);
+    }
+
+    @PostMapping("/admin/discount/getValidityForDiscount")
+    public List<Validity> getValidityForDiscount(@RequestBody Discount discount) {
+        Discount discountResponse = discountService.findByName(discount.getName());
+        return discountResponse.getValidities();
     }
 
     @PostMapping("/admin/discount/getAllDiscounts")

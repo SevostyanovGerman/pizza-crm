@@ -135,24 +135,6 @@
                                     <th></th>
                                 </tr>
                                 </thead>
-                                <tbody id="validity-tbody" th:each="validity : ${discount.validities}">
-                                <tr class="schedule-tr" >
-                                    <td th:text="${validity.nameValidity}"></td>
-                                    <input type="hidden" th:value="${validity.id}">
-                                </tr>
-                                <tr th:each="validitySchedule : ${validity.validityScheduleList}">
-                                        <td></td>
-                                        <td><input type="time" th:value="${validitySchedule.beginTime}" disabled></td>
-                                        <td><input type="time" th:value="${validitySchedule.endTime}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.monday}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.tuesday}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.wednesday}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.thursday}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.friday}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.saturday}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.sunday}" disabled></td>
-                                </tr>
-                                </tbody>
                                 <tbody id="validity-tbody2">
                                 </tbody>
                             </table>
