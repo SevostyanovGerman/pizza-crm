@@ -60,9 +60,13 @@ public class OrderControllerRest {
         }
         total = rawTotal;
 
-        
 
 
+
+
+        DayOfWeek dayOfWeekNow = LocalDate.now().getDayOfWeek();
+        Double discountSum = 0d;
+        Double extraChargeSum = 0d;
 
         List<String> nameDiscounts = new ArrayList<>();
         for (Discount d : order.getDiscounts()) {
@@ -124,6 +128,10 @@ public class OrderControllerRest {
                 }
             }
         }
+
+
+
+
 
         order.setPrice(rawTotal);
         order.setDiscountedPrice(total);
