@@ -59,6 +59,73 @@ public class OrderControllerRest {
         }
         total = rawTotal;
 
+
+
+
+
+
+
+        List<String> nameDiscounts = new ArrayList<>();
+        for (Discount d : order.getDiscounts()) {
+            nameDiscounts.add(d.getName());
+        }
+        List<Discount> list = new ArrayList<>();
+        list = discountService.getDiscountsForOrder(nameDiscounts, dayOfWeekNow);
+        order.setDiscounts(list);
+
+//            final Double rawTotalStream = rawTotal;
+//            discountStream = order.getDiscounts().stream()
+//                .map(discount -> discount = discountService.findByName(discount.getName()))
+//                .distinct()
+//                .filter(discount -> discount.getValidities().stream()
+//                        .noneMatch(validity -> validity.getValidityScheduleList().stream()
+//                                .noneMatch(validitySchedule ->
+//                                        (validitySchedule.getDayOfWeekList().contains(dayOfWeekNow))
+//                                )
+//                        )
+//                )
+//                    .filter(discount -> discount.getValidities().stream()
+//                            .noneMatch(validity -> validity.getValidityScheduleList().stream()
+//                                    .noneMatch(validitySchedule ->
+//                                            (localTimeNow.isAfter(validitySchedule.getBeginTime())&&
+//                                                    localTimeNow.isBefore(validitySchedule.getEndTime()))
+//                                    )
+//                            )
+//                    )
+//                    .filter(discount -> !(discount.isMinSumRestriction() &&
+//                            discount.getMinSum().compareTo(rawTotalStream) > 0)
+//                    )
+//                    .filter(discount -> !(!(discount.getCombinable()) && order.getDiscounts().size() > 1)
+//                    )
+//                    .collect(Collectors.toList());
+//            order.setDiscounts(discountStream);
+        
+        //Order cost calculation with discounts
+        if (order.getDiscounts() != null) {
+            for (Discount discount: order.getDiscounts()) {
+                switch (discount.getDiscountApplicationMethod()) {
+                    case FULL_PRICE:
+                        if (discount.getDiscountMode() == DiscountMode.DISCOUNT) {
+                            total = total - (rawTotal * discount.getValue()) / 100;
+                            discountSum += discount.getValue();
+                        } else if (discount.getDiscountMode() == DiscountMode.EXTRA_PAY) {
+                            total = total + (rawTotal * discount.getValue()) / 100;
+                            extraChargeSum += discount.getValue();
+                        }
+                        break;
+                    case WITH_OTHERS:
+                        if (discount.getDiscountMode() == DiscountMode.DISCOUNT) {
+                            total = total - (total * discount.getValue()) / 100;
+                            discountSum += discount.getValue();
+                        } else if (discount.getDiscountMode() == DiscountMode.EXTRA_PAY) {
+                            total = total + (total * discount.getValue()) / 100;
+                            extraChargeSum += discount.getValue();
+                        }
+                        break;
+                }
+            }
+        }
+
         order.setPrice(rawTotal);
         order.setDiscountedPrice(total);
         order.setCreationDate(localDateTime);
