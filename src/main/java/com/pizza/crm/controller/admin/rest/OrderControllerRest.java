@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.xml.crypto.Data;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -59,9 +60,7 @@ public class OrderControllerRest {
         }
         total = rawTotal;
 
-
-
-
+        
 
 
 
