@@ -68,10 +68,10 @@ public class OrderControllerRest {
         for (Discount d : order.getDiscounts()) {
             nameDiscounts.add(d.getName());
         }
-        List<Discount> list = new ArrayList<>();
-        list = discountService.getDiscountsForOrder(nameDiscounts, dayOfWeekNow, localDateTime,
+        List<Discount> discounts = new ArrayList<>();
+        discounts = discountService.getDiscountsForOrder(nameDiscounts, dayOfWeekNow, localDateTime,
                                                     rawTotal, nameDiscounts.size());
-        order.setDiscounts(list);
+        order.setDiscounts(discounts);
         
         //Order cost calculation with discounts
         if (order.getDiscounts() != null) {
