@@ -41,17 +41,9 @@ public interface DiscountRepository extends JpaRepository<Discount, Long> {
                     "JOIN validity.validityScheduleList validitySchedule " +
                     "JOIN validitySchedule.dayOfWeekList dayOfWeek " +
                 "WHERE discount.name IN :strings " +
-                    "AND dayOfWeek IN :dayOfWeekNow) " +
-                    "AND discount.scheduleRestriction = true " +
-                    "AND discount.enabled = true " +
-            "AND discount = (" +
-                "SELECT discount " +
-                "FROM Discount discount " +
-                    "JOIN discount.validities validity " +
-                    "JOIN validity.validityScheduleList validitySchedule " +
-                "WHERE discount.name IN :strings " +
+                    "AND dayOfWeek IN :dayOfWeekNow " +
                     "AND (CAST (:localDateTime AS time) between CAST(validitySchedule.beginTime AS time) " +
-                    "AND CAST(validitySchedule.endTime AS time))) " +
+                        "AND CAST(validitySchedule.endTime AS time))) " +
                     "AND discount.scheduleRestriction = true " +
                     "AND discount.enabled = true "
     )
