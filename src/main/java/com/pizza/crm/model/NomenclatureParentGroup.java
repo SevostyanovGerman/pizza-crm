@@ -23,7 +23,7 @@ public class NomenclatureParentGroup {
 
     private String backgroundColor;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "Nomenclature_NomenclatureParentGroup",
             joinColumns = @JoinColumn(name = "NomenclatureParentGroup"),
             inverseJoinColumns = @JoinColumn(name = "nomenclature"))

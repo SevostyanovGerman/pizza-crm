@@ -44,7 +44,7 @@ public class Nomenclature {
 
     private String cookingPlace;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "Nomenclature_NomenclatureParentGroup",
             joinColumns = @JoinColumn(name = "nomenclature"),
             inverseJoinColumns = @JoinColumn(name = "NomenclatureParentGroup"))

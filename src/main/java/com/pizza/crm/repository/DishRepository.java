@@ -7,9 +7,5 @@ import java.util.List;
 
 public interface DishRepository extends JpaRepository<Dish, Long> {
 
-    @Override
-    List<Dish> findAll();
-
     Dish getDishByName(String name);
-
 }

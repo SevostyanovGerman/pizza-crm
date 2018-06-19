@@ -39,7 +39,7 @@ public class CategoryController {
     public String categories(Model model) {
         model.addAttribute("category", categoryService.getAll());
         model.addAttribute("addedCategories", addedCategoryService.findAllCategories());
-        return "adminCategories";
+        return "admin/adminCategories";
     }
 
     @RequestMapping(value = "/categories/add", method = RequestMethod.POST)
