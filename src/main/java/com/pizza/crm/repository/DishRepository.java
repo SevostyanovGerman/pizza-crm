@@ -15,7 +15,7 @@ public interface DishRepository extends JpaRepository<Dish, Long> {
 
     Dish getDishByName(String name);
 
-    @Query("SELECT dish FROM Dish dish WHERE dish.name IN :dishNames")
+    @Query("SELECT dish FROM Dish dish WHERE (dish.name IN :dishNames)")
     List<Dish> getDishesByName(@Param("dishNames") List<String> dishNames);
 
 }

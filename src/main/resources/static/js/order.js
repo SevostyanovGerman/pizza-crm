@@ -349,11 +349,8 @@ function getSelectedRow() {
 }
 
 function updateTotal() {
-    let rawTotal = 0;
-    let total = 0;
 
     var dishes = [];
-
     $('.order-table tr').each(function () {
         let amount = parseInt($(this).find('td:eq(0)').text());
         if (isNaN(amount)) {
@@ -367,9 +364,12 @@ function updateTotal() {
 
     var id = $("#new-order-id").text();
 
+    var discounts = discountsAndExtraCharges;
+
     var order = {
         id: id,
-        dishes: dishes
+        dishes: dishes,
+        discounts: discounts
     };
 
     $.ajax({
@@ -383,6 +383,9 @@ function updateTotal() {
         success: function (data) {
             $('#rawTotal').html(data[0]);
             $('#total').html(data[1]);
+            $('#discount').html(data[2]);
+            $('#extraCharge').html(data[3]);
+
         },
         error: function () {
         }

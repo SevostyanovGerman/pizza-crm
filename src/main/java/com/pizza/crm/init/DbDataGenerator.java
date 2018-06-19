@@ -313,7 +313,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     }
 
     private void generateNomenclatureAndNomenclatureParentGroup() {
-        Nomenclature philadelphia = new Nomenclature(15002, 370.00, LocalTime.of(0, 5, 15),
+        Nomenclature philadelphia = new Nomenclature(15002, 1000.00, LocalTime.of(0, 5, 15),
                 LocalTime.of(0, 6, 30), "Филадельфия", DISH,
                 PRODUCT, "Kitchen");
         Nomenclature california = new Nomenclature(15003, 430.00, LocalTime.of(0, 4, 15),
@@ -436,7 +436,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         ValiditySchedule tuesdaySchedule = new ValiditySchedule(LocalTime.of(0, 0),
                                                                 LocalTime.of(23, 0));
         //Days of week creation
-        List<DayOfWeek> dayOfWeeks = new ArrayList<>(Arrays.asList(DayOfWeek.MONDAY));
+        List<DayOfWeek> dayOfWeeks = new ArrayList<>(Arrays.asList(DayOfWeek.TUESDAY,
+                                                                    DayOfWeek.WEDNESDAY));
         tuesdaySchedule.setDayOfWeekList(dayOfWeeks);
         List<ValiditySchedule> listtuesdaySchedule = new ArrayList<>(Arrays.asList(tuesdaySchedule));
 

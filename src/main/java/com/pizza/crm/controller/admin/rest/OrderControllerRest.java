@@ -60,10 +60,6 @@ public class OrderControllerRest {
         }
         total = rawTotal;
 
-
-
-
-
         DayOfWeek dayOfWeekNow = LocalDate.now().getDayOfWeek();
         Double discountSum = 0d;
         Double extraChargeSum = 0d;
@@ -73,35 +69,9 @@ public class OrderControllerRest {
             nameDiscounts.add(d.getName());
         }
         List<Discount> list = new ArrayList<>();
-        list = discountService.getDiscountsForOrder(nameDiscounts, dayOfWeekNow);
+        list = discountService.getDiscountsForOrder(nameDiscounts, dayOfWeekNow, localDateTime,
+                                                    rawTotal, nameDiscounts.size());
         order.setDiscounts(list);
-
-//            final Double rawTotalStream = rawTotal;
-//            discountStream = order.getDiscounts().stream()
-//                .map(discount -> discount = discountService.findByName(discount.getName()))
-//                .distinct()
-//                .filter(discount -> discount.getValidities().stream()
-//                        .noneMatch(validity -> validity.getValidityScheduleList().stream()
-//                                .noneMatch(validitySchedule ->
-//                                        (validitySchedule.getDayOfWeekList().contains(dayOfWeekNow))
-//                                )
-//                        )
-//                )
-//                    .filter(discount -> discount.getValidities().stream()
-//                            .noneMatch(validity -> validity.getValidityScheduleList().stream()
-//                                    .noneMatch(validitySchedule ->
-//                                            (localTimeNow.isAfter(validitySchedule.getBeginTime())&&
-//                                                    localTimeNow.isBefore(validitySchedule.getEndTime()))
-//                                    )
-//                            )
-//                    )
-//                    .filter(discount -> !(discount.isMinSumRestriction() &&
-//                            discount.getMinSum().compareTo(rawTotalStream) > 0)
-//                    )
-//                    .filter(discount -> !(!(discount.getCombinable()) && order.getDiscounts().size() > 1)
-//                    )
-//                    .collect(Collectors.toList());
-//            order.setDiscounts(discountStream);
         
         //Order cost calculation with discounts
         if (order.getDiscounts() != null) {
@@ -129,18 +99,18 @@ public class OrderControllerRest {
             }
         }
 
-
-
-
-
         order.setPrice(rawTotal);
         order.setDiscountedPrice(total);
+        order.setDiscountCost(discountSum);
+        order.setExtraChargeCost(extraChargeSum);
         order.setCreationDate(localDateTime);
         order.setDishes(dishService.getDishesByName(dishNames));
         orderService.save(order);
 
         rawTotalAndTotal.add(order.getPrice());
         rawTotalAndTotal.add(order.getDiscountedPrice());
+        rawTotalAndTotal.add(order.getDiscountCost());
+        rawTotalAndTotal.add(order.getExtraChargeCost());
 
         return rawTotalAndTotal;
     }

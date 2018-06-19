@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +59,10 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
-    public List<Discount> getDiscountsForOrder(List<String> strings, DayOfWeek dayOfWeek) {
-        return discountRepository.getDiscountsForOrder(strings, dayOfWeek);
+    public List<Discount> getDiscountsForOrder(List<String> strings,
+                                               DayOfWeek dayOfWeek,
+                                               LocalDateTime localDateTime,
+                                               Double total, Integer size) {
+        return discountRepository.getDiscountsForOrder(strings, dayOfWeek, localDateTime, total, size);
     }
 }
