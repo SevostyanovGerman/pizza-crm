@@ -13,7 +13,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Array;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -103,6 +102,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
+        generateUsers();
+
         generateDishes();
 
         generateValidity();
@@ -110,8 +111,6 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         generateFakeStaff();
 
         generateDiscountsAndPaymentMethods();
-
-        generateUsers();
 
         generateAddedCategory();
 
@@ -162,11 +161,14 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                     faker.numerify("####"));
             employee.setEmployeeInfo(employeeInfo);
             employee.setAddress(address);
+            Role role = roleService.getByName("USER");
+            User user = new User(employee.getPincode(), true);
+            user.setRoles(Collections.singletonList(role));
+            employee.setUser(user);
             return employee;
         })
                 .limit(10)
                 .collect(Collectors.toList());
-        fakeEmployees.add(new Employee("admin", "admin", "admin"));
 
         Random random = new Random();
         fakeEmployees.forEach((e) -> {

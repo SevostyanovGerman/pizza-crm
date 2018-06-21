@@ -1,5 +1,7 @@
 package com.pizza.crm.model.security;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.pizza.crm.model.Employee;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,17 +11,23 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@Table(name = "user")
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column
     private String pincode;
 
     private Boolean enabled;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "user")
+    @JsonBackReference
+    private Employee employee;
+
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user")},
             inverseJoinColumns = {@JoinColumn(name = "role")})
@@ -95,6 +103,14 @@ public class User implements UserDetails {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public Collection<Role> getRoles() {
