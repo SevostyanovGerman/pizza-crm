@@ -24,6 +24,11 @@ function SaveDecree() {
         }
     });
 
+    var validities = [];
+    var nameValidity = $("#activePeriod").find('option:selected').text();
+    var validity = {nameValidity: nameValidity};
+    validities.push(validity);
+
     var decree = {
         id: id,
         comment: comment,
@@ -32,8 +37,9 @@ function SaveDecree() {
         endTime: endTime + "T23:59:59",
         nameForIikoFront: nameForIikoFront,
         numberDecree: numberDecree,
-        enable: enable
-    }
+        enable: enable,
+        validities: validities
+    };
 
     console.log(decree);
 

@@ -2,6 +2,7 @@ package com.pizza.crm.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,6 +30,12 @@ public class Decree {
             joinColumns = @JoinColumn(name = "decree"),
             inverseJoinColumns = @JoinColumn(name = "dish"))
     private Set<Dish> dishes;
+
+    @ManyToMany
+    @JoinTable(name = "Decree_Validity",
+            joinColumns = @JoinColumn(name = "Decree"),
+            inverseJoinColumns = @JoinColumn(name = "Validity"))
+    private List<Validity> validities;
 
     public Decree() {
 
@@ -106,6 +113,14 @@ public class Decree {
 
     public void setNameForIikoFront(String nameForIikoFront) {
         this.nameForIikoFront = nameForIikoFront;
+    }
+
+    public List<Validity> getValidities() {
+        return validities;
+    }
+
+    public void setValidities(List<Validity> validities) {
+        this.validities = validities;
     }
 
     @Override
