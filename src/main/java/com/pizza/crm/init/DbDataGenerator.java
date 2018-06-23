@@ -177,7 +177,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
             List<Dish> list = (List<Dish>) dishService.getAll();
 
             if (list.size() == 0){
-                for (int c = 0; c < 103; c++) {
+                for (int c = 0; c < 25; c++) {
                     String namesDishes = faker.food().ingredient();
                     namesDishesSet.add(namesDishes);
                 }
@@ -190,13 +190,9 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                     for (int i = 0; i < list.size(); i++) {
                         String dishName = list.get(i).getName();
                         if (dishName.equals(namesDishes)){
-                           //namesDishesSet.add(namesDishes);
                             flag = true;
                             break;
-                        } else {
-                            flag = false;
                         }
-
                     }
 
                     if (!flag){
@@ -281,10 +277,11 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         String now = "2016-11-09 10:30";
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
         LocalDateTime formatDateTime = LocalDateTime.parse(now, formatter);
 
-        decreeService.save(new Decree("001", formatDateTime, formatDateTime, "123", "1111", false));
+        for (int i = 0; i < 15; i++) {
+            decreeService.save(new Decree("001", formatDateTime, formatDateTime, "123", "1111", false));
+        }
 
     }
 
@@ -295,13 +292,13 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         List<Nomenclature> nomenclaturesList = new ArrayList<>();
         Set<NomenclatureParentGroup> parentSet = new HashSet<>();
 
-        for (int j = 0; j < 50; j++) {
+        for (int j = 0; j < 25; j++) {
             nomenclaturesList.clear();
             parentSet.clear();
             NomenclatureParentGroup nomenclaturePG = new NomenclatureParentGroup(faker.food().ingredient());
             parentSet.add(nomenclaturePG);
 
-            for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < 25; i++) {
 
                 LocalTime localTime1 = LocalTime.MIN.plusSeconds(generator.nextLong());
                 LocalTime localTime2 = LocalTime.MIN.plusSeconds(generator.nextLong());
@@ -327,53 +324,85 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     }
 
     private void generateScaleOfSize() {
-        ScaleOfSizeValues valuesDrink = new ScaleOfSizeValues("0,33 литра", "0.3 л.", false);
-        ScaleOfSizeValues valuesPizza = new ScaleOfSizeValues("30 сантиметров", "30 см.", true);
-        ScaleOfSizeValues valuesWeight = new ScaleOfSizeValues("100 грамм", "100 гр.", true);
-        List<ScaleOfSizeValues> listDrink = new ArrayList<>(Arrays.asList(valuesDrink));
-        List<ScaleOfSizeValues> listPizza = new ArrayList<>(Arrays.asList(valuesPizza));
-        List<ScaleOfSizeValues> listWeight = new ArrayList<>(Arrays.asList(valuesWeight));
-        ScaleOfSize scaleDrink = new ScaleOfSize("Обьем бутылок", listDrink);
-        ScaleOfSize scalePizza = new ScaleOfSize("Размер пиццы", listPizza);
-        ScaleOfSize scaleWeight = new ScaleOfSize("Вес товара", listWeight);
-        scaleOfSizeService.save(scaleDrink);
-        scaleOfSizeService.save(scalePizza);
-        scaleOfSizeService.save(scaleWeight);
+        Faker faker = new Faker(new Locale("ru"));
+        List<ScaleOfSizeValues> valuesList = new ArrayList<>();
+
+
+        for (int i = 0; i < 5; i++) {
+            valuesList.clear();
+            ScaleOfSize scale = new ScaleOfSize(faker.food().ingredient());
+            scaleOfSizeService.save(scale);
+
+            for (int j = 0; j < 10; j++) {
+                ScaleOfSizeValues values = new ScaleOfSizeValues(faker.food().spice(), "0.3 л.", false);
+                valuesList.add(values);
+            }
+            scale.setValuesList(valuesList);
+            scaleOfSizeService.save(scale);
+        }
     }
 
     private void generateIngredient() {
         Ingredient ingredient = new Ingredient("Dough", 1.0, "1", "kg");
-
         ingredientService.save(ingredient);
-
         //dishPizza.addIngredient(ingredient);
     }
 
     private void generateValidity() {
-        ValiditySchedule validityScheduleLunch = new ValiditySchedule(/*"Lunch",*/ LocalTime.of(12, 00), LocalTime.of(13, 00), true, true, true, true, true, false, false);
-        ValiditySchedule validityScheduleLunch2 = new ValiditySchedule(/*"Lunch",*/ LocalTime.of(14, 30), LocalTime.of(15, 00), false, true, true, true, true, true, false);
-        List<ValiditySchedule> listValidityScheduleLunches = new ArrayList<>(Arrays.asList(validityScheduleLunch, validityScheduleLunch2));
+        Faker faker = new Faker(new Locale("ru"));
+        List<ValiditySchedule> listValiditySchedule = new ArrayList<>();
+        Set<String> validitySet = new HashSet<>();
 
-        ValiditySchedule validityScheduleDinner = new ValiditySchedule(/*"Dinner",*/ LocalTime.of(18, 00), LocalTime.of(20, 00), false, true, true, true, true, true, false);
-        List<ValiditySchedule> listValidityScheduleDinner = new ArrayList<>(Arrays.asList(validityScheduleDinner));
+        for (int i = 0; i < 15; i++) {
+            listValiditySchedule.clear();
 
-        Validity validityDinner = new Validity("Dinner", listValidityScheduleDinner);
-        Validity validityLunch = new Validity("Lunch", listValidityScheduleLunches);
-        validityService.save(validityLunch);
-        validityService.save(validityDinner);
 
-        ValiditySchedule tuesdaySchedule = new ValiditySchedule(LocalTime.of(1, 00),
-                LocalTime.of(23, 00), false, true, false, false,
-                false, false, false);
+            List<Validity> validityList = (List<Validity>) validityService.getAll();
 
-        List<ValiditySchedule> listtuesdaySchedule = new ArrayList<>(Arrays.asList(tuesdaySchedule));
+            if (validityList.size() == 0){
+                String fakerName = faker.beer().name();
+                validitySet.add(fakerName);
+                List<String> list = new ArrayList<>(validitySet);
+                Validity validity = new Validity();
+                validity.setNameValidity(list.get(i));
+                validityService.save(validity);
 
-        Validity validitytuesday = new Validity("Вторник, с 1-00 до 23-00", listtuesdaySchedule);
-        validityService.save(validitytuesday);
+            } else {
+                String fakerName = faker.beer().name();
+                boolean flag = false;
 
+                for (int k = 0; k < validityList.size(); k++) {
+                    String validityName = validityList.get(k).getNameValidity();
+                    if (fakerName.equals(validityName)){
+                        flag = true;
+                        break;
+                    }
+                }
+
+                if (!flag) {
+                    Validity validity = new Validity();
+                    validity.setNameValidity(fakerName);
+                    validityService.save(validity);
+
+                    for (int j = 0; j < 13; j++) {
+                        ValiditySchedule schedule = new ValiditySchedule(LocalTime.of(18, 00), LocalTime.of(20, 00), false, true, true, true, true, true, false);
+                        listValiditySchedule.add(schedule);
+                        validity.setValidityScheduleList(listValiditySchedule);
+                        validityService.save(validity);
+                    }
+                }
+            }
+        }
     }
 
     private void generateDiscountsAndPaymentMethods() {
+        Faker faker = new Faker(new Locale("ru"));
+
+        for (int i = 0; i < 3; i++) {
+            Discount discount = new Discount(faker.commerce().productName());
+            discountService.save(discount);
+        }
+
         // PaymentType creating
         PaymentType card = new PaymentType("Банковские карты");
         PaymentType cash = new PaymentType("Наличные");
@@ -549,12 +578,14 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     }
 
     private void generateUnitsOfMeasurement() {
-        UnitsOfMeasurement kg = new UnitsOfMeasurement("Киллограммы", "кг", true, 4747);
-        UnitsOfMeasurement l = new UnitsOfMeasurement("Литры", "л", true, 4748);
-        UnitsOfMeasurement portion = new UnitsOfMeasurement("Порция", "порц", true, 4749);
-        unitsOfMeasurementService.save(kg);
-        unitsOfMeasurementService.save(l);
-        unitsOfMeasurementService.save(portion);
+        Faker faker = new Faker(new Locale("ru"));
+
+        for (int i = 0; i < 15; i++) {
+            String name = faker.food().measurement();
+            UnitsOfMeasurement units = new UnitsOfMeasurement(name, name , true, 4747);
+            unitsOfMeasurementService.save(units);
+        }
+
     }
 
 }
