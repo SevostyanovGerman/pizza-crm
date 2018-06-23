@@ -159,54 +159,64 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         Set<String> namesCategoriesSet = new HashSet<>();
 
 
-        for (int j = 0; j < 2; j++) {
+        for (int j = 0; j < 5; j++) {
             namesCategoriesSet.clear();
             namesDishesSet.clear();
             categorySet.clear();
             dishSet.clear();
-            //-------------------Категория------------------------
+
+            //------------------- Category ------------------------
 
             namesCategoriesSet.add(faker.food().ingredient());
             List<String> namesCategoriesList = new ArrayList<>(namesCategoriesSet);
             Category category = new Category(namesCategoriesList.get(0));
             categorySet.add(category);
 
-           //---------------------Блюда----------------------------
+            //--------------------- Dishes ----------------------------
 
             List<Dish> list = (List<Dish>) dishService.getAll();
 
             if (list.size() == 0){
-                for (int c = 0; c < 15; c++) {
+                for (int c = 0; c < 103; c++) {
                     String namesDishes = faker.food().ingredient();
                     namesDishesSet.add(namesDishes);
                 }
 
             } else {
-                for (int c = 0; c < 15; c++) {
+                for (int c = 0; c < 103; c++) {
                     String namesDishes = faker.food().ingredient();
+                    boolean flag = false;
 
                     for (int i = 0; i < list.size(); i++) {
-                        if (!(list.get(c).getName().equals(namesDishes))) {
-                            namesDishesSet.add(namesDishes);
-                        //} else {
-
+                        String dishName = list.get(i).getName();
+                        if (dishName.equals(namesDishes)){
+                           //namesDishesSet.add(namesDishes);
+                            flag = true;
+                            break;
+                        } else {
+                            flag = false;
                         }
+
+                    }
+
+                    if (!flag){
+                        namesDishesSet.add(namesDishes);
                     }
                 }
             }
 
             List<String> namesDishesList = new ArrayList<>(namesDishesSet);
             for (int i = 0; i < namesDishesList.size(); i++) {
-                    Dish dish = new Dish(
-                            namesDishesList.get(i),
-                            faker.number().randomDouble(1, 10, 10000),
-                            faker.number().digit(),
-                            faker.number().digit(),
-                            faker.number().digit());
-                    dishSet.add(dish);
-                    dishService.save(dish);
-                    dish.setCategories(categorySet);
-                    System.out.println("Блюдо: " + dish);
+                Dish dish = new Dish(
+                        namesDishesList.get(i),
+                        faker.number().randomDouble(1, 10, 10000),
+                        faker.number().digit(),
+                        faker.number().digit(),
+                        faker.number().digit());
+                dishSet.add(dish);
+                dishService.save(dish);
+                dish.setCategories(categorySet);
+                System.out.println("Блюдо: " + dish);
             }
             //-------------------------------------------------------------
 
@@ -214,6 +224,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
             categoryService.save(category);
             System.out.println("Категория: " + category);
         }
+
 
         DishQuickMenu dishQuickMenu = new DishQuickMenu(faker.color().name(), 1, dishSet);
         dishQuickMenuService.save(dishQuickMenu);
@@ -243,7 +254,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         quickMenuService.save(new QuickMenu("||", new HashSet<>(), 6));
         quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 6));
 
-     /*   quickMenuService.save(new QuickMenu("Roll", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu2)), 7));
+/*        quickMenuService.save(new QuickMenu("Roll", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu2)), 7));
         quickMenuService.save(new QuickMenu("Pizza", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu3)), 7));
         quickMenuService.save(new QuickMenu("Test", new HashSet<>(Arrays.asList(dishQuickMenu4)), 7));*/
     }
@@ -284,13 +295,13 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         List<Nomenclature> nomenclaturesList = new ArrayList<>();
         Set<NomenclatureParentGroup> parentSet = new HashSet<>();
 
-        for (int j = 0; j < 5; j++) {
+        for (int j = 0; j < 50; j++) {
             nomenclaturesList.clear();
             parentSet.clear();
             NomenclatureParentGroup nomenclaturePG = new NomenclatureParentGroup(faker.food().ingredient());
             parentSet.add(nomenclaturePG);
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 50; i++) {
 
                 LocalTime localTime1 = LocalTime.MIN.plusSeconds(generator.nextLong());
                 LocalTime localTime2 = LocalTime.MIN.plusSeconds(generator.nextLong());
