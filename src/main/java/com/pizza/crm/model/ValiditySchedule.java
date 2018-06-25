@@ -1,7 +1,9 @@
 package com.pizza.crm.model;
 
 import javax.persistence.*;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "validity_schedule")
@@ -15,36 +17,16 @@ public class ValiditySchedule {
 
     private LocalTime endTime;
 
-    private Boolean monday;
-
-    private Boolean tuesday;
-
-    private Boolean wednesday;
-
-    private Boolean thursday;
-
-    private Boolean friday;
-
-    private Boolean saturday;
-
-    private Boolean sunday;
+    @ElementCollection(targetClass = DayOfWeek.class)
+    @CollectionTable(name = "validity_schedule_DayOfWeek",
+            joinColumns = @JoinColumn(name = "validity_schedule_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "DayOfWeek_id")
+    private List<DayOfWeek> dayOfWeekList;
 
     public ValiditySchedule(LocalTime beginTime, LocalTime endTime) {
         this.beginTime = beginTime;
         this.endTime = endTime;
-    }
-
-    public ValiditySchedule(LocalTime beginTime, LocalTime endTime, Boolean monday, Boolean tuesday,
-                            Boolean wednesday, Boolean thursday, Boolean friday, Boolean saturday, Boolean sunday) {
-        this.beginTime = beginTime;
-        this.endTime = endTime;
-        this.monday = monday;
-        this.tuesday = tuesday;
-        this.wednesday = wednesday;
-        this.thursday = thursday;
-        this.friday = friday;
-        this.saturday = saturday;
-        this.sunday = sunday;
     }
 
     public ValiditySchedule() {
@@ -74,59 +56,11 @@ public class ValiditySchedule {
         this.endTime = endTime;
     }
 
-    public Boolean getMonday() {
-        return monday;
+    public List<DayOfWeek> getDayOfWeekList() {
+        return dayOfWeekList;
     }
 
-    public void setMonday(Boolean monday) {
-        this.monday = monday;
-    }
-
-    public Boolean getTuesday() {
-        return tuesday;
-    }
-
-    public void setTuesday(Boolean tuesday) {
-        this.tuesday = tuesday;
-    }
-
-    public Boolean getWednesday() {
-        return wednesday;
-    }
-
-    public void setWednesday(Boolean wednesday) {
-        this.wednesday = wednesday;
-    }
-
-    public Boolean getThursday() {
-        return thursday;
-    }
-
-    public void setThursday(Boolean thursday) {
-        this.thursday = thursday;
-    }
-
-    public Boolean getFriday() {
-        return friday;
-    }
-
-    public void setFriday(Boolean friday) {
-        this.friday = friday;
-    }
-
-    public Boolean getSaturday() {
-        return saturday;
-    }
-
-    public void setSaturday(Boolean saturday) {
-        this.saturday = saturday;
-    }
-
-    public Boolean getSunday() {
-        return sunday;
-    }
-
-    public void setSunday(Boolean sunday) {
-        this.sunday = sunday;
+    public void setDayOfWeekList(List<DayOfWeek> dayOfWeekList) {
+        this.dayOfWeekList = dayOfWeekList;
     }
 }

@@ -20,7 +20,9 @@ public class Order {
     @JoinColumn(name = "salesPoint")
     private SalesPoint salesPoint;
 
-    private LocalDateTime dateCreateOrder;
+    private LocalDateTime creationDate;
+
+    private LocalDateTime closingDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee")
@@ -56,14 +58,16 @@ public class Order {
 
     private String deliveryAddress;
 
-    private double costNotDiscount;
-
-    private double discount;
-
-    private double costDiscount;
-
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<OrderTab> orderTab = new ArrayList<>();
+
+    private Double price;
+
+    private Double discountedPrice;
+
+    private Double discountCost;
+
+    private Double extraChargeCost;
 
     public Order() {
     }
@@ -84,12 +88,12 @@ public class Order {
         this.salesPoint = salesPoint;
     }
 
-    public LocalDateTime getDateCreateOrder() {
-        return dateCreateOrder;
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
-    public void setDateCreateOrder(LocalDateTime dateCreateOrder) {
-        this.dateCreateOrder = dateCreateOrder;
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     public Employee getEmployee() {
@@ -114,30 +118,6 @@ public class Order {
 
     public void setDeliveryAddress(String deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
-    }
-
-    public double getCostNotDiscount() {
-        return costNotDiscount;
-    }
-
-    public void setCostNotDiscount(double costNotDiscount) {
-        this.costNotDiscount = costNotDiscount;
-    }
-
-    public double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(double discount) {
-        this.discount = discount;
-    }
-
-    public double getCostDiscount() {
-        return costDiscount;
-    }
-
-    public void setCostDiscount(double costDiscount) {
-        this.costDiscount = costDiscount;
     }
 
     public Collection<OrderTab> getOrderTab() {
@@ -187,5 +167,45 @@ public class Order {
 
     public void setDishes(List<Dish> dishes) {
         this.dishes = dishes;
+    }
+
+    public LocalDateTime getClosingDate() {
+        return closingDate;
+    }
+
+    public void setClosingDate(LocalDateTime closingDate) {
+        this.closingDate = closingDate;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getDiscountedPrice() {
+        return discountedPrice;
+    }
+
+    public void setDiscountedPrice(Double discountedPrice) {
+        this.discountedPrice = discountedPrice;
+    }
+
+    public Double getDiscountCost() {
+        return discountCost;
+    }
+
+    public void setDiscountCost(Double discountCost) {
+        this.discountCost = discountCost;
+    }
+
+    public Double getExtraChargeCost() {
+        return extraChargeCost;
+    }
+
+    public void setExtraChargeCost(Double extraChargeCost) {
+        this.extraChargeCost = extraChargeCost;
     }
 }

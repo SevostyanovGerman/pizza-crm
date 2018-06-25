@@ -46,22 +46,10 @@ public class ValidityController {
 
     //Отдельное добавление графика
     @PostMapping("/schedule/addSchedule")
-    public String addSchedule(
-            @RequestParam String validityName,
-            @RequestParam LocalTime beginTime,
-            @RequestParam LocalTime endTime,
-            @RequestParam Boolean monday,
-            @RequestParam Boolean tuesday,
-            @RequestParam Boolean wednesday,
-            @RequestParam Boolean thursday,
-            @RequestParam Boolean friday,
-            @RequestParam Boolean saturday,
-            @RequestParam Boolean sunday) {
-        ValiditySchedule validitySchedule = new ValiditySchedule(beginTime, endTime, monday, tuesday, wednesday,
-                thursday, friday, saturday, sunday);
-        Validity validity = validityService.findByNameValidity(validityName);
-        validity.getValidityScheduleList().add(validitySchedule);
-        validityService.save(validity);
+    public String addSchedule(@RequestBody Validity validity) {
+        Validity validityGet = validityService.findByNameValidity(validity.getNameValidity());
+        validityGet.getValidityScheduleList().add(validity.getValidityScheduleList().get(0));
+        validityService.save(validityGet);
         return "redirect:/validity";
     }
 
@@ -77,19 +65,15 @@ public class ValidityController {
         return "redirect:/validity";
     }
 
-
     @PostMapping("/validity/addField")
     public String addField(@RequestBody Validity validity) {
         validityService.save(validity);
         return "redirect:/validity";
     }
 
-
     @PostMapping("/validity/save")
     public String save(@RequestBody Validity validity) {
         validityService.save(validity);
         return "redirect:/validity";
     }
-
-
 }

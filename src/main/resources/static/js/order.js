@@ -105,7 +105,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     $.ajax({
         type: "POST",
-        url: "/admin/discount/getAllDiscountsForOrder",
+        url: "/discount/getAllDiscountsForOrder",
         contentType: "application/json; charset=utf-8",
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
@@ -349,11 +349,8 @@ function getSelectedRow() {
 }
 
 function updateTotal() {
-    let rawTotal = 0;
-    let total = 0;
 
     var dishes = [];
-
     $('.order-table tr').each(function () {
         let amount = parseInt($(this).find('td:eq(0)').text());
         if (isNaN(amount)) {
@@ -365,14 +362,19 @@ function updateTotal() {
         dishes.push(dish);
     });
 
+    var id = $("#new-order-id").text();
+
+    var discounts = discountsAndExtraCharges;
+
     var order = {
+        id: id,
         dishes: dishes,
-        discounts: discountsAndExtraCharges
+        discounts: discounts
     };
 
     $.ajax({
         type: "POST",
-        url: "/admin/discount/getRowTotal",
+        url: "/discount/getRowTotal",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(order),
         beforeSend: function (xhr) {
@@ -381,8 +383,9 @@ function updateTotal() {
         success: function (data) {
             $('#rawTotal').html(data[0]);
             $('#total').html(data[1]);
-            $("#discount").html(data[2]);
-            $("#extraCharge").html(data[3]);
+            $('#discount').html(data[2]);
+            $('#extraCharge').html(data[3]);
+
         },
         error: function () {
         }
@@ -547,7 +550,6 @@ function SearchProductDelOne() {
     $("#SearchModalInput").val(searchString);
     listObj2.search(searchString);
 }
-
 
 function SearchModalЕxpandShow() {
     $("#SearchModal").modal('hide');

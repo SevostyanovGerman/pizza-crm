@@ -36,13 +36,13 @@ function showSchedule(nameValidity) {
                     '<input id="id" class="ids" type="hidden" value="' + data[i].id + '">' +
                     '<td><input type="time" value="' + data[i].beginTime + '"></td>' +
                     '<td><input type="time" value="' + data[i].endTime + '"></td>' +
-                    '<td><input type="checkbox" class="monday activated"' + (data[i].monday ? 'checked' : '') + '></td>' +
-                    '<td><input type="checkbox" class="tuesday activated"' + (data[i].tuesday ? 'checked' : '') + '></td>' +
-                    '<td><input type="checkbox" class="wednesday activated"' + (data[i].wednesday ? 'checked' : '') + '></td>' +
-                    '<td><input type="checkbox" class="thursday activated"' + (data[i].thursday ? 'checked' : '') + '></td>' +
-                    '<td><input type="checkbox" class="friday activated"' + (data[i].friday ? 'checked' : '') + '></td>' +
-                    '<td><input type="checkbox" class="saturday activated"' + (data[i].saturday ? 'checked' : '') + '></td>' +
-                    '<td><input type="checkbox" class="sunday activated"' + (data[i].sunday ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="monday activated"' + ((data[i].dayOfWeekList.indexOf( 'MONDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="tuesday activated"' + ((data[i].dayOfWeekList.indexOf( 'TUESDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="wednesday activated"' + ((data[i].dayOfWeekList.indexOf( 'WEDNESDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="thursday activated"' + ((data[i].dayOfWeekList.indexOf( 'THURSDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="friday activated"' + ((data[i].dayOfWeekList.indexOf( 'FRIDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="saturday activated"' + ((data[i].dayOfWeekList.indexOf( 'SATURDAY' )) != (-1) ? 'checked' : '') + '></td>' +
+                    '<td><input type="checkbox" class="sunday activated"' + ((data[i].dayOfWeekList.indexOf( 'SUNDAY' )) != (-1) ? 'checked' : '') + '></td>' +
                     '<td><a class="btn btn-danger btn-sm deleteSchedule" href="#"><i class="fa fa-trash" aria-hidden="true" ></i></a></td>' +
                     '</tr>');
             }
@@ -63,7 +63,9 @@ $(document).ready(function () {
 });
 
 function addSchedule() {
-    var validityName = tdName;
+
+
+    var nameValidity = tdName;
     var beginTime = $('#beginTime').val();
     var endTime = $('#endTime').val();
     var monday = $("#monday").prop('checked');
@@ -74,26 +76,35 @@ function addSchedule() {
     var saturday = $("#saturday").prop('checked');
     var sunday = $('#sunday').prop('checked');
 
+        var dayOfWeekList = [];
+        if (monday == true) {dayOfWeekList.push("MONDAY");}
+        if (tuesday == true) {dayOfWeekList.push("TUESDAY");}
+        if (thursday == true) {dayOfWeekList.push("THURSDAY");}
+        if (wednesday == true) {dayOfWeekList.push("WEDNESDAY");}
+        if (friday == true) {dayOfWeekList.push("FRIDAY");}
+        if (saturday == true) {dayOfWeekList.push("SATURDAY");}
+        if (sunday == true) {dayOfWeekList.push("SUNDAY");}
+
+        var schedules = [];
+        var scheduleSchedule = {
+            beginTime: beginTime,
+            endTime: endTime,
+            dayOfWeekList: dayOfWeekList
+        };
+        schedules.push(scheduleSchedule);
+
+    var validity = {nameValidity:nameValidity,
+        validityScheduleList: schedules};
+
     $.ajax({
         type: "POST",
         url: "/schedule/addSchedule",
-        data: {
-
-            validityName: validityName,
-            beginTime: beginTime,
-            endTime: endTime,
-            monday: monday,
-            tuesday: tuesday,
-            thursday: thursday,
-            wednesday: wednesday,
-            friday: friday,
-            saturday: saturday,
-            sunday: sunday
-        },
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(validity),
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
-        success: function (data) {
+        success: function () {
             window.location.replace("/validity");
         },
         error: function (e) {
@@ -208,16 +219,19 @@ function addField() {
         var saturdaySchedule =     $(this).closest('tr').find('td:eq(7)').find('input[type=checkbox]').prop('checked');
         var sundaySchedule =       $(this).closest('tr').find('td:eq(8)').find('input[type=checkbox]').prop('checked');
 
+        var dayOfWeekList = [];
+        if (mondaySchedule == true) {dayOfWeekList.push("MONDAY");}
+        if (tuesdaySchedule == true) {dayOfWeekList.push("TUESDAY");}
+        if (thursdaySchedule == true) {dayOfWeekList.push("THURSDAY");}
+        if (wednesdaySchedule == true) {dayOfWeekList.push("WEDNESDAY");}
+        if (fridaySchedule == true) {dayOfWeekList.push("FRIDAY");}
+        if (saturdaySchedule == true) {dayOfWeekList.push("SATURDAY");}
+        if (sundaySchedule == true) {dayOfWeekList.push("SUNDAY");}
+
         var scheduleSchedule = {
             beginTime: beginTimeSchedule,
             endTime: endTimeSchedule,
-            monday: mondaySchedule,
-            tuesday: tuesdaySchedule,
-            wednesday: wednesdaySchedule,
-            thursday: thursdaySchedule,
-            friday: fridaySchedule,
-            saturday: saturdaySchedule,
-            sunday: sundaySchedule
+            dayOfWeekList: dayOfWeekList
         };
 
         schedules.push(scheduleSchedule);
@@ -259,10 +273,6 @@ function exit() {
     window.location.replace("/newDecree");
 }
 
-function saveAndExit() {
-
-}
-
 
 //Код Сохранить все
 function save() {
@@ -273,28 +283,29 @@ function save() {
     $('.tableSchedule').each(function () {
        // var id = $(this).closest('tr').find('input[type=hidden]').val();
 
-        var beginTime = $('#showSchedule tr').find("input[type=time]").eq(0).val();
-        var endTime = $('#showSchedule tr').find("input[type=time]").eq(1).val();
-        var monday = $(".monday").prop('checked');
-        var tuesday = $(".tuesday").prop('checked');
-        var thursday = $(".thursday").prop('checked');
-        var wednesday = $(".wednesday").prop('checked');
-        var friday = $(".friday").prop('checked');
-        var saturday = $(".saturday").prop('checked');
-        var sunday = $('.sunday').prop('checked');
+        var beginTimeSchedule =    $(this).closest('tr').find('td:eq(0)').find('input[type=time]').val();
+        var endTimeSchedule =      $(this).closest('tr').find('td:eq(1)').find('input[type=time]').val();
+        var mondaySchedule =       $(this).closest('tr').find('td:eq(2)').find('input[type=checkbox]').prop('checked');
+        var tuesdaySchedule =      $(this).closest('tr').find('td:eq(3)').find('input[type=checkbox]').prop('checked');
+        var wednesdaySchedule =    $(this).closest('tr').find('td:eq(4)').find('input[type=checkbox]').prop('checked');
+        var thursdaySchedule =     $(this).closest('tr').find('td:eq(5)').find('input[type=checkbox]').prop('checked');
+        var fridaySchedule =       $(this).closest('tr').find('td:eq(6)').find('input[type=checkbox]').prop('checked');
+        var saturdaySchedule =     $(this).closest('tr').find('td:eq(7)').find('input[type=checkbox]').prop('checked');
+        var sundaySchedule =       $(this).closest('tr').find('td:eq(8)').find('input[type=checkbox]').prop('checked');
+
+        var dayOfWeekList = [];
+        if (mondaySchedule == true) {dayOfWeekList.push("MONDAY");}
+        if (tuesdaySchedule == true) {dayOfWeekList.push("TUESDAY");}
+        if (thursdaySchedule == true) {dayOfWeekList.push("THURSDAY");}
+        if (wednesdaySchedule == true) {dayOfWeekList.push("WEDNESDAY");}
+        if (fridaySchedule == true) {dayOfWeekList.push("FRIDAY");}
+        if (saturdaySchedule == true) {dayOfWeekList.push("SATURDAY");}
+        if (sundaySchedule == true) {dayOfWeekList.push("SUNDAY");}
 
         var scheduleSchedule = {
-         //   id: id,
-            name: name,
-            beginTime: beginTime,
-            endTime: endTime,
-            monday: monday,
-            tuesday: tuesday,
-            thursday: thursday,
-            wednesday: wednesday,
-            friday: friday,
-            saturday: saturday,
-            sunday: sunday
+            beginTime: beginTimeSchedule,
+            endTime: endTimeSchedule,
+            dayOfWeekList: dayOfWeekList
         };
 
         schedules.push(scheduleSchedule);
@@ -324,9 +335,6 @@ function save() {
     });
 }
 
-
-
-
 //Код Сохранить все и Выйти
 function saveAndExit() {
     var id = $(".item-active").closest('tr').find('input[type=hidden]').val();
@@ -336,28 +344,29 @@ function saveAndExit() {
     $('.tableSchedule').each(function () {
         // var id = $(this).closest('tr').find('input[type=hidden]').val();
 
-        var beginTime = $('#showSchedule tr').find("input[type=time]").eq(0).val();
-        var endTime = $('#showSchedule tr').find("input[type=time]").eq(1).val();
-        var monday = $(".monday").prop('checked');
-        var tuesday = $(".tuesday").prop('checked');
-        var thursday = $(".thursday").prop('checked');
-        var wednesday = $(".wednesday").prop('checked');
-        var friday = $(".friday").prop('checked');
-        var saturday = $(".saturday").prop('checked');
-        var sunday = $('.sunday').prop('checked');
+        var beginTimeSchedule =    $(this).closest('tr').find('td:eq(0)').find('input[type=time]').val();
+        var endTimeSchedule =      $(this).closest('tr').find('td:eq(1)').find('input[type=time]').val();
+        var mondaySchedule =       $(this).closest('tr').find('td:eq(2)').find('input[type=checkbox]').prop('checked');
+        var tuesdaySchedule =      $(this).closest('tr').find('td:eq(3)').find('input[type=checkbox]').prop('checked');
+        var wednesdaySchedule =    $(this).closest('tr').find('td:eq(4)').find('input[type=checkbox]').prop('checked');
+        var thursdaySchedule =     $(this).closest('tr').find('td:eq(5)').find('input[type=checkbox]').prop('checked');
+        var fridaySchedule =       $(this).closest('tr').find('td:eq(6)').find('input[type=checkbox]').prop('checked');
+        var saturdaySchedule =     $(this).closest('tr').find('td:eq(7)').find('input[type=checkbox]').prop('checked');
+        var sundaySchedule =       $(this).closest('tr').find('td:eq(8)').find('input[type=checkbox]').prop('checked');
+
+        var dayOfWeekList = [];
+        if (mondaySchedule == true) {dayOfWeekList.push("MONDAY");}
+        if (tuesdaySchedule == true) {dayOfWeekList.push("TUESDAY");}
+        if (thursdaySchedule == true) {dayOfWeekList.push("THURSDAY");}
+        if (wednesdaySchedule == true) {dayOfWeekList.push("WEDNESDAY");}
+        if (fridaySchedule == true) {dayOfWeekList.push("FRIDAY");}
+        if (saturdaySchedule == true) {dayOfWeekList.push("SATURDAY");}
+        if (sundaySchedule == true) {dayOfWeekList.push("SUNDAY");}
 
         var scheduleSchedule = {
-            //   id: id,
-            name: name,
-            beginTime: beginTime,
-            endTime: endTime,
-            monday: monday,
-            tuesday: tuesday,
-            thursday: thursday,
-            wednesday: wednesday,
-            friday: friday,
-            saturday: saturday,
-            sunday: sunday
+            beginTime: beginTimeSchedule,
+            endTime: endTimeSchedule,
+            dayOfWeekList: dayOfWeekList
         };
 
         schedules.push(scheduleSchedule);

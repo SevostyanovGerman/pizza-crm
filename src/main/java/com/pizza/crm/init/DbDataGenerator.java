@@ -13,6 +13,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Array;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -423,8 +425,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         paymentMethodService.saveAll(paymentMethods);
 
         Discount discount = new Discount("Автоматическая скидка на все позиции");
-        discount.setEnabled(true);
-        discount.setValue(5);
+        discount.isEnabled(true);
+        discount.setValue(5d);
         discount.setType("Скидки и надбавки");
         discount.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
         discount.setMinSum(0d);
@@ -448,8 +450,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         discountService.save(discount);
 
         Discount extraCharge = new Discount("Надбавка");
-        extraCharge.setEnabled(true);
-        extraCharge.setValue(10);
+        extraCharge.isEnabled(true);
+        extraCharge.setValue(10d);
         extraCharge.setType("Скидки и надбавки");
         extraCharge.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
         extraCharge.setMinSum(0d);
@@ -473,8 +475,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         discountService.save(extraCharge);
 
         Discount defaultDiscount = new Discount("Скидка 15%");
-        defaultDiscount.setEnabled(true);
-        defaultDiscount.setValue(15);
+        defaultDiscount.isEnabled(true);
+        defaultDiscount.setValue(15d);
         defaultDiscount.setType("Скидки и надбавки");
         defaultDiscount.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
         defaultDiscount.setMinSum(0d);
@@ -499,8 +501,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
 
         Discount minSumDiscount =
                 new Discount("Применяется от 2000 рублей с учетом других скидок (Не к полной сумме)");
-        minSumDiscount.setEnabled(true);
-        minSumDiscount.setValue(30);
+        minSumDiscount.isEnabled(true);
+        minSumDiscount.setValue(30d);
         minSumDiscount.setType("Скидки и надбавки");
         minSumDiscount.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
         minSumDiscount.setMinSum(2000d);
@@ -524,8 +526,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         discountService.save(minSumDiscount);
 
         Discount singleton = new Discount("Применяется при отсутствии других скидок");
-        singleton.setEnabled(true);
-        singleton.setValue(20);
+        singleton.isEnabled(true);
+        singleton.setValue(20d);
         singleton.setType("Скидки и надбавки");
         singleton.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
         singleton.setMinSum(0d);
@@ -549,8 +551,8 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         discountService.save(singleton);
 
         Discount tuesdayDiscount = new Discount("Скидка по вторникам, с 1-00 до 23-00");
-        tuesdayDiscount.setEnabled(true);
-        tuesdayDiscount.setValue(20);
+        tuesdayDiscount.isEnabled(true);
+        tuesdayDiscount.setValue(20d);
         tuesdayDiscount.setType("Скидки и надбавки");
         tuesdayDiscount.setPaymentMethods((List<PaymentMethod>) paymentMethodService.getAll());
         tuesdayDiscount.setMinSum(0d);

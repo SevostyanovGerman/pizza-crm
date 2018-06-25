@@ -75,4 +75,9 @@ public class DishServiceImpl implements DishService {
         return dishRepository.getDishByName(name);
     }
 
+    @Override
+    public List<Dish> getDishesByName(List<String> dishNames) {
+        return dishRepository.getDishesByName(dishNames);
+    }
+
 }

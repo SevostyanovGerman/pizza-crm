@@ -135,24 +135,6 @@
                                     <th></th>
                                 </tr>
                                 </thead>
-                                <tbody id="validity-tbody" th:each="validity : ${discount.validities}">
-                                <tr class="schedule-tr" >
-                                    <td th:text="${validity.nameValidity}"></td>
-                                    <input type="hidden" th:value="${validity.id}">
-                                </tr>
-                                <tr th:each="validitySchedule : ${validity.validityScheduleList}">
-                                        <td></td>
-                                        <td><input type="time" th:value="${validitySchedule.beginTime}" disabled></td>
-                                        <td><input type="time" th:value="${validitySchedule.endTime}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.monday}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.tuesday}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.wednesday}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.thursday}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.friday}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.saturday}" disabled></td>
-                                        <td><input type="checkbox" th:checked="${validitySchedule.sunday}" disabled></td>
-                                </tr>
-                                </tbody>
                                 <tbody id="validity-tbody2">
                                 </tbody>
                             </table>
@@ -311,7 +293,7 @@
     <div class="row">
         <div class="col-2 offset-10">
             <button class="btn btn-success" onclick="SaveDiscount()">Сохранить</button>
-            <a class="btn btn-secondary" href="#" th:href="@{../discount/list}">Отмена</a>
+            <a class="btn btn-secondary" th:href="@{/admin/discount/list}">Отмена</a>
         </div>
     </div>
 </div>

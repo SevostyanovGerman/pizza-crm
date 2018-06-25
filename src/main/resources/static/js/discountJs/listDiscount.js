@@ -21,7 +21,6 @@ function checkboxListPaymentMethods (par) {
 
     var col = $(par).parent().parent().children().index($(par).parent());
     var namePm = $('.paymentMethods-names').closest('tr').find('th').eq(col).text();
-
     var checkbox = $(par).prop('checked');
     var idDiscount = $(par).closest('tr').find('input[type=hidden]').val();
 
@@ -33,7 +32,7 @@ function checkboxListPaymentMethods (par) {
 
     $.ajax({
         type: "POST",
-        url: "/admin/discount/methods",
+        url: "/admin/discount/addPaymentMethodForDiscount",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(discount),
         beforeSend: function (xhr) {

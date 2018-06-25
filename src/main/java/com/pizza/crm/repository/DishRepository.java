@@ -7,5 +7,12 @@ import java.util.List;
 
 public interface DishRepository extends JpaRepository<Dish, Long> {
 
+    @Override
+    List<Dish> findAll();
+
     Dish getDishByName(String name);
+
+    @Query("SELECT dish FROM Dish dish WHERE (dish.name IN :dishNames)")
+    List<Dish> getDishesByName(@Param("dishNames") List<String> dishNames);
+
 }

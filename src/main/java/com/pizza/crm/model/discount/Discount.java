@@ -49,7 +49,7 @@ public class Discount {
     private int priority;
 
     @Min(0)
-    private int value;
+    private Double value;
 
     private String comment;
 
@@ -83,15 +83,11 @@ public class Discount {
     public Discount() {
     }
 
-    public Discount(@NotBlank String name, String nameInCheck, String type, @Min(0) Double minSum,
-                    boolean minSumRestriction, boolean ScheduleRestriction, Boolean manualSelectWithOthers,
-                    Boolean manualInput, boolean manualDishSelect, Boolean automatic, Boolean combinable,
-                    Boolean enabled, Boolean applyForAllDiscountCategories, @Min(0) Integer priority,
-                    @Min(0) Integer value, String comment, DiscountApplicationMethod discountApplicationMethod,
-                    DiscountMode discountMode, DiscountAssignMode discountAssignMode,
-                    DiscountCalculationMode discountCalculationMode,
-                    List<PaymentMethod> paymentMethods, List<Validity> validities, List<DiscountCategory> discountCategories,
-                    boolean detailWhenPrinting) {
+    public Discount(@NotBlank String name, String nameInCheck, String type, @Min(0) Double minSum, boolean minSumRestriction, boolean ScheduleRestriction, Boolean manualSelectWithOthers,
+                    Boolean manualInput, boolean manualDishSelect, Boolean automatic, Boolean combinable, Boolean enabled, Boolean applyForAllDiscountCategories,
+                    @Min(0) Integer priority, @Min(0) Double value, String comment, DiscountApplicationMethod discountApplicationMethod,
+                    DiscountMode discountMode, DiscountAssignMode discountAssignMode, DiscountCalculationMode discountCalculationMode,
+                    List<PaymentMethod> paymentMethods, List<Validity> validities, List<DiscountCategory> discountCategories,boolean detailWhenPrinting) {
         this.name = name;
         this.nameInCheck = nameInCheck;
         this.type = type;
@@ -195,11 +191,11 @@ public class Discount {
         this.combinable = combinable;
     }
 
-    public boolean getEnabled() {
+    public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void isEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -219,11 +215,11 @@ public class Discount {
         this.priority = priority;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
