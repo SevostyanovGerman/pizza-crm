@@ -387,7 +387,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                     validityService.save(validity);
 
                     for (int j = 0; j < 13; j++) {
-                        ValiditySchedule schedule = new ValiditySchedule(LocalTime.of(18, 00), LocalTime.of(20, 00), false, true, true, true, true, true, false);
+                        ValiditySchedule schedule = new ValiditySchedule(LocalTime.of(18, 00), LocalTime.of(20, 00));
                         listValiditySchedule.add(schedule);
                         validity.setValidityScheduleList(listValiditySchedule);
                         validityService.save(validity);
