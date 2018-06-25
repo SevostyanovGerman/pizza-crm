@@ -43,4 +43,9 @@ public class OrderServiceImpl implements OrderService {
     public void deleteById(Long aLong) {
         orderRepository.deleteById(aLong);
     }
+
+    @Override
+    public Long getLastRecordId() {
+        return orderRepository.getLastRecordId();
+    }
 }

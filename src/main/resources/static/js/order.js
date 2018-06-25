@@ -362,12 +362,9 @@ function updateTotal() {
         dishes.push(dish);
     });
 
-    var id = $("#new-order-id").text();
-
     var discounts = discountsAndExtraCharges;
 
     var order = {
-        id: id,
         dishes: dishes,
         discounts: discounts
     };
