@@ -86,11 +86,12 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
+        generateUsers();
+
         generateDishes();
         generateValidity();
         generateFakeStaff();
         generateDiscountsAndPaymentMethods();
-        generateUsers();
         generateAddedCategory();
         generateDecree();
         generateNomenclatureAndNomenclatureParentGroup();
@@ -135,13 +136,15 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                     faker.numerify("####"));
             employee.setEmployeeInfo(employeeInfo);
             employee.setAddress(address);
+            Role role = roleService.getByName("USER");
+            User user = new User(employee.getPincode(), true);
+            user.setRoles(Collections.singletonList(role));
+            employee.setUser(user);
             return employee;
         })
                 .limit(50)
                 .collect(Collectors.toList());
 
-
-        fakeEmployees.add(new Employee("admin", "admin", "admin"));
         Random random = new Random();
 
         fakeEmployees.forEach((e) -> {
