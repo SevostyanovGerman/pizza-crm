@@ -8,6 +8,7 @@ import com.pizza.crm.service.QuickMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -50,7 +51,7 @@ public class QuickMenuServiceImpl implements QuickMenuService {
     }
 
     @Override
-    public Collection<QuickMenu> getQuickMenuByDay(int day) {
+    public Collection<QuickMenu> getQuickMenuByDay(DayOfWeek day) {
         return quickMenuRepository.getQuickMenuByDayRepository(day);
     }
 

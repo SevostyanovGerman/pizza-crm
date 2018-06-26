@@ -1,10 +1,9 @@
 package com.pizza.crm.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.DayOfWeek;
 import java.util.Set;
 
 @Entity
@@ -26,12 +25,12 @@ public class QuickMenu {
     private Set<DishQuickMenu> dishQuickMenu;
 
     //TODO сделать на dayofweek
-    private int weekDay;
+    private DayOfWeek dayOfWeek;
 
-    public QuickMenu(@NotBlank String name, Set<DishQuickMenu> dishQuickMenu, int weekDay) {
+    public QuickMenu(@NotBlank String name, Set<DishQuickMenu> dishQuickMenu, DayOfWeek dayOfWeek) {
         this.name = name;
         this.dishQuickMenu = dishQuickMenu;
-        this.weekDay = weekDay;
+        this.dayOfWeek = dayOfWeek;
     }
 
     public QuickMenu() {
@@ -61,12 +60,12 @@ public class QuickMenu {
         this.dishQuickMenu = dishQuickMenu;
     }
 
-    public int getWeekDay() {
-        return weekDay;
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public void setWeekDay(int weekDay) {
-        this.weekDay = weekDay;
+    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
     @Override
@@ -75,7 +74,7 @@ public class QuickMenu {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", dishQuickMenus=" + dishQuickMenu +
-                ", weekDay=" + weekDay +
+                ", dayOfWeek=" + dayOfWeek +
                 '}';
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.DayOfWeek;
 import java.util.Collection;
 
 @RestController
@@ -25,7 +26,7 @@ public class QuickMenuControllerRest {
     }
 
     @RequestMapping(value = "/get/quickmenu/{day}")
-    public ResponseEntity<?> getQuickMenu(@PathVariable("day") @Validated int day) {
+    public ResponseEntity<?> getQuickMenu(@PathVariable("day") @Validated DayOfWeek day) {
         Collection<QuickMenu> quickMenu = quickMenuService.getQuickMenuByDay(day);
         return ResponseEntity.ok(quickMenu);
     }

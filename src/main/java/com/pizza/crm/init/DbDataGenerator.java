@@ -232,29 +232,29 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         dishQuickMenuService.save(dishQuickMenu);
 
 
-        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 1));
-        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 1));
-        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 1));
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), DayOfWeek.MONDAY));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), DayOfWeek.MONDAY));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), DayOfWeek.MONDAY));
 
-        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 2));
-        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 2));
-        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 2));
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), DayOfWeek.TUESDAY));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), DayOfWeek.TUESDAY));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), DayOfWeek.TUESDAY));
 
-        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 3));
-        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 3));
-        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 3));
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), DayOfWeek.WEDNESDAY));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), DayOfWeek.WEDNESDAY));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), DayOfWeek.WEDNESDAY));
 
-        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 4));
-        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 4));
-        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 4));
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), DayOfWeek.THURSDAY));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), DayOfWeek.THURSDAY));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), DayOfWeek.THURSDAY));
 
-        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 5));
-        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 5));
-        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 5));
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), DayOfWeek.FRIDAY));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), DayOfWeek.FRIDAY));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), DayOfWeek.FRIDAY));
 
-        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 6));
-        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 6));
-        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 6));
+        quickMenuService.save(new QuickMenu("|", new HashSet<>(), DayOfWeek.FRIDAY));
+        quickMenuService.save(new QuickMenu("||", new HashSet<>(), DayOfWeek.FRIDAY));
+        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), DayOfWeek.FRIDAY));
 
 /*        quickMenuService.save(new QuickMenu("Roll", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu2)), 7));
         quickMenuService.save(new QuickMenu("Pizza", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu3)), 7));
