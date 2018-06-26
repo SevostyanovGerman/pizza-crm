@@ -27,6 +27,7 @@ import static com.pizza.crm.model.AccountingCategory.PRODUCT;
 import static com.pizza.crm.model.NomenclatureType.DISH;
 import static com.pizza.crm.model.NomenclatureType.MODIFIER;
 
+//TODO почистить от лишнего
 @Component
 public class DbDataGenerator implements ApplicationListener<ContextRefreshedEvent> {
 

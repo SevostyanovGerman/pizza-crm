@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
+//TODO удалить и сервисы и контроллеры
 @Entity
 @Table(name = "Dish")
 public class Dish {

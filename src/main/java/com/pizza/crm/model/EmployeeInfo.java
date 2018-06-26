@@ -3,6 +3,7 @@ package com.pizza.crm.model;
 import javax.persistence.Embeddable;
 import java.time.LocalDate;
 
+//TODO перенести в Emploee
 @Embeddable
 public class EmployeeInfo {
 

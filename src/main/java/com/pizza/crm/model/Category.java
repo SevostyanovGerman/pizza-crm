@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
+//TODO удалить и сервисы и контроллеры
 @Entity
 @Table(name = "Category")
 public class Category {

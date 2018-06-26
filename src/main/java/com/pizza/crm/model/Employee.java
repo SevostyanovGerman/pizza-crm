@@ -21,11 +21,14 @@ public class Employee {
     @NotBlank
     private String name;
 
+    //TODO убрать это поле
     @NotBlank
     private String login;
 
+    //TODO убрать это поле
     private String password;
 
+    //TODO убрать это поле мы связываем работника с юзером 1 к 1
     @NotBlank
     private String pincode;
 

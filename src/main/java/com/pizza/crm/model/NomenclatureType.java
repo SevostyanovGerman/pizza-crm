@@ -6,7 +6,7 @@ public enum NomenclatureType {
     DISH, PRODUCT, BLANK, SERVICE, MODIFIER;
 
 
-    // в сервис
+    //TODO перенести в сервис
     public static NomenclatureType getRandomNomenclatureType() {
         Random random = new Random();
         return values()[random.nextInt(values().length)];

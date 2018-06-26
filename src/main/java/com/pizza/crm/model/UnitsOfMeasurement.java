@@ -2,6 +2,7 @@ package com.pizza.crm.model;
 
 import javax.persistence.*;
 
+//TODO связать с номенклатурой
 @Entity
 @Table(name = "UnitsOfMeasurement")
 public class UnitsOfMeasurement {

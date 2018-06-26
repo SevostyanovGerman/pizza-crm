@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
+//TODO удалить и сервисы и контроллеры
 @Entity
 @Table(name = "DeliveryOrder")
 public class DeliveryOrder {
