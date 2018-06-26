@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ProductSearchController {
 
-    private DishService dishService;
+    private final DishService dishService;
 
     @Autowired
     public ProductSearchController(DishService dishService) {

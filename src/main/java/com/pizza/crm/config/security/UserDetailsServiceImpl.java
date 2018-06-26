@@ -1,0 +1,33 @@
+package com.pizza.crm.config.security;
+
+import com.pizza.crm.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+//TODO всё связанное с секьюрити надо перенести в пакет config.security,
+@Service("userDetailsService")
+public class UserDetailsServiceImpl implements UserDetailsService {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+
+    @Autowired
+    private UserService userService;
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+
+        LOGGER.debug("Trying to find user with pincode: '{}'", s);
+
+        User user = userService.findByPincode(s).orElseThrow(() -> new UsernameNotFoundException("Can't find: " + s));
+
+        LOGGER.debug("Found user: {}", user);
+
+        return user;
+
+    }
+}

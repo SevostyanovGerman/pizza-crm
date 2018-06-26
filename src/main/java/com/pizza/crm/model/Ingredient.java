@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
+//TODO удалить и сервисы и контроллеры, потому что ингридиент это номенклатура с типом "Товар"
 @Entity
 @Table(name = "Ingredient")
 public class Ingredient {

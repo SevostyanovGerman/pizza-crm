@@ -1,0 +1,33 @@
+body {
+    background: #eee;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    padding: 0px 10px 0px;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #eee;
+}
+
+.selected {
+    background: #aeaeae;
+}
+
+.active-modifier {
+    background: #aeaeae;
+}
+.nameScale{
+    background: #aeaeae;
+}

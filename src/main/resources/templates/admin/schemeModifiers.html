@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Схемы модификаторов</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/schemeModifiers.css}"
+          href="../static/css/schemeModifiers.css"
+          rel="stylesheet" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
+          rel="stylesheet" media="screen"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="../static/js/schemeModifiers.js"
+            th:src="@{/js/schemeModifiers.js}"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-5 left-side">
+            <div class="form-group row">
+                <label for="name" class="col-sm-3 col-form-label">Название:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="name" th:value="${schemeModifiers?.name}">
+                    <input id="id" type="hidden" th:value="${schemeModifiers?.id}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Шкала размеров:</label>
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="nameScale">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"  data-toggle="modal" data-target="#scaleOfSize">...</button>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <h4 class="offset-sm-5">Модификаторы</h4>
+            <button class="btn btn-secondary" data-toggle="modal" data-target="#addModifier">Добавить ...</button>
+            <button class="btn btn-secondary" onclick="deleteModifierRow()">Удалить</button>
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Мин</th>
+                    <th>По умолчанию</th>
+                    <th>Макс</th>
+                    <th>Обязательный</th>
+                    <th>Скрывать если...</th>
+                    <th>Ограничение на мин</th>
+                    <th>Бесплатно</th>
+                </tr>
+                </thead>
+                <tbody class="tbody">
+                <tr th:each="modifierProperty : ${schemeModifiers?.modifierPropertyList}">
+                    <td class="modifierName" th:text="${modifierProperty.name}"></td>
+                    <td><input type="number" class="inputs" th:value="${modifierProperty.minimum}"></td>
+                    </td>
+                    <td><input type="number" class="inputs" th:value="${modifierProperty.byDefault}"></td>
+                    </td>
+                    <td><input type="number" class="inputs" th:value="${modifierProperty.maximum}"></td>
+                    </td>
+                    <td><input type="checkbox" th:checked="${modifierProperty.necessarily}"></td>
+                    <td><input type="checkbox" th:checked="${modifierProperty.hideIf}"></td>
+                    <td><input type="checkbox" th:checked="${modifierProperty.restricted}"></td>
+                    <td><input type="number" class="inputs" th:value="${modifierProperty.free}"></td>
+                    <input class="hideId" type="hidden" th:value="${modifierProperty.modifierId}">
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <!--Navigation buttons-->
+    <div class="footer offset-sm-9">
+        <a href="/nomenclature" class="btn btn-secondary" onclick="exit()">Выйти без сохранения</a>
+        <button class="btn btn-secondary" onclick="saveAndExit()">Сохранить и закрыть</button>
+    </div>
+
+    <!--Scale_of_Size-->
+    <!--Modifiers-->
+    <div class="modal fade" id="scaleOfSize" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Шкала размеров</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Название</th>
+                        </tr>
+                        </thead>
+                        <tbody class="modalTbodySize">
+                        <tr th:each ="scale : ${scale}" >
+                            <td th:inline="text" class="selectView"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                                [[${scale.nameScale}]]
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" onclick="saveScaleOfSize()" data-dismiss="modal">
+                        Сохранить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal-->
+<!--Modifiers-->
+<div class="modal fade" id="addModifier" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Добавьте модификатор</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="custom-control custom-checkbox mx-2">
+                    <input type="checkbox" class="custom-control-input groupModifier" id="groupModifier">
+                    <label class="custom-control-label" for="groupModifier">Добавить групповой модификатор</label>
+
+                </div>
+
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Название</th>
+                    </tr>
+                    </thead>
+                    <tbody class="modifierDownTr">
+                    <tr th:each="modifierNomenclature : ${modifierNomenclatures}" class="modifier">
+                        <td th:inline="text" class="parentGroup"><i class="fa fa-angle-right" aria-hidden="true"></i>
+                            [[${modifierNomenclature.name}]]
+                        </td>
+                        <input type="hidden" th:value="${modifierNomenclature.id}">
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" onclick="saveFilterModifiers()" data-dismiss="modal">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
