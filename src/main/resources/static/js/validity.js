@@ -317,6 +317,7 @@ function save() {
         validityScheduleList: schedules
     };
 
+    console.log(validity);
 
     $.ajax({
         type: "POST",
@@ -328,6 +329,7 @@ function save() {
         },
         success: function () {
             window.location.replace("/validity");
+
         },
         error: function (e) {
             alert("error")

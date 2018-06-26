@@ -18,12 +18,14 @@ public class QuickMenu {
     @NotBlank
     private String name;
 
+    //TODO херня какая-то сделать список номенклатур
     @ManyToMany
     @JoinTable(name = "Dish_QuickMenu_more",
             joinColumns = @JoinColumn(name = "quickmenu"),
             inverseJoinColumns = @JoinColumn(name = "dishquickmenu"))
     private Set<DishQuickMenu> dishQuickMenu;
 
+    //TODO сделать на dayofweek
     private int weekDay;
 
     public QuickMenu(@NotBlank String name, Set<DishQuickMenu> dishQuickMenu, int weekDay) {

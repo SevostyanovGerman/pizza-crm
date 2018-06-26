@@ -7,5 +7,4 @@ public interface ScaleOfSizeValuesService extends CrudService<ScaleOfSizeValues,
     ScaleOfSizeValues findByNameSize(String name);
 
     void deleteByNameSize(String name);
-
 }

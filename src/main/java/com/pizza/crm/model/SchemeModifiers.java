@@ -3,6 +3,7 @@ package com.pizza.crm.model;
 import javax.persistence.*;
 import java.util.List;
 
+//TODO связать с номенклатурой
 @Entity
 @Table(name = "schemeModifiers")
 public class SchemeModifiers {

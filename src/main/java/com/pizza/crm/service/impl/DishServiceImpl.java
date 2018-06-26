@@ -30,6 +30,7 @@ public class DishServiceImpl implements DishService {
         this.ingredientRepository = ingredientRepository;
     }
 
+
     @Override
     public Collection<Dish> getAll() {
         return dishRepository.findAll();

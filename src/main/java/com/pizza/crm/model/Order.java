@@ -50,6 +50,8 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "Discount"))
     private List<Discount> discounts;
 
+
+    //TODO должно быть связано с номенклатурой
     @ManyToMany
     @JoinTable(name = "ClientOrder_Dish",
             joinColumns = @JoinColumn(name = "ClientOrder"),

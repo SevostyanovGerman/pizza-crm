@@ -57,6 +57,7 @@
                     <label for="activePeriod" class="d-flex col-sm-6 col-form-label justify-content-end">Период действия приказа:</label>
                     <div class="col-sm-4">
                         <select class="form-control" name="" id="activePeriod">
+                            <option>Без периода</option>
                             <option th:each="validity : ${validity}" th:text="${validity.getNameValidity()}"></option>
                         </select>
                     </div>

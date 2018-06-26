@@ -3,6 +3,7 @@ package com.pizza.crm.model;
 import javax.persistence.*;
 import java.util.Set;
 
+//TODO удалить и сервисы и контроллеры
 @Entity
 @Table(name = "DishQuickMenu")
 public class DishQuickMenu {

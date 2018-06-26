@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.Optional;
 
+//TODO переместить туда где и все сервисы
 @Service
 public class RoleServiceImpl implements RoleService {
 

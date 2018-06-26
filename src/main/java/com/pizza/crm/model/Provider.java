@@ -2,6 +2,7 @@ package com.pizza.crm.model;
 
 import javax.persistence.*;
 
+//TODO удалить и сервисы и контроллеры
 @Entity
 @Table(name = "Provider")
 public class Provider {

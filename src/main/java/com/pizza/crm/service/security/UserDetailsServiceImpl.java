@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+//TODO всё связанное с секьюрити надо перенести в пакет config.security,
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
