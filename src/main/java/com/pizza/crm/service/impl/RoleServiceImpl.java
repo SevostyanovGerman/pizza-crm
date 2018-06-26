@@ -1,7 +1,8 @@
-package com.pizza.crm.service.security;
+package com.pizza.crm.service.impl;
 
-import com.pizza.crm.model.security.Role;
+import com.pizza.crm.config.security.Role;
 import com.pizza.crm.repository.RoleRepository;
+import com.pizza.crm.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

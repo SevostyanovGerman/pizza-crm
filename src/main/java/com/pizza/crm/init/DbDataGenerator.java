@@ -3,18 +3,16 @@ package com.pizza.crm.init;
 import com.github.javafaker.Faker;
 import com.pizza.crm.model.*;
 import com.pizza.crm.model.discount.*;
-import com.pizza.crm.model.security.Role;
-import com.pizza.crm.model.security.User;
+import com.pizza.crm.config.security.Role;
+import com.pizza.crm.config.security.User;
 import com.pizza.crm.service.*;
-import com.pizza.crm.service.security.RoleService;
-import com.pizza.crm.service.security.UserService;
+import com.pizza.crm.service.RoleService;
+import com.pizza.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Array;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,8 +22,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.pizza.crm.model.AccountingCategory.PRODUCT;
-import static com.pizza.crm.model.NomenclatureType.DISH;
-import static com.pizza.crm.model.NomenclatureType.MODIFIER;
 
 //TODO почистить от лишнего
 @Component
