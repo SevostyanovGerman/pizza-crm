@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-
     @Query("FROM User p JOIN FETCH p.roles WHERE p.pincode = (:pincode)")
     User findByPincodeAndFetchRolesEagerly(@Param("pincode") String pincode);
 
