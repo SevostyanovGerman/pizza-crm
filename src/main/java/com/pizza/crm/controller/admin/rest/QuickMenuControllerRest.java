@@ -2,6 +2,7 @@ package com.pizza.crm.controller.admin.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pizza.crm.model.QuickMenu;
+import com.pizza.crm.service.NomenclatureService;
 import com.pizza.crm.service.QuickMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,8 @@ public class QuickMenuControllerRest {
     }
 
     @RequestMapping(value = "/get/quickmenu/{day}")
-    public ResponseEntity<?> getQuickMenu(@PathVariable("day") @Validated DayOfWeek day) {
-        Collection<QuickMenu> quickMenu = quickMenuService.getQuickMenuByDay(day);
+    public ResponseEntity<?> getQuickMenu(@PathVariable("day") int day) {
+        Collection<QuickMenu> quickMenu = quickMenuService.getQuickMenuByDay(DayOfWeek.of(day));
         return ResponseEntity.ok(quickMenu);
     }
 

@@ -6,6 +6,9 @@ import javax.validation.constraints.NotBlank;
 import java.time.DayOfWeek;
 import java.util.Set;
 
+/**
+ * Кнопка выбора списков позиций для выбора быстрого меню, хранит в себе список контейнеров @see {@link NomenclatureQuickMenu}
+ */
 @Entity
 @Table(name = "QuickMenu")
 public class QuickMenu {
@@ -17,19 +20,17 @@ public class QuickMenu {
     @NotBlank
     private String name;
 
-    //TODO херня какая-то сделать список номенклатур
     @ManyToMany
-    @JoinTable(name = "Dish_QuickMenu_more",
+    @JoinTable(name = "Nomenclature_Quick_menus",
             joinColumns = @JoinColumn(name = "quickmenu"),
-            inverseJoinColumns = @JoinColumn(name = "dishquickmenu"))
-    private Set<DishQuickMenu> dishQuickMenu;
+            inverseJoinColumns = @JoinColumn(name = "nomenclatureQuickMenu"))
+    private Set<NomenclatureQuickMenu> nomenclatureQuickMenus;
 
-    //TODO сделать на dayofweek
     private DayOfWeek dayOfWeek;
 
-    public QuickMenu(@NotBlank String name, Set<DishQuickMenu> dishQuickMenu, DayOfWeek dayOfWeek) {
+    public QuickMenu(@NotBlank String name, Set<NomenclatureQuickMenu> nomenclatureQuickMenus, DayOfWeek dayOfWeek) {
         this.name = name;
-        this.dishQuickMenu = dishQuickMenu;
+        this.nomenclatureQuickMenus = nomenclatureQuickMenus;
         this.dayOfWeek = dayOfWeek;
     }
 
@@ -52,12 +53,12 @@ public class QuickMenu {
         this.name = name;
     }
 
-    public Set<DishQuickMenu> getDishQuickMenu() {
-        return dishQuickMenu;
+    public Set<NomenclatureQuickMenu> getNomenclatureQuickMenus() {
+        return nomenclatureQuickMenus;
     }
 
-    public void setDishQuickMenu(Set<DishQuickMenu> dishQuickMenu) {
-        this.dishQuickMenu = dishQuickMenu;
+    public void setNomenclatureQuickMenus(Set<NomenclatureQuickMenu> nomenclatureQuickMenus) {
+        this.nomenclatureQuickMenus = nomenclatureQuickMenus;
     }
 
     public DayOfWeek getDayOfWeek() {
@@ -73,7 +74,7 @@ public class QuickMenu {
         return "QuickMenu{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", dishQuickMenus=" + dishQuickMenu +
+                ", nomenclatureQuickMenus=" + nomenclatureQuickMenus +
                 ", dayOfWeek=" + dayOfWeek +
                 '}';
     }

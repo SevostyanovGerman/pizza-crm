@@ -1,6 +1,6 @@
 package com.pizza.crm.service.impl;
 
-import com.pizza.crm.model.DishQuickMenu;
+import com.pizza.crm.model.NomenclatureQuickMenu;
 import com.pizza.crm.model.QuickMenu;
 import com.pizza.crm.repository.DishQuickMenuRepository;
 import com.pizza.crm.repository.QuickMenuRepository;
@@ -58,9 +58,9 @@ public class QuickMenuServiceImpl implements QuickMenuService {
     @Override
     public void updateQuickMenu(int day, Collection<QuickMenu> quickMenus) {
         for (QuickMenu quickMenu : quickMenus) {
-            for (DishQuickMenu dishQuickMenu : quickMenu.getDishQuickMenu()) {
-                if (dishQuickMenu != null) {
-                    dishQuickMenuRepository.save(dishQuickMenu);
+            for (NomenclatureQuickMenu nomenclatureQuickMenu : quickMenu.getNomenclatureQuickMenus()) {
+                if (nomenclatureQuickMenu != null) {
+                    dishQuickMenuRepository.save(nomenclatureQuickMenu);
                 }
             }
             quickMenuRepository.save(quickMenu);
