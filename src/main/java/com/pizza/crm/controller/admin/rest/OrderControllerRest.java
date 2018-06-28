@@ -6,7 +6,6 @@ import com.pizza.crm.model.discount.Discount;
 import com.pizza.crm.model.discount.DiscountApplicationMethod;
 import com.pizza.crm.model.discount.DiscountMode;
 import com.pizza.crm.service.DiscountService;
-import com.pizza.crm.service.DishService;
 import com.pizza.crm.service.NomenclatureService;
 import com.pizza.crm.service.OrderService;
 import org.springframework.cglib.core.Local;
@@ -31,15 +30,13 @@ import java.util.stream.Stream;
 @RestController
 public class OrderControllerRest {
 
-    private final DishService dishService;
     private final DiscountService discountService;
     private final OrderService orderService;
     private final NomenclatureService nomenclatureService;
 
-    public OrderControllerRest(DishService dishService, DiscountService discountService, OrderService orderService,
+    public OrderControllerRest(DiscountService discountService, OrderService orderService,
                                     NomenclatureService nomenclatureService) {
         this.nomenclatureService = nomenclatureService;
-        this.dishService = dishService;
         this.discountService = discountService;
         this.orderService = orderService;
     }
@@ -51,27 +48,28 @@ public class OrderControllerRest {
         Double total = 0d;
         List<Double> rawTotalAndTotal = new ArrayList<>();
         LocalDateTime localDateTime = LocalDateTime.now();
-        List<String> dishNames = new ArrayList<>();
-
-        //rowTotal cost calculation
-        for (Dish dish: order.getDishes()) {
-            dishNames.add(dish.getName());
-            rawTotal += dish.getAmount() * nomenclatureService.getNomenclatureByName(dish.getName()).getPrice();
-        }
-        total = rawTotal;
-
+        List<Nomenclature> nomenclatures = new ArrayList<>();
         DayOfWeek dayOfWeekNow = LocalDate.now().getDayOfWeek();
         Double discountSum = 0d;
         Double extraChargeSum = 0d;
-
         List<String> nameDiscounts = new ArrayList<>();
+
+        //rowTotal cost calculation
+        for (Nomenclature nomenclature: order.getNomenclatures()) {
+            Nomenclature nom = nomenclatureService.getNomenclatureByName(nomenclature.getName());
+            nom.setAmount(nomenclature.getAmount());
+            nomenclatures.add(nom);
+
+            rawTotal += nom.getAmount() * nom.getPrice();
+        }
+        total = rawTotal;
+
         for (Discount d : order.getDiscounts()) {
             nameDiscounts.add(d.getName());
         }
-        List<Discount> discounts = new ArrayList<>();
-        discounts = discountService.getDiscountsForOrder(nameDiscounts, dayOfWeekNow, localDateTime,
-                                                    rawTotal, nameDiscounts.size());
-        order.setDiscounts(discounts);
+
+        order.setDiscounts(discountService.getDiscountsForOrder(nameDiscounts, dayOfWeekNow, localDateTime,
+                                                                rawTotal, nameDiscounts.size()));
         
         //Order cost calculation with discounts
         if (order.getDiscounts() != null) {
@@ -104,7 +102,7 @@ public class OrderControllerRest {
         order.setDiscountCost(discountSum);
         order.setExtraChargeCost(extraChargeSum);
         order.setCreationDate(localDateTime);
-        order.setDishes(dishService.getDishesByName(dishNames));
+        order.setNomenclatures(nomenclatures);
         orderService.save(order);
 
         rawTotalAndTotal.add(order.getPrice());

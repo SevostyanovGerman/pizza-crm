@@ -1,9 +1,7 @@
 package com.pizza.crm.controller.admin;
 
 import com.pizza.crm.exceptions.NotFoundException;
-import com.pizza.crm.model.Category;
-import com.pizza.crm.model.PaymentMethod;
-import com.pizza.crm.model.Validity;
+import com.pizza.crm.model.*;
 import com.pizza.crm.model.discount.*;
 import com.pizza.crm.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +19,15 @@ public class DiscountController {
     private final DiscountService discountService;
     private final PaymentMethodService paymentMethodService;
     private final ValidityService validityService;
-    private final CategoryService categoryService;
+    private final NomenclatureParentGroupService nomenclatureParentGroupService;
 
     @Autowired
     public DiscountController(DiscountService discountService, PaymentMethodService paymentMethodService,
-                              ValidityService validityService, CategoryService categoryService) {
+                              ValidityService validityService, NomenclatureParentGroupService nomenclatureParentGroupService) {
         this.discountService = discountService;
         this.paymentMethodService = paymentMethodService;
         this.validityService = validityService;
-        this.categoryService = categoryService;
+        this.nomenclatureParentGroupService = nomenclatureParentGroupService;
     }
 
     @GetMapping("/admin/discount/list")
@@ -100,9 +98,10 @@ public class DiscountController {
     }
 
     private void discountCategoriesCreation(Discount discount) {
-        List<Category> categories = new ArrayList<>(categoryService.getAll());
+        List<NomenclatureParentGroup> categories =
+                new ArrayList<>(nomenclatureParentGroupService.findAlNomenclatureParentGroups());
         List<DiscountCategory> discountCategories = new ArrayList<>();
-        for (Category category:categories) {
+        for (NomenclatureParentGroup category:categories) {
             DiscountCategory discountCategory = new DiscountCategory();
             discountCategory.setName(category.getName());
             discountCategories.add(discountCategory);

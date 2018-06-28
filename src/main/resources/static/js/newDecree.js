@@ -32,7 +32,7 @@ function SaveDecree() {
     var decree = {
         id: id,
         comment: comment,
-        dishes: dishSend,
+        nomenclatures: dishSend,
         startTime: startTime + "T00:00:00",
         endTime: endTime + "T23:59:59",
         nameForIikoFront: nameForIikoFront,
@@ -68,7 +68,7 @@ function Cancel() {
 function getDish() {
     $.ajax({
         type: "POST",
-        url: "/get/dish",
+        url: "nomenclature/getAllNomenclatures",
         contentType: "application/json; charset=utf-8",
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
@@ -113,7 +113,7 @@ function getDecree() {
                 $("#comment").val(data.comment);
                 $("#nameForIikoFront").val(data.nameForIikoFront);
                 $("#decreeTrue").prop('checked', data.enable);
-                dishData = data.dishes;
+                dishData = data.nomenclatures;
                 dishData.forEach(function (value) {
                     dish.push(value.id);
                     $(".trr-" + value.id).prop('checked', true);

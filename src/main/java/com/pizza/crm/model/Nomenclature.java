@@ -36,6 +36,8 @@ public class Nomenclature {
 
     private Boolean removed;
 
+    private Long amount;
+
     @Enumerated(EnumType.STRING)
     private NomenclatureType nomenclatureType;
 
@@ -233,5 +235,13 @@ public class Nomenclature {
 
     public void setRemoved(Boolean removed) {
         this.removed = removed;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
     }
 }
