@@ -2,7 +2,7 @@ package com.pizza.crm.model;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.pizza.crm.model.security.User;
+import com.pizza.crm.config.security.User;
 import org.codehaus.jackson.annotate.JsonBackReference;
 
 import javax.persistence.*;
