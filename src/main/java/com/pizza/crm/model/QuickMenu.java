@@ -1,12 +1,14 @@
 package com.pizza.crm.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.DayOfWeek;
 import java.util.Set;
 
+/**
+ * Кнопка выбора списков позиций для выбора быстрого меню, хранит в себе список контейнеров @see {@link NomenclatureQuickMenu}
+ */
 @Entity
 @Table(name = "QuickMenu")
 public class QuickMenu {
@@ -18,20 +20,18 @@ public class QuickMenu {
     @NotBlank
     private String name;
 
-    //TODO херня какая-то сделать список номенклатур
     @ManyToMany
-    @JoinTable(name = "Dish_QuickMenu_more",
+    @JoinTable(name = "Nomenclature_Quick_menus",
             joinColumns = @JoinColumn(name = "quickmenu"),
-            inverseJoinColumns = @JoinColumn(name = "dishquickmenu"))
-    private Set<DishQuickMenu> dishQuickMenu;
+            inverseJoinColumns = @JoinColumn(name = "nomenclatureQuickMenu"))
+    private Set<NomenclatureQuickMenu> nomenclatureQuickMenus;
 
-    //TODO сделать на dayofweek
-    private int weekDay;
+    private DayOfWeek dayOfWeek;
 
-    public QuickMenu(@NotBlank String name, Set<DishQuickMenu> dishQuickMenu, int weekDay) {
+    public QuickMenu(@NotBlank String name, Set<NomenclatureQuickMenu> nomenclatureQuickMenus, DayOfWeek dayOfWeek) {
         this.name = name;
-        this.dishQuickMenu = dishQuickMenu;
-        this.weekDay = weekDay;
+        this.nomenclatureQuickMenus = nomenclatureQuickMenus;
+        this.dayOfWeek = dayOfWeek;
     }
 
     public QuickMenu() {
@@ -53,20 +53,20 @@ public class QuickMenu {
         this.name = name;
     }
 
-    public Set<DishQuickMenu> getDishQuickMenu() {
-        return dishQuickMenu;
+    public Set<NomenclatureQuickMenu> getNomenclatureQuickMenus() {
+        return nomenclatureQuickMenus;
     }
 
-    public void setDishQuickMenu(Set<DishQuickMenu> dishQuickMenu) {
-        this.dishQuickMenu = dishQuickMenu;
+    public void setNomenclatureQuickMenus(Set<NomenclatureQuickMenu> nomenclatureQuickMenus) {
+        this.nomenclatureQuickMenus = nomenclatureQuickMenus;
     }
 
-    public int getWeekDay() {
-        return weekDay;
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public void setWeekDay(int weekDay) {
-        this.weekDay = weekDay;
+    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
     @Override
@@ -74,8 +74,8 @@ public class QuickMenu {
         return "QuickMenu{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", dishQuickMenus=" + dishQuickMenu +
-                ", weekDay=" + weekDay +
+                ", nomenclatureQuickMenus=" + nomenclatureQuickMenus +
+                ", dayOfWeek=" + dayOfWeek +
                 '}';
     }
 }

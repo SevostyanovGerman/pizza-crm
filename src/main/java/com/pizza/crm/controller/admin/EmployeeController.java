@@ -2,9 +2,12 @@ package com.pizza.crm.controller.admin;
 
 import com.pizza.crm.exceptions.NotFoundException;
 import com.pizza.crm.model.Employee;
+import com.pizza.crm.model.security.Role;
+import com.pizza.crm.model.security.User;
 import com.pizza.crm.service.DepartmentService;
 import com.pizza.crm.service.EmployeeService;
 import com.pizza.crm.service.PositionService;
+import com.pizza.crm.service.security.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
 
 @Controller
 public class EmployeeController {
@@ -20,13 +24,16 @@ public class EmployeeController {
     private final EmployeeService employeeService;
     private final PositionService positionService;
     private final DepartmentService departmentService;
+    private final RoleService roleService;
 
     @Autowired
     public EmployeeController(EmployeeService employeeService, PositionService positionService,
-                              DepartmentService departmentService) {
+                              DepartmentService departmentService, RoleService roleService
+    ) {
         this.employeeService = employeeService;
         this.positionService = positionService;
         this.departmentService = departmentService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/admin/staff/employee")
@@ -55,6 +62,10 @@ public class EmployeeController {
         if (bindingResult.hasErrors()) {
             return "admin/staff/employeeCard";
         }
+        Role role = roleService.getByName("USER");
+        User user = new User(employee.getPincode(), true, Collections.singletonList(role));
+        role.setUsers(Collections.singletonList(user));
+        employee.setUser(user);
         employeeService.save(employee);
         return "redirect:/admin/staff/employee";
     }

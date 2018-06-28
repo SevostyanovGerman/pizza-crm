@@ -1,9 +1,8 @@
 package com.pizza.crm.repository;
 
-import com.pizza.crm.model.Dish;
-import com.pizza.crm.model.DishQuickMenu;
+import com.pizza.crm.model.NomenclatureQuickMenu;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DishQuickMenuRepository extends JpaRepository<DishQuickMenu, Long> {
+public interface DishQuickMenuRepository extends JpaRepository<NomenclatureQuickMenu, Long> {
 
 }

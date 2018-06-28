@@ -734,16 +734,22 @@ function GetQuickMenu(day) {
             $(".right-panel-body-1").empty();
             $(".right-panel-body-2").empty();
             $(".right-panel-body-3").empty();
-            quickMenu[0].dishQuickMenu.forEach(function (value) {
+            quickMenu[0].nomenclatureQuickMenus.forEach(function (value) {
                 console.log(value);
                 if (value.position == 1) {
-                    $(".right-panel-body-1").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
+                    value.nomenclatures.forEach(function (nomenclature) {
+                        $(".right-panel-body-1").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + nomenclature.name + "</a>");
+                    });
                 }
                 if (value.position == 2) {
-                    $(".right-panel-body-2").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
+                    value.nomenclatures.forEach(function (nomenclature) {
+                        $(".right-panel-body-2").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + nomenclature.name + "</a>");
+                    });
                 }
                 if (value.position == 3) {
-                    $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
+                    value.nomenclatures.forEach(function (nomenclature) {
+                        $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + nomenclature.name + "</a>");
+                    });
                 }
             });
             headerQuickMenu(1);
@@ -758,16 +764,22 @@ function ChangeQuickMenu(numMenu) {
     $(".right-panel-body-1").empty();
     $(".right-panel-body-2").empty();
     $(".right-panel-body-3").empty();
-    quickMenu[numMenu - 1].dishQuickMenu.forEach(function (value) {
-        if (value.position == 1) {
-            $(".right-panel-body-1").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
-        }
-        if (value.position == 2) {
-            $(".right-panel-body-2").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
-        }
-        if (value.position == 3) {
-            $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + value.dish[0].name + "</a>");
-        }
+    quickMenu[numMenu - 1].nomenclatureQuickMenus.forEach(function (value) {
+                if (value.position == 1) {
+                    value.nomenclatures.forEach(function (nomenclature) {
+                        $(".right-panel-body-1").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + nomenclature.name + "</a>");
+                    });
+                }
+                if (value.position == 2) {
+                    value.nomenclatures.forEach(function (nomenclature) {
+                        $(".right-panel-body-2").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + nomenclature.name + "</a>");
+                    });
+                }
+                if (value.position == 3) {
+                    value.nomenclatures.forEach(function (nomenclature) {
+                        $(".right-panel-body-3").append("<a class=\"middle-panel-yellow\" style=\"background-color: " + value.color + " \" href=\"#\">" + nomenclature.name + "</a>");
+                    });
+                }
     });
 }
 

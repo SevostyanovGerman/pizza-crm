@@ -1,6 +1,8 @@
 package com.pizza.crm.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.pizza.crm.model.security.User;
 import org.codehaus.jackson.annotate.JsonBackReference;
 
 import javax.persistence.*;
@@ -29,8 +31,13 @@ public class Employee {
     private String password;
 
     //TODO убрать это поле мы связываем работника с юзером 1 к 1
-    @NotBlank
+    @Column(insertable = false, updatable = false)
     private String pincode;
+
+    @OneToOne (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user")
+    @JsonManagedReference
+    private User user;
 
     private Boolean dismissed = false;
 
@@ -129,6 +136,14 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Collection<Order> getOrders() {
@@ -257,4 +272,5 @@ public class Employee {
                 ", dismissed=" + dismissed +
                 '}';
     }
+
 }

@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByPincode(String pincode) {
-        return Optional.ofNullable(userRepository.findByPincode(pincode));
+        return Optional.ofNullable(userRepository.findByPincodeAndFetchRolesEagerly(pincode));
     }
 
 }
