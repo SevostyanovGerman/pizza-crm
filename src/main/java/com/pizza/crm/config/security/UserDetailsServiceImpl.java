@@ -1,6 +1,6 @@
-package com.pizza.crm.service.security;
+package com.pizza.crm.config.security;
 
-import com.pizza.crm.model.security.User;
+import com.pizza.crm.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

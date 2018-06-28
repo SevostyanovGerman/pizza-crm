@@ -1,7 +1,7 @@
 package com.pizza.crm.controller;
 
 import com.pizza.crm.model.Employee;
-import com.pizza.crm.model.security.User;
+import com.pizza.crm.config.security.User;
 import com.pizza.crm.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

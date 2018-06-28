@@ -1,4 +1,4 @@
-package com.pizza.crm.service.security.handler;
+package com.pizza.crm.config.security.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

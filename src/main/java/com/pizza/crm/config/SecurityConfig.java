@@ -1,8 +1,8 @@
 package com.pizza.crm.config;
 
-import com.pizza.crm.service.security.PincodePasswordEncoder;
-import com.pizza.crm.service.security.handler.FailureLoginHandler;
-import com.pizza.crm.service.security.handler.SuccessLoginHandler;
+import com.pizza.crm.config.security.PincodePasswordEncoder;
+import com.pizza.crm.config.security.handler.FailureLoginHandler;
+import com.pizza.crm.config.security.handler.SuccessLoginHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.pizza.crm.model.security;
+package com.pizza.crm.config.security;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pizza.crm.model.Employee;
