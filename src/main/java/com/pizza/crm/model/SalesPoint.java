@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+//TODO удалить и сервисы и контроллеры
 @Entity
 @Table(name = "SalesPoint")
 public class SalesPoint {

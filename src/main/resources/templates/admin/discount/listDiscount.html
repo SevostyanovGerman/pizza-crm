@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Скидки и надбавки</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
+          rel="stylesheet" media="screen"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+
+    <link th:href="@{/css/discount/listDiscount.css}" href="../../../static/css/discount/listDiscount.css"
+          rel="stylesheet" media="screen">
+    <script src="../../../static/js/discountJs/listDiscount.js" th:src="@{/js/discountJs/listDiscount.js}"></script>
+    <th:block th:include="admin/fragments/menu-header :: head"></th:block>
+</head>
+<body>
+<th:block th:include="admin/fragments/menu-body :: menu"></th:block>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h3>Скидки и надбавки</h3>
+        </div>
+        <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true"
+           th:href="${'/admin/discount/new'}">Создать скидку/надбавку</a>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Название в пречеке</th>
+                    <th>Тип скидки</th>
+                    <th>Активна</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="discount : ${allDiscounts}">
+                    <td th:text="${discount.name}" th:attr="data-id=${discount.id}"></td>
+                    <td th:text="${discount.nameInCheck}"></td>
+                    <td th:text="${discount.type}"></td>
+                    <td><i th:class="${discount.enabled ? 'ml-4 mt-2 fa fa-check-square-o' : 'ml-4 mt-2 fa fa-square-o'}" aria-hidden="true"></i></td>
+                    <td>
+                        <a class="btn btn-success btn-sm" href="#" th:href="${'edit/' + discount.id}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <a class="btn btn-danger btn-sm btn-discount-delete" href="#" th:href="${'delete/' + discount.id}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="height: 200px"></div>
+
+    <div class="row">
+        <div class="col">
+            <h3>Совместимость скидок и методов оплаты</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-sm">
+                <thead>
+                <tr class="paymentMethods-names" >
+                    <th>Скидка</th>
+                    <th:block th:each="pm : ${allPaymentMethods}">
+                        <th th:text="${pm.name}"></th>
+                    </th:block>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="discount : ${allDiscounts}">
+                    <td th:text="${discount.name}"></td>
+                    <th:block th:each="pm : ${allPaymentMethods}">
+                        <td><input id="paymentMethods-checkbox" class="paymentMethods-checkbox" type="checkbox"
+                           onchange="checkboxListPaymentMethods (this)"  th:checked="${#lists.contains(discount.paymentMethods, pm)}"></td>
+                    </th:block>
+                    <td><input type="hidden" th:value="${discount.id}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

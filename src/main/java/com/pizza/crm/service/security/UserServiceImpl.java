@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.Optional;
 
+//TODO переместить туда где и все сервисы
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByPincode(String pincode) {
-        return Optional.ofNullable(userRepository.findByPincode(pincode));
+        return Optional.ofNullable(userRepository.findByPincodeAndFetchRolesEagerly(pincode));
     }
 
 }

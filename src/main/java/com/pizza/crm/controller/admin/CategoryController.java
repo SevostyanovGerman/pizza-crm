@@ -21,14 +21,15 @@ import java.util.Set;
 @Controller
 public class CategoryController {
 
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
-    private AddedCategoryService addedCategoryService;
+    private final AddedCategoryService addedCategoryService;
 
-    private DishService dishService;
+    private final DishService dishService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService, AddedCategoryService addedCategoryService, DishService dishService) {
+    public CategoryController(CategoryService categoryService, AddedCategoryService addedCategoryService,
+                              DishService dishService) {
         this.categoryService = categoryService;
         this.addedCategoryService = addedCategoryService;
         this.dishService = dishService;
@@ -38,7 +39,7 @@ public class CategoryController {
     public String categories(Model model) {
         model.addAttribute("category", categoryService.getAll());
         model.addAttribute("addedCategories", addedCategoryService.findAllCategories());
-        return "adminCategories";
+        return "admin/adminCategories";
     }
 
     @RequestMapping(value = "/categories/add", method = RequestMethod.POST)
@@ -56,7 +57,8 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/categories/update", method = RequestMethod.POST)
-    public String updateCategories(@ModelAttribute("category") @Validated Category category, BindingResult bindingResult) {
+    public String updateCategories(@ModelAttribute("category") @Validated Category category,
+                                   BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             categoryService.updateCategoriesName(category);
         }
@@ -74,8 +76,8 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/admin/add", method = RequestMethod.POST)
-    public String addCategory(AddedCategory category){
-        if (addedCategoryService.getCategoryByName(category.getName()) == null){
+    public String addCategory(AddedCategory category) {
+        if (addedCategoryService.getCategoryByName(category.getName()) == null) {
             addedCategoryService.save(category);
         } else {
             AddedCategory db = addedCategoryService.getCategoryByName(category.getName());
@@ -86,17 +88,17 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/admin/delete", method = RequestMethod.POST)
-    public String deleteCategory(String name){
+    public String deleteCategory(String name) {
         AddedCategory db = addedCategoryService.getCategoryByName(name);
-        if (db != null){
+        if (db != null) {
             addedCategoryService.delete(db.getId());
         }
         return "redirect:/categories";
     }
 
     @PostMapping(value = "/update/categoriesdish/{id}")
-    public @ResponseBody
-    ResponseEntity<?> updateCategories1(@RequestBody @Validated Set<Dish> dish,
+    @ResponseBody
+    public ResponseEntity<?> updateCategories1(@RequestBody @Validated Set<Dish> dish,
                                         @PathVariable("id") @Validated Long id,
                                         BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {

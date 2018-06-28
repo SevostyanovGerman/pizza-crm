@@ -1,10 +1,13 @@
 package com.pizza.crm.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
+//TODO удалить и сервисы и контроллеры
 @Entity
 @Table(name = "Dish")
 public class Dish {
@@ -25,6 +28,8 @@ public class Dish {
 
     private String vendorCode;
 
+    private Long amount;
+
     @ManyToMany
     @JoinTable(name = "Dish_Ingredient",
             joinColumns = @JoinColumn(name = "dish"),
@@ -37,12 +42,57 @@ public class Dish {
             inverseJoinColumns = @JoinColumn(name = "category"))
     private Set<Category> categories;
 
+    @ManyToMany
+    @JoinTable(name = "Dish_Dicree",
+            joinColumns = @JoinColumn(name = "dish"),
+            inverseJoinColumns = @JoinColumn(name = "decree"))
+    private Set<Decree> decrees;
+
+    @ManyToMany
+    @JoinTable(name = "DishQuickMenu_Dish",
+            joinColumns = @JoinColumn(name = "dish"),
+            inverseJoinColumns = @JoinColumn(name = "nomenclatureQuickMenus"))
+    @JsonBackReference
+    private Set<NomenclatureQuickMenu> nomenclatureQuickMenus;
+
+
     public Dish() {
     }
 
     public Dish(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Dish(@NotBlank String name, double price, String code, String barcode, String vendorCode, Set<Ingredient> ingredients, Set<Category> categories, Set<NomenclatureQuickMenu> nomenclatureQuickMenus) {
+        this.name = name;
+        this.price = price;
+        this.code = code;
+        this.barcode = barcode;
+        this.vendorCode = vendorCode;
+        this.ingredients = ingredients;
+        this.categories = categories;
+        this.nomenclatureQuickMenus = nomenclatureQuickMenus;
+    }
+
+    public Dish(@NotBlank String name, double price, String code, String barcode, String vendorCode, Set<Ingredient> ingredients, Set<Category> categories, Set<Decree> decrees, Set<NomenclatureQuickMenu> nomenclatureQuickMenus) {
+        this.name = name;
+        this.price = price;
+        this.code = code;
+        this.barcode = barcode;
+        this.vendorCode = vendorCode;
+        this.ingredients = ingredients;
+        this.categories = categories;
+        this.decrees = decrees;
+        this.nomenclatureQuickMenus = nomenclatureQuickMenus;
+    }
+
+    public Set<NomenclatureQuickMenu> getNomenclatureQuickMenus() {
+        return nomenclatureQuickMenus;
+    }
+
+    public void setNomenclatureQuickMenus(Set<NomenclatureQuickMenu> nomenclatureQuickMenus) {
+        this.nomenclatureQuickMenus = nomenclatureQuickMenus;
     }
 
     public String getCode() {
@@ -79,7 +129,6 @@ public class Dish {
         this.code = code;
         this.barcode = barcode;
         this.vendorCode = vendorCode;
-
     }
 
     public Dish(String name) {
@@ -147,7 +196,24 @@ public class Dish {
 
     @Override
     public String toString() {
-        return name;
+        return "Dish{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", code='" + code + '\'' +
+                ", barcode='" + barcode + '\'' +
+                ", vendorCode='" + vendorCode + '\'' +
+                ", ingredients=" + ingredients +
+                ", categories=" + categories +
+                ", nomenclatureQuickMenus=" + nomenclatureQuickMenus +
+                '}';
     }
 
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
+    }
 }

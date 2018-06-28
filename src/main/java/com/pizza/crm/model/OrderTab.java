@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+//TODO удалить
 @Entity
 @Table(name = "ClientOrderTab")
 public class OrderTab {

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Редактирование скидки/надбавки</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet" media="screen"/>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+    <script src="../../../static/js/discountJs/discount.js" th:src="@{/js/discountJs/discount.js}"></script>
+
+    <link th:href="@{/css/discount/listDiscount.css}" href="../../../static/css/discount/listDiscount.css"
+          rel="stylesheet" media="screen">
+</head>
+<body style="background: #eee;">
+<div class="container-fluid">
+    <div class="row my-2">
+        <div class="col">
+            <h5>Создание скидки/надбавки</h5>
+        </div>
+    </div>
+    <input type="hidden" id="discount-id" th:field="${discount.id}">
+    <div class="form-group row">
+        <label for="discount-name" class="col-2 col-form-label col-form-label-sm">Название</label>
+        <div class="col-4">
+            <input type="text" class="form-control form-control-sm" id="discount-name" th:field="${discount.name}">
+        </div>
+        <div class="custom-control custom-checkbox col">
+            <input type="checkbox" class="custom-control-input" id="discount-enabled" th:field="${discount.enabled}">
+            <label for="discount-enabled" class="custom-control-label">
+                Активна
+            </label>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="discount-nameInCheck" class="col-2 col-form-label col-form-label-sm">Название в пречеке</label>
+        <div class="col-4">
+            <input type="text" class="form-control form-control-sm" id="discount-nameInCheck" th:field="${discount.nameInCheck}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="discount-type" class="col-2 col-form-label col-form-label-sm">Тип</label>
+        <div class="col-4">
+            <input type="text" class="form-control form-control-sm" id="discount-type" th:field="${discount.type}">
+        </div>
+    </div>
+    <div class="custom-control custom-checkbox col">
+        <input type="checkbox" class="custom-control-input" id="discount-manualSelectWithOthers" th:field="${discount.manualSelectWithOthers}">
+        <label for="discount-manualSelectWithOthers" class="custom-control-label">
+            Подтвердить выбор скидки вручную при наличии других скидок
+        </label>
+    </div>
+    <div class="row">
+        <div class="col">
+            <nav>
+                <div class="nav nav-tabs my-3" id="discount-props-nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-restrictions-tab" data-toggle="tab" href="#nav-restrictions"
+                       role="tab" aria-controls="nav-restrictions" aria-selected="true">Ограничения</a>
+                    <a class="nav-item nav-link" id="nav-sizeType-tab" data-toggle="tab" href="#nav-sizeType"
+                       role="tab" aria-controls="nav-sizeType" aria-selected="false">Размер и тип</a>
+                    <a class="nav-item nav-link" id="nav-options-tab" data-toggle="tab" href="#nav-options"
+                       role="tab" aria-controls="nav-options" aria-selected="false">Настройки</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="discount-props-tab-content" style="height: 450px">
+                <div class="tab-pane fade show active" id="nav-restrictions" role="tabpanel" aria-labelledby="nav-restrictions-tab">
+
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="discount-minSumRestriction" th:field="${discount.minSumRestriction}">
+                                <label for="discount-minSumRestriction" class="custom-control-label">
+                                    Применять, если сумма заказа не менее:
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <input type="number" class="form-control form-control-sm" id="discount-minSum" th:field="${discount.minSum}">
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-2">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="discount-scheduleRestriction" th:field="${discount.scheduleRestriction}">
+                                <label for="discount-scheduleRestriction" class="custom-control-label">
+                                    Применять только в период:
+                                </label>
+                            </div>
+                        </div>
+                        <select class="custom-select selectEnum" id="discount-discountAssignMode" th:field="${discount.discountAssignMode}">
+                            <option th:value="${FIRST_DISH}" selected> По времени печати первого блюда</option>
+                            <option th:value="${ALL_DISHES}" >По времени печати каждого блюда</option>
+                        </select>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col">
+                            <table id="table-schedules" class="table table-sm">
+                                <thead>
+                                <tr><td><select class="custom-select selectEnum" id="allValidities">
+                                    <option th:each="validity : ${allValidity}"
+                                            th:text="${validity.nameValidity}"
+                                            th:value="${validity.id}">
+                                    </option>
+                                        </select></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="addValidity()">Добавить</button>
+                                    </td>
+                                    <td><button type="button" class="btn btn-primary clear-list" id="clear-list">Очистить</button></td>
+                                </tr>
+                                <tr>
+                                    <th>Имя</th>
+                                    <th>Начало</th>
+                                    <th>Окончание</th>
+                                    <th>Понедельник</th>
+                                    <th>Вторник</th>
+                                    <th>Среда</th>
+                                    <th>Четверг</th>
+                                    <th>Пятница</th>
+                                    <th>Суббота</th>
+                                    <th>Воскресенье</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody id="validity-tbody2">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="tab-pane fade" id="nav-sizeType" role="tabpanel" aria-labelledby="nav-sizeType-tab">
+                    <div class="row">
+                        <div class="col-2">
+                            <p>Метод применения</p>
+                        </div>
+                        <select class="custom-select selectEnum" id="discount-discountApplicationMethod" th:field="${discount.discountApplicationMethod}">
+                            <option th:value="${FULL_PRICE}" selected> К полной сумме заказа</option>
+                            <option th:value="${WITH_OTHERS}" >С учетом других скидок</option>
+                        </select>
+                        <div class="col-1 offset-1">
+                            <p>Тип</p>
+                        </div>
+                        <select class="custom-select selectEnum" id="discount-discountMode" th:field="${discount.discountMode}">
+                            <option th:value="${DISCOUNT}" selected >Скидка</option>
+                            <option th:value="${EXTRA_PAY}" >Надбавка</option>
+                        </select>
+                        <select class="custom-select selectEnum" id="discount-discountCalculationMode" th:field="${discount.discountCalculationMode}">
+                            <option th:value="${PERCENT}" selected >Процент от суммы</option>
+                            <option th:value="${FIXED}" >Фиксированная сумма</option>
+                        </select>
+                    </div>
+                    <div class="form-group row mt-3">
+                        <label for="discount-priority" class="col-2 col-form-label">Приоритет</label>
+                        <div class="col-1">
+                            <input type="number" class="form-control" id="discount-priority" th:field="${discount.priority}">
+                        </div>
+                        <label for="discount-value" class="col-1 offset-2 col-form-label">Значение</label>
+                        <div class="col-1">
+                            <input type="number" class="form-control" id="discount-value" th:field="${discount.value}">
+                        </div>
+                    </div>
+
+                    <table class="discount-detailWhenPrinting-table">
+                        <tr>
+                            <td>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="discount-applyForAllDiscountCategories" th:field="${discount.applyForAllDiscountCategories}">
+                                            <label for="discount-applyForAllDiscountCategories" class="custom-control-label">
+                                                Применять для всех категорий блюд
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="discount-detailWhenPrinting-right">
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="discount-detailWhenPrinting" th:field="${discount.detailWhenPrinting}">
+                                            <label for="discount-detailWhenPrinting" class="custom-control-label">
+                                                Детализировать при печати
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+
+                    <div class="row mt-3">
+                        <div class="col">
+                            <table class="table table-sm" id="discountCategories-table">
+                                <thead>
+                                <tr>
+                                    <th>Категория</th>
+                                    <th>Тип</th>
+                                    <th>Процент</th>
+                                </tr>
+                                </thead>
+                                <tbody id="dc-table">
+                                <tr id="dc" th:each="dc : ${discount.discountCategories}">
+                                    <td class="discountCategories-row" th:text="${dc.name}"></td>
+                                    <td>
+                                        <select type="text" class="custom-select selectEnum" id="dc-discountMode" th:value="${dc.discountMode}">
+                                            <option th:value="${NOT_APPLICABLE}"
+                                                    th:selected="${dc.discountMode == NOT_APPLICABLE}">Не используется </option>
+                                            <option th:value="${DISCOUNT}"
+                                                    th:selected="${dc.discountMode == DISCOUNT}">Скидка</option>
+                                            <option th:value="${EXTRA_PAY}"
+                                                    th:selected="${dc.discountMode == EXTRA_PAY}">Надбавка</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" id="dc-value" th:value="${dc.value}"></td>
+                                    <input id="dc-id" type="hidden" th:value="${dc.id}">
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="nav-options" role="tabpanel" aria-labelledby="nav-options-tab">
+                    <div class="row">
+                        <div class="col">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="discount-manualInput" th:field="${discount.manualInput}">
+                                <label for="discount-manualInput" class="custom-control-label">
+                                    Можно назначать вручную
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="discount-automatic" th:field="${discount.automatic}">
+                                <label for="discount-automatic" class="custom-control-label">
+                                    Устанавливать автоматически
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="discount-manualDishSelect" th:field="${discount.manualDishSelect}">
+                                <label for="discount-manualDishSelect" class="custom-control-label">
+                                    Выбор блюд на усмотрение официанта
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="discount-combinable" th:field="${discount.combinable}">
+                                <label for="discount-combinable" class="custom-control-label">
+                                    Можно использовать с другими скидками
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="discount-comment">Комментарий</label>
+                        <textarea class="form-control" id="discount-comment" th:field="${discount.comment}" rows="3"></textarea>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 offset-10">
+            <button class="btn btn-success" onclick="SaveDiscount()">Сохранить</button>
+            <a class="btn btn-secondary" th:href="@{/admin/discount/list}">Отмена</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+.order_item {
+    display: none;
+}
+
+body {
+    background: #eee;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+    background-color: #F5F5F4;
+}
+
+
+.item-active {
+    background: #dfe385;
+}
+
+.removed_el{
+    display: none;
+    text-decoration: line-through;
+}
+
+.selectView{
+    font-weight:bold;
+}
+
+#removed_el{
+    text-decoration: line-through;
+}

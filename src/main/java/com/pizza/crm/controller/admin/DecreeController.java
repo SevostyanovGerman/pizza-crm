@@ -1,34 +1,34 @@
 package com.pizza.crm.controller.admin;
 
-import com.pizza.crm.model.Schedule;
-import com.pizza.crm.service.ScheduleService;
+import com.pizza.crm.service.ValidityScheduleService;
+import com.pizza.crm.service.ValidityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class DecreeController {
 
-    private ScheduleService scheduleService;
+    private final ValidityService validityService;
 
     @Autowired
-    public DecreeController(ScheduleService scheduleService) {
-        this.scheduleService = scheduleService;
+    public DecreeController(ValidityService validityService) {
+        this.validityService = validityService;
     }
 
     @RequestMapping("/newDecree")
-    public String newDecree(Model model){
-        model.addAttribute("schedules", scheduleService.findAllSchedules());
+    public String newDecree(Model model) {
+        model.addAttribute("validity", validityService.getAll());
         return "admin/newDecree";
     }
 
-    @PostMapping("/newDecree/save")
-    public String save(@RequestBody Schedule schedule){
-        scheduleService.save(schedule);
-        return "redirect:/newDecree";
+    @RequestMapping("/getDecree")
+    public String getDecree() {
+        return "admin/decree";
     }
 
+
 }
+
+
