@@ -51,9 +51,9 @@ public class Dish {
     @ManyToMany
     @JoinTable(name = "DishQuickMenu_Dish",
             joinColumns = @JoinColumn(name = "dish"),
-            inverseJoinColumns = @JoinColumn(name = "dishQuickMenu"))
+            inverseJoinColumns = @JoinColumn(name = "nomenclatureQuickMenus"))
     @JsonBackReference
-    private Set<DishQuickMenu> dishQuickMenu;
+    private Set<NomenclatureQuickMenu> nomenclatureQuickMenus;
 
 
     public Dish() {
@@ -64,7 +64,7 @@ public class Dish {
         this.name = name;
     }
 
-    public Dish(@NotBlank String name, double price, String code, String barcode, String vendorCode, Set<Ingredient> ingredients, Set<Category> categories, Set<DishQuickMenu> dishQuickMenu) {
+    public Dish(@NotBlank String name, double price, String code, String barcode, String vendorCode, Set<Ingredient> ingredients, Set<Category> categories, Set<NomenclatureQuickMenu> nomenclatureQuickMenus) {
         this.name = name;
         this.price = price;
         this.code = code;
@@ -72,10 +72,10 @@ public class Dish {
         this.vendorCode = vendorCode;
         this.ingredients = ingredients;
         this.categories = categories;
-        this.dishQuickMenu = dishQuickMenu;
+        this.nomenclatureQuickMenus = nomenclatureQuickMenus;
     }
 
-    public Dish(@NotBlank String name, double price, String code, String barcode, String vendorCode, Set<Ingredient> ingredients, Set<Category> categories, Set<Decree> decrees, Set<DishQuickMenu> dishQuickMenu) {
+    public Dish(@NotBlank String name, double price, String code, String barcode, String vendorCode, Set<Ingredient> ingredients, Set<Category> categories, Set<Decree> decrees, Set<NomenclatureQuickMenu> nomenclatureQuickMenus) {
         this.name = name;
         this.price = price;
         this.code = code;
@@ -84,15 +84,15 @@ public class Dish {
         this.ingredients = ingredients;
         this.categories = categories;
         this.decrees = decrees;
-        this.dishQuickMenu = dishQuickMenu;
+        this.nomenclatureQuickMenus = nomenclatureQuickMenus;
     }
 
-    public Set<DishQuickMenu> getDishQuickMenu() {
-        return dishQuickMenu;
+    public Set<NomenclatureQuickMenu> getNomenclatureQuickMenus() {
+        return nomenclatureQuickMenus;
     }
 
-    public void setDishQuickMenu(Set<DishQuickMenu> dishQuickMenu) {
-        this.dishQuickMenu = dishQuickMenu;
+    public void setNomenclatureQuickMenus(Set<NomenclatureQuickMenu> nomenclatureQuickMenus) {
+        this.nomenclatureQuickMenus = nomenclatureQuickMenus;
     }
 
     public String getCode() {
@@ -205,7 +205,7 @@ public class Dish {
                 ", vendorCode='" + vendorCode + '\'' +
                 ", ingredients=" + ingredients +
                 ", categories=" + categories +
-                ", dishQuickMenu=" + dishQuickMenu +
+                ", nomenclatureQuickMenus=" + nomenclatureQuickMenus +
                 '}';
     }
 

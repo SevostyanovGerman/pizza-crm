@@ -13,7 +13,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Array;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,8 +23,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.pizza.crm.model.AccountingCategory.PRODUCT;
-import static com.pizza.crm.model.NomenclatureType.DISH;
-import static com.pizza.crm.model.NomenclatureType.MODIFIER;
 
 //TODO почистить от лишнего
 @Component
@@ -44,7 +41,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     private final DiscountService discountService;
     private final DecreeService decreeService;
     private final QuickMenuService quickMenuService;
-    private final DishQuickMenuService dishQuickMenuService;
+    private final NomenclatureQuickMenuService nomenclatureQuickMenuService;
     private final EmployeeService employeeService;
     private final PaymentMethodService paymentMethodService;
     private final PaymentTypeService paymentTypeService;
@@ -58,7 +55,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                            DishService dishService, IngredientService ingredientService,
                            ValidityScheduleService validityScheduleService, ValidityService validityService,
                            DiscountService discountService, DecreeService decreeService,
-                           QuickMenuService quickMenuService, DishQuickMenuService dishQuickMenuService,
+                           QuickMenuService quickMenuService, NomenclatureQuickMenuService nomenclatureQuickMenuService,
                            EmployeeService employeeService, PaymentMethodService paymentMethodService,
                            PaymentTypeService paymentTypeService, UnitsOfMeasurementService unitsOfMeasurementService,
                            ScaleOfSizeService scaleOfSizeService) {
@@ -75,7 +72,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
         this.discountService = discountService;
         this.decreeService = decreeService;
         this.quickMenuService = quickMenuService;
-        this.dishQuickMenuService = dishQuickMenuService;
+        this.nomenclatureQuickMenuService = nomenclatureQuickMenuService;
         this.employeeService = employeeService;
         this.paymentMethodService = paymentMethodService;
         this.paymentTypeService = paymentTypeService;
@@ -87,14 +84,14 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
         generateUsers();
-
+        generateNomenclatureAndNomenclatureParentGroup();
         generateDishes();
         generateValidity();
         generateFakeStaff();
         generateDiscountsAndPaymentMethods();
         generateAddedCategory();
         generateDecree();
-        generateNomenclatureAndNomenclatureParentGroup();
+
         generateIngredient();
         generateUnitsOfMeasurement();
         generateScaleOfSize();
@@ -157,108 +154,70 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
     }
 
     private void generateDishes() {
-
         Faker faker = new Faker(new Locale("ru"));
-        Set<Dish> dishSet = new HashSet<>();
-        Set<Category> categorySet = new HashSet<>();
-        Set<String> namesDishesSet = new HashSet<>();
-        Set<String> namesCategoriesSet = new HashSet<>();
 
+        Set<Nomenclature> nomenclatures1 = nomenclatureService
+                .findAllNomenclatures()
+                .stream()
+                .filter(nomenclature -> nomenclature.getNomenclatureType().equals(NomenclatureType.DISH))
+                .limit(3)
+                .collect(Collectors.toSet());
 
-        for (int j = 0; j < 5; j++) {
-            namesCategoriesSet.clear();
-            namesDishesSet.clear();
-            categorySet.clear();
-            dishSet.clear();
+        Set<Nomenclature> nomenclatures2 = nomenclatureService
+                .findAllNomenclatures()
+                .stream()
+                .filter(nomenclature -> nomenclature.getNomenclatureType().equals(NomenclatureType.DISH))
+                .skip(10)
+                .limit(5)
+                .collect(Collectors.toSet());
+        Set<Nomenclature> nomenclatures3 = nomenclatureService
+                .findAllNomenclatures()
+                .stream()
+                .filter(nomenclature -> nomenclature.getNomenclatureType().equals(NomenclatureType.DISH))
+                .skip(20)
+                .limit(4)
+                .collect(Collectors.toSet());
 
-            //------------------- Category ------------------------
+        NomenclatureQuickMenu nomenclatureQuickMenu1 = new NomenclatureQuickMenu(faker.color().name(), 1, nomenclatures1);
+        NomenclatureQuickMenu nomenclatureQuickMenu2 = new NomenclatureQuickMenu(faker.color().name(), 1, nomenclatures2);
+        NomenclatureQuickMenu nomenclatureQuickMenu3 = new NomenclatureQuickMenu(faker.color().name(), 2, nomenclatures3);
 
-            namesCategoriesSet.add(faker.food().ingredient());
-            List<String> namesCategoriesList = new ArrayList<>(namesCategoriesSet);
-            Category category = new Category(namesCategoriesList.get(0));
-            categorySet.add(category);
+        Set<NomenclatureQuickMenu> nomenclatureQuickMenus1 = new HashSet<>();
+        Set<NomenclatureQuickMenu> nomenclatureQuickMenus2 = new HashSet<>();
+        nomenclatureQuickMenus1.add(nomenclatureQuickMenu1);
+        nomenclatureQuickMenus2.add(nomenclatureQuickMenu2);
+        nomenclatureQuickMenus1.add(nomenclatureQuickMenu3);
+        nomenclatureQuickMenuService.save(nomenclatureQuickMenu1);
+        nomenclatureQuickMenuService.save(nomenclatureQuickMenu2);
+        nomenclatureQuickMenuService.save(nomenclatureQuickMenu3);
 
-            //--------------------- Dishes ----------------------------
+        quickMenuService.save(new QuickMenu("Горячее", nomenclatureQuickMenus1, DayOfWeek.MONDAY));
+        quickMenuService.save(new QuickMenu("Салаты", nomenclatureQuickMenus2, DayOfWeek.MONDAY));
+        quickMenuService.save(new QuickMenu("Напитки", nomenclatureQuickMenus1, DayOfWeek.MONDAY));
 
-            List<Dish> list = (List<Dish>) dishService.getAll();
+        quickMenuService.save(new QuickMenu("Горячее", nomenclatureQuickMenus1, DayOfWeek.TUESDAY));
+        quickMenuService.save(new QuickMenu("Салаты", nomenclatureQuickMenus2, DayOfWeek.TUESDAY));
+        quickMenuService.save(new QuickMenu("Напитки", nomenclatureQuickMenus1, DayOfWeek.TUESDAY));
 
-            if (list.size() == 0){
-                for (int c = 0; c < 25; c++) {
-                    String namesDishes = faker.food().ingredient();
-                    namesDishesSet.add(namesDishes);
-                }
+        quickMenuService.save(new QuickMenu("Горячее", nomenclatureQuickMenus1, DayOfWeek.WEDNESDAY));
+        quickMenuService.save(new QuickMenu("Салаты", nomenclatureQuickMenus2, DayOfWeek.WEDNESDAY));
+        quickMenuService.save(new QuickMenu("Напитки", nomenclatureQuickMenus1, DayOfWeek.WEDNESDAY));
 
-            } else {
-                for (int c = 0; c < 103; c++) {
-                    String namesDishes = faker.food().ingredient();
-                    boolean flag = false;
+        quickMenuService.save(new QuickMenu("Горячее", nomenclatureQuickMenus1, DayOfWeek.THURSDAY));
+        quickMenuService.save(new QuickMenu("Салаты", nomenclatureQuickMenus2, DayOfWeek.THURSDAY));
+        quickMenuService.save(new QuickMenu("Напитки", nomenclatureQuickMenus1, DayOfWeek.THURSDAY));
 
-                    for (int i = 0; i < list.size(); i++) {
-                        String dishName = list.get(i).getName();
-                        if (dishName.equals(namesDishes)){
-                            flag = true;
-                            break;
-                        }
-                    }
+        quickMenuService.save(new QuickMenu("Горячее", nomenclatureQuickMenus1, DayOfWeek.FRIDAY));
+        quickMenuService.save(new QuickMenu("Салаты", nomenclatureQuickMenus2, DayOfWeek.FRIDAY));
+        quickMenuService.save(new QuickMenu("Напитки", nomenclatureQuickMenus1, DayOfWeek.FRIDAY));
 
-                    if (!flag){
-                        namesDishesSet.add(namesDishes);
-                    }
-                }
-            }
+        quickMenuService.save(new QuickMenu("Горячее", nomenclatureQuickMenus1, DayOfWeek.SATURDAY));
+        quickMenuService.save(new QuickMenu("Салаты", nomenclatureQuickMenus2, DayOfWeek.SATURDAY));
+        quickMenuService.save(new QuickMenu("Напитки", nomenclatureQuickMenus1, DayOfWeek.SATURDAY));
 
-            List<String> namesDishesList = new ArrayList<>(namesDishesSet);
-            for (int i = 0; i < namesDishesList.size(); i++) {
-                Dish dish = new Dish(
-                        namesDishesList.get(i),
-                        faker.number().randomDouble(1, 10, 10000),
-                        faker.number().digit(),
-                        faker.number().digit(),
-                        faker.number().digit());
-                dishSet.add(dish);
-                dishService.save(dish);
-                dish.setCategories(categorySet);
-                System.out.println("Блюдо: " + dish);
-            }
-            //-------------------------------------------------------------
-
-            category.setDishes(dishSet);
-            categoryService.save(category);
-            System.out.println("Категория: " + category);
-        }
-
-
-        DishQuickMenu dishQuickMenu = new DishQuickMenu(faker.color().name(), 1, dishSet);
-        dishQuickMenuService.save(dishQuickMenu);
-
-
-        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 1));
-        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 1));
-        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 1));
-
-        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 2));
-        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 2));
-        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 2));
-
-        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 3));
-        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 3));
-        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 3));
-
-        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 4));
-        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 4));
-        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 4));
-
-        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 5));
-        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 5));
-        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 5));
-
-        quickMenuService.save(new QuickMenu("|", new HashSet<>(), 6));
-        quickMenuService.save(new QuickMenu("||", new HashSet<>(), 6));
-        quickMenuService.save(new QuickMenu("|||", new HashSet<>(), 6));
-
-/*        quickMenuService.save(new QuickMenu("Roll", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu2)), 7));
-        quickMenuService.save(new QuickMenu("Pizza", new HashSet<>(Arrays.asList(dishQuickMenu1, dishQuickMenu3)), 7));
-        quickMenuService.save(new QuickMenu("Test", new HashSet<>(Arrays.asList(dishQuickMenu4)), 7));*/
+        quickMenuService.save(new QuickMenu("Горячее", nomenclatureQuickMenus1, DayOfWeek.SUNDAY));
+        quickMenuService.save(new QuickMenu("Салаты", nomenclatureQuickMenus2, DayOfWeek.SUNDAY));
+        quickMenuService.save(new QuickMenu("Напитки", nomenclatureQuickMenus1, DayOfWeek.SUNDAY));
     }
 
     private void generateUsers() {
@@ -315,7 +274,7 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
                         localTime1,
                         localTime2,
                         faker.food().ingredient(),
-                        NomenclatureType.getRandomNomenclatureType(),
+                        NomenclatureType.DISH,
                         PRODUCT,
                         faker.address().city());
 

@@ -234,4 +234,12 @@ public class Nomenclature {
     public void setRemoved(Boolean removed) {
         this.removed = removed;
     }
+
+    @Override
+    public String toString() {
+        return "Nomenclature{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
