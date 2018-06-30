@@ -237,20 +237,20 @@ public class Nomenclature {
         this.removed = removed;
     }
 
-<<<<<<< HEAD
-    @Override
-    public String toString() {
-        return "Nomenclature{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-=======
     public Long getAmount() {
         return amount;
     }
 
     public void setAmount(Long amount) {
         this.amount = amount;
->>>>>>> Removing-Dish
     }
+    
+    @Override
+    public String toString() {
+        return "Nomenclature{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
 }
