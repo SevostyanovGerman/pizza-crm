@@ -557,7 +557,7 @@ function SearchModalЕxpandShow() {
 
     $.ajax({
         type: "POST",
-        url: "/get/dish",
+        url: "/nomenclature/getAllNomenclatures",
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
@@ -567,7 +567,9 @@ function SearchModalЕxpandShow() {
             console.log(dish);
             if($("#SearchModalЕxpand").hasClass("flagSearch")){
                 dish.forEach(function (value) {
-                    $("#product").append("<div class=\"col-3\"><div class=\"productItem\" data-quantity=\"1\"><p class=\"nameProduct\">" + value.name + "</p><p class=\"costProduct\">" + value.price + "p</p></div></div>");
+                    $("#product").append("<div class=\"col-3\"><div class=\"productItem\" data-quantity=\"1\">" +
+                        "<p class=\"nameProduct\">" + value.name + "</p>" +
+                        "<p class=\"costProduct\">" + value.price + "p</p></div></div>");
                 });
             }
 
@@ -588,7 +590,7 @@ function SearchModalShow() {
 
     $.ajax({
         type: "POST",
-        url: "/get/dish",
+        url: "/nomenclature/getAllNomenclatures",
         beforeSend: function (xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
@@ -596,7 +598,12 @@ function SearchModalShow() {
             var dish = data;
             console.log(dish);
                 dish.forEach(function (value) {
-                    $("#productsItem").append("<li class=\"product-search\" data-quantity=\"1\"><p class=\"name\">" + value.name + "</p><p class=\"price\">" + value.price + "р</p><p class=\"code\">Код: " + value.code + "</p><p class=\"barcode\" style=\"display: none\">" + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">" + value.vendorCode + "</p></li>");
+                    $("#productsItem").append("<li class=\"product-search\" data-quantity=\"1\"><p class=\"name\">"
+                        + value.name + "</p><p class=\"price\">"
+                        + value.price + "р</p><p class=\"code\">Код: "
+                        + value.code + "</p><p class=\"barcode\" style=\"display: none\">"
+                        + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">"
+                        + value.vendorCode + "</p></li>");
                 });
            listObj2 = new List('products1', option2);
 
