@@ -54,6 +54,8 @@ public class OrderControllerRest {
         Double extraChargeSum = 0d;
         List<String> nameDiscounts = new ArrayList<>();
 
+        order.setId(orderService.getLastRecordId());
+
         //rowTotal cost calculation
         for (Nomenclature nomenclature: order.getNomenclatures()) {
             Nomenclature nom = nomenclatureService.getNomenclatureByName(nomenclature.getName());

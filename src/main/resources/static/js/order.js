@@ -362,13 +362,15 @@ function updateTotal() {
         nomenclatures.push(nomenclature);
     });
 
-    var id = $("#new-order-id").text();
-
     var discounts = discountsAndExtraCharges;
 
     var order = {
+<<<<<<< HEAD
         id: id,
         nomenclatures: nomenclatures,
+=======
+        dishes: dishes,
+>>>>>>> DaysOfWeek-Validity-12-06-2018
         discounts: discounts
     };
 
