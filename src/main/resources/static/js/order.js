@@ -365,9 +365,7 @@ function updateTotal() {
     var discounts = discountsAndExtraCharges;
 
     var order = {
-        id: id,
         nomenclatures: nomenclatures,
-        dishes: dishes,
         discounts: discounts
     };
 
