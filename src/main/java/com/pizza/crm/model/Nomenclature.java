@@ -244,7 +244,7 @@ public class Nomenclature {
     public void setAmount(Long amount) {
         this.amount = amount;
     }
-    
+
     @Override
     public String toString() {
         return "Nomenclature{" +
