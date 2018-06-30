@@ -47,13 +47,13 @@ public class OrderControllerRest {
     @PostMapping("/discount/getRowTotal")
     public List<Double> getRowTotal(@RequestBody Order order){
 
-        order.setId(orderService.getLastRecordId());
-
         Double rawTotal = 0d;
         Double total = 0d;
         List<Double> rawTotalAndTotal = new ArrayList<>();
         LocalDateTime localDateTime = LocalDateTime.now();
         List<String> dishNames = new ArrayList<>();
+
+        order.setId(orderService.getLastRecordId());
 
         //rowTotal cost calculation
         for (Dish dish: order.getDishes()) {
