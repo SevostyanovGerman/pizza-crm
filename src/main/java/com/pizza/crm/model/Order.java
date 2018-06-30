@@ -53,10 +53,10 @@ public class Order {
 
     //TODO должно быть связано с номенклатурой
     @ManyToMany
-    @JoinTable(name = "ClientOrder_Dish",
+    @JoinTable(name = "ClientOrder_Nomenclature",
             joinColumns = @JoinColumn(name = "ClientOrder"),
-            inverseJoinColumns = @JoinColumn(name = "Dish"))
-    private List<Dish> dishes;
+            inverseJoinColumns = @JoinColumn(name = "Nomenclature"))
+    private List<Nomenclature> nomenclatures;
 
     private String deliveryAddress;
 
@@ -162,15 +162,6 @@ public class Order {
         this.discounts = discounts;
     }
 
-    public List<Dish> getDishes() {
-        return dishes;
-    }
-
-
-    public void setDishes(List<Dish> dishes) {
-        this.dishes = dishes;
-    }
-
     public LocalDateTime getClosingDate() {
         return closingDate;
     }
@@ -209,5 +200,13 @@ public class Order {
 
     public void setExtraChargeCost(Double extraChargeCost) {
         this.extraChargeCost = extraChargeCost;
+    }
+
+    public List<Nomenclature> getNomenclatures() {
+        return nomenclatures;
+    }
+
+    public void setNomenclatures(List<Nomenclature> nomenclatures) {
+        this.nomenclatures = nomenclatures;
     }
 }

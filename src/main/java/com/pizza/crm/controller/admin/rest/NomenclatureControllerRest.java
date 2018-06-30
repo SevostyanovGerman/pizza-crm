@@ -70,5 +70,10 @@ public class NomenclatureControllerRest {
         return nomenclatureParentGroup.getNomenclatures();
     }
 
+    @PostMapping("nomenclature/getAllNomenclatures")
+    public List<Nomenclature> getAllNomenclatures() {
+        return nomenclatureService.findAllNomenclatures();
+    }
+
 
 }

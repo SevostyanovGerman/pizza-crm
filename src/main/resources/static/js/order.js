@@ -350,7 +350,7 @@ function getSelectedRow() {
 
 function updateTotal() {
 
-    var dishes = [];
+    var nomenclatures = [];
     $('.order-table tr').each(function () {
         let amount = parseInt($(this).find('td:eq(0)').text());
         if (isNaN(amount)) {
@@ -358,8 +358,8 @@ function updateTotal() {
         }
         let name = $(this).find('td:eq(1)').text();
 
-        var dish = {amount: amount, name: name};
-        dishes.push(dish);
+        var nomenclature = {amount: amount, name: name};
+        nomenclatures.push(nomenclature);
     });
 
     var id = $("#new-order-id").text();
@@ -368,7 +368,7 @@ function updateTotal() {
 
     var order = {
         id: id,
-        dishes: dishes,
+        nomenclatures: nomenclatures,
         discounts: discounts
     };
 

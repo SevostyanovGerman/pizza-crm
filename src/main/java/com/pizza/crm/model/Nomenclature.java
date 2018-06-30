@@ -36,6 +36,8 @@ public class Nomenclature {
 
     private Boolean removed;
 
+    private Long amount;
+
     @Enumerated(EnumType.STRING)
     private NomenclatureType nomenclatureType;
 
@@ -235,11 +237,20 @@ public class Nomenclature {
         this.removed = removed;
     }
 
+<<<<<<< HEAD
     @Override
     public String toString() {
         return "Nomenclature{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+=======
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
+>>>>>>> Removing-Dish
     }
 }

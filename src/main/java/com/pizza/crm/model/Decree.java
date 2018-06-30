@@ -26,10 +26,10 @@ public class Decree {
     private Boolean enable;
 
     @ManyToMany
-    @JoinTable(name = "Dish_Dicree",
-            joinColumns = @JoinColumn(name = "decree"),
-            inverseJoinColumns = @JoinColumn(name = "dish"))
-    private Set<Dish> dishes;
+    @JoinTable(name = "Decree_Nomenclature",
+            joinColumns = @JoinColumn(name = "Decree"),
+            inverseJoinColumns = @JoinColumn(name = "Nomenclature"))
+    private Set<Nomenclature> nomenclatures;
 
     @ManyToMany
     @JoinTable(name = "Decree_Validity",
@@ -57,14 +57,6 @@ public class Decree {
 
     public void setEnable(Boolean enable) {
         this.enable = enable;
-    }
-
-    public Set<Dish> getDishes() {
-        return dishes;
-    }
-
-    public void setDishes(Set<Dish> dishes) {
-        this.dishes = dishes;
     }
 
     public Long getId() {
@@ -121,6 +113,14 @@ public class Decree {
 
     public void setValidities(List<Validity> validities) {
         this.validities = validities;
+    }
+
+    public Set<Nomenclature> getNomenclatures() {
+        return nomenclatures;
+    }
+
+    public void setNomenclatures(Set<Nomenclature> nomenclatures) {
+        this.nomenclatures = nomenclatures;
     }
 
     @Override
