@@ -87,21 +87,21 @@ public class DiscountController {
 
     @PostMapping("/admin/discount/addPaymentMethodForDiscount")
     public String addPaymentMethodForDiscount(@RequestBody Discount discount){
-        Discount discount1 = discountService.findById(discount.getId()).orElseThrow(NotFoundException::new);
+        Discount discountForDiscountList = discountService.findById(discount.getId()).orElseThrow(NotFoundException::new);
         if (discount.isEnabled()) {
-            discount1.getPaymentMethods().add(paymentMethodService.getPaymentMethodByName(discount.getName()));
+            discountForDiscountList.getPaymentMethods().add(paymentMethodService.getPaymentMethodByName(discount.getName()));
         } else {
-            discount1.getPaymentMethods().remove(paymentMethodService.getPaymentMethodByName(discount.getName()));
+            discountForDiscountList.getPaymentMethods().remove(paymentMethodService.getPaymentMethodByName(discount.getName()));
         }
-        discountService.save(discount1);
+        discountService.save(discountForDiscountList);
         return "redirect:/admin/discount/list";
     }
 
     private void discountCategoriesCreation(Discount discount) {
-        List<NomenclatureParentGroup> categories =
+        List<NomenclatureParentGroup> nomenclatureParentGroups =
                 new ArrayList<>(nomenclatureParentGroupService.findAlNomenclatureParentGroups());
         List<DiscountCategory> discountCategories = new ArrayList<>();
-        for (NomenclatureParentGroup category:categories) {
+        for (NomenclatureParentGroup category:nomenclatureParentGroups) {
             DiscountCategory discountCategory = new DiscountCategory();
             discountCategory.setName(category.getName());
             discountCategories.add(discountCategory);
