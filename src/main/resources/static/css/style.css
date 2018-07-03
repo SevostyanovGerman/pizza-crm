@@ -173,6 +173,10 @@ section .left-panel-header-item-3 {
     margin-right: 2vh;
 }
 
+section .showTime {
+    padding-right: 2vh;
+}
+
 section .left-panel-header-item-3 p {
     display:inline-block;
     line-height: 2.6vh;

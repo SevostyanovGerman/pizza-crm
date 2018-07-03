@@ -58,7 +58,7 @@ public class OrderControllerRest {
 
         //rowTotal cost calculation
         for (Nomenclature nomenclature: order.getNomenclatures()) {
-            Nomenclature nom = nomenclatureService.getNomenclatureByName(nomenclature.getName());
+            Nomenclature nom = nomenclatureService.getNomenclature(nomenclature.getId());
             nom.setAmount(nomenclature.getAmount());
             nomenclatures.add(nom);
 
@@ -66,15 +66,14 @@ public class OrderControllerRest {
         }
         total = rawTotal;
 
-        for (Discount d : order.getDiscounts()) {
-            nameDiscounts.add(d.getName());
-        }
-
-        order.setDiscounts(discountService.getDiscountsForOrder(nameDiscounts, dayOfWeekNow, localDateTime,
-                                                                rawTotal, nameDiscounts.size()));
-        
         //Order cost calculation with discounts
-        if (order.getDiscounts() != null) {
+        if (order.getDiscounts().size() > 0) {
+            for (Discount d : order.getDiscounts()) {
+                nameDiscounts.add(d.getName());
+            }
+            order.setDiscounts(discountService.getDiscountsForOrder(nameDiscounts, dayOfWeekNow, localDateTime,
+                                                                    rawTotal, nameDiscounts.size()));
+
             for (Discount discount: order.getDiscounts()) {
                 switch (discount.getDiscountApplicationMethod()) {
                     case FULL_PRICE:

@@ -151,6 +151,13 @@ public class DbDataGenerator implements ApplicationListener<ContextRefreshedEven
             e.addPosition(position);
         });
         employeeService.saveAll(fakeEmployees);
+
+        Employee employeeAdmin = new Employee();
+        employeeAdmin.setName("Администратор Администрацкий");
+        employeeAdmin.setLogin("loginAdmin");
+        employeeService.save(employeeAdmin);
+        employeeAdmin.setUser(userService.findByPincode("admin").orElseGet(User::new));
+        employeeService.save(employeeAdmin);
     }
 
     private void generateDishes() {

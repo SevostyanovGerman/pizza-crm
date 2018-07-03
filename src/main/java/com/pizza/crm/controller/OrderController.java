@@ -28,11 +28,8 @@ public class OrderController {
     @RequestMapping("/order")
     public String orderPage(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Employee employee = employeeService.findByPincode(user.getPincode()).orElseGet(Employee::new);
-        String employeeLogin = employee.getLogin();
-
         model.addAttribute("nomenclatureParentGroups", nomenclatureParentGroupService.findAlNomenclatureParentGroups());
-        model.addAttribute("employeeLogin", employeeLogin);
+        model.addAttribute("employeeLogin", user.getEmployee().getName());
 
         Order order = new Order();
         orderService.save(order);

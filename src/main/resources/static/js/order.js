@@ -51,8 +51,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 $("#dish").empty().css({"display": "block"});
-                if (data.length > 23) {
-                    for (var i = 0; i < 23; i++) {
+                    for (var i = 0; i < data.length; i++) {
                         $("#dish").append($([
                             "<a href='#' class='order-item middle-panel-white'",
                             "data-item-name='" + data[i].name + "'",
@@ -61,29 +60,10 @@ $(document).ready(function () {
                             ">",
                             "<p>" + data[i].name + "</p>",
                             "<p>" + data[i].price + "</p>",
+                            '<input  type="hidden" value="' + data[i].id + '">' +
                             "</a>"
                         ].join("\n")));
                     }
-                    $("#dish").append($([
-                        '<a href="#" class="middle-panel-white" onclick="showMoreDishes(\'' + buttonName + '\')">' +
-                        '<p><i class=\'fa fa-angle-down\' aria-hidden=\'true\'></i></p>' +
-                        '</a>'
-                    ].join("\n")));
-
-                } else {
-                    $.each(data, function (key, value) {
-                        $("#dish").append($([
-                            "<a href='#' class='order-item middle-panel-white'",
-                            "data-item-name=\"" + value.name + "\"",
-                            "data-quantity='1'",
-                            "data-price=" + value.price,
-                            ">",
-                            "<p>" + value.name + "</p>",
-                            "<p>" + value.price + "</p>",
-                            "</a>"
-                        ].join("\n")));
-                    });
-                }
             },
             error: function (e) {
             }
@@ -116,12 +96,13 @@ $(document).ready(function () {
 
                 if (data[i].automatic) {
                     $('.discount-select-tbody').append(
-                        '<tr class="select-discount" aria-disabled="true">' +
+                        '<tr class="select-discount" onclick="changeColor(this)">' +
+                        <!--aria-disabled="true"-->
                         '<td>' + data[i].name + '</td>' +
                         '<td>' + data[i].value + '</td>' +
                         '<td> % </td>' +
                         '<input type="hidden" value="' + data[i].automatic + '">' +
-                        '</tr>')
+                        '</tr>');
                     $('.discount-select-tbody').find(".select-discount").eq(i).css("background", "#dee284");
                 } else {
                     $('.discount-select-tbody').append(
@@ -130,7 +111,7 @@ $(document).ready(function () {
                         '<td>' + data[i].value + '</td>' +
                         '<td> % </td>' +
                         '<input type="hidden" value="' + data[i].automatic + '">' +
-                        '</tr>')
+                        '</tr>');
                 }
 
             }
@@ -190,7 +171,6 @@ $(document).ready(function () {
         let tr = getSelectedRow();
         let quantity = parseFloat(tr.find('td:eq(0)').text());
         if (--quantity <= 0) {
-           // tr.remove();
             updateTotal();
             return;
         }
@@ -219,6 +199,7 @@ $(document).ready(function () {
         var quantity = $(this).data('quantity');
         var itemName = $(this).data('itemName');
         var price = $(this).data('price');
+        var id = $(this).closest('a').find('input[type=hidden]').val();
         var tableRow = $('.order-table tr').length;
         if (tableRow == 0) {
             setOrderTimestamp();
@@ -227,6 +208,7 @@ $(document).ready(function () {
                 "<td>" + $(this).data('quantity') + "</td>",
                 "<td>" + $(this).data('itemName') + "</td>",
                 "<td>" + $(this).data('price') + "</td>",
+                '<input type="hidden" value="' + id + '">'
             ].join("/n")));
             applicateDiscounts();
             updateTotal();
@@ -247,6 +229,7 @@ $(document).ready(function () {
                     "<td>" + quantity + "</td>",
                     "<td>" + itemName + "</td>",
                     "<td>" + price + "</td>",
+                    '<input type="hidden" value="' + id + '">'
                 ].join("/n")));
             }
 
@@ -351,14 +334,15 @@ function getSelectedRow() {
 function updateTotal() {
 
     var nomenclatures = [];
+
     $('.order-table tr').each(function () {
         let amount = parseInt($(this).find('td:eq(0)').text());
         if (isNaN(amount)) {
             amount = 0;
         }
-        let name = $(this).find('td:eq(1)').text();
+        let id = $(this).closest('tr').find('input[type=hidden]').val();
 
-        var nomenclature = {amount: amount, name: name};
+        var nomenclature = {id: id, amount: amount};
         nomenclatures.push(nomenclature);
     });
 
