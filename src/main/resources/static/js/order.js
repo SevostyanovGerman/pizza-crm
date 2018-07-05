@@ -247,6 +247,7 @@ $(document).ready(function () {
         var itemName = $(this).children()[0].innerHTML;
         var price = $(this).children()[1].innerHTML.slice(0, -1);
         var tableRow = $('.order-table tr').length;
+        var id = $(this).closest('li').find('input[type=hidden]').val();
         if (tableRow == 0) {
             setOrderTimestamp();
             $('.order-table').append($([
@@ -254,7 +255,10 @@ $(document).ready(function () {
                 "<td>" + $(this).data('quantity') + "</td>",
                 "<td>" + $(this).children()[0].innerHTML + "</td>",
                 "<td>" + $(this).children()[1].innerHTML.slice(0, -1) + "</td>",
+                '<input type="hidden" value="' + id + '">'
+
             ].join("/n")));
+            updateTotal();
             return;
         } else {
             var go = true;
@@ -272,6 +276,7 @@ $(document).ready(function () {
                     "<td>" + quantity + "</td>",
                     "<td>" + itemName + "</td>",
                     "<td>" + price + "</td>",
+                    '<input type="hidden" value="' + id + '">'
                 ].join("/n")));
             }
 
@@ -287,6 +292,7 @@ $(document).ready(function () {
         var itemName = $(this).children()[0].innerHTML;
         var price = $(this).children()[1].innerHTML.slice(0, -1);
         var tableRow = $('.order-table tr').length;
+        var id = $(this).closest('div').find('input[type=hidden]').val();
         if (tableRow == 0) {
             setOrderTimestamp();
             $('.order-table').append($([
@@ -294,7 +300,9 @@ $(document).ready(function () {
                 "<td>" + $(this).data('quantity') + "</td>",
                 "<td>" + $(this).children()[0].innerHTML + "</td>",
                 "<td>" + $(this).children()[1].innerHTML.slice(0, -1) + "</td>",
+                '<input type="hidden" value="' + id + '">'
             ].join("/n")));
+            updateTotal();
             return;
         } else {
             var go = true;
@@ -312,6 +320,7 @@ $(document).ready(function () {
                     "<td>" + quantity + "</td>",
                     "<td>" + itemName + "</td>",
                     "<td>" + price + "</td>",
+                    '<input type="hidden" value="' + id + '">'
                 ].join("/n")));
             }
 
@@ -362,8 +371,8 @@ function updateTotal() {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
         success: function (data) {
-            $('#rawTotal').html(data[0]);
-            $('#total').html(data[1]);
+            $('#rawTotal').html(data[0].toFixed(2));
+            $('#total').html(data[1].toFixed(2));
             $('#discount').html(data[2]);
             $('#extraCharge').html(data[3]);
 
@@ -550,7 +559,9 @@ function SearchModalЕxpandShow() {
                 dish.forEach(function (value) {
                     $("#product").append("<div class=\"col-3\"><div class=\"productItem\" data-quantity=\"1\">" +
                         "<p class=\"nameProduct\">" + value.name + "</p>" +
-                        "<p class=\"costProduct\">" + value.price + "p</p></div></div>");
+                        "<p class=\"costProduct\">" + value.price + "p</p>" +
+                        '<input type="hidden" value="' + value.id + '">' +
+                        "</div></div>");
                 });
             }
 
@@ -584,7 +595,9 @@ function SearchModalShow() {
                         + value.price + "р</p><p class=\"code\">Код: "
                         + value.code + "</p><p class=\"barcode\" style=\"display: none\">"
                         + value.barcode + "</p><p class=\"vendorcode\" style=\"display: none\">"
-                        + value.vendorCode + "</p></li>");
+                        + value.vendorCode + "</p>" +
+                        '<input type="hidden" value="' + value.id + '">' +
+                        "</li>");
                 });
            listObj2 = new List('products1', option2);
 
